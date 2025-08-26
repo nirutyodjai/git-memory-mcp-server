@@ -263,7 +263,7 @@ export default function Pricing() {
                         }`} />
                       </div>
                       <span className="text-gray-700 text-sm leading-relaxed">{feature}</span>
-                    </li>
+                    </motion.li>
                   ))}
                 </ul>
                 
