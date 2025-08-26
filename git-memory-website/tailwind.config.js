@@ -148,6 +148,25 @@ module.exports = {
         'fade-in-left': 'fadeInLeft 0.6s ease-out',
         'fade-in-right': 'fadeInRight 0.6s ease-out',
         'float': 'float 3s ease-in-out infinite',
+        'gradient-x': 'gradient-x 15s ease infinite',
+        'gradient-y': 'gradient-y 15s ease infinite',
+        'gradient-xy': 'gradient-xy 15s ease infinite',
+        'gradient-shift': 'gradient-shift 8s ease-in-out infinite',
+        'shimmer': 'shimmer 2s linear infinite',
+        'glow-pulse': 'glow-pulse 2s ease-in-out infinite alternate',
+        'typing': 'typing 3.5s steps(40, end)',
+        'blink-caret': 'blink-caret 1s infinite',
+        'slide-in-bottom': 'slide-in-bottom 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both',
+        'slide-in-top': 'slide-in-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both',
+        'slide-in-left': 'slide-in-left 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both',
+        'slide-in-right': 'slide-in-right 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both',
+        'scale-in-center': 'scale-in-center 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both',
+        'bounce-in': 'bounce-in 1.1s both',
+        'flip-in-hor-bottom': 'flip-in-hor-bottom 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both',
+        'text-focus-in': 'text-focus-in 1s cubic-bezier(0.550, 0.085, 0.680, 0.530) both',
+        'puff-in-center': 'puff-in-center 0.7s cubic-bezier(0.470, 0.000, 0.745, 0.715) both',
+        'morph': 'morph 8s ease-in-out infinite',
+        'breathe': 'breathe 4s ease-in-out infinite',
         'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
       },
       keyframes: {
@@ -187,6 +206,46 @@ module.exports = {
           },
           '50%': {
             transform: 'translateY(-10px)',
+          },
+        },
+        'gradient-shift': {
+          '0%, 100%': {
+            backgroundPosition: '0% 50%',
+          },
+          '50%': {
+            backgroundPosition: '100% 50%',
+          },
+        },
+        'glow-pulse': {
+          '0%': {
+            boxShadow: '0 0 5px rgba(14, 165, 233, 0.3)',
+          },
+          '100%': {
+            boxShadow: '0 0 20px rgba(14, 165, 233, 0.6), 0 0 30px rgba(14, 165, 233, 0.4)',
+          },
+        },
+        morph: {
+          '0%, 100%': {
+            borderRadius: '50%',
+          },
+          '25%': {
+            borderRadius: '25% 75%',
+          },
+          '50%': {
+            borderRadius: '75% 25%',
+          },
+          '75%': {
+            borderRadius: '25% 75% 75% 25%',
+          },
+        },
+        breathe: {
+          '0%, 100%': {
+            transform: 'scale(1)',
+            opacity: '0.8',
+          },
+          '50%': {
+            transform: 'scale(1.05)',
+            opacity: '1',
           },
         },
       },

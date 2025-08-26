@@ -1,20 +1,36 @@
-/* Responsive Design Styles */
+/* Modern Responsive Design Styles */
 
-/* Mobile First Approach */
+/* Mobile First Approach with Modern Breakpoints */
 
 /* Extra Small devices (phones, 320px and up) */
 @media (min-width: 320px) {
   .hero-title {
-    font-size: 1.5rem;
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    line-height: 1.2;
   }
   
   .hero-subtitle {
-    font-size: 1rem;
+    font-size: clamp(1rem, 2.5vw, 1.125rem);
+    line-height: 1.5;
   }
   
   .container-responsive {
-    padding-left: 1rem;
-    padding-right: 1rem;
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
+  
+  /* Modern card stacking for mobile */
+  .card-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  /* Touch-friendly buttons */
+  .btn-touch {
+    min-height: 44px;
+    min-width: 44px;
+    padding: 0.75rem 1rem;
   }
 }
 
@@ -41,76 +57,127 @@
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) {
   .hero-title {
-    font-size: 2.25rem;
+    font-size: clamp(2.25rem, 5vw, 3rem);
+    line-height: 1.1;
   }
   
   .hero-subtitle {
-    font-size: 1.25rem;
+    font-size: clamp(1.25rem, 3vw, 1.5rem);
+    line-height: 1.4;
   }
   
   .container-responsive {
-    padding-left: 2rem;
-    padding-right: 2rem;
+    padding-left: clamp(2rem, 4vw, 3rem);
+    padding-right: clamp(2rem, 4vw, 3rem);
   }
   
   .grid-responsive {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: clamp(1.5rem, 3vw, 2rem);
   }
   
   .pricing-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: clamp(1.5rem, 3vw, 2rem);
+    align-items: start;
   }
   
   .feature-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: clamp(2rem, 4vw, 3rem);
+  }
+  
+  /* Card hover improvements for tablets */
+  .card-hover-tablet {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .card-hover-tablet:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
   }
 }
 
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) {
   .hero-title {
-    font-size: 3rem;
+    font-size: clamp(3rem, 6vw, 4rem);
+    line-height: 1.05;
   }
   
   .hero-subtitle {
-    font-size: 1.25rem;
+    font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+    line-height: 1.4;
   }
   
   .container-responsive {
-    padding-left: 3rem;
-    padding-right: 3rem;
+    padding-left: clamp(3rem, 5vw, 4rem);
+    padding-right: clamp(3rem, 5vw, 4rem);
   }
   
   .grid-responsive {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: clamp(2rem, 4vw, 3rem);
   }
   
   .pricing-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(300px, 1fr));
+    gap: clamp(2rem, 3vw, 2.5rem);
+    max-width: 1200px;
+    margin: 0 auto;
   }
   
   .feature-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: clamp(2.5rem, 5vw, 4rem);
+  }
+  
+  /* Advanced hover effects for desktop */
+  .card-hover-desktop {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .card-hover-desktop:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
   }
 }
 
 /* Extra large devices (large desktops, 1200px and up) */
 @media (min-width: 1200px) {
   .hero-title {
-    font-size: 3.75rem;
+    font-size: clamp(3.75rem, 7vw, 5rem);
+    line-height: 1;
+  }
+  
+  .hero-subtitle {
+    font-size: clamp(1.5rem, 2.5vw, 1.75rem);
   }
   
   .container-responsive {
-    padding-left: 4rem;
-    padding-right: 4rem;
+    padding-left: clamp(4rem, 6vw, 6rem);
+    padding-right: clamp(4rem, 6vw, 6rem);
+    max-width: 1400px;
+    margin: 0 auto;
   }
   
   .grid-responsive {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: clamp(2.5rem, 4vw, 3.5rem);
   }
   
   .feature-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(350px, 1fr));
+    gap: clamp(3rem, 5vw, 4rem);
+  }
+  
+  /* Ultra-wide screen optimizations */
+  .container-ultra-wide {
+    max-width: 1600px;
+    margin: 0 auto;
   }
 }
 
@@ -566,18 +633,33 @@
   }
 }
 
-/* Accessibility Responsive */
+/* Modern Accessibility & User Preferences */
 @media (prefers-reduced-motion: reduce) {
   .motion-safe {
     animation: none !important;
     transition: none !important;
   }
+  
+  .motion-reduce {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 @media (prefers-color-scheme: dark) {
   .dark-responsive {
-    background-color: #111827;
-    color: #ffffff;
+    background-color: #0f172a;
+    color: #f8fafc;
+  }
+  
+  .dark-card {
+    background-color: #1e293b;
+    border-color: #334155;
+  }
+  
+  .dark-text {
+    color: #cbd5e1;
   }
 }
 
@@ -585,5 +667,102 @@
   .high-contrast {
     border-width: 2px;
     border-color: #000000;
+    outline: 2px solid #000000;
   }
+  
+  .high-contrast-text {
+    color: #000000;
+    background-color: #ffffff;
+  }
+}
+
+/* Modern Container Queries Support */
+@container (min-width: 320px) {
+  .container-query-sm {
+    padding: 1rem;
+  }
+}
+
+@container (min-width: 768px) {
+  .container-query-md {
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+@container (min-width: 1024px) {
+  .container-query-lg {
+    padding: 3rem;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+}
+
+/* Modern Viewport Units */
+.full-viewport {
+  min-height: 100vh;
+  min-height: 100dvh; /* Dynamic viewport height */
+}
+
+.safe-area-padding {
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+}
+
+/* Fluid Typography */
+.text-fluid-xs {
+  font-size: clamp(0.75rem, 2vw, 0.875rem);
+}
+
+.text-fluid-sm {
+  font-size: clamp(0.875rem, 2.5vw, 1rem);
+}
+
+.text-fluid-base {
+  font-size: clamp(1rem, 3vw, 1.125rem);
+}
+
+.text-fluid-lg {
+  font-size: clamp(1.125rem, 4vw, 1.25rem);
+}
+
+.text-fluid-xl {
+  font-size: clamp(1.25rem, 5vw, 1.5rem);
+}
+
+.text-fluid-2xl {
+  font-size: clamp(1.5rem, 6vw, 2rem);
+}
+
+.text-fluid-3xl {
+  font-size: clamp(1.875rem, 7vw, 2.5rem);
+}
+
+.text-fluid-4xl {
+  font-size: clamp(2.25rem, 8vw, 3rem);
+}
+
+/* Modern Spacing */
+.space-fluid-xs {
+  margin: clamp(0.25rem, 1vw, 0.5rem);
+}
+
+.space-fluid-sm {
+  margin: clamp(0.5rem, 2vw, 1rem);
+}
+
+.space-fluid-md {
+  margin: clamp(1rem, 3vw, 1.5rem);
+}
+
+.space-fluid-lg {
+  margin: clamp(1.5rem, 4vw, 2rem);
+}
+
+.space-fluid-xl {
+  margin: clamp(2rem, 5vw, 3rem);
 }
