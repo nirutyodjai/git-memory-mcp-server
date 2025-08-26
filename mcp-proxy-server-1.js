@@ -2,6 +2,7 @@ const express = require('express');
 const { spawn } = require('child_process');
 const path = require('path');
 const fs = require('fs');
+const { authenticateApiKey, requirePermission, rateLimit, logRequest, healthCheck } = require('./auth-middleware');
 
 const app = express();
 const PORT = 3001;
@@ -81,17 +82,10 @@ for (let i = 1; i <= 50; i++) {
 }
 
 app.use(express.json());
+app.use(logRequest);
 
-// Health check endpoint
-app.get('/health', (req, res) => {
-  res.json({ 
-    status: 'healthy', 
-    proxy: 'proxy-1',
-    port: PORT,
-    servers: mcpServers.length,
-    timestamp: new Date().toISOString() 
-  });
-});
+// Health check endpoint (no auth required)
+app.get('/health', healthCheck);
 
 // Get server count
 app.get('/servers/count', (req, res) => {
@@ -103,17 +97,36 @@ app.get('/servers', (req, res) => {
   res.json({ servers: mcpServers, proxy: 'proxy-1' });
 });
 
-// Root endpoint
+// Public endpoints (no auth required)
 app.get('/', (req, res) => {
-  res.json({ 
-    message: 'MCP Proxy Server 1', 
-    version: '1.0.0',
+  res.json({
+    message: 'MCP Proxy Server 1 - Authentication Enabled',
+    version: '2.0.0',
     proxy: 'proxy-1',
     port: PORT,
     servers: mcpServers.length,
-    endpoints: ['/health', '/servers', '/servers/count', '/tools', '/call', '/mcp/:serverName/:toolName', '/status']
+    endpoints: {
+      '/': 'This endpoint',
+      '/health': 'Health check (no auth)',
+      '/status': 'Server status (requires auth)',
+      '/tools': 'List all tools (requires read permission)',
+      '/call': 'Execute MCP tool (requires write permission)',
+      '/mcp/:serverName/:toolName': 'Legacy endpoint (requires write permission)'
+    },
+    authentication: {
+      required: true,
+      method: 'API Key',
+      header: 'X-API-Key or api_key query parameter'
+    }
   });
 });
+
+// Protected endpoints (require authentication)
+app.use('/status', authenticateApiKey, requirePermission('read'));
+app.use('/servers', authenticateApiKey, requirePermission('read'), rateLimit(50, 60000));
+app.use('/tools', authenticateApiKey, requirePermission('read'), rateLimit(50, 60000));
+app.use('/call', authenticateApiKey, requirePermission('write'), rateLimit(30, 60000));
+app.use('/mcp', authenticateApiKey, requirePermission('write'), rateLimit(30, 60000));
 
 // Status endpoint
 app.get('/status', (req, res) => {
@@ -129,7 +142,9 @@ app.get('/status', (req, res) => {
       active: activeServers,
       inactive: mcpServers.length - activeServers
     },
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
+    user: req.user.name,
+    permissions: req.user.permissions
   });
 });
 
