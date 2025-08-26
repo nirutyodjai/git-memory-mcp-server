@@ -1,0 +1,92 @@
+{
+  "mcpProxy": {
+    "baseURL": "http://localhost:9090",
+    "addr": ":9090",
+    "name": "MCP Proxy Server",
+    "version": "1.0.0",
+    "type": "sse",
+    "options": {
+      "panicIfInvalid": false,
+      "logEnabled": true,
+      "authTokens": []
+    }
+  },
+  "mcpServers": {
+    "shadcn-ui": {
+      "transportType": "stdio",
+      "command": "npx",
+      "args": ["@jpisnice/shadcn-ui-mcp-server"],
+      "env": {},
+      "options": {
+        "logEnabled": true
+      }
+    },
+    "magic-ui": {
+      "transportType": "stdio",
+      "command": "npx",
+      "args": ["-y", "@magicuidesign/mcp@latest"],
+      "env": {},
+      "options": {
+        "logEnabled": true
+      }
+    },
+    "google-workspace": {
+      "transportType": "stdio",
+      "command": "uvx",
+      "args": ["workspace-mcp", "--tool-tier", "core"],
+      "env": {
+        "GOOGLE_OAUTH_CLIENT_ID": "${GOOGLE_OAUTH_CLIENT_ID}",
+        "GOOGLE_OAUTH_CLIENT_SECRET": "${GOOGLE_OAUTH_CLIENT_SECRET}",
+        "OAUTHLIB_INSECURE_TRANSPORT": "1"
+      },
+      "options": {
+        "logEnabled": true
+      }
+    },
+    "playwright": {
+      "transportType": "stdio",
+      "command": "node",
+      "args": ["src/playwright/index.ts"],
+      "env": {},
+      "options": {
+        "logEnabled": true
+      }
+    },
+    "multi-fetch": {
+      "transportType": "stdio",
+      "command": "python",
+      "args": ["-m", "src.fetch"],
+      "env": {},
+      "options": {
+        "logEnabled": true
+      }
+    },
+    "blender": {
+      "transportType": "stdio",
+      "command": "node",
+      "args": ["src/blender/index.ts"],
+      "env": {},
+      "options": {
+        "logEnabled": true
+      }
+    },
+    "memory": {
+      "transportType": "stdio",
+      "command": "node",
+      "args": ["src/memory/index.ts"],
+      "env": {},
+      "options": {
+        "logEnabled": true
+      }
+    },
+    "sequential-thinking": {
+      "transportType": "stdio",
+      "command": "node",
+      "args": ["src/sequentialthinking/index.ts"],
+      "env": {},
+      "options": {
+        "logEnabled": true
+      }
+    }
+  }
+}

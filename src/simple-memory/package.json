@@ -1,0 +1,19 @@
+{
+  "name": "@3d-sco/simple-memory-mcp",
+  "version": "1.0.0",
+  "description": "Simple key-value memory MCP server",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsc --watch"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22",
+    "typescript": "^5.6.2"
+  }
+}

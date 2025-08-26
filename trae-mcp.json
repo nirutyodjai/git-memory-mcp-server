@@ -1,0 +1,177 @@
+{
+  "mcpServers": {
+    "figma-developer-mcp": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "figma-developer-mcp",
+        "--figma-api-key=figd_T55K1_C02bkJ4e36LuRX0h53O_uSF58m9L53G4sv",
+        "--stdio"
+      ],
+      "env": {
+        "MCP_SERVER_NAME": "Figma Developer MCP - Design Context Provider"
+      }
+    },
+    "1mcpserver": {
+      "url": "https://mcp.1mcpserver.com/mcp/",
+      "headers": {
+        "Accept": "text/event-stream",
+        "Cache-Control": "no-cache"
+      },
+      "env": {
+        "MCP_SERVER_NAME": "1MCP Server - MCP Discovery"
+      }
+    },
+    "agentbay": {
+      "url": "https://agentbay.wuying.aliyun.com/sse?APIKEY=YOUR_API_KEY",
+      "env": {
+        "MCP_SERVER_NAME": "AgentBay - Serverless Cloud Infrastructure"
+      }
+    },
+    "adr-analysis": {
+      "command": "npx",
+      "args": [
+        "mcp-adr-analysis-server"
+      ],
+      "env": {
+        "PROJECT_PATH": "D:\\servers-main\\servers-main",
+        "EXECUTION_MODE": "full",
+        "AI_MODEL": "anthropic/claude-3-sonnet",
+        "MCP_SERVER_NAME": "ADR Analysis - Architectural Decision Records"
+      }
+    },
+    "apiweaver": {
+      "command": "uvx",
+      "args": [
+        "apiweaver",
+        "run"
+      ],
+      "env": {
+        "MCP_SERVER_NAME": "APIWeaver - Dynamic API to MCP Server"
+      }
+    },
+    "antv-chart": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@antv/mcp-server-chart"
+      ],
+      "env": {
+        "MCP_SERVER_NAME": "AntV Chart - Visual Charts Generator"
+      }
+    },
+    "3d-sco-memory": {
+      "command": "node",
+      "args": [
+        "d:\\servers-main\\servers-main\\src\\simple-memory\\dist\\index.js"
+      ],
+      "env": {
+        "NODE_ENV": "production",
+        "MCP_SERVER_NAME": "3D-SCO Simple Memory"
+      }
+    },
+    "3d-sco-thinking": {
+      "command": "node",
+      "args": [
+        "d:\\servers-main\\servers-main\\src\\sequentialthinking\\dist\\index.js"
+      ],
+      "env": {
+        "NODE_ENV": "production",
+        "MCP_SERVER_NAME": "3D-SCO Sequential Thinking"
+      }
+    },
+    "3d-sco-blender": {
+      "command": "node",
+      "args": [
+        "d:\\servers-main\\servers-main\\src\\blender\\dist\\index.js"
+      ],
+      "env": {
+        "NODE_ENV": "production",
+        "MCP_SERVER_NAME": "blender",
+        "BLENDER_PATH": "C:\\Program Files\\Blender Foundation\\Blender 4.0\\blender.exe"
+      }
+    },
+    "3d-sco-multifetch": {
+      "command": "python",
+      "args": [
+        "-m", "mcp_server_fetch"
+      ],
+      "cwd": "d:\\servers-main\\servers-main\\src\\fetch",
+      "env": {
+        "NODE_ENV": "production",
+        "MCP_SERVER_NAME": "3D-SCO Multi Fetch"
+      }
+    },
+    "3d-sco-playwright": {
+      "command": "node",
+      "args": [
+        "d:\\servers-main\\servers-main\\src\\playwright\\dist\\index.js"
+      ],
+      "env": {
+        "NODE_ENV": "production",
+        "MCP_SERVER_NAME": "playwright"
+      }
+    },
+    "3d-sco-filesystem": {
+      "command": "node",
+      "args": [
+        "d:\\servers-main\\servers-main\\src\\filesystem\\dist\\index.js"
+      ],
+      "env": {
+        "NODE_ENV": "production",
+        "MCP_SERVER_NAME": "3D-SCO Filesystem"
+      }
+    },
+    "3d-sco-git": {
+      "command": "python",
+      "args": [
+        "-m", "mcp_server_git"
+      ],
+      "cwd": "d:\\servers-main\\servers-main\\src\\git",
+      "env": {
+        "NODE_ENV": "production",
+        "MCP_SERVER_NAME": "3D-SCO Git"
+      }
+    },
+    "3d-sco-time": {
+      "command": "python",
+      "args": [
+        "-m", "mcp_server_time"
+      ],
+      "cwd": "d:\\servers-main\\servers-main\\src\\time",
+      "env": {
+        "NODE_ENV": "production",
+        "MCP_SERVER_NAME": "3D-SCO Time"
+      }
+    }
+  },
+  "globalSettings": {
+    "logLevel": "info",
+    "timeout": 30000,
+    "retries": 3,
+    "rateLimit": {
+      "enabled": true,
+      "windowMs": 900000,
+      "maxRequests": 100
+    }
+  },
+  "traeIntegration": {
+    "enabled": true,
+    "version": "1.0.0",
+    "compatibility": "trae-ai-v4",
+    "features": [
+      "browser-automation",
+      "web-scraping",
+      "3d-modeling",
+      "sequential-thinking",
+      "memory-management"
+    ],
+    "endpoints": {
+      "playwright": "/api/mcp/playwright",
+      "multifetch": "/api/mcp/fetch",
+      "blender": "/api/mcp/blender",
+      "thinking": "/api/mcp/thinking",
+      "memory": "/api/mcp/memory"
+    }
+  }
+}

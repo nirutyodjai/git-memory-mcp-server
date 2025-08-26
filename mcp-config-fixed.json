@@ -1,0 +1,306 @@
+{
+  "mcpServers": {
+    "figma-developer-mcp": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "figma-developer-mcp",
+        "--figma-api-key=figd_T55K1_C02bkJ4e36LuRX0h53O_uSF58m9L53G4sv",
+        "--stdio"
+      ],
+      "env": {
+        "MCP_SERVER_NAME": "Figma Developer MCP - Design Context Provider"
+      }
+    },
+    "3d-sco-playwright": {
+      "command": "node",
+      "args": [
+        "d:\\3D-SCO\\scripts\\mcp-playwright-server.js"
+      ],
+      "env": {
+        "NODE_ENV": "production",
+        "MCP_SERVER_NAME": "3D-SCO Playwright",
+        "BASE_URL": "http://localhost:3001"
+      }
+    },
+    "3d-sco-multifetch": {
+      "command": "node",
+      "args": [
+        "d:\\3D-SCO\\scripts\\mcp-multifetch-server.js"
+      ],
+      "env": {
+        "NODE_ENV": "production",
+        "MCP_SERVER_NAME": "3D-SCO Multi Fetch",
+        "BASE_URL": "http://localhost:3001"
+      }
+    },
+    "3d-sco-blender": {
+      "command": "node",
+      "args": [
+        "d:\\3D-SCO\\scripts\\mcp-blender-server.js"
+      ],
+      "env": {
+        "NODE_ENV": "production",
+        "MCP_SERVER_NAME": "3D-SCO Blender",
+        "BASE_URL": "http://localhost:3001",
+        "BLENDER_PATH": "C:\\Program Files\\Blender Foundation\\Blender 4.0\\blender.exe"
+      }
+    },
+    "3d-sco-thinking": {
+      "command": "node",
+      "args": [
+        "d:\\3D-SCO\\scripts\\mcp-thinking-server.js"
+      ],
+      "env": {
+        "NODE_ENV": "production",
+        "MCP_SERVER_NAME": "3D-SCO Sequential Thinking",
+        "BASE_URL": "http://localhost:3001"
+      }
+    },
+    "3d-sco-memory": {
+      "command": "node",
+      "args": [
+        "d:\\3D-SCO\\scripts\\mcp-memory-server.js"
+      ],
+      "env": {
+        "NODE_ENV": "production",
+        "MCP_SERVER_NAME": "3D-SCO Memory",
+        "BASE_URL": "http://localhost:3001"
+      }
+    },
+    "Fetch": {
+      "command": "uvx",
+      "args": [
+        "mcp-server-fetch"
+      ],
+      "env": {},
+      "fromGalleryId": "modelcontextprotocol.servers_fetch"
+    },
+    "Time": {
+      "command": "python",
+      "args": [
+        "-m",
+        "mcp_server_time"
+      ],
+      "env": {},
+      "fromGalleryId": "modelcontextprotocol.servers_time"
+    },
+    "Puppeteer": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-puppeteer"
+      ],
+      "env": {},
+      "fromGalleryId": "modelcontextprotocol.servers_puppeteer"
+    },
+    "Slack": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-slack"
+      ],
+      "env": {
+        "SLACK_BOT_TOKEN": "",
+        "SLACK_TEAM_ID": ""
+      },
+      "fromGalleryId": "modelcontextprotocol.servers_slack"
+    },
+    "GitLab": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-gitlab"
+      ],
+      "env": {
+        "GITLAB_API_URL": "https://gitlab.com/api/v4",
+        "GITLAB_PERSONAL_ACCESS_TOKEN": ""
+      },
+      "fromGalleryId": "modelcontextprotocol.servers_gitlab"
+    },
+    "Google Maps": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-google-maps"
+      ],
+      "env": {
+        "GOOGLE_MAPS_API_KEY": ""
+      },
+      "fromGalleryId": "modelcontextprotocol.servers_google-maps"
+    },
+    "AWS Knowledge Base": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-aws-kb-retrieval"
+      ],
+      "env": {
+        "AWS_ACCESS_KEY_ID": "",
+        "AWS_REGION": "",
+        "AWS_SECRET_ACCESS_KEY": ""
+      },
+      "fromGalleryId": "modelcontextprotocol.servers_aws-kb-retrieval-server"
+    },
+    "Google Drive": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-gdrive"
+      ],
+      "env": {
+        "GDRIVE_CREDENTIALS_PATH": ".gdrive-server-credentials.json",
+        "GDRIVE_OAUTH_PATH": "gcp-oauth.keys.json"
+      },
+      "fromGalleryId": "modelcontextprotocol.servers_gdrive"
+    },
+    "Redis": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-redis",
+        "redis://localhost:6379"
+      ],
+      "env": {},
+      "fromGalleryId": "modelcontextprotocol.servers_redis"
+    },
+    "Desktop Commander": {
+      "command": "npx desktop-commander",
+      "args": [],
+      "env": {},
+      "fromGalleryId": "wonderwhy-er.ClaudeComputerCommander"
+    },
+    "Sentry": {
+      "command": "mcp-server-sentry",
+      "args": [],
+      "env": {
+        "SENTRY_AUTH_TOKEN": ""
+      },
+      "fromGalleryId": "modelcontextprotocol.servers_sentry"
+    },
+    "Brave Search": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-brave-search"
+      ],
+      "env": {
+        "BRAVE_API_KEY": ""
+      },
+      "fromGalleryId": "modelcontextprotocol.servers_brave-search"
+    },
+    "context7": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@upstash/context7-mcp@latest"
+      ],
+      "env": {
+        "DEFAULT_MINIMUM_TOKENS": "10000"
+      },
+      "fromGalleryId": "upstash.context7"
+    },
+    "Git": {
+      "command": "uvx",
+      "args": [
+        "mcp-server-git",
+        "--repository",
+        "path/to/git/repo"
+      ],
+      "env": {},
+      "fromGalleryId": "modelcontextprotocol.servers_git"
+    },
+    "Codegen": {
+      "command": "uvx",
+      "args": [
+        "--from",
+        "git+https://github.com/codegen-sh/codegen-sdk.git#egg=codegen-mcp-server&subdirectory=codegen-examples/examples/codegen-mcp-server",
+        "codegen-mcp-server",
+        "--yes"
+      ],
+      "env": {},
+      "fromGalleryId": "codegen-sh.codegen-sdk_codegen-mcp-server"
+    },
+    "Excel": {
+      "command": "npx",
+      "args": [
+        "--yes",
+        "@negokaz/excel-mcp-server"
+      ],
+      "env": {
+        "EXCEL_MCP_PAGING_CELLS_LIMIT": "4000"
+      },
+      "fromGalleryId": "negokaz.excel-mcp-server"
+    },
+    "MySQL Server": {
+      "command": "mysql_mcp_server",
+      "args": [],
+      "env": {
+        "MYSQL_DATABASE": "",
+        "MYSQL_HOST": "localhost",
+        "MYSQL_PASSWORD": "",
+        "MYSQL_PORT": "3306",
+        "MYSQL_USER": ""
+      },
+      "fromGalleryId": "designcomputer.mysql_mcp_server"
+    },
+    "Oxylabs MCP": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "oxylabs-mcp"
+      ],
+      "env": {
+        "OXYLABS_PASSWORD": "",
+        "OXYLABS_USERNAME": ""
+      },
+      "fromGalleryId": "oxylabs.oxylabs-mcp"
+    },
+    "ClickUp": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@taazkareem/clickup-mcp-server@latest",
+        "--env",
+        "CLICKUP_API_KEY=your_api_key_here",
+        "--env",
+        "CLICKUP_TEAM_ID=your_team_id_here"
+      ],
+      "env": {
+        "CLICKUP_API_KEY": "",
+        "CLICKUP_TEAM_ID": ""
+      },
+      "fromGalleryId": "windalfin.clickup-mcp-server"
+    }
+  },
+  "globalSettings": {
+    "logLevel": "info",
+    "timeout": 30000,
+    "retries": 3,
+    "rateLimit": {
+      "enabled": true,
+      "windowMs": 900000,
+      "maxRequests": 100
+    }
+  },
+  "traeIntegration": {
+    "enabled": true,
+    "version": "1.0.0",
+    "compatibility": "trae-ai-v4",
+    "features": [
+      "browser-automation",
+      "web-scraping",
+      "3d-modeling",
+      "sequential-thinking",
+      "memory-management"
+    ],
+    "endpoints": {
+      "playwright": "/api/mcp/playwright",
+      "multifetch": "/api/mcp/fetch",
+      "blender": "/api/mcp/blender",
+      "thinking": "/api/mcp/thinking",
+      "memory": "/api/mcp/memory"
+    },
+    "baseUrl": "http://localhost:3001"
+  }
+}
