@@ -1,0 +1,137 @@
+{
+  "mcpServers": {
+    "mcp-proxy": {
+      "command": "node",
+      "args": ["mcp-proxy-server.js"],
+      "env": {},
+      "options": {
+        "logEnabled": true
+      }
+    }
+  },
+  "endpoints": {
+    "health": "http://localhost:9090/health",
+    "servers": "http://localhost:9090/servers",
+    "shadcn-ui": "http://localhost:9090/mcp/shadcn-ui",
+    "magic-ui": "http://localhost:9090/mcp/magic-ui",
+    "google-workspace": "http://localhost:9090/mcp/google-workspace",
+    "playwright": "http://localhost:9090/mcp/playwright",
+    "memory": "http://localhost:9090/mcp/memory",
+    "git-memory": "http://localhost:9090/mcp/git-memory"
+  },
+  "usage": {
+    "description": "MCP Proxy Server Configuration for AI Clients",
+    "port": 9090,
+    "protocol": "HTTP",
+    "cors": "enabled",
+    "authentication": "none",
+    "content_type": "application/json"
+  },
+  "tools_summary": {
+    "total_servers": 14,
+    "total_tools": 81,
+    "built_in_3d_sco_servers": 9,
+    "external_servers": 5,
+    "servers": {
+      "filesystem": {
+        "tools_count": 7,
+        "category": "File Operations",
+        "status": "built",
+        "type": "3D-SCO TypeScript"
+      },
+      "memory": {
+        "tools_count": 5,
+        "category": "Data Storage",
+        "status": "built",
+        "type": "3D-SCO TypeScript"
+      },
+      "sequentialthinking": {
+        "tools_count": 4,
+        "category": "Process Management",
+        "status": "built",
+        "type": "3D-SCO TypeScript"
+      },
+      "everything": {
+        "tools_count": 10,
+        "category": "Multi-Feature",
+        "status": "built",
+        "type": "3D-SCO TypeScript"
+      },
+      "fetch": {
+        "tools_count": 4,
+        "category": "Web Scraping",
+        "status": "installed",
+        "type": "3D-SCO Python"
+      },
+      "git": {
+        "tools_count": 8,
+        "category": "Version Control",
+        "status": "installed",
+        "type": "3D-SCO Python"
+      },
+      "time": {
+        "tools_count": 4,
+        "category": "Time Management",
+        "status": "available",
+        "type": "3D-SCO"
+      },
+      "multifetch": {
+        "tools_count": 4,
+        "category": "Data Fetching",
+        "status": "available",
+        "type": "3D-SCO"
+      },
+      "blender": {
+        "tools_count": 5,
+        "category": "3D Modeling",
+        "status": "available",
+        "type": "3D-SCO"
+      },
+      "shadcn-ui": {
+        "tools_count": 3,
+        "category": "UI Components",
+        "status": "available",
+        "type": "External"
+      },
+      "magic-ui": {
+        "tools_count": 2,
+        "category": "UI Components",
+        "status": "available",
+        "type": "External"
+      },
+      "google-workspace": {
+        "tools_count": 4,
+        "category": "Cloud Services",
+        "status": "configured",
+        "type": "External"
+      },
+      "playwright": {
+        "tools_count": 3,
+        "category": "Browser Automation",
+        "status": "available",
+        "type": "External"
+      },
+      "git-memory": {
+        "tools_count": 8,
+        "category": "Version Control + Memory",
+        "status": "available",
+        "type": "External"
+      }
+    }
+  },
+  "integration_examples": {
+    "curl": {
+      "health_check": "curl http://localhost:9090/health",
+      "list_servers": "curl http://localhost:9090/servers",
+      "access_memory": "curl http://localhost:9090/mcp/memory"
+    },
+    "javascript": {
+      "fetch_health": "fetch('http://localhost:9090/health').then(r => r.json())",
+      "fetch_servers": "fetch('http://localhost:9090/servers').then(r => r.json())"
+    },
+    "python": {
+      "requests_health": "import requests; requests.get('http://localhost:9090/health').json()",
+      "requests_servers": "import requests; requests.get('http://localhost:9090/servers').json()"
+    }
+  }
+}

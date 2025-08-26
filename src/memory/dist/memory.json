@@ -1,0 +1,3 @@
+{"type":"entity","name":"User","entityType":"Person","observations":["A software developer","Uses React and Node.js"]}
+{"type":"entity","name":"Project","entityType":"Software","observations":["Web application","Built with modern technologies"]}
+{"type":"relation","from":"User","to":"Project","relationType":"develops"}
