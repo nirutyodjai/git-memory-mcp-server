@@ -87,6 +87,176 @@
       "options": {
         "logEnabled": true
       }
+    },
+
+    "oneuptime-mcp": {
+      "transportType": "stdio",
+      "command": "npx",
+      "args": ["-y", "@oneuptime/mcp-server"],
+      "env": {},
+      "options": {
+        "logEnabled": true
+      }
+    },
+    "supabase": {
+      "transportType": "stdio",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-supabase"],
+      "env": {
+        "SUPABASE_URL": "https://rnuvnufywjvztbbnrpyc.supabase.co",
+        "SUPABASE_ANON_KEY": "sb_publishable_W7u9fyItxkqtu7AoNX6dZA_JfZyDhmH"
+      },
+      "options": {
+        "logEnabled": true
+      }
+    },
+    "mongodb": {
+      "transportType": "stdio",
+      "command": "npx",
+      "args": ["-y", "mongodb-mcp-server", "--readOnly"],
+      "env": {
+        "MDB_MCP_CONNECTION_STRING": "mongodb://localhost:27017/myDatabase",
+        "MDB_MCP_READ_ONLY": "true"
+      },
+      "options": {
+        "logEnabled": true
+      }
+    },
+    "mongo-mcp": {
+      "transportType": "stdio",
+      "command": "npx",
+      "args": ["-y", "mcp-mongo-server"],
+      "env": {
+        "MCP_MONGODB_URI": "mongodb://localhost:27017/database",
+        "MCP_MONGODB_READONLY": "true"
+      },
+      "options": {
+        "logEnabled": true
+      }
+    },
+    "gitlab": {
+      "transportType": "stdio",
+      "command": "npx",
+      "args": ["-y", "@zereight/mcp-gitlab"],
+      "env": {
+        "GITLAB_PERSONAL_ACCESS_TOKEN": "YOUR_GITLAB_TOKEN_HERE",
+        "GITLAB_API_URL": "https://gitlab.com/api/v4"
+      },
+      "options": {
+        "logEnabled": true
+      }
+    },
+    "brave-search": {
+       "transportType": "stdio",
+       "command": "npx",
+       "args": ["-y", "@brave/brave-search-mcp-server"],
+       "env": {
+         "BRAVE_API_KEY": "YOUR_BRAVE_API_KEY_HERE"
+       },
+       "options": {
+         "logEnabled": true
+      }
+    },
+    "gitlab-mcp": {
+      "transportType": "stdio",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-gitlab"],
+      "env": {
+        "GITLAB_API_URL": "https://gitlab.com/api/v4",
+        "GITLAB_PERSONAL_ACCESS_TOKEN": "test-token"
+      },
+      "options": {
+        "logEnabled": true
+      }
+    },
+    "google-maps": {
+      "transportType": "stdio",
+      "command": "npx",
+      "args": ["-y", "@cablate/mcp-google-map"],
+      "env": {
+        "GOOGLE_MAPS_API_KEY": "YOUR_GOOGLE_MAPS_API_KEY_HERE"
+      },
+      "options": {
+        "logEnabled": true
+      }
+    },
+    "google-maps-code-assist": {
+      "transportType": "stdio",
+      "command": "npx",
+      "args": ["-y", "@googlemaps/code-assist-mcp", "--port", "3000"],
+      "env": {},
+      "options": {
+        "logEnabled": true
+      }
+    },
+    "excel": {
+      "transportType": "stdio",
+      "command": "npx",
+      "args": ["-y", "@negokaz/excel-mcp-server"],
+      "env": {
+        "EXCEL_MCP_PAGING_CELLS_LIMIT": "4000"
+      },
+      "options": {
+        "logEnabled": true
+      }
+    },
+    "redis-mcp": {
+      "transportType": "stdio",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-redis", "redis://localhost:6379"],
+      "env": {},
+      "options": {
+        "logEnabled": true
+      }
+    },
+    "sentry-mcp": {
+      "transportType": "stdio",
+      "command": "npx",
+      "args": ["-y", "mcp-server-sentry"],
+      "env": {
+        "SENTRY_AUTH_TOKEN": "test-token"
+      },
+      "options": {
+        "logEnabled": true
+      }
+    },
+    "excel-mcp": {
+      "transportType": "stdio",
+      "command": "npx",
+      "args": ["--yes", "@negokaz/excel-mcp-server"],
+      "env": {
+        "EXCEL_MCP_PAGING_CELLS_LIMIT": "4000"
+      },
+      "options": {
+        "logEnabled": true
+      }
+    },
+    "mysql-mcp": {
+      "transportType": "stdio",
+      "command": "npx",
+      "args": ["-y", "mysql_mcp_server"],
+      "env": {
+        "MYSQL_HOST": "localhost",
+        "MYSQL_PORT": "3306",
+        "MYSQL_USER": "root",
+        "MYSQL_PASSWORD": "password",
+        "MYSQL_DATABASE": "test"
+      },
+      "options": {
+        "logEnabled": true
+      }
+    },
+    "clickup-mcp": {
+      "transportType": "stdio",
+      "command": "npx",
+      "args": ["-y", "@taazkareem/clickup-mcp-server@latest"],
+      "env": {
+        "CLICKUP_API_KEY": "test-key",
+        "CLICKUP_TEAM_ID": "test-team"
+      },
+      "options": {
+        "logEnabled": true
+      }
     }
   }
 }
