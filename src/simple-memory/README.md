@@ -134,7 +134,7 @@ npm run build
 # ใช้ MCP tool
 run_mcp("mcp.config.usrlocalmcp.3d-sco-memory", "set", {
   "key": "figma_api_key",
-  "value": "figd_T55K1_C02bkJ4e36LuRX0h53O_uSF58m9L53G4sv",
+  "value": "YOUR_FIGMA_TOKEN_HERE",
   "tags": ["figma", "api", "configuration"],
   "metadata": {
     "source": "user_provided",
