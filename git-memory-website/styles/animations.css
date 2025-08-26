@@ -473,6 +473,49 @@
   will-change: scroll-position;
 }
 
+/* Modern gradient animations */
+.animate-gradient-x {
+  background-size: 400% 400%;
+  animation: gradient-x 3s ease infinite;
+}
+
+@keyframes gradient-x {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Pulse variations */
+.animate-pulse-slow {
+  animation: pulse-slow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse-slow {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+/* Enhanced glow effect */
+.animate-glow-enhanced {
+  animation: glow-enhanced 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow-enhanced {
+  from {
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+  }
+  to {
+    box-shadow: 0 0 30px rgba(59, 130, 246, 0.8);
+  }
+}
+
 /* Reduced Motion Support */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -487,7 +530,10 @@
   .animate-spin,
   .animate-ping,
   .animate-pulse,
-  .animate-bounce {
+  .animate-bounce,
+  .animate-gradient-x,
+  .animate-pulse-slow,
+  .animate-glow-enhanced {
     animation: none !important;
   }
 }
