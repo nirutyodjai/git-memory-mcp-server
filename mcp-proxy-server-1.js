@@ -103,7 +103,95 @@ app.get('/servers', (req, res) => {
   res.json({ servers: mcpServers, proxy: 'proxy-1' });
 });
 
-// MCP tool execution endpoint
+// Root endpoint
+app.get('/', (req, res) => {
+  res.json({ 
+    message: 'MCP Proxy Server 1', 
+    version: '1.0.0',
+    proxy: 'proxy-1',
+    port: PORT,
+    servers: mcpServers.length,
+    endpoints: ['/health', '/servers', '/servers/count', '/tools', '/call', '/mcp/:serverName/:toolName', '/status']
+  });
+});
+
+// Status endpoint
+app.get('/status', (req, res) => {
+  const activeServers = mcpServers.filter(s => s.status === 'active').length;
+  res.json({ 
+    proxy: 'proxy-1',
+    port: PORT,
+    status: 'running',
+    uptime: process.uptime(),
+    memory: process.memoryUsage(),
+    servers: {
+      total: mcpServers.length,
+      active: activeServers,
+      inactive: mcpServers.length - activeServers
+    },
+    timestamp: new Date().toISOString()
+  });
+});
+
+// List all available tools
+app.get('/tools', (req, res) => {
+  const allTools = [];
+  mcpServers.forEach(server => {
+    server.tools.forEach(tool => {
+      allTools.push({
+        server: server.name,
+        tool: tool,
+        description: server.description
+      });
+    });
+  });
+  res.json({ tools: allTools, proxy: 'proxy-1', count: allTools.length });
+});
+
+// Standard MCP call endpoint
+app.post('/call', async (req, res) => {
+  const { server_name, tool_name, args } = req.body;
+  
+  if (!server_name || !tool_name) {
+    return res.status(400).json({ 
+      error: 'Missing required fields: server_name and tool_name', 
+      proxy: 'proxy-1' 
+    });
+  }
+  
+  const server = mcpServers.find(s => s.name === server_name);
+  if (!server) {
+    return res.status(404).json({ 
+      error: `Server '${server_name}' not found`, 
+      proxy: 'proxy-1',
+      available_servers: mcpServers.map(s => s.name)
+    });
+  }
+  
+  if (!server.tools.includes(tool_name)) {
+    return res.status(404).json({ 
+      error: `Tool '${tool_name}' not found in server '${server_name}'`, 
+      proxy: 'proxy-1',
+      available_tools: server.tools
+    });
+  }
+  
+  // Simulate tool execution with more realistic response
+  const result = {
+    success: true,
+    server: server_name,
+    tool: tool_name,
+    args: args || {},
+    result: `Successfully executed ${tool_name} on ${server_name}`,
+    execution_time: Math.random() * 100 + 50, // Random execution time 50-150ms
+    proxy: 'proxy-1',
+    timestamp: new Date().toISOString()
+  };
+  
+  res.json(result);
+});
+
+// MCP tool execution endpoint (legacy)
 app.post('/mcp/:serverName/:toolName', async (req, res) => {
   const { serverName, toolName } = req.params;
   const { args } = req.body;
