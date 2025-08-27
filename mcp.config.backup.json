@@ -1,0 +1,328 @@
+{
+  "$schema": "https://github.com/modelcontextprotocol/typescript-sdk/blob/main/src/types.ts",
+  "mcpServers": {
+    "playwright": {
+      "name": "Playwright",
+      "description": "Browser automation and web testing with Playwright integration for Trae AI",
+      "endpoint": "/api/mcp/playwright",
+      "version": "1.0.0",
+      "capabilities": [
+        "get_context",
+        "get_full_dom",
+        "get_screenshot",
+        "execute_code",
+        "init_browser",
+        "validate_selectors",
+        "navigate_to_url",
+        "click_element",
+        "fill_input",
+        "wait_for_element",
+        "extract_text",
+        "generate_test_code",
+        "run_test"
+      ],
+      "rateLimit": {
+        "requests": 30,
+        "window": "15m"
+      },
+      "config": {
+        "browserType": "chromium",
+        "headless": true,
+        "timeout": 15000,
+        "viewport": {
+          "width": 1024,
+          "height": 768
+        },
+        "enableScreenshots": false,
+        "enableTracing": false,
+        "enableVideo": false
+      }
+    },
+    "multi-fetch": {
+      "name": "Multi Fetch",
+      "description": "Fetch websites and return content in various formats (HTML, JSON, text, markdown)",
+      "endpoint": "/api/mcp/fetch",
+      "version": "1.0.0",
+      "capabilities": [
+        "fetch_html",
+        "fetch_json",
+        "fetch_txt",
+        "fetch_markdown",
+        "fetch_plaintext"
+      ],
+      "rateLimit": {
+        "requests": 100,
+        "window": "15m"
+      },
+      "config": {
+        "maxContentSize": 10485760,
+        "defaultTimeout": 15000,
+        "maxRedirects": 5,
+        "enableContentSplitting": false,
+        "supportedFormats": ["html", "json", "text"]
+      }
+    },
+    "blender": {
+      "name": "Blender",
+      "description": "Integration with Blender 3D software and external asset libraries",
+      "endpoint": "/api/mcp/blender",
+      "version": "1.0.0",
+      "capabilities": [
+        "get_scene_info",
+        "get_object_info",
+        "get_viewport_screenshot",
+        "execute_blender_code",
+        "get_polyhaven_categories",
+        "search_polyhaven_assets",
+        "download_polyhaven_asset",
+        "set_texture",
+        "search_sketchfab_models",
+        "download_sketchfab_model",
+        "generate_hyper3d_model_via_text"
+      ],
+      "rateLimit": {
+        "requests": 50,
+        "window": "15m"
+      },
+      "config": {
+        "blenderPath": null,
+        "autoConnect": false,
+        "supportedAssetTypes": ["hdris", "textures", "models"],
+        "supportedResolutions": ["1k", "2k", "4k", "8k"],
+        "supportedFormats": {
+          "hdris": ["hdr", "exr"],
+          "textures": ["jpg", "png", "exr"],
+          "models": ["gltf", "fbx", "obj"]
+        }
+      }
+    },
+    "sequential-thinking": {
+      "name": "Sequential Thinking",
+      "description": "Structured thinking and problem-solving processes",
+      "endpoint": "/api/mcp/thinking",
+      "version": "1.0.0",
+      "capabilities": [
+        "get_templates",
+        "add_template",
+        "create_process",
+        "get_process",
+        "delete_process",
+        "start_process",
+        "start_step",
+        "complete_step",
+        "fail_step",
+        "get_progress",
+        "export_process",
+        "import_process"
+      ],
+      "rateLimit": {
+        "requests": 200,
+        "window": "15m"
+      },
+      "config": {
+        "maxProcesses": 100,
+        "maxStepsPerProcess": 50,
+        "autoSave": true,
+        "defaultTemplates": [
+          "problem-solving",
+          "design-thinking",
+          "software-development",
+          "research",
+          "decision-making"
+        ]
+      }
+    },
+    "memory": {
+      "name": "Memory",
+      "description": "Memory management and data storage with advanced querying",
+      "endpoint": "/api/mcp/memory",
+      "version": "1.0.0",
+      "capabilities": [
+        "set",
+        "get",
+        "delete",
+        "query",
+        "search",
+        "bulk_set",
+        "bulk_get",
+        "bulk_delete",
+        "stats",
+        "backup",
+        "restore",
+        "configure",
+        "clear",
+        "expire"
+      ],
+      "rateLimit": {
+        "requests": 500,
+        "window": "15m"
+      },
+      "config": {
+        "maxSize": 20971520,
+        "defaultTTL": 1800000,
+        "enableCompression": true,
+        "enableEncryption": false,
+        "autoCleanup": true,
+        "cleanupInterval": 180000,
+        "supportedTypes": ["string", "number", "boolean", "object"]
+      }
+    },
+    "3d-sco-memory": {
+      "command": "node",
+      "args": [
+        "d:\\servers-main\\servers-main\\src\\simple-memory\\dist\\index.js"
+      ],
+      "env": {
+        "NODE_ENV": "production",
+        "MCP_SERVER_NAME": "3D-SCO Simple Memory"
+      }
+    },
+    "3d-sco-thinking": {
+      "command": "node",
+      "args": [
+        "d:\\servers-main\\servers-main\\src\\sequentialthinking\\dist\\index.js"
+      ],
+      "env": {
+        "NODE_ENV": "production",
+        "MCP_SERVER_NAME": "3D-SCO Sequential Thinking"
+      }
+    },
+    "3d-sco-blender": {
+      "command": "node",
+      "args": [
+        "d:\\servers-main\\servers-main\\src\\blender\\dist\\index.js"
+      ],
+      "env": {
+        "NODE_ENV": "production",
+        "MCP_SERVER_NAME": "blender",
+        "BLENDER_PATH": "C:\\Program Files\\Blender Foundation\\Blender 4.0\\blender.exe"
+      }
+    },
+    "3d-sco-multifetch": {
+      "command": "python",
+      "args": [
+        "-m", "mcp_server_fetch"
+      ],
+      "cwd": "d:\\servers-main\\servers-main\\src\\fetch",
+      "env": {
+        "NODE_ENV": "production",
+        "MCP_SERVER_NAME": "3D-SCO Multi Fetch"
+      }
+    },
+    "3d-sco-playwright": {
+      "command": "node",
+      "args": [
+        "d:\\servers-main\\servers-main\\src\\playwright\\dist\\index.js"
+      ],
+      "env": {
+        "NODE_ENV": "production",
+        "MCP_SERVER_NAME": "playwright"
+      }
+    },
+    "Kubernetes": {
+      "command": "npx -y mcp-server-kubernetes",
+      "args": [],
+      "env": {},
+      "fromGalleryId": "Flux159.mcp-server-kubernetes"
+    },
+    "Hyperbrowser": {
+      "command": "npx",
+      "args": [
+        "--yes",
+        "hyperbrowser-mcp"
+      ],
+      "env": {
+        "HYPERBROWSER_API_KEY": ""
+      },
+      "fromGalleryId": "hyperbrowserai.mcp"
+    }
+  },
+  "global": {
+    "baseUrl": "http://localhost:3000",
+    "timeout": 15000,
+    "retries": 2,
+    "retryDelay": 500,
+    "userAgent": "MCP-Client/1.0.0",
+    "headers": {
+      "Content-Type": "application/json",
+      "Accept": "application/json"
+    },
+    "security": {
+      "enableRateLimit": true,
+      "enableCORS": true,
+      "allowedOrigins": ["http://localhost:3000"],
+      "enableCSRF": false
+    },
+    "logging": {
+      "level": "warn",
+      "enableRequestLogging": false,
+      "enableErrorLogging": true,
+      "logFormat": "simple"
+    },
+    "monitoring": {
+      "enableMetrics": false,
+      "enableHealthCheck": true,
+      "healthCheckInterval": 120000
+    }
+  },
+  "environments": {
+    "development": {
+      "baseUrl": "http://localhost:3000",
+      "logging": {
+        "level": "debug"
+      },
+      "security": {
+        "enableRateLimit": false
+      }
+    },
+    "production": {
+      "baseUrl": "https://your-domain.com",
+      "logging": {
+        "level": "warn"
+      },
+      "security": {
+        "enableRateLimit": true,
+        "enableCSRF": true
+      }
+    }
+  },
+  "globalSettings": {
+    "logLevel": "warn",
+    "timeout": 15000,
+    "retries": 2,
+    "rateLimit": {
+      "enabled": true,
+      "windowMs": 900000,
+      "maxRequests": 100
+    }
+  },
+  "traeIntegration": {
+    "enabled": true,
+    "version": "1.0.0",
+    "compatibility": "trae-ai-v4",
+    "features": [
+      "browser-automation",
+      "web-scraping",
+      "3d-modeling",
+      "sequential-thinking",
+      "memory-management"
+    ],
+    "endpoints": {
+      "playwright": "/api/mcp/playwright",
+      "multifetch": "/api/mcp/fetch",
+      "blender": "/api/mcp/blender",
+      "thinking": "/api/mcp/thinking",
+      "memory": "/api/mcp/memory"
+    }
+  },
+  "metadata": {
+    "version": "1.0.0",
+    "created": "2024-01-15T00:00:00.000Z",
+    "updated": "2024-01-15T00:00:00.000Z",
+    "author": "3D-SCO Development Team",
+    "description": "MCP (Model Context Protocol) configuration for 3D-SCO application",
+    "license": "MIT",
+    "repository": "https://github.com/your-org/3d-sco",
+    "documentation": "https://docs.your-domain.com/mcp"
+  }
+}

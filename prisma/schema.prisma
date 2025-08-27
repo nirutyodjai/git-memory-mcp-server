@@ -1,0 +1,157 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// User Management
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  username  String   @unique
+  name      String?
+  avatar    String?
+  bio       String?
+  role      Role     @default(USER)
+  verified  Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  posts     Post[]
+  comments  Comment[]
+  likes     Like[]
+  sessions  Session[]
+  analytics UserAnalytics[]
+
+  @@map("users")
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+// Content Management
+model Post {
+  id          String   @id @default(cuid())
+  title       String
+  content     String
+  excerpt     String?
+  slug        String   @unique
+  published   Boolean  @default(false)
+  featured    Boolean  @default(false)
+  viewCount   Int      @default(0)
+  likeCount   Int      @default(0)
+  commentCount Int     @default(0)
+  tags        String[]
+  metadata    Json?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  publishedAt DateTime?
+
+  // Relations
+  authorId String
+  author   User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  comments Comment[]
+  likes    Like[]
+  analytics PostAnalytics[]
+
+  @@map("posts")
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  content   String
+  published Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  authorId String
+  author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  postId   String
+  post     Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+  parentId String?
+  parent   Comment? @relation("CommentReplies", fields: [parentId], references: [id])
+  replies  Comment[] @relation("CommentReplies")
+
+  @@map("comments")
+}
+
+model Like {
+  id     String @id @default(cuid())
+  userId String
+  postId String
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, postId])
+  @@map("likes")
+}
+
+// Analytics
+model UserAnalytics {
+  id        String   @id @default(cuid())
+  userId    String
+  event     String
+  data      Json?
+  userAgent String?
+  ipAddress String?
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("user_analytics")
+}
+
+model PostAnalytics {
+  id        String   @id @default(cuid())
+  postId    String
+  event     String   // view, like, share, etc.
+  data      Json?
+  userAgent String?
+  ipAddress String?
+  createdAt DateTime @default(now())
+
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@map("post_analytics")
+}
+
+model SystemAnalytics {
+  id        String   @id @default(cuid())
+  event     String
+  data      Json?
+  userAgent String?
+  ipAddress String?
+  createdAt DateTime @default(now())
+
+  @@map("system_analytics")
+}
+
+// Enums
+enum Role {
+  USER
+  ADMIN
+  MODERATOR
+}

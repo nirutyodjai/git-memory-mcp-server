@@ -27,8 +27,8 @@ if not exist "..\node_modules" (
 )
 
 REM Check if MCP Proxy Server file exists
-if not exist "..\mcp-proxy\mcp-proxy-server-500.js" (
-    echo ❌ Error: mcp-proxy-server-500.js not found
+if not exist "mcp-proxy\mcp-proxy-server-500.js" (
+    echo โ Error: mcp-proxy-server-500.js not found
     echo Please ensure the MCP Proxy Server file is in the mcp-proxy directory
     pause
     exit /b 1
@@ -59,7 +59,7 @@ echo ========================================
 echo.
 
 REM Start the MCP Proxy Server
-node ..\mcp-proxy\mcp-proxy-server-500.js
+node mcp-proxy\mcp-proxy-server-500.js
 
 REM If the server stops, show exit message
 echo.

@@ -34,7 +34,7 @@ class BatchDeployer {
 
   generateMCPServer(category, index, categoryConfig) {
     const serverId = `${category}-server-${String(index).padStart(3, '0')}`;
-    const port = categoryConfig.portRange[0] + index;
+    const port = categoryConfig.portStart + index - 1;
     
     return {
       id: serverId,
@@ -91,6 +91,7 @@ class BatchDeployer {
 
 const { Server } = require('@modelcontextprotocol/sdk/server/index.js');
 const { StdioServerTransport } = require('@modelcontextprotocol/sdk/server/stdio.js');
+const { ListToolsRequestSchema, CallToolRequestSchema } = require('@modelcontextprotocol/sdk/types.js');
 const fs = require('fs').promises;
 const path = require('path');
 
@@ -116,25 +117,8 @@ class ${this.toPascalCase(category)}MCPServer {
   }
 
   async setupTools() {
-    // Memory operations
-    this.server.setRequestHandler('tools/call', async (request) => {
-      const { name, arguments: args } = request.params;
-      
-      switch (name) {
-        case 'memory_store':
-          return await this.storeMemory(args.key, args.content, args.metadata);
-        case 'memory_retrieve':
-          return await this.retrieveMemory(args.key);
-        case 'health_check':
-          return await this.healthCheck();
-        case 'status_report':
-          return await this.statusReport();
-        default:
-          throw new Error(\`Unknown tool: \${name}\`);
-      }
-    });
-
-    this.server.setRequestHandler('tools/list', async () => {
+    // List available tools
+    this.server.setRequestHandler(ListToolsRequestSchema, async () => {
       return {
         tools: [
           {
@@ -173,6 +157,24 @@ class ${this.toPascalCase(category)}MCPServer {
           }
         ]
       };
+    });
+
+    // Handle tool calls
+    this.server.setRequestHandler(CallToolRequestSchema, async (request) => {
+      const { name, arguments: args } = request.params;
+      
+      switch (name) {
+        case 'memory_store':
+          return { content: [{ type: 'text', text: JSON.stringify(await this.storeMemory(args.key, args.content, args.metadata)) }] };
+        case 'memory_retrieve':
+          return { content: [{ type: 'text', text: JSON.stringify(await this.retrieveMemory(args.key)) }] };
+        case 'health_check':
+          return { content: [{ type: 'text', text: JSON.stringify(await this.healthCheck()) }] };
+        case 'status_report':
+          return { content: [{ type: 'text', text: JSON.stringify(await this.statusReport()) }] };
+        default:
+          throw new Error(\`Unknown tool: \${name}\`);
+      }
     });
   }
 

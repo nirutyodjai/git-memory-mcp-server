@@ -1,214 +1,208 @@
 {
-  "version": "1.0.0",
-  "coordinator": {
-    "name": "MCP-Coordinator-Master",
-    "id": "mcp-coordinator-001",
-    "port": 3001,
-    "maxServers": 1000,
-    "batchSize": 50,
-    "autoScale": true,
-    "healthCheckInterval": 30000,
-    "memoryBackupInterval": 21600000,
-    "gitAutoCommit": true,
-    "logLevel": "info"
-  },
-  "categories": {
-    "database": {
-      "name": "Database Services",
-      "description": "Database management and operations",
-      "portRange": [4000, 4099],
-      "maxServers": 100,
-      "priority": "high",
-      "examples": ["MySQL", "PostgreSQL", "MongoDB", "Redis", "Elasticsearch"]
-    },
-    "filesystem": {
-      "name": "File System Operations",
-      "description": "File and directory management",
-      "portRange": [4100, 4199],
-      "maxServers": 100,
-      "priority": "high",
-      "examples": ["File Manager", "Directory Watcher", "Backup Service", "Sync Service"]
-    },
-    "api": {
-      "name": "API & Web Services",
-      "description": "REST APIs, GraphQL, and web services",
-      "portRange": [4200, 4299],
-      "maxServers": 150,
-      "priority": "high",
-      "examples": ["REST API", "GraphQL", "WebSocket", "HTTP Proxy", "Load Balancer"]
-    },
-    "ai-ml": {
-      "name": "AI/ML Services",
-      "description": "Artificial Intelligence and Machine Learning",
-      "portRange": [4300, 4399],
-      "maxServers": 100,
-      "priority": "medium",
-      "examples": ["TensorFlow", "PyTorch", "OpenAI", "Hugging Face", "Computer Vision"]
-    },
-    "version-control": {
-      "name": "Version Control",
-      "description": "Git and other VCS operations",
-      "portRange": [4400, 4499],
-      "maxServers": 80,
-      "priority": "high",
-      "examples": ["Git", "SVN", "Mercurial", "GitHub", "GitLab"]
-    },
-    "dev-tools": {
-      "name": "Development Tools",
-      "description": "Development and build tools",
-      "portRange": [4500, 4599],
-      "maxServers": 120,
-      "priority": "medium",
-      "examples": ["Docker", "Kubernetes", "Jenkins", "Webpack", "ESLint"]
-    },
-    "system-ops": {
-      "name": "System Operations",
-      "description": "System monitoring and operations",
-      "portRange": [4600, 4699],
-      "maxServers": 100,
-      "priority": "high",
-      "examples": ["Process Monitor", "Log Analyzer", "Performance Monitor", "Alert System"]
-    },
-    "communication": {
-      "name": "Communication Services",
-      "description": "Messaging and communication tools",
-      "portRange": [4700, 4799],
-      "maxServers": 80,
-      "priority": "medium",
-      "examples": ["Email", "SMS", "Slack", "Discord", "WebRTC"]
-    },
-    "business": {
-      "name": "Business Applications",
-      "description": "Business logic and enterprise tools",
-      "portRange": [4800, 4899],
-      "maxServers": 90,
-      "priority": "medium",
-      "examples": ["CRM", "ERP", "Analytics", "Reporting", "Workflow"]
-    },
-    "iot-hardware": {
-      "name": "IoT & Hardware",
-      "description": "Internet of Things and hardware interfaces",
-      "portRange": [4900, 4999],
-      "maxServers": 70,
-      "priority": "low",
-      "examples": ["Sensor Data", "Device Control", "Arduino", "Raspberry Pi", "MQTT"]
-    }
-  },
-  "deployment": {
-    "phases": [
+  "currentPhase": 0,
+  "mcpServers": [
+    [
+      "database-3100",
       {
-        "phase": 1,
-        "categories": ["database", "filesystem", "api"],
-        "serversPerCategory": 50,
-        "totalServers": 150,
-        "description": "Core infrastructure services"
-      },
-      {
-        "phase": 2,
-        "categories": ["version-control", "system-ops"],
-        "serversPerCategory": 50,
-        "totalServers": 100,
-        "description": "Development and operations tools"
-      },
-      {
-        "phase": 3,
-        "categories": ["ai-ml", "dev-tools"],
-        "serversPerCategory": 50,
-        "totalServers": 100,
-        "description": "AI/ML and development tools"
-      },
-      {
-        "phase": 4,
-        "categories": ["communication", "business"],
-        "serversPerCategory": 50,
-        "totalServers": 100,
-        "description": "Communication and business services"
-      },
-      {
-        "phase": 5,
-        "categories": ["iot-hardware"],
-        "serversPerCategory": 50,
-        "totalServers": 50,
-        "description": "IoT and hardware services"
+        "id": "database-3100",
+        "category": "database",
+        "port": 3100,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:46:54.036Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\database-3100",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-database-3100.js"
       }
     ],
-    "currentPhase": 0,
-    "autoAdvancePhase": true,
-    "phaseDelay": 5000
-  },
-  "memory": {
-    "gitRepository": ".git-memory.json",
-    "backupDirectory": "./memory-backups",
-    "maxBackups": 10,
-    "compressionEnabled": true,
-    "encryptionEnabled": false,
-    "syncInterval": 300000,
-    "categories": {
-      "coordinator": "Coordinator system data",
-      "servers": "MCP server configurations",
-      "deployment": "Deployment status and logs",
-      "health": "Health check results",
-      "performance": "Performance metrics",
-      "user": "User-defined data"
-    }
-  },
-  "monitoring": {
-    "enabled": true,
-    "metricsPort": 9090,
-    "healthEndpoint": "/health",
-    "metricsEndpoint": "/metrics",
-    "alerting": {
-      "enabled": true,
-      "thresholds": {
-        "cpuUsage": 80,
-        "memoryUsage": 85,
-        "responseTime": 5000,
-        "errorRate": 5
+    [
+      "database-3101",
+      {
+        "id": "database-3101",
+        "category": "database",
+        "port": 3101,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:46:54.038Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\database-3101",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-database-3101.js"
       }
-    }
-  },
-  "security": {
-    "authentication": {
-      "enabled": false,
-      "type": "jwt",
-      "secretKey": "your-secret-key-here"
-    },
-    "rateLimit": {
-      "enabled": true,
-      "windowMs": 900000,
-      "maxRequests": 100
-    },
-    "cors": {
-      "enabled": true,
-      "origins": ["*"]
-    }
-  },
-  "logging": {
-    "level": "info",
-    "format": "json",
-    "file": {
-      "enabled": true,
-      "filename": "logs/mcp-coordinator.log",
-      "maxSize": "10m",
-      "maxFiles": 5
-    },
-    "console": {
-      "enabled": true,
-      "colorize": true
-    }
-  },
-  "mcpServers": [],
-  "statistics": {
-    "totalDeployed": 0,
-    "totalActive": 0,
-    "totalFailed": 0,
-    "deploymentStartTime": null,
-    "lastHealthCheck": null,
-    "averageResponseTime": 0,
-    "memoryUsage": {
-      "coordinator": 0,
-      "servers": 0,
-      "total": 0
-    }
-  }
+    ],
+    [
+      "database-3102",
+      {
+        "id": "database-3102",
+        "category": "database",
+        "port": 3102,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:46:54.039Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\database-3102",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-database-3102.js"
+      }
+    ],
+    [
+      "database-3103",
+      {
+        "id": "database-3103",
+        "category": "database",
+        "port": 3103,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:46:54.040Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\database-3103",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-database-3103.js"
+      }
+    ],
+    [
+      "database-3104",
+      {
+        "id": "database-3104",
+        "category": "database",
+        "port": 3104,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:46:54.041Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\database-3104",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-database-3104.js"
+      }
+    ],
+    [
+      "database-3105",
+      {
+        "id": "database-3105",
+        "category": "database",
+        "port": 3105,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:46:54.042Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\database-3105",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-database-3105.js"
+      }
+    ],
+    [
+      "database-3106",
+      {
+        "id": "database-3106",
+        "category": "database",
+        "port": 3106,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:46:54.043Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\database-3106",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-database-3106.js"
+      }
+    ],
+    [
+      "database-3107",
+      {
+        "id": "database-3107",
+        "category": "database",
+        "port": 3107,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:46:54.044Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\database-3107",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-database-3107.js"
+      }
+    ],
+    [
+      "database-3108",
+      {
+        "id": "database-3108",
+        "category": "database",
+        "port": 3108,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:46:54.045Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\database-3108",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-database-3108.js"
+      }
+    ],
+    [
+      "database-3109",
+      {
+        "id": "database-3109",
+        "category": "database",
+        "port": 3109,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:46:54.046Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\database-3109",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-database-3109.js"
+      }
+    ]
+  ],
+  "categories": [
+    [
+      "database",
+      {
+        "portStart": 3100,
+        "portEnd": 3149,
+        "count": 10
+      }
+    ],
+    [
+      "filesystem",
+      {
+        "portStart": 3150,
+        "portEnd": 3199,
+        "count": 0
+      }
+    ],
+    [
+      "api",
+      {
+        "portStart": 3200,
+        "portEnd": 3249,
+        "count": 0
+      }
+    ],
+    [
+      "ai-ml",
+      {
+        "portStart": 3250,
+        "portEnd": 3299,
+        "count": 0
+      }
+    ],
+    [
+      "version-control",
+      {
+        "portStart": 3300,
+        "portEnd": 3349,
+        "count": 0
+      }
+    ],
+    [
+      "dev-tools",
+      {
+        "portStart": 3350,
+        "portEnd": 3399,
+        "count": 0
+      }
+    ],
+    [
+      "system-ops",
+      {
+        "portStart": 3400,
+        "portEnd": 3449,
+        "count": 0
+      }
+    ],
+    [
+      "communication",
+      {
+        "portStart": 3450,
+        "portEnd": 3499,
+        "count": 0
+      }
+    ],
+    [
+      "business",
+      {
+        "portStart": 3500,
+        "portEnd": 3549,
+        "count": 0
+      }
+    ],
+    [
+      "iot-hardware",
+      {
+        "portStart": 3550,
+        "portEnd": 3599,
+        "count": 0
+      }
+    ]
+  ],
+  "lastUpdated": "2025-08-27T16:46:54.048Z"
 }

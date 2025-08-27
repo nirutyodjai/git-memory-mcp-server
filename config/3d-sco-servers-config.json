@@ -1,0 +1,133 @@
+{
+  "servers": {
+    "3d-sco-playwright": {
+      "name": "3D-SCO Playwright Server",
+      "description": "Browser automation and web scraping server",
+      "endpoint": "http://localhost:3021",
+      "script": "generated-servers/3d-sco/mcp-playwright-server.js",
+      "port": 3021,
+      "capabilities": [
+        "get_context",
+        "init_browser",
+        "navigate_to_url",
+        "get_screenshot",
+        "click_element",
+        "get_full_dom",
+        "execute_code",
+        "get_sessions",
+        "cleanup"
+      ],
+      "rateLimit": {
+        "requests": 100,
+        "window": "1h"
+      },
+      "timeout": 30000,
+      "retries": 3
+    },
+    "3d-sco-multifetch": {
+      "name": "3D-SCO Multi Fetch Server",
+      "description": "HTTP requests and web content fetching server",
+      "endpoint": "http://localhost:3022",
+      "script": "generated-servers/3d-sco/mcp-multifetch-server.js",
+      "port": 3022,
+      "capabilities": [
+        "fetch_html",
+        "fetch_json",
+        "fetch_text",
+        "batch_fetch",
+        "get_headers",
+        "post_data"
+      ],
+      "rateLimit": {
+        "requests": 200,
+        "window": "1h"
+      },
+      "timeout": 15000,
+      "retries": 2
+    },
+    "3d-sco-blender": {
+      "name": "3D-SCO Blender Server",
+      "description": "3D modeling and rendering server",
+      "endpoint": "http://localhost:3023",
+      "script": "generated-servers/3d-sco/mcp-blender-server.js",
+      "port": 3023,
+      "capabilities": [
+        "get_scene_info",
+        "create_object",
+        "modify_object",
+        "render_scene",
+        "export_model",
+        "import_model"
+      ],
+      "rateLimit": {
+        "requests": 50,
+        "window": "1h"
+      },
+      "timeout": 60000,
+      "retries": 1
+    },
+    "3d-sco-thinking": {
+      "name": "3D-SCO Sequential Thinking Server",
+      "description": "Structured problem-solving and reasoning server",
+      "endpoint": "http://localhost:3024",
+      "script": "generated-servers/3d-sco/mcp-thinking-server.js",
+      "port": 3024,
+      "capabilities": [
+        "create_process",
+        "add_step",
+        "execute_step",
+        "get_process",
+        "list_processes",
+        "analyze_problem"
+      ],
+      "rateLimit": {
+        "requests": 100,
+        "window": "1h"
+      },
+      "timeout": 45000,
+      "retries": 2
+    },
+    "3d-sco-memory": {
+      "name": "3D-SCO Memory Server",
+      "description": "Advanced memory management and storage server",
+      "endpoint": "http://localhost:3025",
+      "script": "generated-servers/3d-sco/mcp-memory-server.js",
+      "port": 3025,
+      "capabilities": [
+        "set",
+        "get",
+        "delete",
+        "query",
+        "search",
+        "bulk_set",
+        "bulk_get",
+        "bulk_delete",
+        "expire",
+        "backup"
+      ],
+      "rateLimit": {
+        "requests": 500,
+        "window": "1h"
+      },
+      "timeout": 10000,
+      "retries": 3
+    }
+  },
+  "global": {
+    "baseUrl": "http://localhost",
+    "timeout": 30000,
+    "retries": 3,
+    "security": {
+      "enableAuth": false,
+      "apiKey": null
+    },
+    "logging": {
+      "level": "info",
+      "enableRequestLogging": true
+    },
+    "monitoring": {
+      "enableHealthCheck": true,
+      "healthCheckInterval": 30000
+    }
+  }
+}

@@ -730,7 +730,78 @@ server.run().catch(console.error);
     }
   }
 
+  async startHttpServer() {
+    const app = express();
+    app.use(express.json());
+    
+    // CORS middleware
+    app.use((req, res, next) => {
+      res.header('Access-Control-Allow-Origin', '*');
+      res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+      res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+      if (req.method === 'OPTIONS') {
+        res.sendStatus(200);
+      } else {
+        next();
+      }
+    });
+    
+    // API endpoints
+    app.get('/servers', async (req, res) => {
+      try {
+        const result = await this.listServers(req.query.category, req.query.status);
+        res.json({ success: true, data: result });
+      } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+      }
+    });
+    
+    app.get('/health', async (req, res) => {
+      try {
+        const result = await this.healthCheck(req.query.category, req.query.detailed === 'true');
+        res.json({ success: true, data: result });
+      } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+      }
+    });
+    
+    app.post('/deploy', async (req, res) => {
+      try {
+        const { category, count } = req.body;
+        const result = await this.deployBatch(category, count);
+        res.json({ success: true, data: result });
+      } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+      }
+    });
+    
+    app.get('/stats', (req, res) => {
+      res.json({
+        success: true,
+        data: {
+          totalServers: this.mcpServers.size,
+          categories: Array.from(this.categories.entries()).map(([name, config]) => ({
+            name,
+            deployed: config.count,
+            capacity: config.portEnd - config.portStart + 1
+          })),
+          uptime: process.uptime(),
+          memory: process.memoryUsage()
+        }
+      });
+    });
+    
+    const port = process.env.MCP_COORDINATOR_PORT || 3000;
+    app.listen(port, () => {
+      console.error(`MCP Coordinator HTTP server running on port ${port}`);
+    });
+  }
+  
   async run() {
+    // Start HTTP server
+    await this.startHttpServer();
+    
+    // Start MCP server
     const transport = new StdioServerTransport();
     await this.server.connect(transport);
     console.error('MCP Coordinator running...');

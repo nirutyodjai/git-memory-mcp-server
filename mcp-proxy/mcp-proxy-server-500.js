@@ -152,8 +152,8 @@ class MCPProxyServer500 extends EventEmitter {
   async discoverFromConfig() {
     // Load from configuration files
     const configPaths = [
-      './mcp-servers.json',
-      './config/external-servers.json',
+      './config/mcp-servers-config.json',
+      './config/external-servers-500.json',
       process.env.MCP_CONFIG_PATH
     ].filter(Boolean);
     
@@ -166,7 +166,7 @@ class MCPProxyServer500 extends EventEmitter {
           const config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
           
           for (const server of config.servers || []) {
-            if (await this.validateServer(server)) {
+            if (this.validateServer(server)) {
               servers.push(server);
               await this.registerServer(server);
             }
@@ -271,6 +271,23 @@ class MCPProxyServer500 extends EventEmitter {
     
     console.log(`✅ Registered server: ${serverInfo.name} (${serverInfo.id})`);
     return true;
+  }
+
+  startServerHealthCheck(serverId) {
+    const server = this.servers.get(serverId);
+    if (!server) return;
+    
+    // Health check every 30 seconds
+    setInterval(async () => {
+      try {
+        const isHealthy = await this.checkServerHealth(serverId);
+        server.lastHealthCheck = new Date();
+        server.status = isHealthy ? 'active' : 'inactive';
+      } catch (error) {
+        console.error(`❌ Health check failed for ${server.name}:`, error.message);
+        server.status = 'error';
+      }
+    }, 30000);
   }
 
   startHealthMonitoring() {
@@ -635,10 +652,7 @@ async function main() {
     return await proxyServer.handleCallTool(request);
   });
 
-  // Add metrics endpoint
-  server.setRequestHandler('metrics', async () => {
-    return proxyServer.getMetrics();
-  });
+  // Metrics can be accessed via getMetrics() method
 
   // Start the server
   const transport = new StdioServerTransport();

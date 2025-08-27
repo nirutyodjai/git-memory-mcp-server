@@ -1,0 +1,155 @@
+{
+  "$schema": "https://github.com/modelcontextprotocol/typescript-sdk/blob/main/src/types.ts",
+  "mcpServers": {
+    "git-memory-server": {
+      "name": "Git Memory MCP Server",
+      "description": "Git repository management with AI-powered memory capabilities",
+      "command": "node",
+      "args": ["dist/index.js"],
+      "env": {
+        "NODE_ENV": "production",
+        "MCP_SERVER_NAME": "Git Memory Server"
+      }
+    },
+    "3d-sco-memory": {
+      "name": "3D-SCO Memory Server",
+      "description": "Memory management and data storage",
+      "command": "node",
+      "args": ["generated-servers/3d-sco/mcp-memory-server.js"],
+      "env": {
+        "NODE_ENV": "production",
+        "MCP_SERVER_NAME": "3D-SCO Memory"
+      }
+    },
+    "3d-sco-thinking": {
+      "name": "3D-SCO Thinking Server",
+      "description": "Sequential thinking and problem-solving processes",
+      "command": "node",
+      "args": ["generated-servers/3d-sco/mcp-thinking-server.js"],
+      "env": {
+        "NODE_ENV": "production",
+        "MCP_SERVER_NAME": "3D-SCO Thinking"
+      }
+    },
+    "3d-sco-blender": {
+      "name": "3D-SCO Blender Server",
+      "description": "Blender 3D integration and asset management",
+      "command": "node",
+      "args": ["generated-servers/3d-sco/mcp-blender-server.js"],
+      "env": {
+        "NODE_ENV": "production",
+        "MCP_SERVER_NAME": "3D-SCO Blender",
+        "BLENDER_PATH": "C:\\Program Files\\Blender Foundation\\Blender 4.0\\blender.exe"
+      }
+    },
+    "3d-sco-multifetch": {
+      "name": "3D-SCO Multi Fetch Server",
+      "description": "Multi-format web content fetching",
+      "command": "node",
+      "args": ["generated-servers/3d-sco/mcp-multifetch-server.js"],
+      "env": {
+        "NODE_ENV": "production",
+        "MCP_SERVER_NAME": "3D-SCO Multi Fetch"
+      }
+    },
+    "3d-sco-playwright": {
+      "name": "3D-SCO Playwright Server",
+      "description": "Browser automation and web testing",
+      "command": "node",
+      "args": ["generated-servers/3d-sco/mcp-playwright-server.js"],
+      "env": {
+        "NODE_ENV": "production",
+        "MCP_SERVER_NAME": "3D-SCO Playwright"
+      }
+    }
+  },
+  "global": {
+    "baseUrl": "http://localhost:3000",
+    "timeout": 15000,
+    "retries": 2,
+    "retryDelay": 500,
+    "userAgent": "MCP-Client/1.0.0",
+    "headers": {
+      "Content-Type": "application/json",
+      "Accept": "application/json"
+    },
+    "security": {
+      "enableRateLimit": true,
+      "enableCORS": true,
+      "allowedOrigins": ["http://localhost:3000"],
+      "enableCSRF": false
+    },
+    "logging": {
+      "level": "warn",
+      "enableRequestLogging": false,
+      "enableErrorLogging": true,
+      "logFormat": "simple"
+    },
+    "monitoring": {
+      "enableMetrics": false,
+      "enableHealthCheck": true,
+      "healthCheckInterval": 120000
+    }
+  },
+  "environments": {
+    "development": {
+      "baseUrl": "http://localhost:3000",
+      "logging": {
+        "level": "debug"
+      },
+      "security": {
+        "enableRateLimit": false
+      }
+    },
+    "production": {
+      "baseUrl": "https://your-domain.com",
+      "logging": {
+        "level": "warn"
+      },
+      "security": {
+        "enableRateLimit": true,
+        "enableCSRF": true
+      }
+    }
+  },
+  "globalSettings": {
+    "logLevel": "warn",
+    "timeout": 15000,
+    "retries": 2,
+    "rateLimit": {
+      "enabled": true,
+      "windowMs": 900000,
+      "maxRequests": 100
+    }
+  },
+  "traeIntegration": {
+    "enabled": true,
+    "version": "1.0.0",
+    "compatibility": "trae-ai-v4",
+    "features": [
+      "git-memory-management",
+      "3d-modeling",
+      "sequential-thinking",
+      "browser-automation",
+      "web-scraping"
+    ],
+    "endpoints": {
+      "git-memory": "/api/mcp/git-memory",
+      "memory": "/api/mcp/3d-sco/memory",
+      "thinking": "/api/mcp/3d-sco/thinking",
+      "blender": "/api/mcp/3d-sco/blender",
+      "multifetch": "/api/mcp/3d-sco/multifetch",
+      "playwright": "/api/mcp/3d-sco/playwright"
+    }
+  },
+  "metadata": {
+    "version": "1.2.0",
+    "created": "2024-01-15T00:00:00.000Z",
+    "updated": "2024-01-17T00:00:00.000Z",
+    "author": "Git Memory MCP Server Team",
+    "description": "MCP configuration for Git Memory Server with 3D-SCO integration",
+    "license": "MIT",
+    "repository": "https://github.com/your-org/git-memory-mcp-server",
+    "documentation": "https://docs.your-domain.com/git-memory-mcp"
+  }
+}

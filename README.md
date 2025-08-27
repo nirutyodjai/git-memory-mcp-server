@@ -1,6 +1,6 @@
-# Git Memory MCP Server
+# Git Memory MCP Server & Coordinator System
 
-> A comprehensive MCP (Model Context Protocol) server for Git repository management with persistent memory capabilities and support for 500+ MCP server connections.
+> A comprehensive MCP (Model Context Protocol) server for Git repository management with persistent memory capabilities and MCP Coordinator System that supports scaling up to 1000 MCP servers with Git-based memory sharing.
 
 ## 📁 Project Structure
 
@@ -28,7 +28,10 @@ git-memory-mcp-server/
 │   ├── mcp-proxy-server-500.js
 │   ├── package-mcp-proxy-500.json
 │   └── test-mcp-proxy-500.js
-├── 📁 scripts/          # Utility scripts
+├── 📁 scripts/          # MCP Coordinator Scripts
+│   ├── deploy-batch.js      # Batch deployment system
+│   ├── health-check.js      # Health monitoring
+│   ├── scale-system.js      # System scaling
 │   └── start-mcp-proxy-500.bat
 ├── 📁 src/              # Source code
 │   └── index.ts
@@ -37,14 +40,18 @@ git-memory-mcp-server/
 │   ├── memory-operations.test.ts
 │   ├── setup.ts
 │   └── simple.test.ts
-└── 📁 dist/             # Compiled output
+├── 📁 dist/             # Compiled output
+├── mcp-coordinator.js           # Main MCP Coordinator
+├── mcp-proxy-server.js          # HTTP Proxy Server
+├── mcp-coordinator-config.json  # Coordinator Configuration
+└── mcp-coordinator-architecture.md  # Architecture Documentation
 ```
 
 ## 🚀 Quick Start
 
 ### Installation
 ```bash
-npm install -g git-memory-mcp-server
+npm install
 ```
 
 ### Basic Usage
@@ -52,8 +59,23 @@ npm install -g git-memory-mcp-server
 # Start the main MCP server
 npm start
 
-# Start the MCP Proxy Server (500 servers)
-npm run start:mcp-proxy
+# Start MCP Coordinator System
+npm run coordinator
+
+# Start HTTP Proxy Server
+npm run proxy
+
+# Start Dashboard
+npm run dashboard
+
+# Deploy MCP servers in batches
+npm run deploy:batch
+
+# Check system health
+npm run health:check
+
+# Scale system
+npm run scale:system
 
 # Run tests
 npm test
@@ -77,11 +99,26 @@ All configuration files are located in the `config/` directory:
 
 ## 🎯 Features
 
+### Core Features
 - **Git Operations**: Complete Git repository management
-- **Persistent Memory**: Store and retrieve information across sessions
+- **Persistent Memory**: Store and retrieve information across sessions with Git-based sharing
+- **MCP Coordinator**: Central coordination system for managing multiple MCP servers
+- **Batch Deployment**: Deploy MCP servers in batches of 50 with automatic scaling
+- **Health Monitoring**: Real-time health checks and system monitoring
+- **Category Management**: Organize servers by categories (Database, API, AI/ML, etc.)
+
+### Scaling Capabilities
 - **500+ MCP Servers**: Support for massive MCP server connections
+- **1000 Server Target**: Designed to scale up to 1000 MCP servers
+- **Auto-scaling**: Intelligent scaling based on system health and capacity
+- **Load Balancing**: Distribute workload across server categories
+
+### Enterprise Features
 - **High Performance**: Optimized for enterprise-scale deployments
 - **Cross-Platform**: Works on Windows, macOS, and Linux
+- **Dashboard**: Web-based management interface
+- **API Integration**: RESTful API for system management
+- **Monitoring & Logging**: Comprehensive system monitoring and logging
 
 ## 📝 License
 

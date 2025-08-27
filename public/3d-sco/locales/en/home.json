@@ -1,0 +1,22 @@
+{
+  "hero": {
+    "title": "Create Digital Worlds with 3D",
+    "subtitle": "Expert in 3D Modeling and Web Development",
+    "description": "Welcome to the limitless world of 3D creativity powered by modern web technology",
+    "cta": "View Portfolio",
+    "learnMore": "Learn More"
+  },
+  "features": {
+    "title": "Our Services",
+    "subtitle": "Diverse expertise to meet all your needs"
+  },
+  "testimonials": {
+    "title": "Client Testimonials",
+    "subtitle": "What our clients say about our work"
+  },
+  "cta": {
+    "title": "Ready to Start a New Project?",
+    "subtitle": "Let's create something amazing together",
+    "button": "Contact Us"
+  }
+}
