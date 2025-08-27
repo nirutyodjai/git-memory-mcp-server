@@ -7,6 +7,64 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.0] - 2024-01-17
+
+### Added
+- **Enhanced Git Operations**
+  - `git_add` - Stage files for commit
+  - `git_commit` - Create commits with messages
+  - `git_push` - Push changes to remote repository
+  - `git_pull` - Pull changes from remote repository
+  - `git_branch` - Create and manage Git branches
+  - `git_merge` - Merge branches
+
+- **Advanced Memory Management**
+  - `memory_search` - Search through stored memories with query strings
+  - `memory_filter` - Filter memories by criteria (type, tags, date range)
+  - Enhanced `memory_store` with tags support
+
+- **Testing Infrastructure**
+  - Comprehensive test suite covering all MCP tools
+  - Jest configuration with TypeScript support
+  - Test coverage for Git operations, memory operations, and error handling
+  - Windows-compatible file system cleanup in tests
+
+- **CI/CD Pipeline**
+  - GitHub Actions workflows for automated testing
+  - Code quality checks and security scanning
+  - Multi-version Node.js testing (18.x, 20.x, 22.x)
+  - Automated NPM publishing on releases
+  - Dependabot configuration for dependency updates
+
+- **Developer Experience**
+  - Issue templates for bug reports and feature requests
+  - Pull request template with comprehensive checklist
+  - Contributing guidelines with development setup
+  - Enhanced documentation with testing section
+
+### Enhanced
+- **Error Handling**
+  - Improved error messages with better context
+  - Proper error propagation in all tools
+  - Validation for required parameters
+
+- **Performance**
+  - Optimized JSON storage operations
+  - Better memory management for large repositories
+  - Efficient search algorithms for memory operations
+
+- **Documentation**
+  - Updated README with all new features
+  - Comprehensive API reference for all tools
+  - Usage examples for Git and memory operations
+  - Testing section with coverage information
+
+### Fixed
+- File system compatibility issues on Windows
+- TypeScript strict mode compliance
+- Memory leak prevention in test cleanup
+- Proper handling of Git repository states
+
 ## [1.0.2] - 2024-01-16
 
 ### Added

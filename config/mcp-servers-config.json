@@ -1,0 +1,297 @@
+{
+  "version": "1.0.0",
+  "description": "Configuration for 500 External MCP Servers",
+  "discovery": {
+    "enabled": true,
+    "methods": ["registry", "endpoints", "environment", "config"],
+    "interval": 300000,
+    "timeout": 30000
+  },
+  "servers": [
+    {
+      "id": "git-server-1",
+      "name": "Git Operations Server",
+      "endpoint": "http://localhost:3001/mcp",
+      "type": "http",
+      "category": "version-control",
+      "tools": [
+        {
+          "name": "git_clone",
+          "description": "Clone a git repository",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "url": { "type": "string" },
+              "path": { "type": "string" }
+            },
+            "required": ["url"]
+          }
+        },
+        {
+          "name": "git_status",
+          "description": "Get git repository status",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "path": { "type": "string" }
+            }
+          }
+        }
+      ],
+      "priority": 1,
+      "enabled": true
+    },
+    {
+      "id": "database-server-1",
+      "name": "Database Operations Server",
+      "endpoint": "ws://localhost:3002/mcp",
+      "type": "websocket",
+      "category": "database",
+      "tools": [
+        {
+          "name": "db_query",
+          "description": "Execute database query",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "query": { "type": "string" },
+              "database": { "type": "string" }
+            },
+            "required": ["query"]
+          }
+        },
+        {
+          "name": "db_schema",
+          "description": "Get database schema",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "database": { "type": "string" }
+            }
+          }
+        }
+      ],
+      "priority": 2,
+      "enabled": true
+    },
+    {
+      "id": "file-server-1",
+      "name": "File Operations Server",
+      "endpoint": "http://localhost:3003/mcp",
+      "type": "http",
+      "category": "file-system",
+      "tools": [
+        {
+          "name": "file_read",
+          "description": "Read file contents",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "path": { "type": "string" },
+              "encoding": { "type": "string", "default": "utf8" }
+            },
+            "required": ["path"]
+          }
+        },
+        {
+          "name": "file_write",
+          "description": "Write file contents",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "path": { "type": "string" },
+              "content": { "type": "string" },
+              "encoding": { "type": "string", "default": "utf8" }
+            },
+            "required": ["path", "content"]
+          }
+        }
+      ],
+      "priority": 3,
+      "enabled": true
+    },
+    {
+      "id": "api-server-1",
+      "name": "REST API Server",
+      "endpoint": "https://api.example.com/mcp",
+      "type": "http",
+      "category": "api",
+      "authentication": {
+        "type": "bearer",
+        "token": "${API_TOKEN}"
+      },
+      "tools": [
+        {
+          "name": "api_get",
+          "description": "Make GET request to API",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "url": { "type": "string" },
+              "headers": { "type": "object" }
+            },
+            "required": ["url"]
+          }
+        },
+        {
+          "name": "api_post",
+          "description": "Make POST request to API",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "url": { "type": "string" },
+              "data": { "type": "object" },
+              "headers": { "type": "object" }
+            },
+            "required": ["url", "data"]
+          }
+        }
+      ],
+      "priority": 4,
+      "enabled": true
+    },
+    {
+      "id": "ai-server-1",
+      "name": "AI/ML Operations Server",
+      "endpoint": "ws://localhost:3004/mcp",
+      "type": "websocket",
+      "category": "ai-ml",
+      "tools": [
+        {
+          "name": "text_analyze",
+          "description": "Analyze text content",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "text": { "type": "string" },
+              "analysis_type": { "type": "string", "enum": ["sentiment", "entities", "summary"] }
+            },
+            "required": ["text"]
+          }
+        },
+        {
+          "name": "image_process",
+          "description": "Process image",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "image_path": { "type": "string" },
+              "operation": { "type": "string", "enum": ["resize", "crop", "filter"] }
+            },
+            "required": ["image_path", "operation"]
+          }
+        }
+      ],
+      "priority": 5,
+      "enabled": true
+    }
+  ],
+  "registries": [
+    {
+      "name": "MCP Hub",
+      "url": "https://mcp-hub.com/api/discover",
+      "enabled": true,
+      "categories": ["all"]
+    },
+    {
+      "name": "MCP Registry",
+      "url": "https://registry.mcp.dev/api/servers",
+      "enabled": true,
+      "categories": ["development", "productivity"]
+    },
+    {
+      "name": "Local Registry",
+      "url": "http://localhost:8080/registry",
+      "enabled": false,
+      "categories": ["local"]
+    }
+  ],
+  "discovery_endpoints": [
+    "http://localhost:3000/mcp",
+    "http://localhost:3001/mcp",
+    "http://localhost:3002/mcp",
+    "http://localhost:3003/mcp",
+    "http://localhost:3004/mcp",
+    "http://localhost:3005/mcp",
+    "ws://localhost:9000/mcp",
+    "ws://localhost:9001/mcp",
+    "ws://localhost:9002/mcp",
+    "https://api.github.com/mcp",
+    "https://api.gitlab.com/mcp",
+    "https://api.bitbucket.org/mcp"
+  ],
+  "categories": {
+    "version-control": {
+      "description": "Git and version control operations",
+      "max_servers": 50,
+      "priority": 1
+    },
+    "database": {
+      "description": "Database operations and queries",
+      "max_servers": 75,
+      "priority": 2
+    },
+    "file-system": {
+      "description": "File and directory operations",
+      "max_servers": 60,
+      "priority": 3
+    },
+    "api": {
+      "description": "REST API and web service operations",
+      "max_servers": 100,
+      "priority": 4
+    },
+    "ai-ml": {
+      "description": "AI and machine learning operations",
+      "max_servers": 80,
+      "priority": 5
+    },
+    "security": {
+      "description": "Security and compliance operations",
+      "max_servers": 40,
+      "priority": 6
+    },
+    "monitoring": {
+      "description": "System monitoring and logging",
+      "max_servers": 35,
+      "priority": 7
+    },
+    "communication": {
+      "description": "Email, chat, and notification services",
+      "max_servers": 30,
+      "priority": 8
+    },
+    "productivity": {
+      "description": "Office and productivity tools",
+      "max_servers": 30,
+      "priority": 9
+    }
+  },
+  "load_balancing": {
+    "strategy": "round-robin",
+    "health_check_interval": 60000,
+    "retry_attempts": 3,
+    "timeout": 30000
+  },
+  "caching": {
+    "enabled": true,
+    "ttl": 300000,
+    "max_size": 1000
+  },
+  "security": {
+    "rate_limiting": {
+      "enabled": true,
+      "requests_per_minute": 1000
+    },
+    "authentication": {
+      "required": false,
+      "methods": ["bearer", "api-key"]
+    }
+  },
+  "monitoring": {
+    "metrics_enabled": true,
+    "logging_level": "info",
+    "health_endpoint": "/health",
+    "metrics_endpoint": "/metrics"
+  }
+}

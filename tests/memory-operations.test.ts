@@ -4,11 +4,13 @@ const os = require('os');
 
 // Mock the GitMemoryServer class
 class MockGitMemoryServer {
+  private memoryData: Map<string, any>;
+
   constructor() {
     this.memoryData = new Map();
   }
 
-  async handleMemoryStore(args) {
+  async handleMemoryStore(args: any) {
     const { key, content, metadata } = args;
     this.memoryData.set(key, { content, metadata, timestamp: new Date().toISOString() });
     return {
@@ -19,7 +21,7 @@ class MockGitMemoryServer {
     };
   }
 
-  async handleMemoryRetrieve(args) {
+  async handleMemoryRetrieve(args: any) {
     const { key } = args;
     const data = this.memoryData.get(key);
     if (!data) {
@@ -43,9 +45,9 @@ class MockGitMemoryServer {
     };
   }
 
-  async handleMemorySearch(args) {
+  async handleMemorySearch(args: any) {
     const { query } = args;
-    const results = [];
+    const results: any[] = [];
     for (const [key, data] of this.memoryData.entries()) {
       if (data.content.toLowerCase().includes(query.toLowerCase()) ||
           key.toLowerCase().includes(query.toLowerCase())) {
@@ -60,15 +62,15 @@ class MockGitMemoryServer {
     };
   }
 
-  async handleMemoryFilter(args) {
+  async handleMemoryFilter(args: any) {
     const { criteria } = args;
-    const results = [];
+    const results: any[] = [];
     for (const [key, data] of this.memoryData.entries()) {
       let matches = true;
       if (criteria.type && data.metadata?.type !== criteria.type) {
         matches = false;
       }
-      if (criteria.tags && !criteria.tags.every(tag => data.metadata?.tags?.includes(tag))) {
+      if (criteria.tags && !criteria.tags.every((tag: any) => data.metadata?.tags?.includes(tag))) {
         matches = false;
       }
       if (matches) {
@@ -83,7 +85,7 @@ class MockGitMemoryServer {
     };
   }
 
-  async handleMemoryDelete(args) {
+  async handleMemoryDelete(args: any) {
     const { key } = args;
     if (!this.memoryData.has(key)) {
       throw new Error(`Memory not found for key: ${key}`);
@@ -99,9 +101,9 @@ class MockGitMemoryServer {
 }
 
 describe('Memory Operations Tests', () => {
-  let server;
-  let testDir;
-  let memoryFile;
+  let server: any;
+  let testDir: any;
+  let memoryFile: any;
 
   beforeEach(() => {
     server = new MockGitMemoryServer();
@@ -109,9 +111,16 @@ describe('Memory Operations Tests', () => {
     memoryFile = path.join(testDir, 'memory.json');
   });
 
-  afterEach(() => {
+  afterEach(async () => {
     if (fs.existsSync(testDir)) {
-      fs.rmSync(testDir, { recursive: true, force: true });
+      try {
+        // Wait a bit before cleanup on Windows
+        await new Promise(resolve => setTimeout(resolve, 100));
+        fs.rmSync(testDir, { recursive: true, force: true });
+      } catch (error) {
+         // Ignore cleanup errors in tests
+         console.warn('Cleanup warning:', (error as Error).message);
+       }
     }
   });
 

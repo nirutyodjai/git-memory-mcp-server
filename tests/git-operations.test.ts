@@ -5,7 +5,7 @@ const os = require('os');
 // Mock the GitMemoryServer class
 class MockGitMemoryServer {
   constructor() {
-    this.workingDirectory = process.cwd();
+    // Mock implementation
   }
 
   async handleGitStatus() {
@@ -17,7 +17,7 @@ class MockGitMemoryServer {
     };
   }
 
-  async handleGitLog(args) {
+  async handleGitLog(args: any) {
     const limit = args.limit || 10;
     return {
       content: [{
@@ -27,7 +27,7 @@ class MockGitMemoryServer {
     };
   }
 
-  async handleGitAdd(args) {
+  async handleGitAdd(args: any) {
     return {
       content: [{
         type: 'text',
@@ -36,7 +36,7 @@ class MockGitMemoryServer {
     };
   }
 
-  async handleGitCommit(args) {
+  async handleGitCommit(args: any) {
     return {
       content: [{
         type: 'text',
@@ -63,7 +63,7 @@ class MockGitMemoryServer {
     };
   }
 
-  async handleGitBranch(args) {
+  async handleGitBranch(args: any) {
     if (args.create) {
       return {
         content: [{
@@ -80,7 +80,7 @@ class MockGitMemoryServer {
     };
   }
 
-  async handleGitMerge(args) {
+  async handleGitMerge(args: any) {
     return {
       content: [{
         type: 'text',
@@ -91,8 +91,8 @@ class MockGitMemoryServer {
 }
 
 describe('Git Operations Tests', () => {
-  let server;
-  let testDir;
+  let server: any;
+  let testDir: any;
 
   beforeEach(() => {
     server = new MockGitMemoryServer();
@@ -100,9 +100,16 @@ describe('Git Operations Tests', () => {
     process.chdir(testDir);
   });
 
-  afterEach(() => {
+  afterEach(async () => {
     if (fs.existsSync(testDir)) {
-      fs.rmSync(testDir, { recursive: true, force: true });
+      try {
+        // Wait a bit before cleanup on Windows
+        await new Promise(resolve => setTimeout(resolve, 100));
+        fs.rmSync(testDir, { recursive: true, force: true });
+      } catch (error) {
+         // Ignore cleanup errors in tests
+         console.warn('Cleanup warning:', (error as Error).message);
+       }
     }
   });
 
