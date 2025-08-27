@@ -1,3 +1,20 @@
+
+// Memory Optimization Settings
+process.env.NODE_OPTIONS = '--max-old-space-size=8192 --max-semi-space-size=512 --initial-old-space-size=2048 --optimize-for-size --gc-interval=100 --expose-gc';
+
+// Memory monitoring
+setInterval(() => {
+const MCPServerSharedIntegration = require('./mcp-server-shared-integration');
+    const memUsage = process.memoryUsage();
+    if (memUsage.heapUsed > 1024 * 1024 * 1024) { // 1GB threshold
+        if (global.gc) {
+            global.gc();
+            console.log('🧹 Garbage collection triggered for', process.pid);
+        }
+    }
+}, 30000); // Check every 30 seconds
+
+// Original server code starts here
 #!/usr/bin/env node
 
 const { Server } = require('@modelcontextprotocol/sdk/server/index.js');
@@ -12,6 +29,17 @@ class MCP_FILESYSTEM_Server {
       {
         name: 'filesystem-3155',
         version: '1.0.0',
+
+        // Shared Data Integration
+        this.sharedIntegration = new MCPServerSharedIntegration(
+            'filesystem-3155',
+            'filesystem',
+            3155
+        );
+
+        // Setup shared integration callbacks
+        this.setupSharedIntegration();
+
       },
       {
         capabilities: {
@@ -165,3 +193,166 @@ class MCP_FILESYSTEM_Server {
 
 const server = new MCP_FILESYSTEM_Server();
 server.run().catch(console.error);
+
+
+    // === Shared Data Integration Methods ===
+
+    // Setup shared integration
+    async setupSharedIntegration() {
+        try {
+            // Register with shared data coordinator
+            const registered = await this.sharedIntegration.register();
+            if (registered) {
+                console.log('✅ Shared integration registered successfully');
+                
+                // Setup callbacks
+                this.sharedIntegration.onDataReceived = this.onSharedDataReceived.bind(this);
+                this.sharedIntegration.onChannelMessage = this.onSharedChannelMessage.bind(this);
+                
+                // Share initial data
+                await this.shareInitialData();
+            }
+        } catch (error) {
+            console.error('❌ Shared integration setup failed:', error.message);
+        }
+    }
+
+    // Handle received shared data
+    onSharedDataReceived(dataType, serverId, data, metadata) {
+        console.log(`📥 [filesystem-3155] Received ${dataType} from ${serverId}`);
+        
+        switch (dataType) {
+            case 'memory':
+                this.handleSharedMemory(serverId, data, metadata);
+                break;
+            case 'session':
+                this.handleSharedSession(serverId, data, metadata);
+                break;
+            case 'config':
+                this.handleSharedConfig(serverId, data, metadata);
+                break;
+            case 'logs':
+                this.handleSharedLogs(serverId, data, metadata);
+                break;
+        }
+    }
+
+    // Handle channel messages
+    onSharedChannelMessage(channel, data) {
+        console.log(`📢 [filesystem-3155] Channel message on ${channel}:`, data);
+        
+        // Handle different channel types
+        switch (channel) {
+            case 'global':
+                this.handleGlobalMessage(data);
+                break;
+            case 'filesystem':
+                this.handleCategoryMessage(data);
+                break;
+            case 'filesystem-3155':
+                this.handleDirectMessage(data);
+                break;
+        }
+    }
+
+    // Share initial data
+    async shareInitialData() {
+        try {
+            // Share server status
+            await this.sharedIntegration.shareData('status', {
+                serverId: 'filesystem-3155',
+                status: 'online',
+                category: 'filesystem',
+                port: 3155,
+                startTime: new Date().toISOString()
+            });
+            
+            // Share memory data if available
+            if (this.memoryPath && fs.existsSync(this.memoryPath)) {
+                const memoryData = JSON.parse(fs.readFileSync(this.memoryPath, 'utf8'));
+                await this.sharedIntegration.shareMemory(memoryData);
+            }
+            
+        } catch (error) {
+            console.error('❌ Failed to share initial data:', error.message);
+        }
+    }
+
+    // Handle shared memory
+    handleSharedMemory(serverId, data, metadata) {
+        // Implement memory handling logic
+        console.log(`🧠 Processing shared memory from ${serverId}`);
+    }
+
+    // Handle shared session
+    handleSharedSession(serverId, data, metadata) {
+        // Implement session handling logic
+        console.log(`📋 Processing shared session from ${serverId}`);
+    }
+
+    // Handle shared config
+    handleSharedConfig(serverId, data, metadata) {
+        // Implement config handling logic
+        console.log(`⚙️ Processing shared config from ${serverId}`);
+    }
+
+    // Handle shared logs
+    handleSharedLogs(serverId, data, metadata) {
+        // Implement log handling logic
+        console.log(`📝 Processing shared logs from ${serverId}`);
+    }
+
+    // Handle global messages
+    handleGlobalMessage(data) {
+        console.log('🌐 Global message:', data);
+    }
+
+    // Handle category messages
+    handleCategoryMessage(data) {
+        console.log('📂 Category message:', data);
+    }
+
+    // Handle direct messages
+    handleDirectMessage(data) {
+        console.log('💬 Direct message:', data);
+    }
+
+    // Share current memory state
+    async shareCurrentMemory() {
+        if (this.memoryPath && fs.existsSync(this.memoryPath)) {
+            try {
+                const memoryData = JSON.parse(fs.readFileSync(this.memoryPath, 'utf8'));
+                await this.sharedIntegration.shareMemory(memoryData);
+                return true;
+            } catch (error) {
+                console.error('❌ Failed to share memory:', error.message);
+                return false;
+            }
+        }
+        return false;
+    }
+
+    // Get shared data from other servers
+    async getSharedDataFromServers(dataType) {
+        try {
+            return await this.sharedIntegration.getSharedData(dataType);
+        } catch (error) {
+            console.error(`❌ Failed to get shared ${dataType}:`, error.message);
+            return [];
+        }
+    }
+
+    // Broadcast to category channel
+    broadcastToCategory(data) {
+        this.sharedIntegration.broadcastToChannel('filesystem', data);
+    }
+
+    // Broadcast to global channel
+    broadcastGlobal(data) {
+        this.sharedIntegration.broadcastToChannel('global', data);
+    }
+
+    // Commit changes to Git Memory
+    async commitToGitMemory(message) {
+        return await this.sharedIntegration.commitToGitMemory(message);
+    }

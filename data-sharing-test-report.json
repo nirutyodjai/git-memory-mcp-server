@@ -1,0 +1,142 @@
+{
+  "timestamp": "2025-08-27T17:36:22.574Z",
+  "summary": {
+    "total": 7,
+    "passed": 6,
+    "failed": 1,
+    "successRate": "85.71%"
+  },
+  "tests": [
+    {
+      "test": "Shared Data Coordinator",
+      "status": "PASS",
+      "details": {
+        "success": true,
+        "totalServers": 0,
+        "servers": []
+      }
+    },
+    {
+      "test": "MCP Coordinator",
+      "status": "PASS",
+      "details": {
+        "success": true,
+        "data": {
+          "totalServers": 75,
+          "categories": [
+            {
+              "name": "database",
+              "deployed": 10,
+              "capacity": 50
+            },
+            {
+              "name": "filesystem",
+              "deployed": 20,
+              "capacity": 50
+            },
+            {
+              "name": "api",
+              "deployed": 15,
+              "capacity": 50
+            },
+            {
+              "name": "ai-ml",
+              "deployed": 30,
+              "capacity": 50
+            },
+            {
+              "name": "version-control",
+              "deployed": 0,
+              "capacity": 50
+            },
+            {
+              "name": "dev-tools",
+              "deployed": 0,
+              "capacity": 50
+            },
+            {
+              "name": "system-ops",
+              "deployed": 0,
+              "capacity": 50
+            },
+            {
+              "name": "communication",
+              "deployed": 0,
+              "capacity": 50
+            },
+            {
+              "name": "business",
+              "deployed": 0,
+              "capacity": 50
+            },
+            {
+              "name": "iot-hardware",
+              "deployed": 0,
+              "capacity": 50
+            }
+          ],
+          "uptime": 549.1729504,
+          "memory": {
+            "rss": 47775744,
+            "heapTotal": 12161024,
+            "heapUsed": 10545032,
+            "external": 2508510,
+            "arrayBuffers": 43231
+          }
+        }
+      }
+    },
+    {
+      "test": "Server Registration",
+      "status": "PASS",
+      "details": {
+        "success": true,
+        "message": "Server registered successfully",
+        "serverId": "test-server-001"
+      }
+    },
+    {
+      "test": "Data Sharing",
+      "status": "PASS",
+      "details": {
+        "success": true,
+        "message": "Data shared successfully",
+        "dataType": "test-data",
+        "timestamp": "2025-08-27T17:36:20.465Z"
+      }
+    },
+    {
+      "test": "WebSocket Connection",
+      "status": "PASS"
+    },
+    {
+      "test": "Git Memory Operations",
+      "status": "FAIL",
+      "error": "warning: in the working copy of 'shared/test-data-index.json', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'shared/test-data/test-server-001-2025-08-27T17-36-20-453Z.json', LF will be replaced by CRLF the next time Git touches it\nerror: pathspec 'data' did not match any file(s) known to git\nerror: pathspec 'update' did not match any file(s) known to git\n"
+    },
+    {
+      "test": "Data Retrieval",
+      "status": "PASS",
+      "details": {
+        "success": true,
+        "data": [
+          {
+            "serverId": "test-server-001",
+            "dataType": "test-data",
+            "data": {
+              "message": "Hello from test server!",
+              "timestamp": "2025-08-27T17:36:20.451Z",
+              "testValue": 0.6462212968892354
+            },
+            "metadata": {
+              "type": "test-message",
+              "priority": "high"
+            },
+            "timestamp": "2025-08-27T17-36-20-453Z"
+          }
+        ],
+        "dataType": "test-data"
+      }
+    }
+  ]
+}
