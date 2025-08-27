@@ -1,5 +1,5 @@
 {
-  "name": "portfolio",
+  "name": "git-memory-proxy",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -46,10 +46,12 @@
     "cheerio": "^1.1.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "cors": "^2.8.5",
     "date-fns": "^4.1.0",
     "devtools-detector": "^2.0.22",
     "dotenv": "^17.2.1",
     "embla-carousel-react": "^8.1.8",
+    "express": "^5.1.0",
     "fabric": "^6.7.1",
     "framer-motion": "^11.3.17",
     "gsap": "^3.12.5",

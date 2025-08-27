@@ -1,0 +1,14 @@
+{
+  "timestamp": "2025-08-27T03:18:11.192Z",
+  "connection": "success",
+  "dataStored": {
+    "users": 0,
+    "products": 0,
+    "orders": 0
+  },
+  "searchTest": {
+    "query": "สมชาย",
+    "results": 0
+  },
+  "status": "completed"
+}

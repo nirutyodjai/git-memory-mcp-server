@@ -1,8 +1,8 @@
-# Model Context Protocol servers
+# Git Memory Proxy
 
-This repository is a collection of *reference implementations* for the [Model Context Protocol](https://modelcontextprotocol.io/) (MCP), as well as references to community-built servers and additional resources.
+A memory-centric MCP (Model Context Protocol) proxy server that prioritizes git-based memory systems and intelligent data persistence for AI agents.
 
-The servers in this repository showcase the versatility and extensibility of MCP, demonstrating how it can be used to give Large Language Models (LLMs) secure, controlled access to tools and data sources.
+This repository provides a specialized proxy implementation that emphasizes memory-aware operations, demonstrating how MCP can be used to give Large Language Models (LLMs) secure, controlled access to persistent memory systems and data sources.
 Typically, each MCP server is implemented with an MCP SDK:
 
 - [C# MCP SDK](https://github.com/modelcontextprotocol/csharp-sdk)
