@@ -300,6 +300,246 @@
         "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\api-3214",
         "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-api-3214.js"
       }
+    ],
+    [
+      "filesystem-3150",
+      {
+        "id": "filesystem-3150",
+        "category": "filesystem",
+        "port": 3150,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:26.866Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\filesystem-3150",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-filesystem-3150.js"
+      }
+    ],
+    [
+      "filesystem-3151",
+      {
+        "id": "filesystem-3151",
+        "category": "filesystem",
+        "port": 3151,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:26.867Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\filesystem-3151",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-filesystem-3151.js"
+      }
+    ],
+    [
+      "filesystem-3152",
+      {
+        "id": "filesystem-3152",
+        "category": "filesystem",
+        "port": 3152,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:26.867Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\filesystem-3152",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-filesystem-3152.js"
+      }
+    ],
+    [
+      "filesystem-3153",
+      {
+        "id": "filesystem-3153",
+        "category": "filesystem",
+        "port": 3153,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:26.868Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\filesystem-3153",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-filesystem-3153.js"
+      }
+    ],
+    [
+      "filesystem-3154",
+      {
+        "id": "filesystem-3154",
+        "category": "filesystem",
+        "port": 3154,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:26.869Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\filesystem-3154",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-filesystem-3154.js"
+      }
+    ],
+    [
+      "filesystem-3155",
+      {
+        "id": "filesystem-3155",
+        "category": "filesystem",
+        "port": 3155,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:26.869Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\filesystem-3155",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-filesystem-3155.js"
+      }
+    ],
+    [
+      "filesystem-3156",
+      {
+        "id": "filesystem-3156",
+        "category": "filesystem",
+        "port": 3156,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:26.870Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\filesystem-3156",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-filesystem-3156.js"
+      }
+    ],
+    [
+      "filesystem-3157",
+      {
+        "id": "filesystem-3157",
+        "category": "filesystem",
+        "port": 3157,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:26.871Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\filesystem-3157",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-filesystem-3157.js"
+      }
+    ],
+    [
+      "filesystem-3158",
+      {
+        "id": "filesystem-3158",
+        "category": "filesystem",
+        "port": 3158,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:26.871Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\filesystem-3158",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-filesystem-3158.js"
+      }
+    ],
+    [
+      "filesystem-3159",
+      {
+        "id": "filesystem-3159",
+        "category": "filesystem",
+        "port": 3159,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:26.872Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\filesystem-3159",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-filesystem-3159.js"
+      }
+    ],
+    [
+      "filesystem-3160",
+      {
+        "id": "filesystem-3160",
+        "category": "filesystem",
+        "port": 3160,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:26.872Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\filesystem-3160",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-filesystem-3160.js"
+      }
+    ],
+    [
+      "filesystem-3161",
+      {
+        "id": "filesystem-3161",
+        "category": "filesystem",
+        "port": 3161,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:26.873Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\filesystem-3161",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-filesystem-3161.js"
+      }
+    ],
+    [
+      "filesystem-3162",
+      {
+        "id": "filesystem-3162",
+        "category": "filesystem",
+        "port": 3162,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:26.874Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\filesystem-3162",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-filesystem-3162.js"
+      }
+    ],
+    [
+      "filesystem-3163",
+      {
+        "id": "filesystem-3163",
+        "category": "filesystem",
+        "port": 3163,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:26.874Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\filesystem-3163",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-filesystem-3163.js"
+      }
+    ],
+    [
+      "filesystem-3164",
+      {
+        "id": "filesystem-3164",
+        "category": "filesystem",
+        "port": 3164,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:26.875Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\filesystem-3164",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-filesystem-3164.js"
+      }
+    ],
+    [
+      "filesystem-3165",
+      {
+        "id": "filesystem-3165",
+        "category": "filesystem",
+        "port": 3165,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:26.876Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\filesystem-3165",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-filesystem-3165.js"
+      }
+    ],
+    [
+      "filesystem-3166",
+      {
+        "id": "filesystem-3166",
+        "category": "filesystem",
+        "port": 3166,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:26.876Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\filesystem-3166",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-filesystem-3166.js"
+      }
+    ],
+    [
+      "filesystem-3167",
+      {
+        "id": "filesystem-3167",
+        "category": "filesystem",
+        "port": 3167,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:26.877Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\filesystem-3167",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-filesystem-3167.js"
+      }
+    ],
+    [
+      "filesystem-3168",
+      {
+        "id": "filesystem-3168",
+        "category": "filesystem",
+        "port": 3168,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:26.877Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\filesystem-3168",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-filesystem-3168.js"
+      }
+    ],
+    [
+      "filesystem-3169",
+      {
+        "id": "filesystem-3169",
+        "category": "filesystem",
+        "port": 3169,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:26.878Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\filesystem-3169",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-filesystem-3169.js"
+      }
     ]
   ],
   "categories": [
@@ -316,7 +556,7 @@
       {
         "portStart": 3150,
         "portEnd": 3199,
-        "count": 0
+        "count": 20
       }
     ],
     [
@@ -384,5 +624,5 @@
       }
     ]
   ],
-  "lastUpdated": "2025-08-27T16:47:03.187Z"
+  "lastUpdated": "2025-08-27T16:47:26.879Z"
 }
