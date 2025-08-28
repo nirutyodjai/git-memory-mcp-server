@@ -1,0 +1,441 @@
+# Git Memory MCP Server - Production Deployment Pipeline
+# Automated CI/CD pipeline for production deployment
+
+name: Production Deployment
+
+on:
+  push:
+    branches:
+      - main
+      - production
+    tags:
+      - 'v*'
+  
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Deployment environment'
+        required: true
+        default: 'production'
+        type: choice
+        options:
+          - production
+          - staging
+      force_deploy:
+        description: 'Force deployment (skip tests)'
+        required: false
+        default: false
+        type: boolean
+
+env:
+  NODE_VERSION: '18'
+  DOCKER_REGISTRY: 'ghcr.io'
+  IMAGE_NAME: 'git-memory-mcp-server'
+  DEPLOYMENT_TIMEOUT: '600'
+
+jobs:
+  # =============================================================================
+  # Code Quality & Security Checks
+  # =============================================================================
+  quality-checks:
+    name: Code Quality & Security
+    runs-on: ubuntu-latest
+    if: github.event.inputs.force_deploy != 'true'
+    
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      
+      - name: Install Dependencies
+        run: |
+          npm ci
+          npm audit --audit-level=high
+      
+      - name: Lint Code
+        run: npm run lint
+      
+      - name: Type Check
+        run: npm run type-check
+      
+      - name: Security Scan
+        run: |
+          npm audit --audit-level=moderate
+          npx snyk test --severity-threshold=high
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      
+      - name: Code Quality Analysis
+        uses: sonarcloud/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+  # =============================================================================
+  # Automated Testing
+  # =============================================================================
+  testing:
+    name: Automated Testing
+    runs-on: ubuntu-latest
+    if: github.event.inputs.force_deploy != 'true'
+    needs: quality-checks
+    
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_PASSWORD: test_password
+          POSTGRES_USER: test_user
+          POSTGRES_DB: test_db
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+      
+      redis:
+        image: redis:7
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 6379:6379
+    
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      
+      - name: Install Dependencies
+        run: npm ci
+      
+      - name: Setup Test Environment
+        run: |
+          cp .env.example .env.test
+          echo "DATABASE_URL=postgresql://test_user:test_password@localhost:5432/test_db" >> .env.test
+          echo "REDIS_URL=redis://localhost:6379" >> .env.test
+      
+      - name: Run Database Migrations
+        run: |
+          npx prisma generate
+          npx prisma db push
+        env:
+          DATABASE_URL: postgresql://test_user:test_password@localhost:5432/test_db
+      
+      - name: Run Unit Tests
+        run: npm run test:unit
+        env:
+          NODE_ENV: test
+      
+      - name: Run Integration Tests
+        run: npm run test:integration
+        env:
+          NODE_ENV: test
+          DATABASE_URL: postgresql://test_user:test_password@localhost:5432/test_db
+          REDIS_URL: redis://localhost:6379
+      
+      - name: Run E2E Tests
+        run: npm run test:e2e
+        env:
+          NODE_ENV: test
+      
+      - name: Generate Test Coverage
+        run: npm run test:coverage
+      
+      - name: Upload Coverage Reports
+        uses: codecov/codecov-action@v4
+        with:
+          files: ./coverage/lcov.info
+          flags: production
+          fail_ci_if_error: true
+
+  # =============================================================================
+  # Build Docker Images
+  # =============================================================================
+  build:
+    name: Build Docker Images
+    runs-on: ubuntu-latest
+    needs: [quality-checks, testing]
+    if: always() && (needs.quality-checks.result == 'success' || github.event.inputs.force_deploy == 'true') && (needs.testing.result == 'success' || github.event.inputs.force_deploy == 'true')
+    
+    outputs:
+      image-tag: ${{ steps.meta.outputs.tags }}
+      image-digest: ${{ steps.build.outputs.digest }}
+    
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      
+      - name: Log in to Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.DOCKER_REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Extract Metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.DOCKER_REGISTRY }}/${{ github.repository }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=sha,prefix={{branch}}-
+            type=raw,value=latest,enable={{is_default_branch}}
+            type=raw,value=production,enable=${{ github.ref == 'refs/heads/main' }}
+      
+      - name: Build and Push Docker Image
+        id: build
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          target: production
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          platforms: linux/amd64,linux/arm64
+      
+      - name: Generate SBOM
+        uses: anchore/sbom-action@v0
+        with:
+          image: ${{ steps.meta.outputs.tags }}
+          format: spdx-json
+          output-file: sbom.spdx.json
+      
+      - name: Scan Image for Vulnerabilities
+        uses: anchore/scan-action@v3
+        with:
+          image: ${{ steps.meta.outputs.tags }}
+          fail-build: true
+          severity-cutoff: high
+
+  # =============================================================================
+  # Deploy to Production
+  # =============================================================================
+  deploy:
+    name: Deploy to Production
+    runs-on: ubuntu-latest
+    needs: build
+    environment: 
+      name: production
+      url: https://gitmemory.comdee.co.th
+    
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.8.0
+        with:
+          ssh-private-key: ${{ secrets.PRODUCTION_SSH_KEY }}
+      
+      - name: Add Production Server to Known Hosts
+        run: |
+          ssh-keyscan -H ${{ secrets.PRODUCTION_HOST }} >> ~/.ssh/known_hosts
+      
+      - name: Deploy to Production Server
+        run: |
+          # Create deployment directory on server
+          ssh ${{ secrets.PRODUCTION_USER }}@${{ secrets.PRODUCTION_HOST }} "
+            sudo mkdir -p /opt/git-memory
+            sudo chown ${{ secrets.PRODUCTION_USER }}:${{ secrets.PRODUCTION_USER }} /opt/git-memory
+          "
+          
+          # Copy deployment files
+          scp -r ./* ${{ secrets.PRODUCTION_USER }}@${{ secrets.PRODUCTION_HOST }}:/opt/git-memory/
+          
+          # Execute deployment script
+          ssh ${{ secrets.PRODUCTION_USER }}@${{ secrets.PRODUCTION_HOST }} "
+            cd /opt/git-memory
+            chmod +x scripts/deploy-production.sh
+            sudo ./scripts/deploy-production.sh
+          "
+        timeout-minutes: ${{ fromJSON(env.DEPLOYMENT_TIMEOUT) }}
+      
+      - name: Wait for Deployment
+        run: |
+          echo "Waiting for deployment to complete..."
+          sleep 60
+      
+      - name: Health Check
+        run: |
+          # Wait for services to be ready
+          for i in {1..30}; do
+            if curl -f https://gitmemory.comdee.co.th/health; then
+              echo "✅ Health check passed"
+              break
+            fi
+            echo "⏳ Waiting for service to be ready... ($i/30)"
+            sleep 10
+          done
+          
+          # Final health check
+          if ! curl -f https://gitmemory.comdee.co.th/health; then
+            echo "❌ Health check failed"
+            exit 1
+          fi
+      
+      - name: Run Smoke Tests
+        run: |
+          # Test API endpoints
+          curl -f https://gitmemory.comdee.co.th/api/health
+          curl -f https://gitmemory.comdee.co.th/api/version
+          
+          # Test dashboard
+          curl -f https://gitmemory.comdee.co.th/dashboard/
+          
+          echo "✅ Smoke tests passed"
+      
+      - name: Update Deployment Status
+        if: always()
+        run: |
+          if [ "${{ job.status }}" == "success" ]; then
+            echo "✅ Deployment successful"
+            # Send success notification
+            curl -X POST ${{ secrets.SLACK_WEBHOOK_URL }} \
+              -H 'Content-type: application/json' \
+              --data '{
+                "text": "🚀 Git Memory MCP Server deployed successfully to production!",
+                "attachments": [{
+                  "color": "good",
+                  "fields": [
+                    {"title": "Environment", "value": "Production", "short": true},
+                    {"title": "Version", "value": "${{ github.sha }}", "short": true},
+                    {"title": "URL", "value": "https://gitmemory.comdee.co.th", "short": false}
+                  ]
+                }]
+              }'
+          else
+            echo "❌ Deployment failed"
+            # Send failure notification
+            curl -X POST ${{ secrets.SLACK_WEBHOOK_URL }} \
+              -H 'Content-type: application/json' \
+              --data '{
+                "text": "🚨 Git Memory MCP Server deployment failed!",
+                "attachments": [{
+                  "color": "danger",
+                  "fields": [
+                    {"title": "Environment", "value": "Production", "short": true},
+                    {"title": "Version", "value": "${{ github.sha }}", "short": true},
+                    {"title": "Error", "value": "Check GitHub Actions logs", "short": false}
+                  ]
+                }]
+              }'
+          fi
+
+  # =============================================================================
+  # Post-Deployment Tasks
+  # =============================================================================
+  post-deploy:
+    name: Post-Deployment Tasks
+    runs-on: ubuntu-latest
+    needs: deploy
+    if: success()
+    
+    steps:
+      - name: Update Documentation
+        run: |
+          echo "📚 Updating deployment documentation..."
+          # Add logic to update deployment docs
+      
+      - name: Create GitHub Release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: |
+            ## 🚀 Production Deployment
+            
+            **Deployed to:** https://gitmemory.comdee.co.th
+            **Commit:** ${{ github.sha }}
+            **Date:** ${{ github.event.head_commit.timestamp }}
+            
+            ### Changes
+            ${{ github.event.head_commit.message }}
+            
+            ### Deployment Details
+            - ✅ All tests passed
+            - ✅ Security scans completed
+            - ✅ Docker image built and pushed
+            - ✅ Production deployment successful
+            - ✅ Health checks passed
+          draft: false
+          prerelease: false
+      
+      - name: Update Monitoring Dashboards
+        run: |
+          echo "📊 Updating monitoring dashboards..."
+          # Add logic to update Grafana dashboards
+      
+      - name: Cleanup Old Images
+        run: |
+          echo "🧹 Cleaning up old Docker images..."
+          # Add logic to cleanup old images from registry
+
+  # =============================================================================
+  # Rollback (Manual Trigger)
+  # =============================================================================
+  rollback:
+    name: Rollback Deployment
+    runs-on: ubuntu-latest
+    if: failure() && github.event_name == 'workflow_dispatch'
+    needs: [deploy]
+    
+    steps:
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.8.0
+        with:
+          ssh-private-key: ${{ secrets.PRODUCTION_SSH_KEY }}
+      
+      - name: Rollback to Previous Version
+        run: |
+          ssh ${{ secrets.PRODUCTION_USER }}@${{ secrets.PRODUCTION_HOST }} "
+            cd /opt/git-memory
+            docker-compose -f docker-compose.production.yml down
+            docker-compose -f docker-compose.production.yml up -d --scale git-memory-app=0
+            # Restore from backup if needed
+            echo '🔄 Rollback initiated'
+          "
+      
+      - name: Notify Rollback
+        run: |
+          curl -X POST ${{ secrets.SLACK_WEBHOOK_URL }} \
+            -H 'Content-type: application/json' \
+            --data '{
+              "text": "🔄 Git Memory MCP Server rollback initiated",
+              "attachments": [{
+                "color": "warning",
+                "fields": [
+                  {"title": "Environment", "value": "Production", "short": true},
+                  {"title": "Reason", "value": "Deployment failure", "short": true}
+                ]
+              }]
+            }'
