@@ -1,0 +1,985 @@
+{
+  "mcpServers": {
+    "figma-developer-mcp": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "figma-developer-mcp",
+        "--figma-api-key=figd_T55K1_C02bkJ4e36LuRX0h53O_uSF58m9L53G4sv",
+        "--stdio"
+      ],
+      "env": {
+        "MCP_SERVER_NAME": "Figma Developer MCP - Design Context Provider"
+      }
+    },
+    "1mcpserver": {
+      "url": "https://mcp.1mcpserver.com/mcp/",
+      "headers": {
+        "Accept": "text/event-stream",
+        "Cache-Control": "no-cache"
+      },
+      "env": {
+        "MCP_SERVER_NAME": "1MCP Server - MCP Discovery"
+      }
+    },
+    "agentbay": {
+      "url": "https://agentbay.wuying.aliyun.com/sse?APIKEY=YOUR_API_KEY",
+      "env": {
+        "MCP_SERVER_NAME": "AgentBay - Serverless Cloud Infrastructure"
+      }
+    },
+    "adr-analysis": {
+      "command": "npx",
+      "args": [
+        "mcp-adr-analysis-server"
+      ],
+      "env": {
+        "PROJECT_PATH": "D:\\servers-main\\servers-main",
+        "EXECUTION_MODE": "full",
+        "AI_MODEL": "anthropic/claude-3-sonnet",
+        "MCP_SERVER_NAME": "ADR Analysis - Architectural Decision Records"
+      }
+    },
+    "apiweaver": {
+      "command": "uvx",
+      "args": [
+        "apiweaver",
+        "run"
+      ],
+      "env": {
+        "MCP_SERVER_NAME": "APIWeaver - Dynamic API to MCP Server"
+      }
+    },
+    "antv-chart": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@antv/mcp-server-chart"
+      ],
+      "env": {
+        "MCP_SERVER_NAME": "AntV Chart - Visual Charts Generator"
+      }
+    },
+    "3d-sco-memory": {
+      "command": "node",
+      "args": [
+        "d:\\servers-main\\servers-main\\src\\simple-memory\\dist\\index.js"
+      ],
+      "env": {
+        "NODE_ENV": "production",
+        "MCP_SERVER_NAME": "3D-SCO Simple Memory"
+      }
+    },
+    "3d-sco-thinking": {
+      "command": "node",
+      "args": [
+        "d:\\servers-main\\servers-main\\src\\sequentialthinking\\dist\\index.js"
+      ],
+      "env": {
+        "NODE_ENV": "production",
+        "MCP_SERVER_NAME": "3D-SCO Sequential Thinking"
+      }
+    },
+    "3d-sco-blender": {
+      "command": "node",
+      "args": [
+        "d:\\servers-main\\servers-main\\src\\blender\\dist\\index.js"
+      ],
+      "env": {
+        "NODE_ENV": "production",
+        "MCP_SERVER_NAME": "blender",
+        "BLENDER_PATH": "C:\\Program Files\\Blender Foundation\\Blender 4.0\\blender.exe"
+      }
+    },
+    "3d-sco-multifetch": {
+      "command": "python",
+      "args": [
+        "-m", "mcp_server_fetch"
+      ],
+      "cwd": "d:\\servers-main\\servers-main\\src\\fetch",
+      "env": {
+        "NODE_ENV": "production",
+        "MCP_SERVER_NAME": "3D-SCO Multi Fetch"
+      }
+    },
+    "3d-sco-playwright": {
+      "command": "node",
+      "args": [
+        "d:\\servers-main\\servers-main\\src\\playwright\\dist\\index.js"
+      ],
+      "env": {
+        "NODE_ENV": "production",
+        "MCP_SERVER_NAME": "playwright"
+      }
+    },
+    "3d-sco-filesystem": {
+      "command": "node",
+      "args": [
+        "d:\\servers-main\\servers-main\\src\\filesystem\\dist\\index.js"
+      ],
+      "env": {
+        "NODE_ENV": "production",
+        "MCP_SERVER_NAME": "3D-SCO Filesystem"
+      }
+    },
+    "3d-sco-git": {
+      "command": "python",
+      "args": [
+        "-m", "mcp_server_git"
+      ],
+      "cwd": "d:\\servers-main\\servers-main\\src\\git",
+      "env": {
+        "NODE_ENV": "production",
+        "MCP_SERVER_NAME": "3D-SCO Git"
+      }
+    },
+    "3d-sco-time": {
+      "command": "python",
+      "args": [
+        "-m",
+        "mcp_server_time"
+      ],
+      "cwd": "d:\\servers-main\\servers-main\\src\\time",
+      "env": {
+        "NODE_ENV": "production",
+        "MCP_SERVER_NAME": "3D-SCO Time"
+      }
+    },
+    "Slack": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-slack"
+      ],
+      "env": {
+        "SLACK_BOT_TOKEN": "",
+        "SLACK_TEAM_ID": ""
+      },
+      "fromGalleryId": "modelcontextprotocol.servers_slack"
+    },
+    "GitLab": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-gitlab"
+      ],
+      "env": {
+        "GITLAB_API_URL": "https://gitlab.com/api/v4",
+        "GITLAB_PERSONAL_ACCESS_TOKEN": ""
+      },
+      "fromGalleryId": "modelcontextprotocol.servers_gitlab"
+    },
+    "Time": {
+      "command": "python",
+      "args": [
+        "-m",
+        "mcp_server_time"
+      ],
+      "env": {},
+      "fromGalleryId": "modelcontextprotocol.servers_time"
+    },
+    "Google Maps": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-google-maps"
+      ],
+      "env": {
+        "GOOGLE_MAPS_API_KEY": ""
+      },
+      "fromGalleryId": "modelcontextprotocol.servers_google-maps"
+    },
+    "AWS Knowledge Base": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-aws-kb-retrieval"
+      ],
+      "env": {
+        "AWS_ACCESS_KEY_ID": "",
+        "AWS_REGION": "",
+        "AWS_SECRET_ACCESS_KEY": ""
+      },
+      "fromGalleryId": "modelcontextprotocol.servers_aws-kb-retrieval-server"
+    },
+    "Google Drive": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-gdrive"
+      ],
+      "env": {
+        "GDRIVE_CREDENTIALS_PATH": ".gdrive-server-credentials.json",
+        "GDRIVE_OAUTH_PATH": "gcp-oauth.keys.json"
+      },
+      "fromGalleryId": "modelcontextprotocol.servers_gdrive"
+    },
+    "Sequential Thinking": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-sequential-thinking"
+      ],
+      "env": {},
+      "fromGalleryId": "modelcontextprotocol.servers_sequentialthinking"
+    },
+    "Redis": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-redis",
+        "redis://localhost:6379"
+      ],
+      "env": {},
+      "fromGalleryId": "modelcontextprotocol.servers_redis"
+    },
+    "Sentry": {
+      "command": "mcp-server-sentry",
+      "args": [],
+      "env": {
+        "SENTRY_AUTH_TOKEN": ""
+      },
+      "fromGalleryId": "modelcontextprotocol.servers_sentry"
+    },
+    "Brave Search": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-brave-search"
+      ],
+      "env": {
+        "BRAVE_API_KEY": ""
+      },
+      "fromGalleryId": "modelcontextprotocol.servers_brave-search"
+    },
+    "Memory": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-memory"
+      ],
+      "env": {
+        "MEMORY_FILE_PATH": "memory.json"
+      },
+      "fromGalleryId": "modelcontextprotocol.servers_memory"
+    },
+    "Git": {
+      "command": "uvx",
+      "args": [
+        "mcp-server-git",
+        "--repository",
+        "path/to/git/repo"
+      ],
+      "env": {},
+      "fromGalleryId": "modelcontextprotocol.servers_git"
+    },
+    "Filesystem": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/path/to/allowed/directory"
+      ],
+      "env": {},
+      "fromGalleryId": "modelcontextprotocol.servers_filesystem"
+    },
+    "Fetch": {
+      "command": "uvx",
+      "args": [
+        "mcp-server-fetch"
+      ],
+      "env": {},
+      "fromGalleryId": "modelcontextprotocol.servers_fetch"
+    },
+    "Blender": {
+      "command": "uvx",
+      "args": [
+        "blender-mcp"
+      ],
+      "env": {
+        "HYPER3D_API_KEY": "k9TcfFoEhNd9cCPP2guHAHHHkctZHIRhZDywZ1euGUXwihbYLpOjQhofby80NJez",
+        "RODIN_FREE_TRIAL_KEY": "k9TcfFoEhNd9cCPP2guHAHHHkctZHIRhZDywZ1euGUXwihbYLpOjQhofby80NJez"
+      },
+      "fromGalleryId": "ahujasid.blender-mcp"
+    },
+    "context7": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@upstash/context7-mcp@latest"
+      ],
+      "env": {
+        "DEFAULT_MINIMUM_TOKENS": "10000"
+      },
+      "fromGalleryId": "upstash.context7"
+    },
+    "Firecrawl": {
+      "command": "env FIRECRAWL_API_KEY=your-api-key npx -y firecrawl-mcp",
+      "args": [],
+      "env": {
+        "FIRECRAWL_API_KEY": "",
+        "FIRECRAWL_RETRY_MAX_ATTEMPTS": "3",
+        "FIRECRAWL_RETRY_INITIAL_DELAY": "1000",
+        "FIRECRAWL_RETRY_MAX_DELAY": "10000",
+        "FIRECRAWL_RETRY_BACKOFF_FACTOR": "2",
+        "FIRECRAWL_CREDIT_WARNING_THRESHOLD": "1000",
+        "FIRECRAWL_CREDIT_CRITICAL_THRESHOLD": "100"
+      },
+      "fromGalleryId": "mendableai.firecrawl-mcp-server"
+    },
+    "Playwright": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@executeautomation/playwright-mcp-server"
+      ],
+      "env": {},
+      "fromGalleryId": "executeautomation.mcp-playwright"
+    },
+    "Desktop Commander": {
+      "command": "npx desktop-commander",
+      "args": [],
+      "env": {},
+      "fromGalleryId": "wonderwhy-er.ClaudeComputerCommander"
+    },
+    "Ableton Live Integration": {
+      "command": "uvx",
+      "args": [
+        "ableton-mcp"
+      ],
+      "env": {},
+      "fromGalleryId": "ahujasid.ableton-mcp"
+    },
+    "Cloudflare": {
+      "command": "npx",
+      "args": [
+        "@cloudflare/mcp-server-cloudflare@0.2.0",
+        "run",
+        "<account-id>"
+      ],
+      "env": {},
+      "fromGalleryId": "cloudflare.mcp-server-cloudflare"
+    },
+    "Stripe": {
+      "command": "npx -y @stripe/mcp",
+      "args": [
+        "--tools=all",
+        "--api-key=${STRIPE_SECRET_KEY}"
+      ],
+      "env": {
+        "STRIPE_SECRET_KEY": ""
+      },
+      "fromGalleryId": "stripe.agent-toolkit_modelcontextprotocol"
+    },
+    "Exa Search": {
+      "command": "exa-mcp-server",
+      "args": [],
+      "env": {
+        "EXA_API_KEY": ""
+      },
+      "fromGalleryId": "exa-labs.exa-mcp-server"
+    },
+    "Codegen": {
+      "command": "uvx",
+      "args": [
+        "--from",
+        "git+https://github.com/codegen-sh/codegen-sdk.git#egg=codegen-mcp-server&subdirectory=codegen-examples/examples/codegen-mcp-server",
+        "codegen-mcp-server",
+        "--yes"
+      ],
+      "env": {},
+      "fromGalleryId": "codegen-sh.codegen-sdk_codegen-mcp-server"
+    },
+    "Qdrant Server": {
+      "command": "uvx mcp-server-qdrant",
+      "args": [],
+      "env": {
+        "COLLECTION_NAME": "None",
+        "EMBEDDING_MODEL": "sentence-transformers/all-MiniLM-L6-v2",
+        "EMBEDDING_PROVIDER": "fastembed",
+        "QDRANT_API_KEY": "None",
+        "QDRANT_LOCAL_PATH": "None",
+        "QDRANT_URL": "None",
+        "TOOL_FIND_DESCRIPTION": "See default in settings.py",
+        "TOOL_STORE_DESCRIPTION": "See default in settings.py"
+      },
+      "fromGalleryId": "qdrant.mcp-server-qdrant"
+    },
+    "MySQL Server": {
+      "command": "mysql_mcp_server",
+      "args": [],
+      "env": {
+        "MYSQL_DATABASE": "",
+        "MYSQL_HOST": "localhost",
+        "MYSQL_PASSWORD": "",
+        "MYSQL_PORT": "3306",
+        "MYSQL_USER": ""
+      },
+      "fromGalleryId": "designcomputer.mysql_mcp_server"
+    },
+    "Kubernetes": {
+      "command": "npx -y mcp-server-kubernetes",
+      "args": [],
+      "env": {},
+      "fromGalleryId": "Flux159.mcp-server-kubernetes"
+    },
+    "Hyperbrowser": {
+      "command": "npx",
+      "args": [
+        "--yes",
+        "hyperbrowser-mcp"
+      ],
+      "env": {
+        "HYPERBROWSER_API_KEY": ""
+      },
+      "fromGalleryId": "hyperbrowserai.mcp"
+    },
+    "Tavily": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "tavily-mcp@0.1.4"
+      ],
+      "env": {
+        "TAVILY_API_KEY": ""
+      },
+      "fromGalleryId": "tavily-ai.tavily-mcp"
+    },
+    "Neon Database": {
+      "command": "npx",
+      "args": [
+        "@neondatabase/mcp-server-neon",
+        "init",
+        "$NEON_API_KEY"
+      ],
+      "env": {
+        "NEON_API_KEY": ""
+      },
+      "fromGalleryId": "neondatabase.mcp-server-neon"
+    },
+    "Docker": {
+      "command": "uvx",
+      "args": [
+        "docker-mcp"
+      ],
+      "env": {},
+      "fromGalleryId": "QuantGeekDev.docker-mcp"
+    },
+    "HuggingFace Spaces": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@llmindset/mcp-hfspace",
+        "--work-dir=${MCP_HF_WORK_DIR}",
+        "--hf-token=${HF_TOKEN}",
+        "space1",
+        "space2",
+        "..."
+      ],
+      "env": {
+        "CLAUDE_DESKTOP_MODE": "true"
+      },
+      "fromGalleryId": "evalstate.mcp-hfspace"
+    },
+    "Graphlit": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "graphlit-mcp-server"
+      ],
+      "env": {
+        "GRAPHLIT_ENVIRONMENT_ID": "",
+        "GRAPHLIT_JWT_SECRET": "",
+        "GRAPHLIT_ORGANIZATION_ID": ""
+      },
+      "fromGalleryId": "graphlit.graphlit-mcp-server"
+    },
+    "Aindreyway Codex Keeper": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@aindreyway/mcp-codex-keeper@latest"
+      ],
+      "env": {
+        "npm_config_cache_max": "1024000000",
+        "NODE_OPTIONS": "--max-old-space-size=256"
+      },
+      "fromGalleryId": "aindreyway.mcp-codex-keeper"
+    },
+    "testsprite": {
+      "command": "npx",
+      "args": [
+        "@testsprite/testsprite-mcp@latest"
+      ],
+      "env": {
+        "API_KEY": ""
+      },
+      "fromGalleryId": "byted-mcp.testsprite"
+    },
+    "Puppeteer": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-puppeteer"
+      ],
+      "env": {},
+      "fromGalleryId": "modelcontextprotocol.servers_puppeteer"
+    },
+    "PostgreSQL": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-postgres",
+        "test"
+      ],
+      "env": {},
+      "fromGalleryId": "modelcontextprotocol.servers_postgres"
+    },
+    "GitHub": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-github"
+      ],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "git"
+      },
+      "fromGalleryId": "modelcontextprotocol.servers_github"
+    },
+    "Figma AI Bridge": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "figma-developer-mcp",
+        "--stdio"
+      ],
+      "env": {
+        "FIGMA_API_KEY": "fig"
+      },
+      "fromGalleryId": "GLips.Figma-Context-MCP"
+    },
+    "Search1API": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "search1api-mcp"
+      ],
+      "env": {
+        "SEARCH1API_KEY": ""
+      },
+      "fromGalleryId": "fatwang2.search1api-mcp"
+    },
+    "Apify Actors": {
+      "command": "npx -y @apify/actors-mcp-server",
+      "args": [
+        "--actors",
+        "actor1,actor2"
+      ],
+      "env": {
+        "APIFY_TOKEN": ""
+      },
+      "fromGalleryId": "apify.actors-mcp-server"
+    },
+    "Todoist": {
+      "command": "npx -y @abhiz123/todoist-mcp-server",
+      "args": [],
+      "env": {
+        "TODOIST_API_TOKEN": ""
+      },
+      "fromGalleryId": "abhiz123.todoist-mcp-server"
+    },
+    "Pandoc": {
+      "command": "uvx",
+      "args": [
+        "mcp-pandoc"
+      ],
+      "env": {},
+      "fromGalleryId": "vivekVells.mcp-pandoc"
+    },
+    "Postgrest": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@supabase/mcp-server-postgrest",
+        "--apiUrl",
+        "<POSTGREST_API_URL>",
+        "--schema",
+        "<SCHEMA>",
+        "--apiKey",
+        "[OPTIONAL_API_KEY]"
+      ],
+      "env": {},
+      "fromGalleryId": "supabase-community.mcp-supabase_mcp-server-postgrest"
+    },
+    "Airtable": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "airtable-mcp-server"
+      ],
+      "env": {
+        "AIRTABLE_API_KEY": ""
+      },
+      "fromGalleryId": "domdomegg.airtable-mcp-server"
+    },
+    "HotNews Server": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@wopal/mcp-server-hotnews"
+      ],
+      "env": {},
+      "fromGalleryId": "wopal-cn.mcp-hotnews-server"
+    },
+    "Notion": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "notion-mcp-server"
+      ],
+      "env": {
+        "NOTION_PAGE_ID": "",
+        "NOTION_TOKEN": ""
+      },
+      "fromGalleryId": "awkoy.notion-mcp-server"
+    },
+    "Package Version": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-package-version"
+      ],
+      "env": {},
+      "fromGalleryId": "sammcj.mcp-package-version"
+    },
+    "DuckDuckGo Search Server": {
+      "command": "uvx",
+      "args": [
+        "duckduckgo-mcp-server"
+      ],
+      "env": {},
+      "fromGalleryId": "nickclyde.duckduckgo-mcp-server"
+    },
+    "Excel": {
+      "command": "npx",
+      "args": [
+        "--yes",
+        "@negokaz/excel-mcp-server"
+      ],
+      "env": {
+        "EXCEL_MCP_PAGING_CELLS_LIMIT": "4000"
+      },
+      "fromGalleryId": "negokaz.excel-mcp-server"
+    },
+    "Airbnb Search and Listing Server": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@openbnb/mcp-server-airbnb"
+      ],
+      "env": {},
+      "fromGalleryId": "openbnb-org.mcp-server-airbnb"
+    },
+    "Firebase": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@gannonh/firebase-mcp"
+      ],
+      "env": {
+        "FIREBASE_STORAGE_BUCKET": "[projectId].appspot.com",
+        "SERVICE_ACCOUNT_KEY_PATH": ""
+      },
+      "fromGalleryId": "gannonh.firebase-mcp"
+    },
+    "Replicate": {
+      "command": "npx",
+      "args": [
+        "mcp-replicate"
+      ],
+      "env": {
+        "REPLICATE_API_TOKEN": ""
+      },
+      "fromGalleryId": "deepfates.mcp-replicate"
+    },
+    "TaskManager": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@kazuph/mcp-taskmanager"
+      ],
+      "env": {
+        "TASK_MANAGER_FILE_PATH": "~/Documents/tasks.json"
+      },
+      "fromGalleryId": "kazuph.mcp-taskmanager"
+    },
+    "Persistent Knowledge Graph": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@itseasy21/mcp-knowledge-graph"
+      ],
+      "env": {
+        "MEMORY_FILE_PATH": "memory.jsonl"
+      },
+      "fromGalleryId": "itseasy21.mcp-knowledge-graph"
+    },
+    "BigQuery": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@ergut/mcp-bigquery-server",
+        "--project-id",
+        "your-project-id",
+        "--location",
+        "us-central1"
+      ],
+      "env": {},
+      "fromGalleryId": "ergut.mcp-bigquery-server"
+    },
+    "Airtable Server": {
+      "command": "npx",
+      "args": [
+        "@felores/airtable-mcp-server"
+      ],
+      "env": {
+        "AIRTABLE_API_KEY": ""
+      },
+      "fromGalleryId": "felores.airtable-mcp"
+    },
+    "Trello Server": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-trello"
+      ],
+      "env": {
+        "TRELLO_API_KEY": "",
+        "TRELLO_BOARD_ID": "",
+        "TRELLO_TOKEN": ""
+      },
+      "fromGalleryId": "delorenj.mcp-server-trello"
+    },
+    "Jina AI": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "jina-ai-mcp-server"
+      ],
+      "env": {
+        "JINA_API_KEY": ""
+      },
+      "fromGalleryId": "joeBlockchain.mcp-jina-ai"
+    },
+    "Replicate Flux MCP": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "replicate-flux-mcp"
+      ],
+      "env": {
+        "REPLICATE_API_TOKEN": ""
+      },
+      "fromGalleryId": "awkoy.replicate-flux-mcp"
+    },
+    "Contentful": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@ivotoby/contentful-management-mcp-server"
+      ],
+      "env": {
+        "CONTENTFUL_HOST": "https://api.contentful.com",
+        "CONTENTFUL_MANAGEMENT_ACCESS_TOKEN": ""
+      },
+      "fromGalleryId": "ivo-toby.contentful-mcp"
+    },
+    "Gitingest": {
+      "command": "uvx",
+      "args": [
+        "--from",
+        "git+https://github.com/puravparab/gitingest-mcp",
+        "gitingest-mcp"
+      ],
+      "env": {},
+      "fromGalleryId": "puravparab.Gitingest-MCP"
+    },
+    "Oxylabs MCP": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "oxylabs-mcp"
+      ],
+      "env": {
+        "OXYLABS_PASSWORD": "",
+        "OXYLABS_USERNAME": ""
+      },
+      "fromGalleryId": "oxylabs.oxylabs-mcp"
+    },
+    "FFmpeg Video Processor": {
+      "command": "npx",
+      "args": [
+        "--yes",
+        "mcp-ffmpeg"
+      ],
+      "env": {},
+      "fromGalleryId": "bitscorp-mcp.mcp-ffmpeg"
+    },
+    "YouTube": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "youtube-data-mcp-server"
+      ],
+      "env": {
+        "YOUTUBE_API_KEY": "",
+        "YOUTUBE_TRANSCRIPT_LANG": "ko"
+      },
+      "fromGalleryId": "icraft2170.youtube-data-mcp-server"
+    },
+    "Lunchmoney": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "lunchmoney-mcp-server"
+      ],
+      "env": {
+        "LUNCHMONEY_TOKEN": ""
+      },
+      "fromGalleryId": "leafeye.lunchmoney-mcp-server"
+    },
+    "YouTube Transcript Server": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@sinco-lab/mcp-youtube-transcript"
+      ],
+      "env": {},
+      "fromGalleryId": "sinco-lab.mcp-youtube-transcript"
+    },
+    "DeepView": {
+      "command": "deepview-mcp",
+      "args": [],
+      "env": {
+        "GEMINI_API_KEY": ""
+      },
+      "fromGalleryId": "ai-1st.deepview-mcp"
+    },
+    "Multi Fetch": {
+      "command": "npx -y @lmcc-dev/mult-fetch-mcp-server",
+      "args": [],
+      "env": {
+        "MCP_LANG": "Auto-detected based on system"
+      },
+      "fromGalleryId": "lmcc-dev.mult-fetch-mcp-server"
+    },
+    "Raygun": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@raygun.io/mcp-server-raygun"
+      ],
+      "env": {
+        "RAYGUN_PAT_TOKEN": ""
+      },
+      "fromGalleryId": "MindscapeHQ.mcp-server-raygun"
+    },
+    "File Context Server": {
+      "command": "npx",
+      "args": [
+        "--yes",
+        "file-context-server"
+      ],
+      "env": {
+        "CACHE_TTL": "3600000",
+        "MAX_CACHE_SIZE": "1000",
+        "MAX_FILE_SIZE": "1048576"
+      },
+      "fromGalleryId": "bsmi021.mcp-file-context-server"
+    },
+    "Maven": {
+      "command": "npx -y mcp-maven-deps",
+      "args": [],
+      "env": {},
+      "fromGalleryId": "Bigsy.maven-mcp-server"
+    },
+    "Instagram Engagement Analysis": {
+      "command": "npx",
+      "args": [
+        "instagram-engagement-mcp"
+      ],
+      "env": {
+        "INSTAGRAM_PASSWORD": "",
+        "INSTAGRAM_USERNAME": ""
+      },
+      "fromGalleryId": "Bob-lance.instagram-engagement-mcp"
+    },
+    "Clojars": {
+      "command": "npx -y clojars-deps-server",
+      "args": [],
+      "env": {},
+      "fromGalleryId": "Bigsy.Clojars-MCP-Server"
+    },
+    "Linear": {
+      "command": "npx @ibraheem4/linear-mcp",
+      "args": [],
+      "env": {
+        "LINEAR_API_KEY": ""
+      },
+      "fromGalleryId": "tiovikram.linear-mcp"
+    },
+    "File System": {
+      "command": "npx -y @bunas/fs-mcp@latest",
+      "args": [],
+      "env": {
+        "API_KEY": ""
+      },
+      "fromGalleryId": "bunasQ.fs"
+    },
+    "ClickUp": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@taazkareem/clickup-mcp-server@latest",
+        "--env",
+        "CLICKUP_API_KEY=your_api_key_here",
+        "--env",
+        "CLICKUP_TEAM_ID=your_team_id_here"
+      ],
+      "env": {
+        "CLICKUP_API_KEY": "",
+        "CLICKUP_TEAM_ID": ""
+      },
+      "fromGalleryId": "windalfin.clickup-mcp-server"
+    }
+  },
+  "globalSettings": {
+    "logLevel": "info",
+    "timeout": 30000,
+    "retries": 3,
+    "rateLimit": {
+      "enabled": true,
+      "windowMs": 900000,
+      "maxRequests": 100
+    }
+  },
+  "traeIntegration": {
+    "enabled": true,
+    "version": "1.0.0",
+    "compatibility": "trae-ai-v4",
+    "features": [
+      "browser-automation",
+      "web-scraping",
+      "3d-modeling",
+      "sequential-thinking",
+      "memory-management"
+    ],
+    "endpoints": {
+      "playwright": "/api/mcp/playwright",
+      "multifetch": "/api/mcp/fetch",
+      "blender": "/api/mcp/blender",
+      "thinking": "/api/mcp/thinking",
+      "memory": "/api/mcp/memory"
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "encoding-server",
+  "version": "1.0.0",
+  "description": "Data encoding and decoding operations",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  }
+}

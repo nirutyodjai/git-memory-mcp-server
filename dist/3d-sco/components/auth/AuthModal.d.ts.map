@@ -1,0 +1,1 @@
+{"version":3,"file":"AuthModal.d.ts","sourceRoot":"","sources":["../../../../src/3d-sco/components/auth/AuthModal.tsx"],"names":[],"mappings":"AAMA,UAAU,cAAc;IACtB,MAAM,EAAE,OAAO,CAAC;IAChB,OAAO,EAAE,MAAM,IAAI,CAAC;IACpB,WAAW,CAAC,EAAE,OAAO,GAAG,UAAU,CAAC;CACpC;AAED,MAAM,CAAC,OAAO,UAAU,SAAS,CAAC,EAAE,MAAM,EAAE,OAAO,EAAE,WAAqB,EAAE,EAAE,cAAc,OAsQ3F"}

@@ -1,0 +1,9 @@
+{
+  "name": "log-server",
+  "version": "1.0.0",
+  "description": "Logging and monitoring operations",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  }
+}

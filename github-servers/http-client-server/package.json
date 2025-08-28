@@ -1,0 +1,9 @@
+{
+  "name": "http-client-server",
+  "version": "1.0.0",
+  "description": "HTTP client for API calls and web requests",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  }
+}

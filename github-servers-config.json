@@ -1,0 +1,224 @@
+{
+  "servers": {
+    "filesystem-server": {
+      "name": "filesystem-server",
+      "description": "File system operations and management",
+      "port": 4000,
+      "directory": "D:\\Ai Server\\git-memory-mcp-server\\github-servers\\filesystem-server",
+      "capabilities": [
+        "read_file",
+        "write_file",
+        "list_directory",
+        "create_directory",
+        "delete_file"
+      ],
+      "category": "filesystem"
+    },
+    "http-client-server": {
+      "name": "http-client-server",
+      "description": "HTTP client for API calls and web requests",
+      "port": 4001,
+      "directory": "D:\\Ai Server\\git-memory-mcp-server\\github-servers\\http-client-server",
+      "capabilities": [
+        "get_request",
+        "post_request",
+        "put_request",
+        "delete_request",
+        "upload_file"
+      ],
+      "category": "web"
+    },
+    "json-processor-server": {
+      "name": "json-processor-server",
+      "description": "JSON data processing and manipulation",
+      "port": 4002,
+      "directory": "D:\\Ai Server\\git-memory-mcp-server\\github-servers\\json-processor-server",
+      "capabilities": [
+        "parse_json",
+        "stringify_json",
+        "validate_json",
+        "transform_json",
+        "merge_json"
+      ],
+      "category": "data"
+    },
+    "text-processor-server": {
+      "name": "text-processor-server",
+      "description": "Text processing and manipulation utilities",
+      "port": 4003,
+      "directory": "D:\\Ai Server\\git-memory-mcp-server\\github-servers\\text-processor-server",
+      "capabilities": [
+        "search_text",
+        "replace_text",
+        "split_text",
+        "join_text",
+        "format_text"
+      ],
+      "category": "text"
+    },
+    "crypto-server": {
+      "name": "crypto-server",
+      "description": "Cryptographic operations and security",
+      "port": 4004,
+      "directory": "D:\\Ai Server\\git-memory-mcp-server\\github-servers\\crypto-server",
+      "capabilities": [
+        "hash_data",
+        "encrypt_data",
+        "decrypt_data",
+        "generate_key",
+        "verify_signature"
+      ],
+      "category": "security"
+    },
+    "datetime-server": {
+      "name": "datetime-server",
+      "description": "Date and time operations",
+      "port": 4005,
+      "directory": "D:\\Ai Server\\git-memory-mcp-server\\github-servers\\datetime-server",
+      "capabilities": [
+        "current_time",
+        "format_date",
+        "parse_date",
+        "add_time",
+        "diff_time"
+      ],
+      "category": "utility"
+    },
+    "math-server": {
+      "name": "math-server",
+      "description": "Mathematical calculations and operations",
+      "port": 4006,
+      "directory": "D:\\Ai Server\\git-memory-mcp-server\\github-servers\\math-server",
+      "capabilities": [
+        "calculate",
+        "random_number",
+        "statistics",
+        "geometry",
+        "algebra"
+      ],
+      "category": "math"
+    },
+    "validation-server": {
+      "name": "validation-server",
+      "description": "Data validation and verification",
+      "port": 4007,
+      "directory": "D:\\Ai Server\\git-memory-mcp-server\\github-servers\\validation-server",
+      "capabilities": [
+        "validate_email",
+        "validate_url",
+        "validate_phone",
+        "validate_json",
+        "validate_schema"
+      ],
+      "category": "validation"
+    },
+    "encoding-server": {
+      "name": "encoding-server",
+      "description": "Data encoding and decoding operations",
+      "port": 4008,
+      "directory": "D:\\Ai Server\\git-memory-mcp-server\\github-servers\\encoding-server",
+      "capabilities": [
+        "base64_encode",
+        "base64_decode",
+        "url_encode",
+        "url_decode",
+        "html_encode"
+      ],
+      "category": "encoding"
+    },
+    "template-server": {
+      "name": "template-server",
+      "description": "Template processing and rendering",
+      "port": 4009,
+      "directory": "D:\\Ai Server\\git-memory-mcp-server\\github-servers\\template-server",
+      "capabilities": [
+        "render_template",
+        "compile_template",
+        "validate_template",
+        "list_variables",
+        "format_output"
+      ],
+      "category": "template"
+    },
+    "cache-server": {
+      "name": "cache-server",
+      "description": "In-memory caching and storage",
+      "port": 4010,
+      "directory": "D:\\Ai Server\\git-memory-mcp-server\\github-servers\\cache-server",
+      "capabilities": [
+        "cache_set",
+        "cache_get",
+        "cache_delete",
+        "cache_clear",
+        "cache_stats"
+      ],
+      "category": "cache"
+    },
+    "log-server": {
+      "name": "log-server",
+      "description": "Logging and monitoring operations",
+      "port": 4011,
+      "directory": "D:\\Ai Server\\git-memory-mcp-server\\github-servers\\log-server",
+      "capabilities": [
+        "log_info",
+        "log_error",
+        "log_debug",
+        "log_warn",
+        "get_logs"
+      ],
+      "category": "logging"
+    },
+    "config-server": {
+      "name": "config-server",
+      "description": "Configuration management",
+      "port": 4012,
+      "directory": "D:\\Ai Server\\git-memory-mcp-server\\github-servers\\config-server",
+      "capabilities": [
+        "get_config",
+        "set_config",
+        "validate_config",
+        "reload_config",
+        "backup_config"
+      ],
+      "category": "config"
+    },
+    "queue-server": {
+      "name": "queue-server",
+      "description": "Message queue and task processing",
+      "port": 4013,
+      "directory": "D:\\Ai Server\\git-memory-mcp-server\\github-servers\\queue-server",
+      "capabilities": [
+        "enqueue",
+        "dequeue",
+        "peek",
+        "queue_size",
+        "clear_queue"
+      ],
+      "category": "queue"
+    },
+    "notification-server": {
+      "name": "notification-server",
+      "description": "Notification and alerting system",
+      "port": 4014,
+      "directory": "D:\\Ai Server\\git-memory-mcp-server\\github-servers\\notification-server",
+      "capabilities": [
+        "send_notification",
+        "schedule_notification",
+        "cancel_notification",
+        "get_notifications",
+        "mark_read"
+      ],
+      "category": "notification"
+    }
+  },
+  "lastRun": {
+    "timestamp": "2025-08-27T22:54:30.693Z",
+    "results": {
+      "created": 15,
+      "started": 15,
+      "registered": 0,
+      "connected": 15,
+      "failed": []
+    }
+  }
+}

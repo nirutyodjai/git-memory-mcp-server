@@ -1,0 +1,1 @@
+{"version":3,"file":"smooth-scroll.d.ts","sourceRoot":"","sources":["../../../src/3d-sco/components/smooth-scroll.tsx"],"names":[],"mappings":"AAEA,OAAO,KAAoB,MAAM,OAAO,CAAC;AAGzC,UAAU,UAAU;IAClB,QAAQ,EAAE,KAAK,CAAC,SAAS,CAAC;IAC1B,aAAa,CAAC,EAAE,OAAO,CAAC;CACzB;AAED,iBAAS,YAAY,CAAC,EAAE,QAAQ,EAAE,aAAqB,EAAE,EAAE,UAAU,OA2BpE;AAED,eAAe,YAAY,CAAC"}

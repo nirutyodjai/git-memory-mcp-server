@@ -1,0 +1,6239 @@
+{
+  "routes": [
+    {
+      "path": "/aggregator/*",
+      "target": "http://localhost:9000",
+      "name": "mcp-server-aggregator",
+      "category": "aggregator"
+    },
+    {
+      "path": "/mcp-server-aggregator/*",
+      "target": "http://localhost:9000",
+      "name": "mcp-server-aggregator",
+      "category": "aggregator"
+    },
+    {
+      "path": "/search/*",
+      "target": "http://localhost:9001",
+      "name": "mcp-servers-kagi",
+      "category": "search"
+    },
+    {
+      "path": "/mcp-servers-kagi/*",
+      "target": "http://localhost:9001",
+      "name": "mcp-servers-kagi",
+      "category": "search"
+    },
+    {
+      "path": "/productivity/*",
+      "target": "http://localhost:9002",
+      "name": "mcp-server-raycast",
+      "category": "productivity"
+    },
+    {
+      "path": "/mcp-server-raycast/*",
+      "target": "http://localhost:9002",
+      "name": "mcp-server-raycast",
+      "category": "productivity"
+    },
+    {
+      "path": "/notes/*",
+      "target": "http://localhost:9003",
+      "name": "mcp-server-obsidian",
+      "category": "notes"
+    },
+    {
+      "path": "/mcp-server-obsidian/*",
+      "target": "http://localhost:9003",
+      "name": "mcp-server-obsidian",
+      "category": "notes"
+    },
+    {
+      "path": "/productivity/*",
+      "target": "http://localhost:9004",
+      "name": "mcp-server-notion",
+      "category": "productivity"
+    },
+    {
+      "path": "/mcp-server-notion/*",
+      "target": "http://localhost:9004",
+      "name": "mcp-server-notion",
+      "category": "productivity"
+    },
+    {
+      "path": "/productivity/*",
+      "target": "http://localhost:9005",
+      "name": "mcp-server-todoist",
+      "category": "productivity"
+    },
+    {
+      "path": "/mcp-server-todoist/*",
+      "target": "http://localhost:9005",
+      "name": "mcp-server-todoist",
+      "category": "productivity"
+    },
+    {
+      "path": "/project-management/*",
+      "target": "http://localhost:9006",
+      "name": "mcp-server-linear",
+      "category": "project-management"
+    },
+    {
+      "path": "/mcp-server-linear/*",
+      "target": "http://localhost:9006",
+      "name": "mcp-server-linear",
+      "category": "project-management"
+    },
+    {
+      "path": "/project-management/*",
+      "target": "http://localhost:9007",
+      "name": "mcp-server-jira",
+      "category": "project-management"
+    },
+    {
+      "path": "/mcp-server-jira/*",
+      "target": "http://localhost:9007",
+      "name": "mcp-server-jira",
+      "category": "project-management"
+    },
+    {
+      "path": "/project-management/*",
+      "target": "http://localhost:9008",
+      "name": "mcp-server-trello",
+      "category": "project-management"
+    },
+    {
+      "path": "/mcp-server-trello/*",
+      "target": "http://localhost:9008",
+      "name": "mcp-server-trello",
+      "category": "project-management"
+    },
+    {
+      "path": "/project-management/*",
+      "target": "http://localhost:9009",
+      "name": "mcp-server-asana",
+      "category": "project-management"
+    },
+    {
+      "path": "/mcp-server-asana/*",
+      "target": "http://localhost:9009",
+      "name": "mcp-server-asana",
+      "category": "project-management"
+    },
+    {
+      "path": "/communication/*",
+      "target": "http://localhost:9010",
+      "name": "mcp-server-slack",
+      "category": "communication"
+    },
+    {
+      "path": "/mcp-server-slack/*",
+      "target": "http://localhost:9010",
+      "name": "mcp-server-slack",
+      "category": "communication"
+    },
+    {
+      "path": "/communication/*",
+      "target": "http://localhost:9011",
+      "name": "mcp-server-discord",
+      "category": "communication"
+    },
+    {
+      "path": "/mcp-server-discord/*",
+      "target": "http://localhost:9011",
+      "name": "mcp-server-discord",
+      "category": "communication"
+    },
+    {
+      "path": "/communication/*",
+      "target": "http://localhost:9012",
+      "name": "mcp-server-telegram",
+      "category": "communication"
+    },
+    {
+      "path": "/mcp-server-telegram/*",
+      "target": "http://localhost:9012",
+      "name": "mcp-server-telegram",
+      "category": "communication"
+    },
+    {
+      "path": "/communication/*",
+      "target": "http://localhost:9013",
+      "name": "mcp-server-whatsapp",
+      "category": "communication"
+    },
+    {
+      "path": "/mcp-server-whatsapp/*",
+      "target": "http://localhost:9013",
+      "name": "mcp-server-whatsapp",
+      "category": "communication"
+    },
+    {
+      "path": "/database/*",
+      "target": "http://localhost:9014",
+      "name": "mcp-server-sqlite",
+      "category": "database"
+    },
+    {
+      "path": "/mcp-server-sqlite/*",
+      "target": "http://localhost:9014",
+      "name": "mcp-server-sqlite",
+      "category": "database"
+    },
+    {
+      "path": "/database/*",
+      "target": "http://localhost:9015",
+      "name": "mcp-server-postgres",
+      "category": "database"
+    },
+    {
+      "path": "/mcp-server-postgres/*",
+      "target": "http://localhost:9015",
+      "name": "mcp-server-postgres",
+      "category": "database"
+    },
+    {
+      "path": "/database/*",
+      "target": "http://localhost:9016",
+      "name": "mcp-server-mysql",
+      "category": "database"
+    },
+    {
+      "path": "/mcp-server-mysql/*",
+      "target": "http://localhost:9016",
+      "name": "mcp-server-mysql",
+      "category": "database"
+    },
+    {
+      "path": "/database/*",
+      "target": "http://localhost:9017",
+      "name": "mcp-server-mongodb",
+      "category": "database"
+    },
+    {
+      "path": "/mcp-server-mongodb/*",
+      "target": "http://localhost:9017",
+      "name": "mcp-server-mongodb",
+      "category": "database"
+    },
+    {
+      "path": "/database/*",
+      "target": "http://localhost:9018",
+      "name": "mcp-server-redis",
+      "category": "database"
+    },
+    {
+      "path": "/mcp-server-redis/*",
+      "target": "http://localhost:9018",
+      "name": "mcp-server-redis",
+      "category": "database"
+    },
+    {
+      "path": "/database/*",
+      "target": "http://localhost:9019",
+      "name": "mcp-server-elasticsearch",
+      "category": "database"
+    },
+    {
+      "path": "/mcp-server-elasticsearch/*",
+      "target": "http://localhost:9019",
+      "name": "mcp-server-elasticsearch",
+      "category": "database"
+    },
+    {
+      "path": "/development/*",
+      "target": "http://localhost:9020",
+      "name": "mcp-server-github",
+      "category": "development"
+    },
+    {
+      "path": "/mcp-server-github/*",
+      "target": "http://localhost:9020",
+      "name": "mcp-server-github",
+      "category": "development"
+    },
+    {
+      "path": "/development/*",
+      "target": "http://localhost:9021",
+      "name": "mcp-server-gitlab",
+      "category": "development"
+    },
+    {
+      "path": "/mcp-server-gitlab/*",
+      "target": "http://localhost:9021",
+      "name": "mcp-server-gitlab",
+      "category": "development"
+    },
+    {
+      "path": "/development/*",
+      "target": "http://localhost:9022",
+      "name": "mcp-server-bitbucket",
+      "category": "development"
+    },
+    {
+      "path": "/mcp-server-bitbucket/*",
+      "target": "http://localhost:9022",
+      "name": "mcp-server-bitbucket",
+      "category": "development"
+    },
+    {
+      "path": "/development/*",
+      "target": "http://localhost:9023",
+      "name": "mcp-server-docker",
+      "category": "development"
+    },
+    {
+      "path": "/mcp-server-docker/*",
+      "target": "http://localhost:9023",
+      "name": "mcp-server-docker",
+      "category": "development"
+    },
+    {
+      "path": "/development/*",
+      "target": "http://localhost:9024",
+      "name": "mcp-server-kubernetes",
+      "category": "development"
+    },
+    {
+      "path": "/mcp-server-kubernetes/*",
+      "target": "http://localhost:9024",
+      "name": "mcp-server-kubernetes",
+      "category": "development"
+    },
+    {
+      "path": "/development/*",
+      "target": "http://localhost:9025",
+      "name": "mcp-server-jenkins",
+      "category": "development"
+    },
+    {
+      "path": "/mcp-server-jenkins/*",
+      "target": "http://localhost:9025",
+      "name": "mcp-server-jenkins",
+      "category": "development"
+    },
+    {
+      "path": "/development/*",
+      "target": "http://localhost:9026",
+      "name": "mcp-server-circleci",
+      "category": "development"
+    },
+    {
+      "path": "/mcp-server-circleci/*",
+      "target": "http://localhost:9026",
+      "name": "mcp-server-circleci",
+      "category": "development"
+    },
+    {
+      "path": "/development/*",
+      "target": "http://localhost:9027",
+      "name": "mcp-server-travis",
+      "category": "development"
+    },
+    {
+      "path": "/mcp-server-travis/*",
+      "target": "http://localhost:9027",
+      "name": "mcp-server-travis",
+      "category": "development"
+    },
+    {
+      "path": "/cloud/*",
+      "target": "http://localhost:9028",
+      "name": "mcp-server-aws",
+      "category": "cloud"
+    },
+    {
+      "path": "/mcp-server-aws/*",
+      "target": "http://localhost:9028",
+      "name": "mcp-server-aws",
+      "category": "cloud"
+    },
+    {
+      "path": "/cloud/*",
+      "target": "http://localhost:9029",
+      "name": "mcp-server-gcp",
+      "category": "cloud"
+    },
+    {
+      "path": "/mcp-server-gcp/*",
+      "target": "http://localhost:9029",
+      "name": "mcp-server-gcp",
+      "category": "cloud"
+    },
+    {
+      "path": "/cloud/*",
+      "target": "http://localhost:9030",
+      "name": "mcp-server-azure",
+      "category": "cloud"
+    },
+    {
+      "path": "/mcp-server-azure/*",
+      "target": "http://localhost:9030",
+      "name": "mcp-server-azure",
+      "category": "cloud"
+    },
+    {
+      "path": "/cloud/*",
+      "target": "http://localhost:9031",
+      "name": "mcp-server-digitalocean",
+      "category": "cloud"
+    },
+    {
+      "path": "/mcp-server-digitalocean/*",
+      "target": "http://localhost:9031",
+      "name": "mcp-server-digitalocean",
+      "category": "cloud"
+    },
+    {
+      "path": "/cloud/*",
+      "target": "http://localhost:9032",
+      "name": "mcp-server-heroku",
+      "category": "cloud"
+    },
+    {
+      "path": "/mcp-server-heroku/*",
+      "target": "http://localhost:9032",
+      "name": "mcp-server-heroku",
+      "category": "cloud"
+    },
+    {
+      "path": "/cloud/*",
+      "target": "http://localhost:9033",
+      "name": "mcp-server-vercel",
+      "category": "cloud"
+    },
+    {
+      "path": "/mcp-server-vercel/*",
+      "target": "http://localhost:9033",
+      "name": "mcp-server-vercel",
+      "category": "cloud"
+    },
+    {
+      "path": "/cloud/*",
+      "target": "http://localhost:9034",
+      "name": "mcp-server-netlify",
+      "category": "cloud"
+    },
+    {
+      "path": "/mcp-server-netlify/*",
+      "target": "http://localhost:9034",
+      "name": "mcp-server-netlify",
+      "category": "cloud"
+    },
+    {
+      "path": "/filesystem/*",
+      "target": "http://localhost:9035",
+      "name": "mcp-server-filesystem",
+      "category": "filesystem"
+    },
+    {
+      "path": "/mcp-server-filesystem/*",
+      "target": "http://localhost:9035",
+      "name": "mcp-server-filesystem",
+      "category": "filesystem"
+    },
+    {
+      "path": "/filesystem/*",
+      "target": "http://localhost:9036",
+      "name": "mcp-server-gdrive",
+      "category": "filesystem"
+    },
+    {
+      "path": "/mcp-server-gdrive/*",
+      "target": "http://localhost:9036",
+      "name": "mcp-server-gdrive",
+      "category": "filesystem"
+    },
+    {
+      "path": "/filesystem/*",
+      "target": "http://localhost:9037",
+      "name": "mcp-server-dropbox",
+      "category": "filesystem"
+    },
+    {
+      "path": "/mcp-server-dropbox/*",
+      "target": "http://localhost:9037",
+      "name": "mcp-server-dropbox",
+      "category": "filesystem"
+    },
+    {
+      "path": "/filesystem/*",
+      "target": "http://localhost:9038",
+      "name": "mcp-server-onedrive",
+      "category": "filesystem"
+    },
+    {
+      "path": "/mcp-server-onedrive/*",
+      "target": "http://localhost:9038",
+      "name": "mcp-server-onedrive",
+      "category": "filesystem"
+    },
+    {
+      "path": "/filesystem/*",
+      "target": "http://localhost:9039",
+      "name": "mcp-server-box",
+      "category": "filesystem"
+    },
+    {
+      "path": "/mcp-server-box/*",
+      "target": "http://localhost:9039",
+      "name": "mcp-server-box",
+      "category": "filesystem"
+    },
+    {
+      "path": "/web/*",
+      "target": "http://localhost:9040",
+      "name": "mcp-server-fetch",
+      "category": "web"
+    },
+    {
+      "path": "/mcp-server-fetch/*",
+      "target": "http://localhost:9040",
+      "name": "mcp-server-fetch",
+      "category": "web"
+    },
+    {
+      "path": "/web/*",
+      "target": "http://localhost:9041",
+      "name": "mcp-server-puppeteer",
+      "category": "web"
+    },
+    {
+      "path": "/mcp-server-puppeteer/*",
+      "target": "http://localhost:9041",
+      "name": "mcp-server-puppeteer",
+      "category": "web"
+    },
+    {
+      "path": "/web/*",
+      "target": "http://localhost:9042",
+      "name": "mcp-server-playwright",
+      "category": "web"
+    },
+    {
+      "path": "/mcp-server-playwright/*",
+      "target": "http://localhost:9042",
+      "name": "mcp-server-playwright",
+      "category": "web"
+    },
+    {
+      "path": "/web/*",
+      "target": "http://localhost:9043",
+      "name": "mcp-server-selenium",
+      "category": "web"
+    },
+    {
+      "path": "/mcp-server-selenium/*",
+      "target": "http://localhost:9043",
+      "name": "mcp-server-selenium",
+      "category": "web"
+    },
+    {
+      "path": "/web/*",
+      "target": "http://localhost:9044",
+      "name": "mcp-server-curl",
+      "category": "web"
+    },
+    {
+      "path": "/mcp-server-curl/*",
+      "target": "http://localhost:9044",
+      "name": "mcp-server-curl",
+      "category": "web"
+    },
+    {
+      "path": "/web/*",
+      "target": "http://localhost:9045",
+      "name": "mcp-server-postman",
+      "category": "web"
+    },
+    {
+      "path": "/mcp-server-postman/*",
+      "target": "http://localhost:9045",
+      "name": "mcp-server-postman",
+      "category": "web"
+    },
+    {
+      "path": "/analytics/*",
+      "target": "http://localhost:9046",
+      "name": "mcp-server-google-analytics",
+      "category": "analytics"
+    },
+    {
+      "path": "/mcp-server-google-analytics/*",
+      "target": "http://localhost:9046",
+      "name": "mcp-server-google-analytics",
+      "category": "analytics"
+    },
+    {
+      "path": "/analytics/*",
+      "target": "http://localhost:9047",
+      "name": "mcp-server-mixpanel",
+      "category": "analytics"
+    },
+    {
+      "path": "/mcp-server-mixpanel/*",
+      "target": "http://localhost:9047",
+      "name": "mcp-server-mixpanel",
+      "category": "analytics"
+    },
+    {
+      "path": "/analytics/*",
+      "target": "http://localhost:9048",
+      "name": "mcp-server-amplitude",
+      "category": "analytics"
+    },
+    {
+      "path": "/mcp-server-amplitude/*",
+      "target": "http://localhost:9048",
+      "name": "mcp-server-amplitude",
+      "category": "analytics"
+    },
+    {
+      "path": "/monitoring/*",
+      "target": "http://localhost:9049",
+      "name": "mcp-server-datadog",
+      "category": "monitoring"
+    },
+    {
+      "path": "/mcp-server-datadog/*",
+      "target": "http://localhost:9049",
+      "name": "mcp-server-datadog",
+      "category": "monitoring"
+    },
+    {
+      "path": "/monitoring/*",
+      "target": "http://localhost:9050",
+      "name": "mcp-server-newrelic",
+      "category": "monitoring"
+    },
+    {
+      "path": "/mcp-server-newrelic/*",
+      "target": "http://localhost:9050",
+      "name": "mcp-server-newrelic",
+      "category": "monitoring"
+    },
+    {
+      "path": "/monitoring/*",
+      "target": "http://localhost:9051",
+      "name": "mcp-server-grafana",
+      "category": "monitoring"
+    },
+    {
+      "path": "/mcp-server-grafana/*",
+      "target": "http://localhost:9051",
+      "name": "mcp-server-grafana",
+      "category": "monitoring"
+    },
+    {
+      "path": "/ecommerce/*",
+      "target": "http://localhost:9052",
+      "name": "mcp-server-shopify",
+      "category": "ecommerce"
+    },
+    {
+      "path": "/mcp-server-shopify/*",
+      "target": "http://localhost:9052",
+      "name": "mcp-server-shopify",
+      "category": "ecommerce"
+    },
+    {
+      "path": "/ecommerce/*",
+      "target": "http://localhost:9053",
+      "name": "mcp-server-woocommerce",
+      "category": "ecommerce"
+    },
+    {
+      "path": "/mcp-server-woocommerce/*",
+      "target": "http://localhost:9053",
+      "name": "mcp-server-woocommerce",
+      "category": "ecommerce"
+    },
+    {
+      "path": "/ecommerce/*",
+      "target": "http://localhost:9054",
+      "name": "mcp-server-magento",
+      "category": "ecommerce"
+    },
+    {
+      "path": "/mcp-server-magento/*",
+      "target": "http://localhost:9054",
+      "name": "mcp-server-magento",
+      "category": "ecommerce"
+    },
+    {
+      "path": "/payment/*",
+      "target": "http://localhost:9055",
+      "name": "mcp-server-stripe",
+      "category": "payment"
+    },
+    {
+      "path": "/mcp-server-stripe/*",
+      "target": "http://localhost:9055",
+      "name": "mcp-server-stripe",
+      "category": "payment"
+    },
+    {
+      "path": "/payment/*",
+      "target": "http://localhost:9056",
+      "name": "mcp-server-paypal",
+      "category": "payment"
+    },
+    {
+      "path": "/mcp-server-paypal/*",
+      "target": "http://localhost:9056",
+      "name": "mcp-server-paypal",
+      "category": "payment"
+    },
+    {
+      "path": "/social/*",
+      "target": "http://localhost:9057",
+      "name": "mcp-server-twitter",
+      "category": "social"
+    },
+    {
+      "path": "/mcp-server-twitter/*",
+      "target": "http://localhost:9057",
+      "name": "mcp-server-twitter",
+      "category": "social"
+    },
+    {
+      "path": "/social/*",
+      "target": "http://localhost:9058",
+      "name": "mcp-server-facebook",
+      "category": "social"
+    },
+    {
+      "path": "/mcp-server-facebook/*",
+      "target": "http://localhost:9058",
+      "name": "mcp-server-facebook",
+      "category": "social"
+    },
+    {
+      "path": "/social/*",
+      "target": "http://localhost:9059",
+      "name": "mcp-server-instagram",
+      "category": "social"
+    },
+    {
+      "path": "/mcp-server-instagram/*",
+      "target": "http://localhost:9059",
+      "name": "mcp-server-instagram",
+      "category": "social"
+    },
+    {
+      "path": "/social/*",
+      "target": "http://localhost:9060",
+      "name": "mcp-server-linkedin",
+      "category": "social"
+    },
+    {
+      "path": "/mcp-server-linkedin/*",
+      "target": "http://localhost:9060",
+      "name": "mcp-server-linkedin",
+      "category": "social"
+    },
+    {
+      "path": "/social/*",
+      "target": "http://localhost:9061",
+      "name": "mcp-server-youtube",
+      "category": "social"
+    },
+    {
+      "path": "/mcp-server-youtube/*",
+      "target": "http://localhost:9061",
+      "name": "mcp-server-youtube",
+      "category": "social"
+    },
+    {
+      "path": "/ai/*",
+      "target": "http://localhost:9062",
+      "name": "mcp-server-openai",
+      "category": "ai"
+    },
+    {
+      "path": "/mcp-server-openai/*",
+      "target": "http://localhost:9062",
+      "name": "mcp-server-openai",
+      "category": "ai"
+    },
+    {
+      "path": "/ai/*",
+      "target": "http://localhost:9063",
+      "name": "mcp-server-anthropic",
+      "category": "ai"
+    },
+    {
+      "path": "/mcp-server-anthropic/*",
+      "target": "http://localhost:9063",
+      "name": "mcp-server-anthropic",
+      "category": "ai"
+    },
+    {
+      "path": "/ai/*",
+      "target": "http://localhost:9064",
+      "name": "mcp-server-huggingface",
+      "category": "ai"
+    },
+    {
+      "path": "/mcp-server-huggingface/*",
+      "target": "http://localhost:9064",
+      "name": "mcp-server-huggingface",
+      "category": "ai"
+    },
+    {
+      "path": "/ai/*",
+      "target": "http://localhost:9065",
+      "name": "mcp-server-tensorflow",
+      "category": "ai"
+    },
+    {
+      "path": "/mcp-server-tensorflow/*",
+      "target": "http://localhost:9065",
+      "name": "mcp-server-tensorflow",
+      "category": "ai"
+    },
+    {
+      "path": "/ai/*",
+      "target": "http://localhost:9066",
+      "name": "mcp-server-pytorch",
+      "category": "ai"
+    },
+    {
+      "path": "/mcp-server-pytorch/*",
+      "target": "http://localhost:9066",
+      "name": "mcp-server-pytorch",
+      "category": "ai"
+    },
+    {
+      "path": "/email/*",
+      "target": "http://localhost:9067",
+      "name": "mcp-server-gmail",
+      "category": "email"
+    },
+    {
+      "path": "/mcp-server-gmail/*",
+      "target": "http://localhost:9067",
+      "name": "mcp-server-gmail",
+      "category": "email"
+    },
+    {
+      "path": "/email/*",
+      "target": "http://localhost:9068",
+      "name": "mcp-server-outlook",
+      "category": "email"
+    },
+    {
+      "path": "/mcp-server-outlook/*",
+      "target": "http://localhost:9068",
+      "name": "mcp-server-outlook",
+      "category": "email"
+    },
+    {
+      "path": "/email/*",
+      "target": "http://localhost:9069",
+      "name": "mcp-server-sendgrid",
+      "category": "email"
+    },
+    {
+      "path": "/mcp-server-sendgrid/*",
+      "target": "http://localhost:9069",
+      "name": "mcp-server-sendgrid",
+      "category": "email"
+    },
+    {
+      "path": "/email/*",
+      "target": "http://localhost:9070",
+      "name": "mcp-server-mailchimp",
+      "category": "email"
+    },
+    {
+      "path": "/mcp-server-mailchimp/*",
+      "target": "http://localhost:9070",
+      "name": "mcp-server-mailchimp",
+      "category": "email"
+    },
+    {
+      "path": "/crm/*",
+      "target": "http://localhost:9071",
+      "name": "mcp-server-salesforce",
+      "category": "crm"
+    },
+    {
+      "path": "/mcp-server-salesforce/*",
+      "target": "http://localhost:9071",
+      "name": "mcp-server-salesforce",
+      "category": "crm"
+    },
+    {
+      "path": "/crm/*",
+      "target": "http://localhost:9072",
+      "name": "mcp-server-hubspot",
+      "category": "crm"
+    },
+    {
+      "path": "/mcp-server-hubspot/*",
+      "target": "http://localhost:9072",
+      "name": "mcp-server-hubspot",
+      "category": "crm"
+    },
+    {
+      "path": "/crm/*",
+      "target": "http://localhost:9073",
+      "name": "mcp-server-pipedrive",
+      "category": "crm"
+    },
+    {
+      "path": "/mcp-server-pipedrive/*",
+      "target": "http://localhost:9073",
+      "name": "mcp-server-pipedrive",
+      "category": "crm"
+    },
+    {
+      "path": "/crm/*",
+      "target": "http://localhost:9074",
+      "name": "mcp-server-zoho",
+      "category": "crm"
+    },
+    {
+      "path": "/mcp-server-zoho/*",
+      "target": "http://localhost:9074",
+      "name": "mcp-server-zoho",
+      "category": "crm"
+    },
+    {
+      "path": "/cms/*",
+      "target": "http://localhost:9075",
+      "name": "mcp-server-wordpress",
+      "category": "cms"
+    },
+    {
+      "path": "/mcp-server-wordpress/*",
+      "target": "http://localhost:9075",
+      "name": "mcp-server-wordpress",
+      "category": "cms"
+    },
+    {
+      "path": "/cms/*",
+      "target": "http://localhost:9076",
+      "name": "mcp-server-drupal",
+      "category": "cms"
+    },
+    {
+      "path": "/mcp-server-drupal/*",
+      "target": "http://localhost:9076",
+      "name": "mcp-server-drupal",
+      "category": "cms"
+    },
+    {
+      "path": "/cms/*",
+      "target": "http://localhost:9077",
+      "name": "mcp-server-contentful",
+      "category": "cms"
+    },
+    {
+      "path": "/mcp-server-contentful/*",
+      "target": "http://localhost:9077",
+      "name": "mcp-server-contentful",
+      "category": "cms"
+    },
+    {
+      "path": "/cms/*",
+      "target": "http://localhost:9078",
+      "name": "mcp-server-strapi",
+      "category": "cms"
+    },
+    {
+      "path": "/mcp-server-strapi/*",
+      "target": "http://localhost:9078",
+      "name": "mcp-server-strapi",
+      "category": "cms"
+    },
+    {
+      "path": "/security/*",
+      "target": "http://localhost:9079",
+      "name": "mcp-server-1password",
+      "category": "security"
+    },
+    {
+      "path": "/mcp-server-1password/*",
+      "target": "http://localhost:9079",
+      "name": "mcp-server-1password",
+      "category": "security"
+    },
+    {
+      "path": "/security/*",
+      "target": "http://localhost:9080",
+      "name": "mcp-server-bitwarden",
+      "category": "security"
+    },
+    {
+      "path": "/mcp-server-bitwarden/*",
+      "target": "http://localhost:9080",
+      "name": "mcp-server-bitwarden",
+      "category": "security"
+    },
+    {
+      "path": "/security/*",
+      "target": "http://localhost:9081",
+      "name": "mcp-server-lastpass",
+      "category": "security"
+    },
+    {
+      "path": "/mcp-server-lastpass/*",
+      "target": "http://localhost:9081",
+      "name": "mcp-server-lastpass",
+      "category": "security"
+    },
+    {
+      "path": "/security/*",
+      "target": "http://localhost:9082",
+      "name": "mcp-server-vault",
+      "category": "security"
+    },
+    {
+      "path": "/mcp-server-vault/*",
+      "target": "http://localhost:9082",
+      "name": "mcp-server-vault",
+      "category": "security"
+    },
+    {
+      "path": "/finance/*",
+      "target": "http://localhost:9083",
+      "name": "mcp-server-quickbooks",
+      "category": "finance"
+    },
+    {
+      "path": "/mcp-server-quickbooks/*",
+      "target": "http://localhost:9083",
+      "name": "mcp-server-quickbooks",
+      "category": "finance"
+    },
+    {
+      "path": "/finance/*",
+      "target": "http://localhost:9084",
+      "name": "mcp-server-xero",
+      "category": "finance"
+    },
+    {
+      "path": "/mcp-server-xero/*",
+      "target": "http://localhost:9084",
+      "name": "mcp-server-xero",
+      "category": "finance"
+    },
+    {
+      "path": "/finance/*",
+      "target": "http://localhost:9085",
+      "name": "mcp-server-freshbooks",
+      "category": "finance"
+    },
+    {
+      "path": "/mcp-server-freshbooks/*",
+      "target": "http://localhost:9085",
+      "name": "mcp-server-freshbooks",
+      "category": "finance"
+    },
+    {
+      "path": "/finance/*",
+      "target": "http://localhost:9086",
+      "name": "mcp-server-wave",
+      "category": "finance"
+    },
+    {
+      "path": "/mcp-server-wave/*",
+      "target": "http://localhost:9086",
+      "name": "mcp-server-wave",
+      "category": "finance"
+    },
+    {
+      "path": "/design/*",
+      "target": "http://localhost:9087",
+      "name": "mcp-server-figma",
+      "category": "design"
+    },
+    {
+      "path": "/mcp-server-figma/*",
+      "target": "http://localhost:9087",
+      "name": "mcp-server-figma",
+      "category": "design"
+    },
+    {
+      "path": "/design/*",
+      "target": "http://localhost:9088",
+      "name": "mcp-server-sketch",
+      "category": "design"
+    },
+    {
+      "path": "/mcp-server-sketch/*",
+      "target": "http://localhost:9088",
+      "name": "mcp-server-sketch",
+      "category": "design"
+    },
+    {
+      "path": "/design/*",
+      "target": "http://localhost:9089",
+      "name": "mcp-server-adobe",
+      "category": "design"
+    },
+    {
+      "path": "/mcp-server-adobe/*",
+      "target": "http://localhost:9089",
+      "name": "mcp-server-adobe",
+      "category": "design"
+    },
+    {
+      "path": "/design/*",
+      "target": "http://localhost:9090",
+      "name": "mcp-server-canva",
+      "category": "design"
+    },
+    {
+      "path": "/mcp-server-canva/*",
+      "target": "http://localhost:9090",
+      "name": "mcp-server-canva",
+      "category": "design"
+    },
+    {
+      "path": "/time-tracking/*",
+      "target": "http://localhost:9091",
+      "name": "mcp-server-toggl",
+      "category": "time-tracking"
+    },
+    {
+      "path": "/mcp-server-toggl/*",
+      "target": "http://localhost:9091",
+      "name": "mcp-server-toggl",
+      "category": "time-tracking"
+    },
+    {
+      "path": "/time-tracking/*",
+      "target": "http://localhost:9092",
+      "name": "mcp-server-harvest",
+      "category": "time-tracking"
+    },
+    {
+      "path": "/mcp-server-harvest/*",
+      "target": "http://localhost:9092",
+      "name": "mcp-server-harvest",
+      "category": "time-tracking"
+    },
+    {
+      "path": "/time-tracking/*",
+      "target": "http://localhost:9093",
+      "name": "mcp-server-clockify",
+      "category": "time-tracking"
+    },
+    {
+      "path": "/mcp-server-clockify/*",
+      "target": "http://localhost:9093",
+      "name": "mcp-server-clockify",
+      "category": "time-tracking"
+    },
+    {
+      "path": "/time-tracking/*",
+      "target": "http://localhost:9094",
+      "name": "mcp-server-rescuetime",
+      "category": "time-tracking"
+    },
+    {
+      "path": "/mcp-server-rescuetime/*",
+      "target": "http://localhost:9094",
+      "name": "mcp-server-rescuetime",
+      "category": "time-tracking"
+    },
+    {
+      "path": "/calendar/*",
+      "target": "http://localhost:9095",
+      "name": "mcp-server-google-calendar",
+      "category": "calendar"
+    },
+    {
+      "path": "/mcp-server-google-calendar/*",
+      "target": "http://localhost:9095",
+      "name": "mcp-server-google-calendar",
+      "category": "calendar"
+    },
+    {
+      "path": "/calendar/*",
+      "target": "http://localhost:9096",
+      "name": "mcp-server-outlook-calendar",
+      "category": "calendar"
+    },
+    {
+      "path": "/mcp-server-outlook-calendar/*",
+      "target": "http://localhost:9096",
+      "name": "mcp-server-outlook-calendar",
+      "category": "calendar"
+    },
+    {
+      "path": "/calendar/*",
+      "target": "http://localhost:9097",
+      "name": "mcp-server-calendly",
+      "category": "calendar"
+    },
+    {
+      "path": "/mcp-server-calendly/*",
+      "target": "http://localhost:9097",
+      "name": "mcp-server-calendly",
+      "category": "calendar"
+    },
+    {
+      "path": "/calendar/*",
+      "target": "http://localhost:9098",
+      "name": "mcp-server-acuity",
+      "category": "calendar"
+    },
+    {
+      "path": "/mcp-server-acuity/*",
+      "target": "http://localhost:9098",
+      "name": "mcp-server-acuity",
+      "category": "calendar"
+    },
+    {
+      "path": "/weather/*",
+      "target": "http://localhost:9099",
+      "name": "mcp-server-weather",
+      "category": "weather"
+    },
+    {
+      "path": "/mcp-server-weather/*",
+      "target": "http://localhost:9099",
+      "name": "mcp-server-weather",
+      "category": "weather"
+    },
+    {
+      "path": "/location/*",
+      "target": "http://localhost:9100",
+      "name": "mcp-server-maps",
+      "category": "location"
+    },
+    {
+      "path": "/mcp-server-maps/*",
+      "target": "http://localhost:9100",
+      "name": "mcp-server-maps",
+      "category": "location"
+    },
+    {
+      "path": "/location/*",
+      "target": "http://localhost:9101",
+      "name": "mcp-server-geocoding",
+      "category": "location"
+    },
+    {
+      "path": "/mcp-server-geocoding/*",
+      "target": "http://localhost:9101",
+      "name": "mcp-server-geocoding",
+      "category": "location"
+    },
+    {
+      "path": "/media/*",
+      "target": "http://localhost:9102",
+      "name": "mcp-server-news",
+      "category": "media"
+    },
+    {
+      "path": "/mcp-server-news/*",
+      "target": "http://localhost:9102",
+      "name": "mcp-server-news",
+      "category": "media"
+    },
+    {
+      "path": "/media/*",
+      "target": "http://localhost:9103",
+      "name": "mcp-server-rss",
+      "category": "media"
+    },
+    {
+      "path": "/mcp-server-rss/*",
+      "target": "http://localhost:9103",
+      "name": "mcp-server-rss",
+      "category": "media"
+    },
+    {
+      "path": "/media/*",
+      "target": "http://localhost:9104",
+      "name": "mcp-server-podcast",
+      "category": "media"
+    },
+    {
+      "path": "/mcp-server-podcast/*",
+      "target": "http://localhost:9104",
+      "name": "mcp-server-podcast",
+      "category": "media"
+    },
+    {
+      "path": "/translation/*",
+      "target": "http://localhost:9105",
+      "name": "mcp-server-google-translate",
+      "category": "translation"
+    },
+    {
+      "path": "/mcp-server-google-translate/*",
+      "target": "http://localhost:9105",
+      "name": "mcp-server-google-translate",
+      "category": "translation"
+    },
+    {
+      "path": "/translation/*",
+      "target": "http://localhost:9106",
+      "name": "mcp-server-deepl",
+      "category": "translation"
+    },
+    {
+      "path": "/mcp-server-deepl/*",
+      "target": "http://localhost:9106",
+      "name": "mcp-server-deepl",
+      "category": "translation"
+    },
+    {
+      "path": "/translation/*",
+      "target": "http://localhost:9107",
+      "name": "mcp-server-azure-translator",
+      "category": "translation"
+    },
+    {
+      "path": "/mcp-server-azure-translator/*",
+      "target": "http://localhost:9107",
+      "name": "mcp-server-azure-translator",
+      "category": "translation"
+    },
+    {
+      "path": "/utility/*",
+      "target": "http://localhost:9108",
+      "name": "mcp-server-qr-code",
+      "category": "utility"
+    },
+    {
+      "path": "/mcp-server-qr-code/*",
+      "target": "http://localhost:9108",
+      "name": "mcp-server-qr-code",
+      "category": "utility"
+    },
+    {
+      "path": "/utility/*",
+      "target": "http://localhost:9109",
+      "name": "mcp-server-url-shortener",
+      "category": "utility"
+    },
+    {
+      "path": "/mcp-server-url-shortener/*",
+      "target": "http://localhost:9109",
+      "name": "mcp-server-url-shortener",
+      "category": "utility"
+    },
+    {
+      "path": "/utility/*",
+      "target": "http://localhost:9110",
+      "name": "mcp-server-password-generator",
+      "category": "utility"
+    },
+    {
+      "path": "/mcp-server-password-generator/*",
+      "target": "http://localhost:9110",
+      "name": "mcp-server-password-generator",
+      "category": "utility"
+    },
+    {
+      "path": "/utility/*",
+      "target": "http://localhost:9111",
+      "name": "mcp-server-uuid",
+      "category": "utility"
+    },
+    {
+      "path": "/mcp-server-uuid/*",
+      "target": "http://localhost:9111",
+      "name": "mcp-server-uuid",
+      "category": "utility"
+    },
+    {
+      "path": "/blockchain/*",
+      "target": "http://localhost:9112",
+      "name": "mcp-server-ethereum",
+      "category": "blockchain"
+    },
+    {
+      "path": "/mcp-server-ethereum/*",
+      "target": "http://localhost:9112",
+      "name": "mcp-server-ethereum",
+      "category": "blockchain"
+    },
+    {
+      "path": "/blockchain/*",
+      "target": "http://localhost:9113",
+      "name": "mcp-server-bitcoin",
+      "category": "blockchain"
+    },
+    {
+      "path": "/mcp-server-bitcoin/*",
+      "target": "http://localhost:9113",
+      "name": "mcp-server-bitcoin",
+      "category": "blockchain"
+    },
+    {
+      "path": "/blockchain/*",
+      "target": "http://localhost:9114",
+      "name": "mcp-server-coinbase",
+      "category": "blockchain"
+    },
+    {
+      "path": "/mcp-server-coinbase/*",
+      "target": "http://localhost:9114",
+      "name": "mcp-server-coinbase",
+      "category": "blockchain"
+    },
+    {
+      "path": "/blockchain/*",
+      "target": "http://localhost:9115",
+      "name": "mcp-server-binance",
+      "category": "blockchain"
+    },
+    {
+      "path": "/mcp-server-binance/*",
+      "target": "http://localhost:9115",
+      "name": "mcp-server-binance",
+      "category": "blockchain"
+    },
+    {
+      "path": "/iot/*",
+      "target": "http://localhost:9116",
+      "name": "mcp-server-arduino",
+      "category": "iot"
+    },
+    {
+      "path": "/mcp-server-arduino/*",
+      "target": "http://localhost:9116",
+      "name": "mcp-server-arduino",
+      "category": "iot"
+    },
+    {
+      "path": "/iot/*",
+      "target": "http://localhost:9117",
+      "name": "mcp-server-raspberry-pi",
+      "category": "iot"
+    },
+    {
+      "path": "/mcp-server-raspberry-pi/*",
+      "target": "http://localhost:9117",
+      "name": "mcp-server-raspberry-pi",
+      "category": "iot"
+    },
+    {
+      "path": "/iot/*",
+      "target": "http://localhost:9118",
+      "name": "mcp-server-mqtt",
+      "category": "iot"
+    },
+    {
+      "path": "/mcp-server-mqtt/*",
+      "target": "http://localhost:9118",
+      "name": "mcp-server-mqtt",
+      "category": "iot"
+    },
+    {
+      "path": "/iot/*",
+      "target": "http://localhost:9119",
+      "name": "mcp-server-zigbee",
+      "category": "iot"
+    },
+    {
+      "path": "/mcp-server-zigbee/*",
+      "target": "http://localhost:9119",
+      "name": "mcp-server-zigbee",
+      "category": "iot"
+    },
+    {
+      "path": "/gaming/*",
+      "target": "http://localhost:9120",
+      "name": "mcp-server-steam",
+      "category": "gaming"
+    },
+    {
+      "path": "/mcp-server-steam/*",
+      "target": "http://localhost:9120",
+      "name": "mcp-server-steam",
+      "category": "gaming"
+    },
+    {
+      "path": "/gaming/*",
+      "target": "http://localhost:9121",
+      "name": "mcp-server-twitch",
+      "category": "gaming"
+    },
+    {
+      "path": "/mcp-server-twitch/*",
+      "target": "http://localhost:9121",
+      "name": "mcp-server-twitch",
+      "category": "gaming"
+    },
+    {
+      "path": "/gaming/*",
+      "target": "http://localhost:9122",
+      "name": "mcp-server-discord-bot",
+      "category": "gaming"
+    },
+    {
+      "path": "/mcp-server-discord-bot/*",
+      "target": "http://localhost:9122",
+      "name": "mcp-server-discord-bot",
+      "category": "gaming"
+    },
+    {
+      "path": "/health/*",
+      "target": "http://localhost:9123",
+      "name": "mcp-server-fitbit",
+      "category": "health"
+    },
+    {
+      "path": "/mcp-server-fitbit/*",
+      "target": "http://localhost:9123",
+      "name": "mcp-server-fitbit",
+      "category": "health"
+    },
+    {
+      "path": "/health/*",
+      "target": "http://localhost:9124",
+      "name": "mcp-server-apple-health",
+      "category": "health"
+    },
+    {
+      "path": "/mcp-server-apple-health/*",
+      "target": "http://localhost:9124",
+      "name": "mcp-server-apple-health",
+      "category": "health"
+    },
+    {
+      "path": "/health/*",
+      "target": "http://localhost:9125",
+      "name": "mcp-server-google-fit",
+      "category": "health"
+    },
+    {
+      "path": "/mcp-server-google-fit/*",
+      "target": "http://localhost:9125",
+      "name": "mcp-server-google-fit",
+      "category": "health"
+    },
+    {
+      "path": "/education/*",
+      "target": "http://localhost:9126",
+      "name": "mcp-server-coursera",
+      "category": "education"
+    },
+    {
+      "path": "/mcp-server-coursera/*",
+      "target": "http://localhost:9126",
+      "name": "mcp-server-coursera",
+      "category": "education"
+    },
+    {
+      "path": "/education/*",
+      "target": "http://localhost:9127",
+      "name": "mcp-server-udemy",
+      "category": "education"
+    },
+    {
+      "path": "/mcp-server-udemy/*",
+      "target": "http://localhost:9127",
+      "name": "mcp-server-udemy",
+      "category": "education"
+    },
+    {
+      "path": "/education/*",
+      "target": "http://localhost:9128",
+      "name": "mcp-server-khan-academy",
+      "category": "education"
+    },
+    {
+      "path": "/mcp-server-khan-academy/*",
+      "target": "http://localhost:9128",
+      "name": "mcp-server-khan-academy",
+      "category": "education"
+    },
+    {
+      "path": "/travel/*",
+      "target": "http://localhost:9129",
+      "name": "mcp-server-booking",
+      "category": "travel"
+    },
+    {
+      "path": "/mcp-server-booking/*",
+      "target": "http://localhost:9129",
+      "name": "mcp-server-booking",
+      "category": "travel"
+    },
+    {
+      "path": "/travel/*",
+      "target": "http://localhost:9130",
+      "name": "mcp-server-airbnb",
+      "category": "travel"
+    },
+    {
+      "path": "/mcp-server-airbnb/*",
+      "target": "http://localhost:9130",
+      "name": "mcp-server-airbnb",
+      "category": "travel"
+    },
+    {
+      "path": "/travel/*",
+      "target": "http://localhost:9131",
+      "name": "mcp-server-expedia",
+      "category": "travel"
+    },
+    {
+      "path": "/mcp-server-expedia/*",
+      "target": "http://localhost:9131",
+      "name": "mcp-server-expedia",
+      "category": "travel"
+    },
+    {
+      "path": "/food/*",
+      "target": "http://localhost:9132",
+      "name": "mcp-server-uber-eats",
+      "category": "food"
+    },
+    {
+      "path": "/mcp-server-uber-eats/*",
+      "target": "http://localhost:9132",
+      "name": "mcp-server-uber-eats",
+      "category": "food"
+    },
+    {
+      "path": "/food/*",
+      "target": "http://localhost:9133",
+      "name": "mcp-server-doordash",
+      "category": "food"
+    },
+    {
+      "path": "/mcp-server-doordash/*",
+      "target": "http://localhost:9133",
+      "name": "mcp-server-doordash",
+      "category": "food"
+    },
+    {
+      "path": "/food/*",
+      "target": "http://localhost:9134",
+      "name": "mcp-server-grubhub",
+      "category": "food"
+    },
+    {
+      "path": "/mcp-server-grubhub/*",
+      "target": "http://localhost:9134",
+      "name": "mcp-server-grubhub",
+      "category": "food"
+    },
+    {
+      "path": "/music/*",
+      "target": "http://localhost:9135",
+      "name": "mcp-server-spotify",
+      "category": "music"
+    },
+    {
+      "path": "/mcp-server-spotify/*",
+      "target": "http://localhost:9135",
+      "name": "mcp-server-spotify",
+      "category": "music"
+    },
+    {
+      "path": "/music/*",
+      "target": "http://localhost:9136",
+      "name": "mcp-server-apple-music",
+      "category": "music"
+    },
+    {
+      "path": "/mcp-server-apple-music/*",
+      "target": "http://localhost:9136",
+      "name": "mcp-server-apple-music",
+      "category": "music"
+    },
+    {
+      "path": "/entertainment/*",
+      "target": "http://localhost:9137",
+      "name": "mcp-server-netflix",
+      "category": "entertainment"
+    },
+    {
+      "path": "/mcp-server-netflix/*",
+      "target": "http://localhost:9137",
+      "name": "mcp-server-netflix",
+      "category": "entertainment"
+    },
+    {
+      "path": "/real-estate/*",
+      "target": "http://localhost:9138",
+      "name": "mcp-server-zillow",
+      "category": "real-estate"
+    },
+    {
+      "path": "/mcp-server-zillow/*",
+      "target": "http://localhost:9138",
+      "name": "mcp-server-zillow",
+      "category": "real-estate"
+    },
+    {
+      "path": "/real-estate/*",
+      "target": "http://localhost:9139",
+      "name": "mcp-server-realtor",
+      "category": "real-estate"
+    },
+    {
+      "path": "/mcp-server-realtor/*",
+      "target": "http://localhost:9139",
+      "name": "mcp-server-realtor",
+      "category": "real-estate"
+    },
+    {
+      "path": "/legal/*",
+      "target": "http://localhost:9140",
+      "name": "mcp-server-legalzoom",
+      "category": "legal"
+    },
+    {
+      "path": "/mcp-server-legalzoom/*",
+      "target": "http://localhost:9140",
+      "name": "mcp-server-legalzoom",
+      "category": "legal"
+    },
+    {
+      "path": "/legal/*",
+      "target": "http://localhost:9141",
+      "name": "mcp-server-docusign",
+      "category": "legal"
+    },
+    {
+      "path": "/mcp-server-docusign/*",
+      "target": "http://localhost:9141",
+      "name": "mcp-server-docusign",
+      "category": "legal"
+    },
+    {
+      "path": "/hr/*",
+      "target": "http://localhost:9142",
+      "name": "mcp-server-linkedin-recruiter",
+      "category": "hr"
+    },
+    {
+      "path": "/mcp-server-linkedin-recruiter/*",
+      "target": "http://localhost:9142",
+      "name": "mcp-server-linkedin-recruiter",
+      "category": "hr"
+    },
+    {
+      "path": "/hr/*",
+      "target": "http://localhost:9143",
+      "name": "mcp-server-indeed",
+      "category": "hr"
+    },
+    {
+      "path": "/mcp-server-indeed/*",
+      "target": "http://localhost:9143",
+      "name": "mcp-server-indeed",
+      "category": "hr"
+    },
+    {
+      "path": "/hr/*",
+      "target": "http://localhost:9144",
+      "name": "mcp-server-glassdoor",
+      "category": "hr"
+    },
+    {
+      "path": "/mcp-server-glassdoor/*",
+      "target": "http://localhost:9144",
+      "name": "mcp-server-glassdoor",
+      "category": "hr"
+    },
+    {
+      "path": "/logistics/*",
+      "target": "http://localhost:9145",
+      "name": "mcp-server-fedex",
+      "category": "logistics"
+    },
+    {
+      "path": "/mcp-server-fedex/*",
+      "target": "http://localhost:9145",
+      "name": "mcp-server-fedex",
+      "category": "logistics"
+    },
+    {
+      "path": "/logistics/*",
+      "target": "http://localhost:9146",
+      "name": "mcp-server-ups",
+      "category": "logistics"
+    },
+    {
+      "path": "/mcp-server-ups/*",
+      "target": "http://localhost:9146",
+      "name": "mcp-server-ups",
+      "category": "logistics"
+    },
+    {
+      "path": "/logistics/*",
+      "target": "http://localhost:9147",
+      "name": "mcp-server-dhl",
+      "category": "logistics"
+    },
+    {
+      "path": "/mcp-server-dhl/*",
+      "target": "http://localhost:9147",
+      "name": "mcp-server-dhl",
+      "category": "logistics"
+    },
+    {
+      "path": "/agriculture/*",
+      "target": "http://localhost:9148",
+      "name": "mcp-server-farm-management",
+      "category": "agriculture"
+    },
+    {
+      "path": "/mcp-server-farm-management/*",
+      "target": "http://localhost:9148",
+      "name": "mcp-server-farm-management",
+      "category": "agriculture"
+    },
+    {
+      "path": "/agriculture/*",
+      "target": "http://localhost:9149",
+      "name": "mcp-server-weather-farming",
+      "category": "agriculture"
+    },
+    {
+      "path": "/mcp-server-weather-farming/*",
+      "target": "http://localhost:9149",
+      "name": "mcp-server-weather-farming",
+      "category": "agriculture"
+    },
+    {
+      "path": "/energy/*",
+      "target": "http://localhost:9150",
+      "name": "mcp-server-solar-monitoring",
+      "category": "energy"
+    },
+    {
+      "path": "/mcp-server-solar-monitoring/*",
+      "target": "http://localhost:9150",
+      "name": "mcp-server-solar-monitoring",
+      "category": "energy"
+    },
+    {
+      "path": "/energy/*",
+      "target": "http://localhost:9151",
+      "name": "mcp-server-smart-grid",
+      "category": "energy"
+    },
+    {
+      "path": "/mcp-server-smart-grid/*",
+      "target": "http://localhost:9151",
+      "name": "mcp-server-smart-grid",
+      "category": "energy"
+    },
+    {
+      "path": "/manufacturing/*",
+      "target": "http://localhost:9152",
+      "name": "mcp-server-erp",
+      "category": "manufacturing"
+    },
+    {
+      "path": "/mcp-server-erp/*",
+      "target": "http://localhost:9152",
+      "name": "mcp-server-erp",
+      "category": "manufacturing"
+    },
+    {
+      "path": "/manufacturing/*",
+      "target": "http://localhost:9153",
+      "name": "mcp-server-inventory",
+      "category": "manufacturing"
+    },
+    {
+      "path": "/mcp-server-inventory/*",
+      "target": "http://localhost:9153",
+      "name": "mcp-server-inventory",
+      "category": "manufacturing"
+    },
+    {
+      "path": "/automotive/*",
+      "target": "http://localhost:9154",
+      "name": "mcp-server-tesla",
+      "category": "automotive"
+    },
+    {
+      "path": "/mcp-server-tesla/*",
+      "target": "http://localhost:9154",
+      "name": "mcp-server-tesla",
+      "category": "automotive"
+    },
+    {
+      "path": "/automotive/*",
+      "target": "http://localhost:9155",
+      "name": "mcp-server-car-diagnostics",
+      "category": "automotive"
+    },
+    {
+      "path": "/mcp-server-car-diagnostics/*",
+      "target": "http://localhost:9155",
+      "name": "mcp-server-car-diagnostics",
+      "category": "automotive"
+    },
+    {
+      "path": "/insurance/*",
+      "target": "http://localhost:9156",
+      "name": "mcp-server-insurance-api",
+      "category": "insurance"
+    },
+    {
+      "path": "/mcp-server-insurance-api/*",
+      "target": "http://localhost:9156",
+      "name": "mcp-server-insurance-api",
+      "category": "insurance"
+    },
+    {
+      "path": "/insurance/*",
+      "target": "http://localhost:9157",
+      "name": "mcp-server-claims-processing",
+      "category": "insurance"
+    },
+    {
+      "path": "/mcp-server-claims-processing/*",
+      "target": "http://localhost:9157",
+      "name": "mcp-server-claims-processing",
+      "category": "insurance"
+    },
+    {
+      "path": "/government/*",
+      "target": "http://localhost:9158",
+      "name": "mcp-server-gov-data",
+      "category": "government"
+    },
+    {
+      "path": "/mcp-server-gov-data/*",
+      "target": "http://localhost:9158",
+      "name": "mcp-server-gov-data",
+      "category": "government"
+    },
+    {
+      "path": "/government/*",
+      "target": "http://localhost:9159",
+      "name": "mcp-server-census",
+      "category": "government"
+    },
+    {
+      "path": "/mcp-server-census/*",
+      "target": "http://localhost:9159",
+      "name": "mcp-server-census",
+      "category": "government"
+    },
+    {
+      "path": "/nonprofit/*",
+      "target": "http://localhost:9160",
+      "name": "mcp-server-charity-navigator",
+      "category": "nonprofit"
+    },
+    {
+      "path": "/mcp-server-charity-navigator/*",
+      "target": "http://localhost:9160",
+      "name": "mcp-server-charity-navigator",
+      "category": "nonprofit"
+    },
+    {
+      "path": "/nonprofit/*",
+      "target": "http://localhost:9161",
+      "name": "mcp-server-donation-tracker",
+      "category": "nonprofit"
+    },
+    {
+      "path": "/mcp-server-donation-tracker/*",
+      "target": "http://localhost:9161",
+      "name": "mcp-server-donation-tracker",
+      "category": "nonprofit"
+    },
+    {
+      "path": "/sports/*",
+      "target": "http://localhost:9162",
+      "name": "mcp-server-espn",
+      "category": "sports"
+    },
+    {
+      "path": "/mcp-server-espn/*",
+      "target": "http://localhost:9162",
+      "name": "mcp-server-espn",
+      "category": "sports"
+    },
+    {
+      "path": "/sports/*",
+      "target": "http://localhost:9163",
+      "name": "mcp-server-nfl",
+      "category": "sports"
+    },
+    {
+      "path": "/mcp-server-nfl/*",
+      "target": "http://localhost:9163",
+      "name": "mcp-server-nfl",
+      "category": "sports"
+    },
+    {
+      "path": "/sports/*",
+      "target": "http://localhost:9164",
+      "name": "mcp-server-nba",
+      "category": "sports"
+    },
+    {
+      "path": "/mcp-server-nba/*",
+      "target": "http://localhost:9164",
+      "name": "mcp-server-nba",
+      "category": "sports"
+    },
+    {
+      "path": "/research/*",
+      "target": "http://localhost:9165",
+      "name": "mcp-server-pubmed",
+      "category": "research"
+    },
+    {
+      "path": "/mcp-server-pubmed/*",
+      "target": "http://localhost:9165",
+      "name": "mcp-server-pubmed",
+      "category": "research"
+    },
+    {
+      "path": "/research/*",
+      "target": "http://localhost:9166",
+      "name": "mcp-server-arxiv",
+      "category": "research"
+    },
+    {
+      "path": "/mcp-server-arxiv/*",
+      "target": "http://localhost:9166",
+      "name": "mcp-server-arxiv",
+      "category": "research"
+    },
+    {
+      "path": "/research/*",
+      "target": "http://localhost:9167",
+      "name": "mcp-server-nasa",
+      "category": "research"
+    },
+    {
+      "path": "/mcp-server-nasa/*",
+      "target": "http://localhost:9167",
+      "name": "mcp-server-nasa",
+      "category": "research"
+    },
+    {
+      "path": "/retail/*",
+      "target": "http://localhost:9168",
+      "name": "mcp-server-amazon",
+      "category": "retail"
+    },
+    {
+      "path": "/mcp-server-amazon/*",
+      "target": "http://localhost:9168",
+      "name": "mcp-server-amazon",
+      "category": "retail"
+    },
+    {
+      "path": "/retail/*",
+      "target": "http://localhost:9169",
+      "name": "mcp-server-ebay",
+      "category": "retail"
+    },
+    {
+      "path": "/mcp-server-ebay/*",
+      "target": "http://localhost:9169",
+      "name": "mcp-server-ebay",
+      "category": "retail"
+    },
+    {
+      "path": "/retail/*",
+      "target": "http://localhost:9170",
+      "name": "mcp-server-etsy",
+      "category": "retail"
+    },
+    {
+      "path": "/mcp-server-etsy/*",
+      "target": "http://localhost:9170",
+      "name": "mcp-server-etsy",
+      "category": "retail"
+    },
+    {
+      "path": "/photography/*",
+      "target": "http://localhost:9171",
+      "name": "mcp-server-unsplash",
+      "category": "photography"
+    },
+    {
+      "path": "/mcp-server-unsplash/*",
+      "target": "http://localhost:9171",
+      "name": "mcp-server-unsplash",
+      "category": "photography"
+    },
+    {
+      "path": "/photography/*",
+      "target": "http://localhost:9172",
+      "name": "mcp-server-pexels",
+      "category": "photography"
+    },
+    {
+      "path": "/mcp-server-pexels/*",
+      "target": "http://localhost:9172",
+      "name": "mcp-server-pexels",
+      "category": "photography"
+    },
+    {
+      "path": "/photography/*",
+      "target": "http://localhost:9173",
+      "name": "mcp-server-shutterstock",
+      "category": "photography"
+    },
+    {
+      "path": "/mcp-server-shutterstock/*",
+      "target": "http://localhost:9173",
+      "name": "mcp-server-shutterstock",
+      "category": "photography"
+    },
+    {
+      "path": "/backup/*",
+      "target": "http://localhost:9174",
+      "name": "mcp-server-backblaze",
+      "category": "backup"
+    },
+    {
+      "path": "/mcp-server-backblaze/*",
+      "target": "http://localhost:9174",
+      "name": "mcp-server-backblaze",
+      "category": "backup"
+    },
+    {
+      "path": "/backup/*",
+      "target": "http://localhost:9175",
+      "name": "mcp-server-carbonite",
+      "category": "backup"
+    },
+    {
+      "path": "/mcp-server-carbonite/*",
+      "target": "http://localhost:9175",
+      "name": "mcp-server-carbonite",
+      "category": "backup"
+    },
+    {
+      "path": "/networking/*",
+      "target": "http://localhost:9176",
+      "name": "mcp-server-cloudflare",
+      "category": "networking"
+    },
+    {
+      "path": "/mcp-server-cloudflare/*",
+      "target": "http://localhost:9176",
+      "name": "mcp-server-cloudflare",
+      "category": "networking"
+    },
+    {
+      "path": "/networking/*",
+      "target": "http://localhost:9177",
+      "name": "mcp-server-dns",
+      "category": "networking"
+    },
+    {
+      "path": "/mcp-server-dns/*",
+      "target": "http://localhost:9177",
+      "name": "mcp-server-dns",
+      "category": "networking"
+    },
+    {
+      "path": "/testing/*",
+      "target": "http://localhost:9178",
+      "name": "mcp-server-browserstack",
+      "category": "testing"
+    },
+    {
+      "path": "/mcp-server-browserstack/*",
+      "target": "http://localhost:9178",
+      "name": "mcp-server-browserstack",
+      "category": "testing"
+    },
+    {
+      "path": "/testing/*",
+      "target": "http://localhost:9179",
+      "name": "mcp-server-sauce-labs",
+      "category": "testing"
+    },
+    {
+      "path": "/mcp-server-sauce-labs/*",
+      "target": "http://localhost:9179",
+      "name": "mcp-server-sauce-labs",
+      "category": "testing"
+    },
+    {
+      "path": "/documentation/*",
+      "target": "http://localhost:9180",
+      "name": "mcp-server-gitbook",
+      "category": "documentation"
+    },
+    {
+      "path": "/mcp-server-gitbook/*",
+      "target": "http://localhost:9180",
+      "name": "mcp-server-gitbook",
+      "category": "documentation"
+    },
+    {
+      "path": "/documentation/*",
+      "target": "http://localhost:9181",
+      "name": "mcp-server-confluence",
+      "category": "documentation"
+    },
+    {
+      "path": "/mcp-server-confluence/*",
+      "target": "http://localhost:9181",
+      "name": "mcp-server-confluence",
+      "category": "documentation"
+    },
+    {
+      "path": "/video-conferencing/*",
+      "target": "http://localhost:9182",
+      "name": "mcp-server-zoom",
+      "category": "video-conferencing"
+    },
+    {
+      "path": "/mcp-server-zoom/*",
+      "target": "http://localhost:9182",
+      "name": "mcp-server-zoom",
+      "category": "video-conferencing"
+    },
+    {
+      "path": "/video-conferencing/*",
+      "target": "http://localhost:9183",
+      "name": "mcp-server-teams",
+      "category": "video-conferencing"
+    },
+    {
+      "path": "/mcp-server-teams/*",
+      "target": "http://localhost:9183",
+      "name": "mcp-server-teams",
+      "category": "video-conferencing"
+    },
+    {
+      "path": "/video-conferencing/*",
+      "target": "http://localhost:9184",
+      "name": "mcp-server-webex",
+      "category": "video-conferencing"
+    },
+    {
+      "path": "/mcp-server-webex/*",
+      "target": "http://localhost:9184",
+      "name": "mcp-server-webex",
+      "category": "video-conferencing"
+    },
+    {
+      "path": "/forms/*",
+      "target": "http://localhost:9185",
+      "name": "mcp-server-typeform",
+      "category": "forms"
+    },
+    {
+      "path": "/mcp-server-typeform/*",
+      "target": "http://localhost:9185",
+      "name": "mcp-server-typeform",
+      "category": "forms"
+    },
+    {
+      "path": "/forms/*",
+      "target": "http://localhost:9186",
+      "name": "mcp-server-surveymonkey",
+      "category": "forms"
+    },
+    {
+      "path": "/mcp-server-surveymonkey/*",
+      "target": "http://localhost:9186",
+      "name": "mcp-server-surveymonkey",
+      "category": "forms"
+    },
+    {
+      "path": "/forms/*",
+      "target": "http://localhost:9187",
+      "name": "mcp-server-google-forms",
+      "category": "forms"
+    },
+    {
+      "path": "/mcp-server-google-forms/*",
+      "target": "http://localhost:9187",
+      "name": "mcp-server-google-forms",
+      "category": "forms"
+    },
+    {
+      "path": "/automation/*",
+      "target": "http://localhost:9188",
+      "name": "mcp-server-zapier",
+      "category": "automation"
+    },
+    {
+      "path": "/mcp-server-zapier/*",
+      "target": "http://localhost:9188",
+      "name": "mcp-server-zapier",
+      "category": "automation"
+    },
+    {
+      "path": "/automation/*",
+      "target": "http://localhost:9189",
+      "name": "mcp-server-ifttt",
+      "category": "automation"
+    },
+    {
+      "path": "/mcp-server-ifttt/*",
+      "target": "http://localhost:9189",
+      "name": "mcp-server-ifttt",
+      "category": "automation"
+    },
+    {
+      "path": "/automation/*",
+      "target": "http://localhost:9190",
+      "name": "mcp-server-microsoft-flow",
+      "category": "automation"
+    },
+    {
+      "path": "/mcp-server-microsoft-flow/*",
+      "target": "http://localhost:9190",
+      "name": "mcp-server-microsoft-flow",
+      "category": "automation"
+    },
+    {
+      "path": "/version-control/*",
+      "target": "http://localhost:9191",
+      "name": "mcp-server-git",
+      "category": "version-control"
+    },
+    {
+      "path": "/mcp-server-git/*",
+      "target": "http://localhost:9191",
+      "name": "mcp-server-git",
+      "category": "version-control"
+    },
+    {
+      "path": "/version-control/*",
+      "target": "http://localhost:9192",
+      "name": "mcp-server-svn",
+      "category": "version-control"
+    },
+    {
+      "path": "/mcp-server-svn/*",
+      "target": "http://localhost:9192",
+      "name": "mcp-server-svn",
+      "category": "version-control"
+    },
+    {
+      "path": "/version-control/*",
+      "target": "http://localhost:9193",
+      "name": "mcp-server-mercurial",
+      "category": "version-control"
+    },
+    {
+      "path": "/mcp-server-mercurial/*",
+      "target": "http://localhost:9193",
+      "name": "mcp-server-mercurial",
+      "category": "version-control"
+    },
+    {
+      "path": "/package-manager/*",
+      "target": "http://localhost:9194",
+      "name": "mcp-server-npm",
+      "category": "package-manager"
+    },
+    {
+      "path": "/mcp-server-npm/*",
+      "target": "http://localhost:9194",
+      "name": "mcp-server-npm",
+      "category": "package-manager"
+    },
+    {
+      "path": "/package-manager/*",
+      "target": "http://localhost:9195",
+      "name": "mcp-server-pip",
+      "category": "package-manager"
+    },
+    {
+      "path": "/mcp-server-pip/*",
+      "target": "http://localhost:9195",
+      "name": "mcp-server-pip",
+      "category": "package-manager"
+    },
+    {
+      "path": "/package-manager/*",
+      "target": "http://localhost:9196",
+      "name": "mcp-server-composer",
+      "category": "package-manager"
+    },
+    {
+      "path": "/mcp-server-composer/*",
+      "target": "http://localhost:9196",
+      "name": "mcp-server-composer",
+      "category": "package-manager"
+    },
+    {
+      "path": "/code-quality/*",
+      "target": "http://localhost:9197",
+      "name": "mcp-server-sonarqube",
+      "category": "code-quality"
+    },
+    {
+      "path": "/mcp-server-sonarqube/*",
+      "target": "http://localhost:9197",
+      "name": "mcp-server-sonarqube",
+      "category": "code-quality"
+    },
+    {
+      "path": "/code-quality/*",
+      "target": "http://localhost:9198",
+      "name": "mcp-server-codeclimate",
+      "category": "code-quality"
+    },
+    {
+      "path": "/mcp-server-codeclimate/*",
+      "target": "http://localhost:9198",
+      "name": "mcp-server-codeclimate",
+      "category": "code-quality"
+    },
+    {
+      "path": "/code-quality/*",
+      "target": "http://localhost:9199",
+      "name": "mcp-server-eslint",
+      "category": "code-quality"
+    },
+    {
+      "path": "/mcp-server-eslint/*",
+      "target": "http://localhost:9199",
+      "name": "mcp-server-eslint",
+      "category": "code-quality"
+    },
+    {
+      "path": "/logging/*",
+      "target": "http://localhost:9200",
+      "name": "mcp-server-logstash",
+      "category": "logging"
+    },
+    {
+      "path": "/mcp-server-logstash/*",
+      "target": "http://localhost:9200",
+      "name": "mcp-server-logstash",
+      "category": "logging"
+    },
+    {
+      "path": "/logging/*",
+      "target": "http://localhost:9201",
+      "name": "mcp-server-splunk",
+      "category": "logging"
+    },
+    {
+      "path": "/mcp-server-splunk/*",
+      "target": "http://localhost:9201",
+      "name": "mcp-server-splunk",
+      "category": "logging"
+    },
+    {
+      "path": "/logging/*",
+      "target": "http://localhost:9202",
+      "name": "mcp-server-fluentd",
+      "category": "logging"
+    },
+    {
+      "path": "/mcp-server-fluentd/*",
+      "target": "http://localhost:9202",
+      "name": "mcp-server-fluentd",
+      "category": "logging"
+    },
+    {
+      "path": "/message-queue/*",
+      "target": "http://localhost:9203",
+      "name": "mcp-server-rabbitmq",
+      "category": "message-queue"
+    },
+    {
+      "path": "/mcp-server-rabbitmq/*",
+      "target": "http://localhost:9203",
+      "name": "mcp-server-rabbitmq",
+      "category": "message-queue"
+    },
+    {
+      "path": "/message-queue/*",
+      "target": "http://localhost:9204",
+      "name": "mcp-server-kafka",
+      "category": "message-queue"
+    },
+    {
+      "path": "/mcp-server-kafka/*",
+      "target": "http://localhost:9204",
+      "name": "mcp-server-kafka",
+      "category": "message-queue"
+    },
+    {
+      "path": "/message-queue/*",
+      "target": "http://localhost:9205",
+      "name": "mcp-server-activemq",
+      "category": "message-queue"
+    },
+    {
+      "path": "/mcp-server-activemq/*",
+      "target": "http://localhost:9205",
+      "name": "mcp-server-activemq",
+      "category": "message-queue"
+    },
+    {
+      "path": "/search-engine/*",
+      "target": "http://localhost:9206",
+      "name": "mcp-server-solr",
+      "category": "search-engine"
+    },
+    {
+      "path": "/mcp-server-solr/*",
+      "target": "http://localhost:9206",
+      "name": "mcp-server-solr",
+      "category": "search-engine"
+    },
+    {
+      "path": "/search-engine/*",
+      "target": "http://localhost:9207",
+      "name": "mcp-server-algolia",
+      "category": "search-engine"
+    },
+    {
+      "path": "/mcp-server-algolia/*",
+      "target": "http://localhost:9207",
+      "name": "mcp-server-algolia",
+      "category": "search-engine"
+    },
+    {
+      "path": "/cache/*",
+      "target": "http://localhost:9208",
+      "name": "mcp-server-memcached",
+      "category": "cache"
+    },
+    {
+      "path": "/mcp-server-memcached/*",
+      "target": "http://localhost:9208",
+      "name": "mcp-server-memcached",
+      "category": "cache"
+    },
+    {
+      "path": "/cache/*",
+      "target": "http://localhost:9209",
+      "name": "mcp-server-varnish",
+      "category": "cache"
+    },
+    {
+      "path": "/mcp-server-varnish/*",
+      "target": "http://localhost:9209",
+      "name": "mcp-server-varnish",
+      "category": "cache"
+    },
+    {
+      "path": "/load-balancer/*",
+      "target": "http://localhost:9210",
+      "name": "mcp-server-nginx",
+      "category": "load-balancer"
+    },
+    {
+      "path": "/mcp-server-nginx/*",
+      "target": "http://localhost:9210",
+      "name": "mcp-server-nginx",
+      "category": "load-balancer"
+    },
+    {
+      "path": "/load-balancer/*",
+      "target": "http://localhost:9211",
+      "name": "mcp-server-haproxy",
+      "category": "load-balancer"
+    },
+    {
+      "path": "/mcp-server-haproxy/*",
+      "target": "http://localhost:9211",
+      "name": "mcp-server-haproxy",
+      "category": "load-balancer"
+    },
+    {
+      "path": "/container/*",
+      "target": "http://localhost:9212",
+      "name": "mcp-server-podman",
+      "category": "container"
+    },
+    {
+      "path": "/mcp-server-podman/*",
+      "target": "http://localhost:9212",
+      "name": "mcp-server-podman",
+      "category": "container"
+    },
+    {
+      "path": "/container/*",
+      "target": "http://localhost:9213",
+      "name": "mcp-server-containerd",
+      "category": "container"
+    },
+    {
+      "path": "/mcp-server-containerd/*",
+      "target": "http://localhost:9213",
+      "name": "mcp-server-containerd",
+      "category": "container"
+    },
+    {
+      "path": "/orchestration/*",
+      "target": "http://localhost:9214",
+      "name": "mcp-server-nomad",
+      "category": "orchestration"
+    },
+    {
+      "path": "/mcp-server-nomad/*",
+      "target": "http://localhost:9214",
+      "name": "mcp-server-nomad",
+      "category": "orchestration"
+    },
+    {
+      "path": "/orchestration/*",
+      "target": "http://localhost:9215",
+      "name": "mcp-server-swarm",
+      "category": "orchestration"
+    },
+    {
+      "path": "/mcp-server-swarm/*",
+      "target": "http://localhost:9215",
+      "name": "mcp-server-swarm",
+      "category": "orchestration"
+    },
+    {
+      "path": "/service-mesh/*",
+      "target": "http://localhost:9216",
+      "name": "mcp-server-istio",
+      "category": "service-mesh"
+    },
+    {
+      "path": "/mcp-server-istio/*",
+      "target": "http://localhost:9216",
+      "name": "mcp-server-istio",
+      "category": "service-mesh"
+    },
+    {
+      "path": "/service-mesh/*",
+      "target": "http://localhost:9217",
+      "name": "mcp-server-linkerd",
+      "category": "service-mesh"
+    },
+    {
+      "path": "/mcp-server-linkerd/*",
+      "target": "http://localhost:9217",
+      "name": "mcp-server-linkerd",
+      "category": "service-mesh"
+    },
+    {
+      "path": "/api-gateway/*",
+      "target": "http://localhost:9218",
+      "name": "mcp-server-kong",
+      "category": "api-gateway"
+    },
+    {
+      "path": "/mcp-server-kong/*",
+      "target": "http://localhost:9218",
+      "name": "mcp-server-kong",
+      "category": "api-gateway"
+    },
+    {
+      "path": "/api-gateway/*",
+      "target": "http://localhost:9219",
+      "name": "mcp-server-ambassador",
+      "category": "api-gateway"
+    },
+    {
+      "path": "/mcp-server-ambassador/*",
+      "target": "http://localhost:9219",
+      "name": "mcp-server-ambassador",
+      "category": "api-gateway"
+    },
+    {
+      "path": "/secrets/*",
+      "target": "http://localhost:9220",
+      "name": "mcp-server-consul",
+      "category": "secrets"
+    },
+    {
+      "path": "/mcp-server-consul/*",
+      "target": "http://localhost:9220",
+      "name": "mcp-server-consul",
+      "category": "secrets"
+    },
+    {
+      "path": "/secrets/*",
+      "target": "http://localhost:9221",
+      "name": "mcp-server-etcd",
+      "category": "secrets"
+    },
+    {
+      "path": "/mcp-server-etcd/*",
+      "target": "http://localhost:9221",
+      "name": "mcp-server-etcd",
+      "category": "secrets"
+    },
+    {
+      "path": "/backup-solution/*",
+      "target": "http://localhost:9222",
+      "name": "mcp-server-velero",
+      "category": "backup-solution"
+    },
+    {
+      "path": "/mcp-server-velero/*",
+      "target": "http://localhost:9222",
+      "name": "mcp-server-velero",
+      "category": "backup-solution"
+    },
+    {
+      "path": "/backup-solution/*",
+      "target": "http://localhost:9223",
+      "name": "mcp-server-restic",
+      "category": "backup-solution"
+    },
+    {
+      "path": "/mcp-server-restic/*",
+      "target": "http://localhost:9223",
+      "name": "mcp-server-restic",
+      "category": "backup-solution"
+    },
+    {
+      "path": "/disaster-recovery/*",
+      "target": "http://localhost:9224",
+      "name": "mcp-server-disaster-recovery",
+      "category": "disaster-recovery"
+    },
+    {
+      "path": "/mcp-server-disaster-recovery/*",
+      "target": "http://localhost:9224",
+      "name": "mcp-server-disaster-recovery",
+      "category": "disaster-recovery"
+    },
+    {
+      "path": "/performance-testing/*",
+      "target": "http://localhost:9225",
+      "name": "mcp-server-jmeter",
+      "category": "performance-testing"
+    },
+    {
+      "path": "/mcp-server-jmeter/*",
+      "target": "http://localhost:9225",
+      "name": "mcp-server-jmeter",
+      "category": "performance-testing"
+    },
+    {
+      "path": "/performance-testing/*",
+      "target": "http://localhost:9226",
+      "name": "mcp-server-gatling",
+      "category": "performance-testing"
+    },
+    {
+      "path": "/mcp-server-gatling/*",
+      "target": "http://localhost:9226",
+      "name": "mcp-server-gatling",
+      "category": "performance-testing"
+    },
+    {
+      "path": "/security-scanning/*",
+      "target": "http://localhost:9227",
+      "name": "mcp-server-nessus",
+      "category": "security-scanning"
+    },
+    {
+      "path": "/mcp-server-nessus/*",
+      "target": "http://localhost:9227",
+      "name": "mcp-server-nessus",
+      "category": "security-scanning"
+    },
+    {
+      "path": "/security-scanning/*",
+      "target": "http://localhost:9228",
+      "name": "mcp-server-openvas",
+      "category": "security-scanning"
+    },
+    {
+      "path": "/mcp-server-openvas/*",
+      "target": "http://localhost:9228",
+      "name": "mcp-server-openvas",
+      "category": "security-scanning"
+    },
+    {
+      "path": "/compliance/*",
+      "target": "http://localhost:9229",
+      "name": "mcp-server-compliance-checker",
+      "category": "compliance"
+    },
+    {
+      "path": "/mcp-server-compliance-checker/*",
+      "target": "http://localhost:9229",
+      "name": "mcp-server-compliance-checker",
+      "category": "compliance"
+    },
+    {
+      "path": "/incident-management/*",
+      "target": "http://localhost:9230",
+      "name": "mcp-server-pagerduty",
+      "category": "incident-management"
+    },
+    {
+      "path": "/mcp-server-pagerduty/*",
+      "target": "http://localhost:9230",
+      "name": "mcp-server-pagerduty",
+      "category": "incident-management"
+    },
+    {
+      "path": "/incident-management/*",
+      "target": "http://localhost:9231",
+      "name": "mcp-server-opsgenie",
+      "category": "incident-management"
+    },
+    {
+      "path": "/mcp-server-opsgenie/*",
+      "target": "http://localhost:9231",
+      "name": "mcp-server-opsgenie",
+      "category": "incident-management"
+    },
+    {
+      "path": "/asset-management/*",
+      "target": "http://localhost:9232",
+      "name": "mcp-server-asset-tracker",
+      "category": "asset-management"
+    },
+    {
+      "path": "/mcp-server-asset-tracker/*",
+      "target": "http://localhost:9232",
+      "name": "mcp-server-asset-tracker",
+      "category": "asset-management"
+    },
+    {
+      "path": "/change-management/*",
+      "target": "http://localhost:9233",
+      "name": "mcp-server-change-tracker",
+      "category": "change-management"
+    },
+    {
+      "path": "/mcp-server-change-tracker/*",
+      "target": "http://localhost:9233",
+      "name": "mcp-server-change-tracker",
+      "category": "change-management"
+    },
+    {
+      "path": "/knowledge-management/*",
+      "target": "http://localhost:9234",
+      "name": "mcp-server-knowledge-base",
+      "category": "knowledge-management"
+    },
+    {
+      "path": "/mcp-server-knowledge-base/*",
+      "target": "http://localhost:9234",
+      "name": "mcp-server-knowledge-base",
+      "category": "knowledge-management"
+    },
+    {
+      "path": "/workflow/*",
+      "target": "http://localhost:9235",
+      "name": "mcp-server-workflow-engine",
+      "category": "workflow"
+    },
+    {
+      "path": "/mcp-server-workflow-engine/*",
+      "target": "http://localhost:9235",
+      "name": "mcp-server-workflow-engine",
+      "category": "workflow"
+    },
+    {
+      "path": "/business-intelligence/*",
+      "target": "http://localhost:9236",
+      "name": "mcp-server-tableau",
+      "category": "business-intelligence"
+    },
+    {
+      "path": "/mcp-server-tableau/*",
+      "target": "http://localhost:9236",
+      "name": "mcp-server-tableau",
+      "category": "business-intelligence"
+    },
+    {
+      "path": "/business-intelligence/*",
+      "target": "http://localhost:9237",
+      "name": "mcp-server-power-bi",
+      "category": "business-intelligence"
+    },
+    {
+      "path": "/mcp-server-power-bi/*",
+      "target": "http://localhost:9237",
+      "name": "mcp-server-power-bi",
+      "category": "business-intelligence"
+    },
+    {
+      "path": "/data-warehouse/*",
+      "target": "http://localhost:9238",
+      "name": "mcp-server-snowflake",
+      "category": "data-warehouse"
+    },
+    {
+      "path": "/mcp-server-snowflake/*",
+      "target": "http://localhost:9238",
+      "name": "mcp-server-snowflake",
+      "category": "data-warehouse"
+    },
+    {
+      "path": "/data-warehouse/*",
+      "target": "http://localhost:9239",
+      "name": "mcp-server-redshift",
+      "category": "data-warehouse"
+    },
+    {
+      "path": "/mcp-server-redshift/*",
+      "target": "http://localhost:9239",
+      "name": "mcp-server-redshift",
+      "category": "data-warehouse"
+    },
+    {
+      "path": "/etl/*",
+      "target": "http://localhost:9240",
+      "name": "mcp-server-airflow",
+      "category": "etl"
+    },
+    {
+      "path": "/mcp-server-airflow/*",
+      "target": "http://localhost:9240",
+      "name": "mcp-server-airflow",
+      "category": "etl"
+    },
+    {
+      "path": "/etl/*",
+      "target": "http://localhost:9241",
+      "name": "mcp-server-luigi",
+      "category": "etl"
+    },
+    {
+      "path": "/mcp-server-luigi/*",
+      "target": "http://localhost:9241",
+      "name": "mcp-server-luigi",
+      "category": "etl"
+    },
+    {
+      "path": "/data-lake/*",
+      "target": "http://localhost:9242",
+      "name": "mcp-server-delta-lake",
+      "category": "data-lake"
+    },
+    {
+      "path": "/mcp-server-delta-lake/*",
+      "target": "http://localhost:9242",
+      "name": "mcp-server-delta-lake",
+      "category": "data-lake"
+    },
+    {
+      "path": "/data-lake/*",
+      "target": "http://localhost:9243",
+      "name": "mcp-server-iceberg",
+      "category": "data-lake"
+    },
+    {
+      "path": "/mcp-server-iceberg/*",
+      "target": "http://localhost:9243",
+      "name": "mcp-server-iceberg",
+      "category": "data-lake"
+    },
+    {
+      "path": "/stream-processing/*",
+      "target": "http://localhost:9244",
+      "name": "mcp-server-spark-streaming",
+      "category": "stream-processing"
+    },
+    {
+      "path": "/mcp-server-spark-streaming/*",
+      "target": "http://localhost:9244",
+      "name": "mcp-server-spark-streaming",
+      "category": "stream-processing"
+    },
+    {
+      "path": "/stream-processing/*",
+      "target": "http://localhost:9245",
+      "name": "mcp-server-flink",
+      "category": "stream-processing"
+    },
+    {
+      "path": "/mcp-server-flink/*",
+      "target": "http://localhost:9245",
+      "name": "mcp-server-flink",
+      "category": "stream-processing"
+    },
+    {
+      "path": "/ml-platform/*",
+      "target": "http://localhost:9246",
+      "name": "mcp-server-mlflow",
+      "category": "ml-platform"
+    },
+    {
+      "path": "/mcp-server-mlflow/*",
+      "target": "http://localhost:9246",
+      "name": "mcp-server-mlflow",
+      "category": "ml-platform"
+    },
+    {
+      "path": "/ml-platform/*",
+      "target": "http://localhost:9247",
+      "name": "mcp-server-kubeflow",
+      "category": "ml-platform"
+    },
+    {
+      "path": "/mcp-server-kubeflow/*",
+      "target": "http://localhost:9247",
+      "name": "mcp-server-kubeflow",
+      "category": "ml-platform"
+    },
+    {
+      "path": "/feature-store/*",
+      "target": "http://localhost:9248",
+      "name": "mcp-server-feast",
+      "category": "feature-store"
+    },
+    {
+      "path": "/mcp-server-feast/*",
+      "target": "http://localhost:9248",
+      "name": "mcp-server-feast",
+      "category": "feature-store"
+    },
+    {
+      "path": "/model-serving/*",
+      "target": "http://localhost:9249",
+      "name": "mcp-server-seldon",
+      "category": "model-serving"
+    },
+    {
+      "path": "/mcp-server-seldon/*",
+      "target": "http://localhost:9249",
+      "name": "mcp-server-seldon",
+      "category": "model-serving"
+    },
+    {
+      "path": "/model-serving/*",
+      "target": "http://localhost:9250",
+      "name": "mcp-server-kserve",
+      "category": "model-serving"
+    },
+    {
+      "path": "/mcp-server-kserve/*",
+      "target": "http://localhost:9250",
+      "name": "mcp-server-kserve",
+      "category": "model-serving"
+    },
+    {
+      "path": "/data-visualization/*",
+      "target": "http://localhost:9251",
+      "name": "mcp-server-d3js",
+      "category": "data-visualization"
+    },
+    {
+      "path": "/mcp-server-d3js/*",
+      "target": "http://localhost:9251",
+      "name": "mcp-server-d3js",
+      "category": "data-visualization"
+    },
+    {
+      "path": "/data-visualization/*",
+      "target": "http://localhost:9252",
+      "name": "mcp-server-plotly",
+      "category": "data-visualization"
+    },
+    {
+      "path": "/mcp-server-plotly/*",
+      "target": "http://localhost:9252",
+      "name": "mcp-server-plotly",
+      "category": "data-visualization"
+    },
+    {
+      "path": "/gis/*",
+      "target": "http://localhost:9253",
+      "name": "mcp-server-qgis",
+      "category": "gis"
+    },
+    {
+      "path": "/mcp-server-qgis/*",
+      "target": "http://localhost:9253",
+      "name": "mcp-server-qgis",
+      "category": "gis"
+    },
+    {
+      "path": "/gis/*",
+      "target": "http://localhost:9254",
+      "name": "mcp-server-arcgis",
+      "category": "gis"
+    },
+    {
+      "path": "/mcp-server-arcgis/*",
+      "target": "http://localhost:9254",
+      "name": "mcp-server-arcgis",
+      "category": "gis"
+    },
+    {
+      "path": "/remote-sensing/*",
+      "target": "http://localhost:9255",
+      "name": "mcp-server-satellite-imagery",
+      "category": "remote-sensing"
+    },
+    {
+      "path": "/mcp-server-satellite-imagery/*",
+      "target": "http://localhost:9255",
+      "name": "mcp-server-satellite-imagery",
+      "category": "remote-sensing"
+    },
+    {
+      "path": "/environmental/*",
+      "target": "http://localhost:9256",
+      "name": "mcp-server-air-quality",
+      "category": "environmental"
+    },
+    {
+      "path": "/mcp-server-air-quality/*",
+      "target": "http://localhost:9256",
+      "name": "mcp-server-air-quality",
+      "category": "environmental"
+    },
+    {
+      "path": "/environmental/*",
+      "target": "http://localhost:9257",
+      "name": "mcp-server-water-quality",
+      "category": "environmental"
+    },
+    {
+      "path": "/mcp-server-water-quality/*",
+      "target": "http://localhost:9257",
+      "name": "mcp-server-water-quality",
+      "category": "environmental"
+    },
+    {
+      "path": "/smart-city/*",
+      "target": "http://localhost:9258",
+      "name": "mcp-server-traffic-management",
+      "category": "smart-city"
+    },
+    {
+      "path": "/mcp-server-traffic-management/*",
+      "target": "http://localhost:9258",
+      "name": "mcp-server-traffic-management",
+      "category": "smart-city"
+    },
+    {
+      "path": "/smart-city/*",
+      "target": "http://localhost:9259",
+      "name": "mcp-server-waste-management",
+      "category": "smart-city"
+    },
+    {
+      "path": "/mcp-server-waste-management/*",
+      "target": "http://localhost:9259",
+      "name": "mcp-server-waste-management",
+      "category": "smart-city"
+    },
+    {
+      "path": "/telecom/*",
+      "target": "http://localhost:9260",
+      "name": "mcp-server-5g-network",
+      "category": "telecom"
+    },
+    {
+      "path": "/mcp-server-5g-network/*",
+      "target": "http://localhost:9260",
+      "name": "mcp-server-5g-network",
+      "category": "telecom"
+    },
+    {
+      "path": "/telecom/*",
+      "target": "http://localhost:9261",
+      "name": "mcp-server-network-monitoring",
+      "category": "telecom"
+    },
+    {
+      "path": "/mcp-server-network-monitoring/*",
+      "target": "http://localhost:9261",
+      "name": "mcp-server-network-monitoring",
+      "category": "telecom"
+    },
+    {
+      "path": "/robotics/*",
+      "target": "http://localhost:9262",
+      "name": "mcp-server-ros",
+      "category": "robotics"
+    },
+    {
+      "path": "/mcp-server-ros/*",
+      "target": "http://localhost:9262",
+      "name": "mcp-server-ros",
+      "category": "robotics"
+    },
+    {
+      "path": "/robotics/*",
+      "target": "http://localhost:9263",
+      "name": "mcp-server-robot-control",
+      "category": "robotics"
+    },
+    {
+      "path": "/mcp-server-robot-control/*",
+      "target": "http://localhost:9263",
+      "name": "mcp-server-robot-control",
+      "category": "robotics"
+    },
+    {
+      "path": "/ar/*",
+      "target": "http://localhost:9264",
+      "name": "mcp-server-ar-toolkit",
+      "category": "ar"
+    },
+    {
+      "path": "/mcp-server-ar-toolkit/*",
+      "target": "http://localhost:9264",
+      "name": "mcp-server-ar-toolkit",
+      "category": "ar"
+    },
+    {
+      "path": "/vr/*",
+      "target": "http://localhost:9265",
+      "name": "mcp-server-vr-engine",
+      "category": "vr"
+    },
+    {
+      "path": "/mcp-server-vr-engine/*",
+      "target": "http://localhost:9265",
+      "name": "mcp-server-vr-engine",
+      "category": "vr"
+    },
+    {
+      "path": "/3d-modeling/*",
+      "target": "http://localhost:9266",
+      "name": "mcp-server-blender",
+      "category": "3d-modeling"
+    },
+    {
+      "path": "/mcp-server-blender/*",
+      "target": "http://localhost:9266",
+      "name": "mcp-server-blender",
+      "category": "3d-modeling"
+    },
+    {
+      "path": "/3d-modeling/*",
+      "target": "http://localhost:9267",
+      "name": "mcp-server-maya",
+      "category": "3d-modeling"
+    },
+    {
+      "path": "/mcp-server-maya/*",
+      "target": "http://localhost:9267",
+      "name": "mcp-server-maya",
+      "category": "3d-modeling"
+    },
+    {
+      "path": "/cad/*",
+      "target": "http://localhost:9268",
+      "name": "mcp-server-autocad",
+      "category": "cad"
+    },
+    {
+      "path": "/mcp-server-autocad/*",
+      "target": "http://localhost:9268",
+      "name": "mcp-server-autocad",
+      "category": "cad"
+    },
+    {
+      "path": "/cad/*",
+      "target": "http://localhost:9269",
+      "name": "mcp-server-solidworks",
+      "category": "cad"
+    },
+    {
+      "path": "/mcp-server-solidworks/*",
+      "target": "http://localhost:9269",
+      "name": "mcp-server-solidworks",
+      "category": "cad"
+    },
+    {
+      "path": "/simulation/*",
+      "target": "http://localhost:9270",
+      "name": "mcp-server-ansys",
+      "category": "simulation"
+    },
+    {
+      "path": "/mcp-server-ansys/*",
+      "target": "http://localhost:9270",
+      "name": "mcp-server-ansys",
+      "category": "simulation"
+    },
+    {
+      "path": "/simulation/*",
+      "target": "http://localhost:9271",
+      "name": "mcp-server-matlab",
+      "category": "simulation"
+    },
+    {
+      "path": "/mcp-server-matlab/*",
+      "target": "http://localhost:9271",
+      "name": "mcp-server-matlab",
+      "category": "simulation"
+    },
+    {
+      "path": "/scientific-computing/*",
+      "target": "http://localhost:9272",
+      "name": "mcp-server-jupyter",
+      "category": "scientific-computing"
+    },
+    {
+      "path": "/mcp-server-jupyter/*",
+      "target": "http://localhost:9272",
+      "name": "mcp-server-jupyter",
+      "category": "scientific-computing"
+    },
+    {
+      "path": "/scientific-computing/*",
+      "target": "http://localhost:9273",
+      "name": "mcp-server-r-studio",
+      "category": "scientific-computing"
+    },
+    {
+      "path": "/mcp-server-r-studio/*",
+      "target": "http://localhost:9273",
+      "name": "mcp-server-r-studio",
+      "category": "scientific-computing"
+    },
+    {
+      "path": "/bioinformatics/*",
+      "target": "http://localhost:9274",
+      "name": "mcp-server-bioconductor",
+      "category": "bioinformatics"
+    },
+    {
+      "path": "/mcp-server-bioconductor/*",
+      "target": "http://localhost:9274",
+      "name": "mcp-server-bioconductor",
+      "category": "bioinformatics"
+    },
+    {
+      "path": "/bioinformatics/*",
+      "target": "http://localhost:9275",
+      "name": "mcp-server-galaxy",
+      "category": "bioinformatics"
+    },
+    {
+      "path": "/mcp-server-galaxy/*",
+      "target": "http://localhost:9275",
+      "name": "mcp-server-galaxy",
+      "category": "bioinformatics"
+    },
+    {
+      "path": "/genomics/*",
+      "target": "http://localhost:9276",
+      "name": "mcp-server-gatk",
+      "category": "genomics"
+    },
+    {
+      "path": "/mcp-server-gatk/*",
+      "target": "http://localhost:9276",
+      "name": "mcp-server-gatk",
+      "category": "genomics"
+    },
+    {
+      "path": "/genomics/*",
+      "target": "http://localhost:9277",
+      "name": "mcp-server-samtools",
+      "category": "genomics"
+    },
+    {
+      "path": "/mcp-server-samtools/*",
+      "target": "http://localhost:9277",
+      "name": "mcp-server-samtools",
+      "category": "genomics"
+    },
+    {
+      "path": "/proteomics/*",
+      "target": "http://localhost:9278",
+      "name": "mcp-server-maxquant",
+      "category": "proteomics"
+    },
+    {
+      "path": "/mcp-server-maxquant/*",
+      "target": "http://localhost:9278",
+      "name": "mcp-server-maxquant",
+      "category": "proteomics"
+    },
+    {
+      "path": "/drug-discovery/*",
+      "target": "http://localhost:9279",
+      "name": "mcp-server-rdkit",
+      "category": "drug-discovery"
+    },
+    {
+      "path": "/mcp-server-rdkit/*",
+      "target": "http://localhost:9279",
+      "name": "mcp-server-rdkit",
+      "category": "drug-discovery"
+    },
+    {
+      "path": "/drug-discovery/*",
+      "target": "http://localhost:9280",
+      "name": "mcp-server-openeye",
+      "category": "drug-discovery"
+    },
+    {
+      "path": "/mcp-server-openeye/*",
+      "target": "http://localhost:9280",
+      "name": "mcp-server-openeye",
+      "category": "drug-discovery"
+    },
+    {
+      "path": "/medical-imaging/*",
+      "target": "http://localhost:9281",
+      "name": "mcp-server-dicom",
+      "category": "medical-imaging"
+    },
+    {
+      "path": "/mcp-server-dicom/*",
+      "target": "http://localhost:9281",
+      "name": "mcp-server-dicom",
+      "category": "medical-imaging"
+    },
+    {
+      "path": "/medical-imaging/*",
+      "target": "http://localhost:9282",
+      "name": "mcp-server-itk",
+      "category": "medical-imaging"
+    },
+    {
+      "path": "/mcp-server-itk/*",
+      "target": "http://localhost:9282",
+      "name": "mcp-server-itk",
+      "category": "medical-imaging"
+    },
+    {
+      "path": "/clinical-trials/*",
+      "target": "http://localhost:9283",
+      "name": "mcp-server-clinical-data",
+      "category": "clinical-trials"
+    },
+    {
+      "path": "/mcp-server-clinical-data/*",
+      "target": "http://localhost:9283",
+      "name": "mcp-server-clinical-data",
+      "category": "clinical-trials"
+    },
+    {
+      "path": "/telemedicine/*",
+      "target": "http://localhost:9284",
+      "name": "mcp-server-telehealth",
+      "category": "telemedicine"
+    },
+    {
+      "path": "/mcp-server-telehealth/*",
+      "target": "http://localhost:9284",
+      "name": "mcp-server-telehealth",
+      "category": "telemedicine"
+    },
+    {
+      "path": "/ehr/*",
+      "target": "http://localhost:9285",
+      "name": "mcp-server-ehr",
+      "category": "ehr"
+    },
+    {
+      "path": "/mcp-server-ehr/*",
+      "target": "http://localhost:9285",
+      "name": "mcp-server-ehr",
+      "category": "ehr"
+    },
+    {
+      "path": "/ehr/*",
+      "target": "http://localhost:9286",
+      "name": "mcp-server-fhir",
+      "category": "ehr"
+    },
+    {
+      "path": "/mcp-server-fhir/*",
+      "target": "http://localhost:9286",
+      "name": "mcp-server-fhir",
+      "category": "ehr"
+    },
+    {
+      "path": "/pharmacy/*",
+      "target": "http://localhost:9287",
+      "name": "mcp-server-pharmacy-management",
+      "category": "pharmacy"
+    },
+    {
+      "path": "/mcp-server-pharmacy-management/*",
+      "target": "http://localhost:9287",
+      "name": "mcp-server-pharmacy-management",
+      "category": "pharmacy"
+    },
+    {
+      "path": "/laboratory/*",
+      "target": "http://localhost:9288",
+      "name": "mcp-server-lis",
+      "category": "laboratory"
+    },
+    {
+      "path": "/mcp-server-lis/*",
+      "target": "http://localhost:9288",
+      "name": "mcp-server-lis",
+      "category": "laboratory"
+    },
+    {
+      "path": "/radiology/*",
+      "target": "http://localhost:9289",
+      "name": "mcp-server-ris",
+      "category": "radiology"
+    },
+    {
+      "path": "/mcp-server-ris/*",
+      "target": "http://localhost:9289",
+      "name": "mcp-server-ris",
+      "category": "radiology"
+    },
+    {
+      "path": "/hospital/*",
+      "target": "http://localhost:9290",
+      "name": "mcp-server-his",
+      "category": "hospital"
+    },
+    {
+      "path": "/mcp-server-his/*",
+      "target": "http://localhost:9290",
+      "name": "mcp-server-his",
+      "category": "hospital"
+    },
+    {
+      "path": "/patient-monitoring/*",
+      "target": "http://localhost:9291",
+      "name": "mcp-server-patient-monitoring",
+      "category": "patient-monitoring"
+    },
+    {
+      "path": "/mcp-server-patient-monitoring/*",
+      "target": "http://localhost:9291",
+      "name": "mcp-server-patient-monitoring",
+      "category": "patient-monitoring"
+    },
+    {
+      "path": "/medical-devices/*",
+      "target": "http://localhost:9292",
+      "name": "mcp-server-medical-devices",
+      "category": "medical-devices"
+    },
+    {
+      "path": "/mcp-server-medical-devices/*",
+      "target": "http://localhost:9292",
+      "name": "mcp-server-medical-devices",
+      "category": "medical-devices"
+    },
+    {
+      "path": "/regulatory/*",
+      "target": "http://localhost:9293",
+      "name": "mcp-server-fda-compliance",
+      "category": "regulatory"
+    },
+    {
+      "path": "/mcp-server-fda-compliance/*",
+      "target": "http://localhost:9293",
+      "name": "mcp-server-fda-compliance",
+      "category": "regulatory"
+    },
+    {
+      "path": "/regulatory/*",
+      "target": "http://localhost:9294",
+      "name": "mcp-server-hipaa-compliance",
+      "category": "regulatory"
+    },
+    {
+      "path": "/mcp-server-hipaa-compliance/*",
+      "target": "http://localhost:9294",
+      "name": "mcp-server-hipaa-compliance",
+      "category": "regulatory"
+    },
+    {
+      "path": "/quality-assurance/*",
+      "target": "http://localhost:9295",
+      "name": "mcp-server-qa-automation",
+      "category": "quality-assurance"
+    },
+    {
+      "path": "/mcp-server-qa-automation/*",
+      "target": "http://localhost:9295",
+      "name": "mcp-server-qa-automation",
+      "category": "quality-assurance"
+    },
+    {
+      "path": "/supply-chain/*",
+      "target": "http://localhost:9296",
+      "name": "mcp-server-supply-chain",
+      "category": "supply-chain"
+    },
+    {
+      "path": "/mcp-server-supply-chain/*",
+      "target": "http://localhost:9296",
+      "name": "mcp-server-supply-chain",
+      "category": "supply-chain"
+    },
+    {
+      "path": "/procurement/*",
+      "target": "http://localhost:9297",
+      "name": "mcp-server-procurement",
+      "category": "procurement"
+    },
+    {
+      "path": "/mcp-server-procurement/*",
+      "target": "http://localhost:9297",
+      "name": "mcp-server-procurement",
+      "category": "procurement"
+    },
+    {
+      "path": "/vendor-management/*",
+      "target": "http://localhost:9298",
+      "name": "mcp-server-vendor-management",
+      "category": "vendor-management"
+    },
+    {
+      "path": "/mcp-server-vendor-management/*",
+      "target": "http://localhost:9298",
+      "name": "mcp-server-vendor-management",
+      "category": "vendor-management"
+    },
+    {
+      "path": "/contract-management/*",
+      "target": "http://localhost:9299",
+      "name": "mcp-server-contract-management",
+      "category": "contract-management"
+    },
+    {
+      "path": "/mcp-server-contract-management/*",
+      "target": "http://localhost:9299",
+      "name": "mcp-server-contract-management",
+      "category": "contract-management"
+    },
+    {
+      "path": "/risk-management/*",
+      "target": "http://localhost:9300",
+      "name": "mcp-server-risk-assessment",
+      "category": "risk-management"
+    },
+    {
+      "path": "/mcp-server-risk-assessment/*",
+      "target": "http://localhost:9300",
+      "name": "mcp-server-risk-assessment",
+      "category": "risk-management"
+    },
+    {
+      "path": "/audit/*",
+      "target": "http://localhost:9301",
+      "name": "mcp-server-audit-management",
+      "category": "audit"
+    },
+    {
+      "path": "/mcp-server-audit-management/*",
+      "target": "http://localhost:9301",
+      "name": "mcp-server-audit-management",
+      "category": "audit"
+    },
+    {
+      "path": "/governance/*",
+      "target": "http://localhost:9302",
+      "name": "mcp-server-governance",
+      "category": "governance"
+    },
+    {
+      "path": "/mcp-server-governance/*",
+      "target": "http://localhost:9302",
+      "name": "mcp-server-governance",
+      "category": "governance"
+    },
+    {
+      "path": "/data-governance/*",
+      "target": "http://localhost:9303",
+      "name": "mcp-server-data-governance",
+      "category": "data-governance"
+    },
+    {
+      "path": "/mcp-server-data-governance/*",
+      "target": "http://localhost:9303",
+      "name": "mcp-server-data-governance",
+      "category": "data-governance"
+    },
+    {
+      "path": "/privacy/*",
+      "target": "http://localhost:9304",
+      "name": "mcp-server-privacy-management",
+      "category": "privacy"
+    },
+    {
+      "path": "/mcp-server-privacy-management/*",
+      "target": "http://localhost:9304",
+      "name": "mcp-server-privacy-management",
+      "category": "privacy"
+    },
+    {
+      "path": "/identity/*",
+      "target": "http://localhost:9305",
+      "name": "mcp-server-identity-management",
+      "category": "identity"
+    },
+    {
+      "path": "/mcp-server-identity-management/*",
+      "target": "http://localhost:9305",
+      "name": "mcp-server-identity-management",
+      "category": "identity"
+    },
+    {
+      "path": "/access-control/*",
+      "target": "http://localhost:9306",
+      "name": "mcp-server-access-control",
+      "category": "access-control"
+    },
+    {
+      "path": "/mcp-server-access-control/*",
+      "target": "http://localhost:9306",
+      "name": "mcp-server-access-control",
+      "category": "access-control"
+    },
+    {
+      "path": "/sso/*",
+      "target": "http://localhost:9307",
+      "name": "mcp-server-sso",
+      "category": "sso"
+    },
+    {
+      "path": "/mcp-server-sso/*",
+      "target": "http://localhost:9307",
+      "name": "mcp-server-sso",
+      "category": "sso"
+    },
+    {
+      "path": "/mfa/*",
+      "target": "http://localhost:9308",
+      "name": "mcp-server-mfa",
+      "category": "mfa"
+    },
+    {
+      "path": "/mcp-server-mfa/*",
+      "target": "http://localhost:9308",
+      "name": "mcp-server-mfa",
+      "category": "mfa"
+    },
+    {
+      "path": "/certificate/*",
+      "target": "http://localhost:9309",
+      "name": "mcp-server-certificate-management",
+      "category": "certificate"
+    },
+    {
+      "path": "/mcp-server-certificate-management/*",
+      "target": "http://localhost:9309",
+      "name": "mcp-server-certificate-management",
+      "category": "certificate"
+    },
+    {
+      "path": "/key-management/*",
+      "target": "http://localhost:9310",
+      "name": "mcp-server-key-management",
+      "category": "key-management"
+    },
+    {
+      "path": "/mcp-server-key-management/*",
+      "target": "http://localhost:9310",
+      "name": "mcp-server-key-management",
+      "category": "key-management"
+    },
+    {
+      "path": "/encryption/*",
+      "target": "http://localhost:9311",
+      "name": "mcp-server-encryption",
+      "category": "encryption"
+    },
+    {
+      "path": "/mcp-server-encryption/*",
+      "target": "http://localhost:9311",
+      "name": "mcp-server-encryption",
+      "category": "encryption"
+    },
+    {
+      "path": "/digital-signatures/*",
+      "target": "http://localhost:9312",
+      "name": "mcp-server-digital-signatures",
+      "category": "digital-signatures"
+    },
+    {
+      "path": "/mcp-server-digital-signatures/*",
+      "target": "http://localhost:9312",
+      "name": "mcp-server-digital-signatures",
+      "category": "digital-signatures"
+    },
+    {
+      "path": "/blockchain-security/*",
+      "target": "http://localhost:9313",
+      "name": "mcp-server-blockchain-security",
+      "category": "blockchain-security"
+    },
+    {
+      "path": "/mcp-server-blockchain-security/*",
+      "target": "http://localhost:9313",
+      "name": "mcp-server-blockchain-security",
+      "category": "blockchain-security"
+    },
+    {
+      "path": "/threat-intelligence/*",
+      "target": "http://localhost:9314",
+      "name": "mcp-server-threat-intelligence",
+      "category": "threat-intelligence"
+    },
+    {
+      "path": "/mcp-server-threat-intelligence/*",
+      "target": "http://localhost:9314",
+      "name": "mcp-server-threat-intelligence",
+      "category": "threat-intelligence"
+    },
+    {
+      "path": "/vulnerability/*",
+      "target": "http://localhost:9315",
+      "name": "mcp-server-vulnerability-management",
+      "category": "vulnerability"
+    },
+    {
+      "path": "/mcp-server-vulnerability-management/*",
+      "target": "http://localhost:9315",
+      "name": "mcp-server-vulnerability-management",
+      "category": "vulnerability"
+    },
+    {
+      "path": "/penetration-testing/*",
+      "target": "http://localhost:9316",
+      "name": "mcp-server-penetration-testing",
+      "category": "penetration-testing"
+    },
+    {
+      "path": "/mcp-server-penetration-testing/*",
+      "target": "http://localhost:9316",
+      "name": "mcp-server-penetration-testing",
+      "category": "penetration-testing"
+    },
+    {
+      "path": "/siem/*",
+      "target": "http://localhost:9317",
+      "name": "mcp-server-siem",
+      "category": "siem"
+    },
+    {
+      "path": "/mcp-server-siem/*",
+      "target": "http://localhost:9317",
+      "name": "mcp-server-siem",
+      "category": "siem"
+    },
+    {
+      "path": "/security-orchestration/*",
+      "target": "http://localhost:9318",
+      "name": "mcp-server-security-orchestration",
+      "category": "security-orchestration"
+    },
+    {
+      "path": "/mcp-server-security-orchestration/*",
+      "target": "http://localhost:9318",
+      "name": "mcp-server-security-orchestration",
+      "category": "security-orchestration"
+    },
+    {
+      "path": "/fraud-detection/*",
+      "target": "http://localhost:9319",
+      "name": "mcp-server-fraud-detection",
+      "category": "fraud-detection"
+    },
+    {
+      "path": "/mcp-server-fraud-detection/*",
+      "target": "http://localhost:9319",
+      "name": "mcp-server-fraud-detection",
+      "category": "fraud-detection"
+    },
+    {
+      "path": "/aml/*",
+      "target": "http://localhost:9320",
+      "name": "mcp-server-aml",
+      "category": "aml"
+    },
+    {
+      "path": "/mcp-server-aml/*",
+      "target": "http://localhost:9320",
+      "name": "mcp-server-aml",
+      "category": "aml"
+    },
+    {
+      "path": "/kyc/*",
+      "target": "http://localhost:9321",
+      "name": "mcp-server-kyc",
+      "category": "kyc"
+    },
+    {
+      "path": "/mcp-server-kyc/*",
+      "target": "http://localhost:9321",
+      "name": "mcp-server-kyc",
+      "category": "kyc"
+    },
+    {
+      "path": "/credit-scoring/*",
+      "target": "http://localhost:9322",
+      "name": "mcp-server-credit-scoring",
+      "category": "credit-scoring"
+    },
+    {
+      "path": "/mcp-server-credit-scoring/*",
+      "target": "http://localhost:9322",
+      "name": "mcp-server-credit-scoring",
+      "category": "credit-scoring"
+    },
+    {
+      "path": "/loan-management/*",
+      "target": "http://localhost:9323",
+      "name": "mcp-server-loan-management",
+      "category": "loan-management"
+    },
+    {
+      "path": "/mcp-server-loan-management/*",
+      "target": "http://localhost:9323",
+      "name": "mcp-server-loan-management",
+      "category": "loan-management"
+    },
+    {
+      "path": "/investment/*",
+      "target": "http://localhost:9324",
+      "name": "mcp-server-investment-management",
+      "category": "investment"
+    },
+    {
+      "path": "/mcp-server-investment-management/*",
+      "target": "http://localhost:9324",
+      "name": "mcp-server-investment-management",
+      "category": "investment"
+    },
+    {
+      "path": "/portfolio/*",
+      "target": "http://localhost:9325",
+      "name": "mcp-server-portfolio-management",
+      "category": "portfolio"
+    },
+    {
+      "path": "/mcp-server-portfolio-management/*",
+      "target": "http://localhost:9325",
+      "name": "mcp-server-portfolio-management",
+      "category": "portfolio"
+    },
+    {
+      "path": "/trading/*",
+      "target": "http://localhost:9326",
+      "name": "mcp-server-trading-systems",
+      "category": "trading"
+    },
+    {
+      "path": "/mcp-server-trading-systems/*",
+      "target": "http://localhost:9326",
+      "name": "mcp-server-trading-systems",
+      "category": "trading"
+    },
+    {
+      "path": "/market-data/*",
+      "target": "http://localhost:9327",
+      "name": "mcp-server-market-data",
+      "category": "market-data"
+    },
+    {
+      "path": "/mcp-server-market-data/*",
+      "target": "http://localhost:9327",
+      "name": "mcp-server-market-data",
+      "category": "market-data"
+    },
+    {
+      "path": "/financial-reporting/*",
+      "target": "http://localhost:9328",
+      "name": "mcp-server-financial-reporting",
+      "category": "financial-reporting"
+    },
+    {
+      "path": "/mcp-server-financial-reporting/*",
+      "target": "http://localhost:9328",
+      "name": "mcp-server-financial-reporting",
+      "category": "financial-reporting"
+    },
+    {
+      "path": "/tax/*",
+      "target": "http://localhost:9329",
+      "name": "mcp-server-tax-management",
+      "category": "tax"
+    },
+    {
+      "path": "/mcp-server-tax-management/*",
+      "target": "http://localhost:9329",
+      "name": "mcp-server-tax-management",
+      "category": "tax"
+    },
+    {
+      "path": "/payroll/*",
+      "target": "http://localhost:9330",
+      "name": "mcp-server-payroll",
+      "category": "payroll"
+    },
+    {
+      "path": "/mcp-server-payroll/*",
+      "target": "http://localhost:9330",
+      "name": "mcp-server-payroll",
+      "category": "payroll"
+    },
+    {
+      "path": "/expense/*",
+      "target": "http://localhost:9331",
+      "name": "mcp-server-expense-management",
+      "category": "expense"
+    },
+    {
+      "path": "/mcp-server-expense-management/*",
+      "target": "http://localhost:9331",
+      "name": "mcp-server-expense-management",
+      "category": "expense"
+    },
+    {
+      "path": "/budget/*",
+      "target": "http://localhost:9332",
+      "name": "mcp-server-budget-planning",
+      "category": "budget"
+    },
+    {
+      "path": "/mcp-server-budget-planning/*",
+      "target": "http://localhost:9332",
+      "name": "mcp-server-budget-planning",
+      "category": "budget"
+    },
+    {
+      "path": "/financial-analytics/*",
+      "target": "http://localhost:9333",
+      "name": "mcp-server-financial-analytics",
+      "category": "financial-analytics"
+    },
+    {
+      "path": "/mcp-server-financial-analytics/*",
+      "target": "http://localhost:9333",
+      "name": "mcp-server-financial-analytics",
+      "category": "financial-analytics"
+    },
+    {
+      "path": "/regulatory-reporting/*",
+      "target": "http://localhost:9334",
+      "name": "mcp-server-regulatory-reporting",
+      "category": "regulatory-reporting"
+    },
+    {
+      "path": "/mcp-server-regulatory-reporting/*",
+      "target": "http://localhost:9334",
+      "name": "mcp-server-regulatory-reporting",
+      "category": "regulatory-reporting"
+    },
+    {
+      "path": "/basel/*",
+      "target": "http://localhost:9335",
+      "name": "mcp-server-basel-compliance",
+      "category": "basel"
+    },
+    {
+      "path": "/mcp-server-basel-compliance/*",
+      "target": "http://localhost:9335",
+      "name": "mcp-server-basel-compliance",
+      "category": "basel"
+    },
+    {
+      "path": "/solvency/*",
+      "target": "http://localhost:9336",
+      "name": "mcp-server-solvency-ii",
+      "category": "solvency"
+    },
+    {
+      "path": "/mcp-server-solvency-ii/*",
+      "target": "http://localhost:9336",
+      "name": "mcp-server-solvency-ii",
+      "category": "solvency"
+    },
+    {
+      "path": "/ifrs/*",
+      "target": "http://localhost:9337",
+      "name": "mcp-server-ifrs-reporting",
+      "category": "ifrs"
+    },
+    {
+      "path": "/mcp-server-ifrs-reporting/*",
+      "target": "http://localhost:9337",
+      "name": "mcp-server-ifrs-reporting",
+      "category": "ifrs"
+    },
+    {
+      "path": "/gaap/*",
+      "target": "http://localhost:9338",
+      "name": "mcp-server-gaap-reporting",
+      "category": "gaap"
+    },
+    {
+      "path": "/mcp-server-gaap-reporting/*",
+      "target": "http://localhost:9338",
+      "name": "mcp-server-gaap-reporting",
+      "category": "gaap"
+    },
+    {
+      "path": "/esg/*",
+      "target": "http://localhost:9339",
+      "name": "mcp-server-esg-reporting",
+      "category": "esg"
+    },
+    {
+      "path": "/mcp-server-esg-reporting/*",
+      "target": "http://localhost:9339",
+      "name": "mcp-server-esg-reporting",
+      "category": "esg"
+    },
+    {
+      "path": "/sustainability/*",
+      "target": "http://localhost:9340",
+      "name": "mcp-server-sustainability-tracking",
+      "category": "sustainability"
+    },
+    {
+      "path": "/mcp-server-sustainability-tracking/*",
+      "target": "http://localhost:9340",
+      "name": "mcp-server-sustainability-tracking",
+      "category": "sustainability"
+    },
+    {
+      "path": "/carbon/*",
+      "target": "http://localhost:9341",
+      "name": "mcp-server-carbon-footprint",
+      "category": "carbon"
+    },
+    {
+      "path": "/mcp-server-carbon-footprint/*",
+      "target": "http://localhost:9341",
+      "name": "mcp-server-carbon-footprint",
+      "category": "carbon"
+    },
+    {
+      "path": "/renewable-energy/*",
+      "target": "http://localhost:9342",
+      "name": "mcp-server-renewable-energy",
+      "category": "renewable-energy"
+    },
+    {
+      "path": "/mcp-server-renewable-energy/*",
+      "target": "http://localhost:9342",
+      "name": "mcp-server-renewable-energy",
+      "category": "renewable-energy"
+    },
+    {
+      "path": "/waste-tracking/*",
+      "target": "http://localhost:9343",
+      "name": "mcp-server-waste-tracking",
+      "category": "waste-tracking"
+    },
+    {
+      "path": "/mcp-server-waste-tracking/*",
+      "target": "http://localhost:9343",
+      "name": "mcp-server-waste-tracking",
+      "category": "waste-tracking"
+    },
+    {
+      "path": "/water-management/*",
+      "target": "http://localhost:9344",
+      "name": "mcp-server-water-management",
+      "category": "water-management"
+    },
+    {
+      "path": "/mcp-server-water-management/*",
+      "target": "http://localhost:9344",
+      "name": "mcp-server-water-management",
+      "category": "water-management"
+    },
+    {
+      "path": "/circular-economy/*",
+      "target": "http://localhost:9345",
+      "name": "mcp-server-circular-economy",
+      "category": "circular-economy"
+    },
+    {
+      "path": "/mcp-server-circular-economy/*",
+      "target": "http://localhost:9345",
+      "name": "mcp-server-circular-economy",
+      "category": "circular-economy"
+    }
+  ],
+  "loadBalancing": {
+    "strategy": "round-robin",
+    "healthCheck": {
+      "enabled": true,
+      "interval": 30000,
+      "timeout": 5000,
+      "retries": 3
+    }
+  },
+  "categories": {
+    "aggregator": [
+      {
+        "name": "mcp-server-aggregator",
+        "port": 9000,
+        "url": "http://localhost:9000"
+      }
+    ],
+    "search": [
+      {
+        "name": "mcp-servers-kagi",
+        "port": 9001,
+        "url": "http://localhost:9001"
+      }
+    ],
+    "productivity": [
+      {
+        "name": "mcp-server-raycast",
+        "port": 9002,
+        "url": "http://localhost:9002"
+      },
+      {
+        "name": "mcp-server-notion",
+        "port": 9004,
+        "url": "http://localhost:9004"
+      },
+      {
+        "name": "mcp-server-todoist",
+        "port": 9005,
+        "url": "http://localhost:9005"
+      }
+    ],
+    "notes": [
+      {
+        "name": "mcp-server-obsidian",
+        "port": 9003,
+        "url": "http://localhost:9003"
+      }
+    ],
+    "project-management": [
+      {
+        "name": "mcp-server-linear",
+        "port": 9006,
+        "url": "http://localhost:9006"
+      },
+      {
+        "name": "mcp-server-jira",
+        "port": 9007,
+        "url": "http://localhost:9007"
+      },
+      {
+        "name": "mcp-server-trello",
+        "port": 9008,
+        "url": "http://localhost:9008"
+      },
+      {
+        "name": "mcp-server-asana",
+        "port": 9009,
+        "url": "http://localhost:9009"
+      }
+    ],
+    "communication": [
+      {
+        "name": "mcp-server-slack",
+        "port": 9010,
+        "url": "http://localhost:9010"
+      },
+      {
+        "name": "mcp-server-discord",
+        "port": 9011,
+        "url": "http://localhost:9011"
+      },
+      {
+        "name": "mcp-server-telegram",
+        "port": 9012,
+        "url": "http://localhost:9012"
+      },
+      {
+        "name": "mcp-server-whatsapp",
+        "port": 9013,
+        "url": "http://localhost:9013"
+      }
+    ],
+    "database": [
+      {
+        "name": "mcp-server-sqlite",
+        "port": 9014,
+        "url": "http://localhost:9014"
+      },
+      {
+        "name": "mcp-server-postgres",
+        "port": 9015,
+        "url": "http://localhost:9015"
+      },
+      {
+        "name": "mcp-server-mysql",
+        "port": 9016,
+        "url": "http://localhost:9016"
+      },
+      {
+        "name": "mcp-server-mongodb",
+        "port": 9017,
+        "url": "http://localhost:9017"
+      },
+      {
+        "name": "mcp-server-redis",
+        "port": 9018,
+        "url": "http://localhost:9018"
+      },
+      {
+        "name": "mcp-server-elasticsearch",
+        "port": 9019,
+        "url": "http://localhost:9019"
+      }
+    ],
+    "development": [
+      {
+        "name": "mcp-server-github",
+        "port": 9020,
+        "url": "http://localhost:9020"
+      },
+      {
+        "name": "mcp-server-gitlab",
+        "port": 9021,
+        "url": "http://localhost:9021"
+      },
+      {
+        "name": "mcp-server-bitbucket",
+        "port": 9022,
+        "url": "http://localhost:9022"
+      },
+      {
+        "name": "mcp-server-docker",
+        "port": 9023,
+        "url": "http://localhost:9023"
+      },
+      {
+        "name": "mcp-server-kubernetes",
+        "port": 9024,
+        "url": "http://localhost:9024"
+      },
+      {
+        "name": "mcp-server-jenkins",
+        "port": 9025,
+        "url": "http://localhost:9025"
+      },
+      {
+        "name": "mcp-server-circleci",
+        "port": 9026,
+        "url": "http://localhost:9026"
+      },
+      {
+        "name": "mcp-server-travis",
+        "port": 9027,
+        "url": "http://localhost:9027"
+      }
+    ],
+    "cloud": [
+      {
+        "name": "mcp-server-aws",
+        "port": 9028,
+        "url": "http://localhost:9028"
+      },
+      {
+        "name": "mcp-server-gcp",
+        "port": 9029,
+        "url": "http://localhost:9029"
+      },
+      {
+        "name": "mcp-server-azure",
+        "port": 9030,
+        "url": "http://localhost:9030"
+      },
+      {
+        "name": "mcp-server-digitalocean",
+        "port": 9031,
+        "url": "http://localhost:9031"
+      },
+      {
+        "name": "mcp-server-heroku",
+        "port": 9032,
+        "url": "http://localhost:9032"
+      },
+      {
+        "name": "mcp-server-vercel",
+        "port": 9033,
+        "url": "http://localhost:9033"
+      },
+      {
+        "name": "mcp-server-netlify",
+        "port": 9034,
+        "url": "http://localhost:9034"
+      }
+    ],
+    "filesystem": [
+      {
+        "name": "mcp-server-filesystem",
+        "port": 9035,
+        "url": "http://localhost:9035"
+      },
+      {
+        "name": "mcp-server-gdrive",
+        "port": 9036,
+        "url": "http://localhost:9036"
+      },
+      {
+        "name": "mcp-server-dropbox",
+        "port": 9037,
+        "url": "http://localhost:9037"
+      },
+      {
+        "name": "mcp-server-onedrive",
+        "port": 9038,
+        "url": "http://localhost:9038"
+      },
+      {
+        "name": "mcp-server-box",
+        "port": 9039,
+        "url": "http://localhost:9039"
+      }
+    ],
+    "web": [
+      {
+        "name": "mcp-server-fetch",
+        "port": 9040,
+        "url": "http://localhost:9040"
+      },
+      {
+        "name": "mcp-server-puppeteer",
+        "port": 9041,
+        "url": "http://localhost:9041"
+      },
+      {
+        "name": "mcp-server-playwright",
+        "port": 9042,
+        "url": "http://localhost:9042"
+      },
+      {
+        "name": "mcp-server-selenium",
+        "port": 9043,
+        "url": "http://localhost:9043"
+      },
+      {
+        "name": "mcp-server-curl",
+        "port": 9044,
+        "url": "http://localhost:9044"
+      },
+      {
+        "name": "mcp-server-postman",
+        "port": 9045,
+        "url": "http://localhost:9045"
+      }
+    ],
+    "analytics": [
+      {
+        "name": "mcp-server-google-analytics",
+        "port": 9046,
+        "url": "http://localhost:9046"
+      },
+      {
+        "name": "mcp-server-mixpanel",
+        "port": 9047,
+        "url": "http://localhost:9047"
+      },
+      {
+        "name": "mcp-server-amplitude",
+        "port": 9048,
+        "url": "http://localhost:9048"
+      }
+    ],
+    "monitoring": [
+      {
+        "name": "mcp-server-datadog",
+        "port": 9049,
+        "url": "http://localhost:9049"
+      },
+      {
+        "name": "mcp-server-newrelic",
+        "port": 9050,
+        "url": "http://localhost:9050"
+      },
+      {
+        "name": "mcp-server-grafana",
+        "port": 9051,
+        "url": "http://localhost:9051"
+      }
+    ],
+    "ecommerce": [
+      {
+        "name": "mcp-server-shopify",
+        "port": 9052,
+        "url": "http://localhost:9052"
+      },
+      {
+        "name": "mcp-server-woocommerce",
+        "port": 9053,
+        "url": "http://localhost:9053"
+      },
+      {
+        "name": "mcp-server-magento",
+        "port": 9054,
+        "url": "http://localhost:9054"
+      }
+    ],
+    "payment": [
+      {
+        "name": "mcp-server-stripe",
+        "port": 9055,
+        "url": "http://localhost:9055"
+      },
+      {
+        "name": "mcp-server-paypal",
+        "port": 9056,
+        "url": "http://localhost:9056"
+      }
+    ],
+    "social": [
+      {
+        "name": "mcp-server-twitter",
+        "port": 9057,
+        "url": "http://localhost:9057"
+      },
+      {
+        "name": "mcp-server-facebook",
+        "port": 9058,
+        "url": "http://localhost:9058"
+      },
+      {
+        "name": "mcp-server-instagram",
+        "port": 9059,
+        "url": "http://localhost:9059"
+      },
+      {
+        "name": "mcp-server-linkedin",
+        "port": 9060,
+        "url": "http://localhost:9060"
+      },
+      {
+        "name": "mcp-server-youtube",
+        "port": 9061,
+        "url": "http://localhost:9061"
+      }
+    ],
+    "ai": [
+      {
+        "name": "mcp-server-openai",
+        "port": 9062,
+        "url": "http://localhost:9062"
+      },
+      {
+        "name": "mcp-server-anthropic",
+        "port": 9063,
+        "url": "http://localhost:9063"
+      },
+      {
+        "name": "mcp-server-huggingface",
+        "port": 9064,
+        "url": "http://localhost:9064"
+      },
+      {
+        "name": "mcp-server-tensorflow",
+        "port": 9065,
+        "url": "http://localhost:9065"
+      },
+      {
+        "name": "mcp-server-pytorch",
+        "port": 9066,
+        "url": "http://localhost:9066"
+      }
+    ],
+    "email": [
+      {
+        "name": "mcp-server-gmail",
+        "port": 9067,
+        "url": "http://localhost:9067"
+      },
+      {
+        "name": "mcp-server-outlook",
+        "port": 9068,
+        "url": "http://localhost:9068"
+      },
+      {
+        "name": "mcp-server-sendgrid",
+        "port": 9069,
+        "url": "http://localhost:9069"
+      },
+      {
+        "name": "mcp-server-mailchimp",
+        "port": 9070,
+        "url": "http://localhost:9070"
+      }
+    ],
+    "crm": [
+      {
+        "name": "mcp-server-salesforce",
+        "port": 9071,
+        "url": "http://localhost:9071"
+      },
+      {
+        "name": "mcp-server-hubspot",
+        "port": 9072,
+        "url": "http://localhost:9072"
+      },
+      {
+        "name": "mcp-server-pipedrive",
+        "port": 9073,
+        "url": "http://localhost:9073"
+      },
+      {
+        "name": "mcp-server-zoho",
+        "port": 9074,
+        "url": "http://localhost:9074"
+      }
+    ],
+    "cms": [
+      {
+        "name": "mcp-server-wordpress",
+        "port": 9075,
+        "url": "http://localhost:9075"
+      },
+      {
+        "name": "mcp-server-drupal",
+        "port": 9076,
+        "url": "http://localhost:9076"
+      },
+      {
+        "name": "mcp-server-contentful",
+        "port": 9077,
+        "url": "http://localhost:9077"
+      },
+      {
+        "name": "mcp-server-strapi",
+        "port": 9078,
+        "url": "http://localhost:9078"
+      }
+    ],
+    "security": [
+      {
+        "name": "mcp-server-1password",
+        "port": 9079,
+        "url": "http://localhost:9079"
+      },
+      {
+        "name": "mcp-server-bitwarden",
+        "port": 9080,
+        "url": "http://localhost:9080"
+      },
+      {
+        "name": "mcp-server-lastpass",
+        "port": 9081,
+        "url": "http://localhost:9081"
+      },
+      {
+        "name": "mcp-server-vault",
+        "port": 9082,
+        "url": "http://localhost:9082"
+      }
+    ],
+    "finance": [
+      {
+        "name": "mcp-server-quickbooks",
+        "port": 9083,
+        "url": "http://localhost:9083"
+      },
+      {
+        "name": "mcp-server-xero",
+        "port": 9084,
+        "url": "http://localhost:9084"
+      },
+      {
+        "name": "mcp-server-freshbooks",
+        "port": 9085,
+        "url": "http://localhost:9085"
+      },
+      {
+        "name": "mcp-server-wave",
+        "port": 9086,
+        "url": "http://localhost:9086"
+      }
+    ],
+    "design": [
+      {
+        "name": "mcp-server-figma",
+        "port": 9087,
+        "url": "http://localhost:9087"
+      },
+      {
+        "name": "mcp-server-sketch",
+        "port": 9088,
+        "url": "http://localhost:9088"
+      },
+      {
+        "name": "mcp-server-adobe",
+        "port": 9089,
+        "url": "http://localhost:9089"
+      },
+      {
+        "name": "mcp-server-canva",
+        "port": 9090,
+        "url": "http://localhost:9090"
+      }
+    ],
+    "time-tracking": [
+      {
+        "name": "mcp-server-toggl",
+        "port": 9091,
+        "url": "http://localhost:9091"
+      },
+      {
+        "name": "mcp-server-harvest",
+        "port": 9092,
+        "url": "http://localhost:9092"
+      },
+      {
+        "name": "mcp-server-clockify",
+        "port": 9093,
+        "url": "http://localhost:9093"
+      },
+      {
+        "name": "mcp-server-rescuetime",
+        "port": 9094,
+        "url": "http://localhost:9094"
+      }
+    ],
+    "calendar": [
+      {
+        "name": "mcp-server-google-calendar",
+        "port": 9095,
+        "url": "http://localhost:9095"
+      },
+      {
+        "name": "mcp-server-outlook-calendar",
+        "port": 9096,
+        "url": "http://localhost:9096"
+      },
+      {
+        "name": "mcp-server-calendly",
+        "port": 9097,
+        "url": "http://localhost:9097"
+      },
+      {
+        "name": "mcp-server-acuity",
+        "port": 9098,
+        "url": "http://localhost:9098"
+      }
+    ],
+    "weather": [
+      {
+        "name": "mcp-server-weather",
+        "port": 9099,
+        "url": "http://localhost:9099"
+      }
+    ],
+    "location": [
+      {
+        "name": "mcp-server-maps",
+        "port": 9100,
+        "url": "http://localhost:9100"
+      },
+      {
+        "name": "mcp-server-geocoding",
+        "port": 9101,
+        "url": "http://localhost:9101"
+      }
+    ],
+    "media": [
+      {
+        "name": "mcp-server-news",
+        "port": 9102,
+        "url": "http://localhost:9102"
+      },
+      {
+        "name": "mcp-server-rss",
+        "port": 9103,
+        "url": "http://localhost:9103"
+      },
+      {
+        "name": "mcp-server-podcast",
+        "port": 9104,
+        "url": "http://localhost:9104"
+      }
+    ],
+    "translation": [
+      {
+        "name": "mcp-server-google-translate",
+        "port": 9105,
+        "url": "http://localhost:9105"
+      },
+      {
+        "name": "mcp-server-deepl",
+        "port": 9106,
+        "url": "http://localhost:9106"
+      },
+      {
+        "name": "mcp-server-azure-translator",
+        "port": 9107,
+        "url": "http://localhost:9107"
+      }
+    ],
+    "utility": [
+      {
+        "name": "mcp-server-qr-code",
+        "port": 9108,
+        "url": "http://localhost:9108"
+      },
+      {
+        "name": "mcp-server-url-shortener",
+        "port": 9109,
+        "url": "http://localhost:9109"
+      },
+      {
+        "name": "mcp-server-password-generator",
+        "port": 9110,
+        "url": "http://localhost:9110"
+      },
+      {
+        "name": "mcp-server-uuid",
+        "port": 9111,
+        "url": "http://localhost:9111"
+      }
+    ],
+    "blockchain": [
+      {
+        "name": "mcp-server-ethereum",
+        "port": 9112,
+        "url": "http://localhost:9112"
+      },
+      {
+        "name": "mcp-server-bitcoin",
+        "port": 9113,
+        "url": "http://localhost:9113"
+      },
+      {
+        "name": "mcp-server-coinbase",
+        "port": 9114,
+        "url": "http://localhost:9114"
+      },
+      {
+        "name": "mcp-server-binance",
+        "port": 9115,
+        "url": "http://localhost:9115"
+      }
+    ],
+    "iot": [
+      {
+        "name": "mcp-server-arduino",
+        "port": 9116,
+        "url": "http://localhost:9116"
+      },
+      {
+        "name": "mcp-server-raspberry-pi",
+        "port": 9117,
+        "url": "http://localhost:9117"
+      },
+      {
+        "name": "mcp-server-mqtt",
+        "port": 9118,
+        "url": "http://localhost:9118"
+      },
+      {
+        "name": "mcp-server-zigbee",
+        "port": 9119,
+        "url": "http://localhost:9119"
+      }
+    ],
+    "gaming": [
+      {
+        "name": "mcp-server-steam",
+        "port": 9120,
+        "url": "http://localhost:9120"
+      },
+      {
+        "name": "mcp-server-twitch",
+        "port": 9121,
+        "url": "http://localhost:9121"
+      },
+      {
+        "name": "mcp-server-discord-bot",
+        "port": 9122,
+        "url": "http://localhost:9122"
+      }
+    ],
+    "health": [
+      {
+        "name": "mcp-server-fitbit",
+        "port": 9123,
+        "url": "http://localhost:9123"
+      },
+      {
+        "name": "mcp-server-apple-health",
+        "port": 9124,
+        "url": "http://localhost:9124"
+      },
+      {
+        "name": "mcp-server-google-fit",
+        "port": 9125,
+        "url": "http://localhost:9125"
+      }
+    ],
+    "education": [
+      {
+        "name": "mcp-server-coursera",
+        "port": 9126,
+        "url": "http://localhost:9126"
+      },
+      {
+        "name": "mcp-server-udemy",
+        "port": 9127,
+        "url": "http://localhost:9127"
+      },
+      {
+        "name": "mcp-server-khan-academy",
+        "port": 9128,
+        "url": "http://localhost:9128"
+      }
+    ],
+    "travel": [
+      {
+        "name": "mcp-server-booking",
+        "port": 9129,
+        "url": "http://localhost:9129"
+      },
+      {
+        "name": "mcp-server-airbnb",
+        "port": 9130,
+        "url": "http://localhost:9130"
+      },
+      {
+        "name": "mcp-server-expedia",
+        "port": 9131,
+        "url": "http://localhost:9131"
+      }
+    ],
+    "food": [
+      {
+        "name": "mcp-server-uber-eats",
+        "port": 9132,
+        "url": "http://localhost:9132"
+      },
+      {
+        "name": "mcp-server-doordash",
+        "port": 9133,
+        "url": "http://localhost:9133"
+      },
+      {
+        "name": "mcp-server-grubhub",
+        "port": 9134,
+        "url": "http://localhost:9134"
+      }
+    ],
+    "music": [
+      {
+        "name": "mcp-server-spotify",
+        "port": 9135,
+        "url": "http://localhost:9135"
+      },
+      {
+        "name": "mcp-server-apple-music",
+        "port": 9136,
+        "url": "http://localhost:9136"
+      }
+    ],
+    "entertainment": [
+      {
+        "name": "mcp-server-netflix",
+        "port": 9137,
+        "url": "http://localhost:9137"
+      }
+    ],
+    "real-estate": [
+      {
+        "name": "mcp-server-zillow",
+        "port": 9138,
+        "url": "http://localhost:9138"
+      },
+      {
+        "name": "mcp-server-realtor",
+        "port": 9139,
+        "url": "http://localhost:9139"
+      }
+    ],
+    "legal": [
+      {
+        "name": "mcp-server-legalzoom",
+        "port": 9140,
+        "url": "http://localhost:9140"
+      },
+      {
+        "name": "mcp-server-docusign",
+        "port": 9141,
+        "url": "http://localhost:9141"
+      }
+    ],
+    "hr": [
+      {
+        "name": "mcp-server-linkedin-recruiter",
+        "port": 9142,
+        "url": "http://localhost:9142"
+      },
+      {
+        "name": "mcp-server-indeed",
+        "port": 9143,
+        "url": "http://localhost:9143"
+      },
+      {
+        "name": "mcp-server-glassdoor",
+        "port": 9144,
+        "url": "http://localhost:9144"
+      }
+    ],
+    "logistics": [
+      {
+        "name": "mcp-server-fedex",
+        "port": 9145,
+        "url": "http://localhost:9145"
+      },
+      {
+        "name": "mcp-server-ups",
+        "port": 9146,
+        "url": "http://localhost:9146"
+      },
+      {
+        "name": "mcp-server-dhl",
+        "port": 9147,
+        "url": "http://localhost:9147"
+      }
+    ],
+    "agriculture": [
+      {
+        "name": "mcp-server-farm-management",
+        "port": 9148,
+        "url": "http://localhost:9148"
+      },
+      {
+        "name": "mcp-server-weather-farming",
+        "port": 9149,
+        "url": "http://localhost:9149"
+      }
+    ],
+    "energy": [
+      {
+        "name": "mcp-server-solar-monitoring",
+        "port": 9150,
+        "url": "http://localhost:9150"
+      },
+      {
+        "name": "mcp-server-smart-grid",
+        "port": 9151,
+        "url": "http://localhost:9151"
+      }
+    ],
+    "manufacturing": [
+      {
+        "name": "mcp-server-erp",
+        "port": 9152,
+        "url": "http://localhost:9152"
+      },
+      {
+        "name": "mcp-server-inventory",
+        "port": 9153,
+        "url": "http://localhost:9153"
+      }
+    ],
+    "automotive": [
+      {
+        "name": "mcp-server-tesla",
+        "port": 9154,
+        "url": "http://localhost:9154"
+      },
+      {
+        "name": "mcp-server-car-diagnostics",
+        "port": 9155,
+        "url": "http://localhost:9155"
+      }
+    ],
+    "insurance": [
+      {
+        "name": "mcp-server-insurance-api",
+        "port": 9156,
+        "url": "http://localhost:9156"
+      },
+      {
+        "name": "mcp-server-claims-processing",
+        "port": 9157,
+        "url": "http://localhost:9157"
+      }
+    ],
+    "government": [
+      {
+        "name": "mcp-server-gov-data",
+        "port": 9158,
+        "url": "http://localhost:9158"
+      },
+      {
+        "name": "mcp-server-census",
+        "port": 9159,
+        "url": "http://localhost:9159"
+      }
+    ],
+    "nonprofit": [
+      {
+        "name": "mcp-server-charity-navigator",
+        "port": 9160,
+        "url": "http://localhost:9160"
+      },
+      {
+        "name": "mcp-server-donation-tracker",
+        "port": 9161,
+        "url": "http://localhost:9161"
+      }
+    ],
+    "sports": [
+      {
+        "name": "mcp-server-espn",
+        "port": 9162,
+        "url": "http://localhost:9162"
+      },
+      {
+        "name": "mcp-server-nfl",
+        "port": 9163,
+        "url": "http://localhost:9163"
+      },
+      {
+        "name": "mcp-server-nba",
+        "port": 9164,
+        "url": "http://localhost:9164"
+      }
+    ],
+    "research": [
+      {
+        "name": "mcp-server-pubmed",
+        "port": 9165,
+        "url": "http://localhost:9165"
+      },
+      {
+        "name": "mcp-server-arxiv",
+        "port": 9166,
+        "url": "http://localhost:9166"
+      },
+      {
+        "name": "mcp-server-nasa",
+        "port": 9167,
+        "url": "http://localhost:9167"
+      }
+    ],
+    "retail": [
+      {
+        "name": "mcp-server-amazon",
+        "port": 9168,
+        "url": "http://localhost:9168"
+      },
+      {
+        "name": "mcp-server-ebay",
+        "port": 9169,
+        "url": "http://localhost:9169"
+      },
+      {
+        "name": "mcp-server-etsy",
+        "port": 9170,
+        "url": "http://localhost:9170"
+      }
+    ],
+    "photography": [
+      {
+        "name": "mcp-server-unsplash",
+        "port": 9171,
+        "url": "http://localhost:9171"
+      },
+      {
+        "name": "mcp-server-pexels",
+        "port": 9172,
+        "url": "http://localhost:9172"
+      },
+      {
+        "name": "mcp-server-shutterstock",
+        "port": 9173,
+        "url": "http://localhost:9173"
+      }
+    ],
+    "backup": [
+      {
+        "name": "mcp-server-backblaze",
+        "port": 9174,
+        "url": "http://localhost:9174"
+      },
+      {
+        "name": "mcp-server-carbonite",
+        "port": 9175,
+        "url": "http://localhost:9175"
+      }
+    ],
+    "networking": [
+      {
+        "name": "mcp-server-cloudflare",
+        "port": 9176,
+        "url": "http://localhost:9176"
+      },
+      {
+        "name": "mcp-server-dns",
+        "port": 9177,
+        "url": "http://localhost:9177"
+      }
+    ],
+    "testing": [
+      {
+        "name": "mcp-server-browserstack",
+        "port": 9178,
+        "url": "http://localhost:9178"
+      },
+      {
+        "name": "mcp-server-sauce-labs",
+        "port": 9179,
+        "url": "http://localhost:9179"
+      }
+    ],
+    "documentation": [
+      {
+        "name": "mcp-server-gitbook",
+        "port": 9180,
+        "url": "http://localhost:9180"
+      },
+      {
+        "name": "mcp-server-confluence",
+        "port": 9181,
+        "url": "http://localhost:9181"
+      }
+    ],
+    "video-conferencing": [
+      {
+        "name": "mcp-server-zoom",
+        "port": 9182,
+        "url": "http://localhost:9182"
+      },
+      {
+        "name": "mcp-server-teams",
+        "port": 9183,
+        "url": "http://localhost:9183"
+      },
+      {
+        "name": "mcp-server-webex",
+        "port": 9184,
+        "url": "http://localhost:9184"
+      }
+    ],
+    "forms": [
+      {
+        "name": "mcp-server-typeform",
+        "port": 9185,
+        "url": "http://localhost:9185"
+      },
+      {
+        "name": "mcp-server-surveymonkey",
+        "port": 9186,
+        "url": "http://localhost:9186"
+      },
+      {
+        "name": "mcp-server-google-forms",
+        "port": 9187,
+        "url": "http://localhost:9187"
+      }
+    ],
+    "automation": [
+      {
+        "name": "mcp-server-zapier",
+        "port": 9188,
+        "url": "http://localhost:9188"
+      },
+      {
+        "name": "mcp-server-ifttt",
+        "port": 9189,
+        "url": "http://localhost:9189"
+      },
+      {
+        "name": "mcp-server-microsoft-flow",
+        "port": 9190,
+        "url": "http://localhost:9190"
+      }
+    ],
+    "version-control": [
+      {
+        "name": "mcp-server-git",
+        "port": 9191,
+        "url": "http://localhost:9191"
+      },
+      {
+        "name": "mcp-server-svn",
+        "port": 9192,
+        "url": "http://localhost:9192"
+      },
+      {
+        "name": "mcp-server-mercurial",
+        "port": 9193,
+        "url": "http://localhost:9193"
+      }
+    ],
+    "package-manager": [
+      {
+        "name": "mcp-server-npm",
+        "port": 9194,
+        "url": "http://localhost:9194"
+      },
+      {
+        "name": "mcp-server-pip",
+        "port": 9195,
+        "url": "http://localhost:9195"
+      },
+      {
+        "name": "mcp-server-composer",
+        "port": 9196,
+        "url": "http://localhost:9196"
+      }
+    ],
+    "code-quality": [
+      {
+        "name": "mcp-server-sonarqube",
+        "port": 9197,
+        "url": "http://localhost:9197"
+      },
+      {
+        "name": "mcp-server-codeclimate",
+        "port": 9198,
+        "url": "http://localhost:9198"
+      },
+      {
+        "name": "mcp-server-eslint",
+        "port": 9199,
+        "url": "http://localhost:9199"
+      }
+    ],
+    "logging": [
+      {
+        "name": "mcp-server-logstash",
+        "port": 9200,
+        "url": "http://localhost:9200"
+      },
+      {
+        "name": "mcp-server-splunk",
+        "port": 9201,
+        "url": "http://localhost:9201"
+      },
+      {
+        "name": "mcp-server-fluentd",
+        "port": 9202,
+        "url": "http://localhost:9202"
+      }
+    ],
+    "message-queue": [
+      {
+        "name": "mcp-server-rabbitmq",
+        "port": 9203,
+        "url": "http://localhost:9203"
+      },
+      {
+        "name": "mcp-server-kafka",
+        "port": 9204,
+        "url": "http://localhost:9204"
+      },
+      {
+        "name": "mcp-server-activemq",
+        "port": 9205,
+        "url": "http://localhost:9205"
+      }
+    ],
+    "search-engine": [
+      {
+        "name": "mcp-server-solr",
+        "port": 9206,
+        "url": "http://localhost:9206"
+      },
+      {
+        "name": "mcp-server-algolia",
+        "port": 9207,
+        "url": "http://localhost:9207"
+      }
+    ],
+    "cache": [
+      {
+        "name": "mcp-server-memcached",
+        "port": 9208,
+        "url": "http://localhost:9208"
+      },
+      {
+        "name": "mcp-server-varnish",
+        "port": 9209,
+        "url": "http://localhost:9209"
+      }
+    ],
+    "load-balancer": [
+      {
+        "name": "mcp-server-nginx",
+        "port": 9210,
+        "url": "http://localhost:9210"
+      },
+      {
+        "name": "mcp-server-haproxy",
+        "port": 9211,
+        "url": "http://localhost:9211"
+      }
+    ],
+    "container": [
+      {
+        "name": "mcp-server-podman",
+        "port": 9212,
+        "url": "http://localhost:9212"
+      },
+      {
+        "name": "mcp-server-containerd",
+        "port": 9213,
+        "url": "http://localhost:9213"
+      }
+    ],
+    "orchestration": [
+      {
+        "name": "mcp-server-nomad",
+        "port": 9214,
+        "url": "http://localhost:9214"
+      },
+      {
+        "name": "mcp-server-swarm",
+        "port": 9215,
+        "url": "http://localhost:9215"
+      }
+    ],
+    "service-mesh": [
+      {
+        "name": "mcp-server-istio",
+        "port": 9216,
+        "url": "http://localhost:9216"
+      },
+      {
+        "name": "mcp-server-linkerd",
+        "port": 9217,
+        "url": "http://localhost:9217"
+      }
+    ],
+    "api-gateway": [
+      {
+        "name": "mcp-server-kong",
+        "port": 9218,
+        "url": "http://localhost:9218"
+      },
+      {
+        "name": "mcp-server-ambassador",
+        "port": 9219,
+        "url": "http://localhost:9219"
+      }
+    ],
+    "secrets": [
+      {
+        "name": "mcp-server-consul",
+        "port": 9220,
+        "url": "http://localhost:9220"
+      },
+      {
+        "name": "mcp-server-etcd",
+        "port": 9221,
+        "url": "http://localhost:9221"
+      }
+    ],
+    "backup-solution": [
+      {
+        "name": "mcp-server-velero",
+        "port": 9222,
+        "url": "http://localhost:9222"
+      },
+      {
+        "name": "mcp-server-restic",
+        "port": 9223,
+        "url": "http://localhost:9223"
+      }
+    ],
+    "disaster-recovery": [
+      {
+        "name": "mcp-server-disaster-recovery",
+        "port": 9224,
+        "url": "http://localhost:9224"
+      }
+    ],
+    "performance-testing": [
+      {
+        "name": "mcp-server-jmeter",
+        "port": 9225,
+        "url": "http://localhost:9225"
+      },
+      {
+        "name": "mcp-server-gatling",
+        "port": 9226,
+        "url": "http://localhost:9226"
+      }
+    ],
+    "security-scanning": [
+      {
+        "name": "mcp-server-nessus",
+        "port": 9227,
+        "url": "http://localhost:9227"
+      },
+      {
+        "name": "mcp-server-openvas",
+        "port": 9228,
+        "url": "http://localhost:9228"
+      }
+    ],
+    "compliance": [
+      {
+        "name": "mcp-server-compliance-checker",
+        "port": 9229,
+        "url": "http://localhost:9229"
+      }
+    ],
+    "incident-management": [
+      {
+        "name": "mcp-server-pagerduty",
+        "port": 9230,
+        "url": "http://localhost:9230"
+      },
+      {
+        "name": "mcp-server-opsgenie",
+        "port": 9231,
+        "url": "http://localhost:9231"
+      }
+    ],
+    "asset-management": [
+      {
+        "name": "mcp-server-asset-tracker",
+        "port": 9232,
+        "url": "http://localhost:9232"
+      }
+    ],
+    "change-management": [
+      {
+        "name": "mcp-server-change-tracker",
+        "port": 9233,
+        "url": "http://localhost:9233"
+      }
+    ],
+    "knowledge-management": [
+      {
+        "name": "mcp-server-knowledge-base",
+        "port": 9234,
+        "url": "http://localhost:9234"
+      }
+    ],
+    "workflow": [
+      {
+        "name": "mcp-server-workflow-engine",
+        "port": 9235,
+        "url": "http://localhost:9235"
+      }
+    ],
+    "business-intelligence": [
+      {
+        "name": "mcp-server-tableau",
+        "port": 9236,
+        "url": "http://localhost:9236"
+      },
+      {
+        "name": "mcp-server-power-bi",
+        "port": 9237,
+        "url": "http://localhost:9237"
+      }
+    ],
+    "data-warehouse": [
+      {
+        "name": "mcp-server-snowflake",
+        "port": 9238,
+        "url": "http://localhost:9238"
+      },
+      {
+        "name": "mcp-server-redshift",
+        "port": 9239,
+        "url": "http://localhost:9239"
+      }
+    ],
+    "etl": [
+      {
+        "name": "mcp-server-airflow",
+        "port": 9240,
+        "url": "http://localhost:9240"
+      },
+      {
+        "name": "mcp-server-luigi",
+        "port": 9241,
+        "url": "http://localhost:9241"
+      }
+    ],
+    "data-lake": [
+      {
+        "name": "mcp-server-delta-lake",
+        "port": 9242,
+        "url": "http://localhost:9242"
+      },
+      {
+        "name": "mcp-server-iceberg",
+        "port": 9243,
+        "url": "http://localhost:9243"
+      }
+    ],
+    "stream-processing": [
+      {
+        "name": "mcp-server-spark-streaming",
+        "port": 9244,
+        "url": "http://localhost:9244"
+      },
+      {
+        "name": "mcp-server-flink",
+        "port": 9245,
+        "url": "http://localhost:9245"
+      }
+    ],
+    "ml-platform": [
+      {
+        "name": "mcp-server-mlflow",
+        "port": 9246,
+        "url": "http://localhost:9246"
+      },
+      {
+        "name": "mcp-server-kubeflow",
+        "port": 9247,
+        "url": "http://localhost:9247"
+      }
+    ],
+    "feature-store": [
+      {
+        "name": "mcp-server-feast",
+        "port": 9248,
+        "url": "http://localhost:9248"
+      }
+    ],
+    "model-serving": [
+      {
+        "name": "mcp-server-seldon",
+        "port": 9249,
+        "url": "http://localhost:9249"
+      },
+      {
+        "name": "mcp-server-kserve",
+        "port": 9250,
+        "url": "http://localhost:9250"
+      }
+    ],
+    "data-visualization": [
+      {
+        "name": "mcp-server-d3js",
+        "port": 9251,
+        "url": "http://localhost:9251"
+      },
+      {
+        "name": "mcp-server-plotly",
+        "port": 9252,
+        "url": "http://localhost:9252"
+      }
+    ],
+    "gis": [
+      {
+        "name": "mcp-server-qgis",
+        "port": 9253,
+        "url": "http://localhost:9253"
+      },
+      {
+        "name": "mcp-server-arcgis",
+        "port": 9254,
+        "url": "http://localhost:9254"
+      }
+    ],
+    "remote-sensing": [
+      {
+        "name": "mcp-server-satellite-imagery",
+        "port": 9255,
+        "url": "http://localhost:9255"
+      }
+    ],
+    "environmental": [
+      {
+        "name": "mcp-server-air-quality",
+        "port": 9256,
+        "url": "http://localhost:9256"
+      },
+      {
+        "name": "mcp-server-water-quality",
+        "port": 9257,
+        "url": "http://localhost:9257"
+      }
+    ],
+    "smart-city": [
+      {
+        "name": "mcp-server-traffic-management",
+        "port": 9258,
+        "url": "http://localhost:9258"
+      },
+      {
+        "name": "mcp-server-waste-management",
+        "port": 9259,
+        "url": "http://localhost:9259"
+      }
+    ],
+    "telecom": [
+      {
+        "name": "mcp-server-5g-network",
+        "port": 9260,
+        "url": "http://localhost:9260"
+      },
+      {
+        "name": "mcp-server-network-monitoring",
+        "port": 9261,
+        "url": "http://localhost:9261"
+      }
+    ],
+    "robotics": [
+      {
+        "name": "mcp-server-ros",
+        "port": 9262,
+        "url": "http://localhost:9262"
+      },
+      {
+        "name": "mcp-server-robot-control",
+        "port": 9263,
+        "url": "http://localhost:9263"
+      }
+    ],
+    "ar": [
+      {
+        "name": "mcp-server-ar-toolkit",
+        "port": 9264,
+        "url": "http://localhost:9264"
+      }
+    ],
+    "vr": [
+      {
+        "name": "mcp-server-vr-engine",
+        "port": 9265,
+        "url": "http://localhost:9265"
+      }
+    ],
+    "3d-modeling": [
+      {
+        "name": "mcp-server-blender",
+        "port": 9266,
+        "url": "http://localhost:9266"
+      },
+      {
+        "name": "mcp-server-maya",
+        "port": 9267,
+        "url": "http://localhost:9267"
+      }
+    ],
+    "cad": [
+      {
+        "name": "mcp-server-autocad",
+        "port": 9268,
+        "url": "http://localhost:9268"
+      },
+      {
+        "name": "mcp-server-solidworks",
+        "port": 9269,
+        "url": "http://localhost:9269"
+      }
+    ],
+    "simulation": [
+      {
+        "name": "mcp-server-ansys",
+        "port": 9270,
+        "url": "http://localhost:9270"
+      },
+      {
+        "name": "mcp-server-matlab",
+        "port": 9271,
+        "url": "http://localhost:9271"
+      }
+    ],
+    "scientific-computing": [
+      {
+        "name": "mcp-server-jupyter",
+        "port": 9272,
+        "url": "http://localhost:9272"
+      },
+      {
+        "name": "mcp-server-r-studio",
+        "port": 9273,
+        "url": "http://localhost:9273"
+      }
+    ],
+    "bioinformatics": [
+      {
+        "name": "mcp-server-bioconductor",
+        "port": 9274,
+        "url": "http://localhost:9274"
+      },
+      {
+        "name": "mcp-server-galaxy",
+        "port": 9275,
+        "url": "http://localhost:9275"
+      }
+    ],
+    "genomics": [
+      {
+        "name": "mcp-server-gatk",
+        "port": 9276,
+        "url": "http://localhost:9276"
+      },
+      {
+        "name": "mcp-server-samtools",
+        "port": 9277,
+        "url": "http://localhost:9277"
+      }
+    ],
+    "proteomics": [
+      {
+        "name": "mcp-server-maxquant",
+        "port": 9278,
+        "url": "http://localhost:9278"
+      }
+    ],
+    "drug-discovery": [
+      {
+        "name": "mcp-server-rdkit",
+        "port": 9279,
+        "url": "http://localhost:9279"
+      },
+      {
+        "name": "mcp-server-openeye",
+        "port": 9280,
+        "url": "http://localhost:9280"
+      }
+    ],
+    "medical-imaging": [
+      {
+        "name": "mcp-server-dicom",
+        "port": 9281,
+        "url": "http://localhost:9281"
+      },
+      {
+        "name": "mcp-server-itk",
+        "port": 9282,
+        "url": "http://localhost:9282"
+      }
+    ],
+    "clinical-trials": [
+      {
+        "name": "mcp-server-clinical-data",
+        "port": 9283,
+        "url": "http://localhost:9283"
+      }
+    ],
+    "telemedicine": [
+      {
+        "name": "mcp-server-telehealth",
+        "port": 9284,
+        "url": "http://localhost:9284"
+      }
+    ],
+    "ehr": [
+      {
+        "name": "mcp-server-ehr",
+        "port": 9285,
+        "url": "http://localhost:9285"
+      },
+      {
+        "name": "mcp-server-fhir",
+        "port": 9286,
+        "url": "http://localhost:9286"
+      }
+    ],
+    "pharmacy": [
+      {
+        "name": "mcp-server-pharmacy-management",
+        "port": 9287,
+        "url": "http://localhost:9287"
+      }
+    ],
+    "laboratory": [
+      {
+        "name": "mcp-server-lis",
+        "port": 9288,
+        "url": "http://localhost:9288"
+      }
+    ],
+    "radiology": [
+      {
+        "name": "mcp-server-ris",
+        "port": 9289,
+        "url": "http://localhost:9289"
+      }
+    ],
+    "hospital": [
+      {
+        "name": "mcp-server-his",
+        "port": 9290,
+        "url": "http://localhost:9290"
+      }
+    ],
+    "patient-monitoring": [
+      {
+        "name": "mcp-server-patient-monitoring",
+        "port": 9291,
+        "url": "http://localhost:9291"
+      }
+    ],
+    "medical-devices": [
+      {
+        "name": "mcp-server-medical-devices",
+        "port": 9292,
+        "url": "http://localhost:9292"
+      }
+    ],
+    "regulatory": [
+      {
+        "name": "mcp-server-fda-compliance",
+        "port": 9293,
+        "url": "http://localhost:9293"
+      },
+      {
+        "name": "mcp-server-hipaa-compliance",
+        "port": 9294,
+        "url": "http://localhost:9294"
+      }
+    ],
+    "quality-assurance": [
+      {
+        "name": "mcp-server-qa-automation",
+        "port": 9295,
+        "url": "http://localhost:9295"
+      }
+    ],
+    "supply-chain": [
+      {
+        "name": "mcp-server-supply-chain",
+        "port": 9296,
+        "url": "http://localhost:9296"
+      }
+    ],
+    "procurement": [
+      {
+        "name": "mcp-server-procurement",
+        "port": 9297,
+        "url": "http://localhost:9297"
+      }
+    ],
+    "vendor-management": [
+      {
+        "name": "mcp-server-vendor-management",
+        "port": 9298,
+        "url": "http://localhost:9298"
+      }
+    ],
+    "contract-management": [
+      {
+        "name": "mcp-server-contract-management",
+        "port": 9299,
+        "url": "http://localhost:9299"
+      }
+    ],
+    "risk-management": [
+      {
+        "name": "mcp-server-risk-assessment",
+        "port": 9300,
+        "url": "http://localhost:9300"
+      }
+    ],
+    "audit": [
+      {
+        "name": "mcp-server-audit-management",
+        "port": 9301,
+        "url": "http://localhost:9301"
+      }
+    ],
+    "governance": [
+      {
+        "name": "mcp-server-governance",
+        "port": 9302,
+        "url": "http://localhost:9302"
+      }
+    ],
+    "data-governance": [
+      {
+        "name": "mcp-server-data-governance",
+        "port": 9303,
+        "url": "http://localhost:9303"
+      }
+    ],
+    "privacy": [
+      {
+        "name": "mcp-server-privacy-management",
+        "port": 9304,
+        "url": "http://localhost:9304"
+      }
+    ],
+    "identity": [
+      {
+        "name": "mcp-server-identity-management",
+        "port": 9305,
+        "url": "http://localhost:9305"
+      }
+    ],
+    "access-control": [
+      {
+        "name": "mcp-server-access-control",
+        "port": 9306,
+        "url": "http://localhost:9306"
+      }
+    ],
+    "sso": [
+      {
+        "name": "mcp-server-sso",
+        "port": 9307,
+        "url": "http://localhost:9307"
+      }
+    ],
+    "mfa": [
+      {
+        "name": "mcp-server-mfa",
+        "port": 9308,
+        "url": "http://localhost:9308"
+      }
+    ],
+    "certificate": [
+      {
+        "name": "mcp-server-certificate-management",
+        "port": 9309,
+        "url": "http://localhost:9309"
+      }
+    ],
+    "key-management": [
+      {
+        "name": "mcp-server-key-management",
+        "port": 9310,
+        "url": "http://localhost:9310"
+      }
+    ],
+    "encryption": [
+      {
+        "name": "mcp-server-encryption",
+        "port": 9311,
+        "url": "http://localhost:9311"
+      }
+    ],
+    "digital-signatures": [
+      {
+        "name": "mcp-server-digital-signatures",
+        "port": 9312,
+        "url": "http://localhost:9312"
+      }
+    ],
+    "blockchain-security": [
+      {
+        "name": "mcp-server-blockchain-security",
+        "port": 9313,
+        "url": "http://localhost:9313"
+      }
+    ],
+    "threat-intelligence": [
+      {
+        "name": "mcp-server-threat-intelligence",
+        "port": 9314,
+        "url": "http://localhost:9314"
+      }
+    ],
+    "vulnerability": [
+      {
+        "name": "mcp-server-vulnerability-management",
+        "port": 9315,
+        "url": "http://localhost:9315"
+      }
+    ],
+    "penetration-testing": [
+      {
+        "name": "mcp-server-penetration-testing",
+        "port": 9316,
+        "url": "http://localhost:9316"
+      }
+    ],
+    "siem": [
+      {
+        "name": "mcp-server-siem",
+        "port": 9317,
+        "url": "http://localhost:9317"
+      }
+    ],
+    "security-orchestration": [
+      {
+        "name": "mcp-server-security-orchestration",
+        "port": 9318,
+        "url": "http://localhost:9318"
+      }
+    ],
+    "fraud-detection": [
+      {
+        "name": "mcp-server-fraud-detection",
+        "port": 9319,
+        "url": "http://localhost:9319"
+      }
+    ],
+    "aml": [
+      {
+        "name": "mcp-server-aml",
+        "port": 9320,
+        "url": "http://localhost:9320"
+      }
+    ],
+    "kyc": [
+      {
+        "name": "mcp-server-kyc",
+        "port": 9321,
+        "url": "http://localhost:9321"
+      }
+    ],
+    "credit-scoring": [
+      {
+        "name": "mcp-server-credit-scoring",
+        "port": 9322,
+        "url": "http://localhost:9322"
+      }
+    ],
+    "loan-management": [
+      {
+        "name": "mcp-server-loan-management",
+        "port": 9323,
+        "url": "http://localhost:9323"
+      }
+    ],
+    "investment": [
+      {
+        "name": "mcp-server-investment-management",
+        "port": 9324,
+        "url": "http://localhost:9324"
+      }
+    ],
+    "portfolio": [
+      {
+        "name": "mcp-server-portfolio-management",
+        "port": 9325,
+        "url": "http://localhost:9325"
+      }
+    ],
+    "trading": [
+      {
+        "name": "mcp-server-trading-systems",
+        "port": 9326,
+        "url": "http://localhost:9326"
+      }
+    ],
+    "market-data": [
+      {
+        "name": "mcp-server-market-data",
+        "port": 9327,
+        "url": "http://localhost:9327"
+      }
+    ],
+    "financial-reporting": [
+      {
+        "name": "mcp-server-financial-reporting",
+        "port": 9328,
+        "url": "http://localhost:9328"
+      }
+    ],
+    "tax": [
+      {
+        "name": "mcp-server-tax-management",
+        "port": 9329,
+        "url": "http://localhost:9329"
+      }
+    ],
+    "payroll": [
+      {
+        "name": "mcp-server-payroll",
+        "port": 9330,
+        "url": "http://localhost:9330"
+      }
+    ],
+    "expense": [
+      {
+        "name": "mcp-server-expense-management",
+        "port": 9331,
+        "url": "http://localhost:9331"
+      }
+    ],
+    "budget": [
+      {
+        "name": "mcp-server-budget-planning",
+        "port": 9332,
+        "url": "http://localhost:9332"
+      }
+    ],
+    "financial-analytics": [
+      {
+        "name": "mcp-server-financial-analytics",
+        "port": 9333,
+        "url": "http://localhost:9333"
+      }
+    ],
+    "regulatory-reporting": [
+      {
+        "name": "mcp-server-regulatory-reporting",
+        "port": 9334,
+        "url": "http://localhost:9334"
+      }
+    ],
+    "basel": [
+      {
+        "name": "mcp-server-basel-compliance",
+        "port": 9335,
+        "url": "http://localhost:9335"
+      }
+    ],
+    "solvency": [
+      {
+        "name": "mcp-server-solvency-ii",
+        "port": 9336,
+        "url": "http://localhost:9336"
+      }
+    ],
+    "ifrs": [
+      {
+        "name": "mcp-server-ifrs-reporting",
+        "port": 9337,
+        "url": "http://localhost:9337"
+      }
+    ],
+    "gaap": [
+      {
+        "name": "mcp-server-gaap-reporting",
+        "port": 9338,
+        "url": "http://localhost:9338"
+      }
+    ],
+    "esg": [
+      {
+        "name": "mcp-server-esg-reporting",
+        "port": 9339,
+        "url": "http://localhost:9339"
+      }
+    ],
+    "sustainability": [
+      {
+        "name": "mcp-server-sustainability-tracking",
+        "port": 9340,
+        "url": "http://localhost:9340"
+      }
+    ],
+    "carbon": [
+      {
+        "name": "mcp-server-carbon-footprint",
+        "port": 9341,
+        "url": "http://localhost:9341"
+      }
+    ],
+    "renewable-energy": [
+      {
+        "name": "mcp-server-renewable-energy",
+        "port": 9342,
+        "url": "http://localhost:9342"
+      }
+    ],
+    "waste-tracking": [
+      {
+        "name": "mcp-server-waste-tracking",
+        "port": 9343,
+        "url": "http://localhost:9343"
+      }
+    ],
+    "water-management": [
+      {
+        "name": "mcp-server-water-management",
+        "port": 9344,
+        "url": "http://localhost:9344"
+      }
+    ],
+    "circular-economy": [
+      {
+        "name": "mcp-server-circular-economy",
+        "port": 9345,
+        "url": "http://localhost:9345"
+      }
+    ]
+  }
+}

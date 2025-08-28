@@ -6,10 +6,11 @@ class MemoryManager {
     constructor() {
         this.configPath = path.join(__dirname, 'mcp-coordinator-config.json');
         this.memoryOptions = {
-            maxOldSpace: 8192,  // 8GB
-            maxSemiSpace: 512,  // 512MB
-            initialOldSpace: 2048, // 2GB
-            gcInterval: 100
+            maxOldSpace: 16384,  // 16GB (เพิ่มเป็น 16GB)
+            maxSemiSpace: 1024,  // 1GB (เพิ่มเป็น 1GB)
+            initialOldSpace: 4096, // 4GB (เพิ่มเป็น 4GB)
+            gcInterval: 50,      // ลดเป็น 50 เพื่อ GC บ่อยขึ้น
+            maxBuffer: 2048      // เพิ่ม buffer size 2GB
         };
     }
 
@@ -37,9 +38,13 @@ class MemoryManager {
             `--max-old-space-size=${this.memoryOptions.maxOldSpace}`,
             `--max-semi-space-size=${this.memoryOptions.maxSemiSpace}`,
             `--initial-old-space-size=${this.memoryOptions.initialOldSpace}`,
+            `--max-buffer-size=${this.memoryOptions.maxBuffer}`,
             '--optimize-for-size',
             '--gc-interval=' + this.memoryOptions.gcInterval,
-            '--expose-gc'
+            '--expose-gc',
+            '--enable-source-maps',
+            '--stack-trace-limit=50',
+            '--v8-pool-size=8'  // เพิ่ม V8 thread pool
         ];
     }
 
@@ -61,14 +66,32 @@ class MemoryManager {
 // Memory Optimization Settings
 process.env.NODE_OPTIONS = '${nodeOptions.join(' ')}';
 
-// Memory monitoring
+// Enhanced Memory monitoring
+let memoryCheckCount = 0;
 setInterval(() => {
     const memUsage = process.memoryUsage();
-    if (memUsage.heapUsed > 1024 * 1024 * 1024) { // 1GB threshold
+    const heapUsedMB = Math.round(memUsage.heapUsed / 1024 / 1024);
+    const heapTotalMB = Math.round(memUsage.heapTotal / 1024 / 1024);
+    const rssMB = Math.round(memUsage.rss / 1024 / 1024);
+    
+    memoryCheckCount++;
+    
+    // Log memory status every 10 checks (5 minutes)
+    if (memoryCheckCount % 10 === 0) {
+        console.log('📊 Memory Status [PID:' + process.pid + '] - Heap: ' + heapUsedMB + '/' + heapTotalMB + 'MB, RSS: ' + rssMB + 'MB');
+    }
+    
+    // Trigger GC if heap usage > 2GB or heap utilization > 80%
+    if (memUsage.heapUsed > 2 * 1024 * 1024 * 1024 || (heapUsedMB / heapTotalMB) > 0.8) {
         if (global.gc) {
             global.gc();
-            console.log('🧹 Garbage collection triggered for', process.pid);
+            console.log('🧹 GC triggered [PID:' + process.pid + '] - Freed memory');
         }
+    }
+    
+    // Warning if memory usage is very high
+    if (rssMB > 8192) { // 8GB warning
+        console.warn('⚠️  High memory usage detected [PID:' + process.pid + ']: ' + rssMB + 'MB');
     }
 }, 30000); // Check every 30 seconds
 

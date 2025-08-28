@@ -1,0 +1,9 @@
+{
+  "name": "math-server",
+  "version": "1.0.0",
+  "description": "Mathematical calculations and operations",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  }
+}

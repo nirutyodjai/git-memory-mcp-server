@@ -1,0 +1,9 @@
+{
+  "name": "json-processor-server",
+  "version": "1.0.0",
+  "description": "JSON data processing and manipulation",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  }
+}

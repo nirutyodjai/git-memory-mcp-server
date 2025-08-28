@@ -1,0 +1,1 @@
+{"version":3,"file":"email-template.d.ts","sourceRoot":"","sources":["../../../src/3d-sco/components/email-template.tsx"],"names":[],"mappings":"AAAA,OAAO,KAAK,KAAK,MAAM,OAAO,CAAC;AAE/B,UAAU,kBAAkB;IAC1B,QAAQ,EAAE,MAAM,CAAC;IACjB,KAAK,EAAE,MAAM,CAAC;IACd,OAAO,EAAE,MAAM,CAAC;CACjB;AAED,eAAO,MAAM,aAAa,EAAE,KAAK,CAAC,EAAE,CAAC,QAAQ,CAAC,kBAAkB,CAAC,CAUhE,CAAC"}

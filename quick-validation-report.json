@@ -1,0 +1,80 @@
+{
+  "timestamp": "2025-08-27T21:10:40.816Z",
+  "test_type": "quick_validation",
+  "test_duration_ms": 40,
+  "samples_tested": 14,
+  "estimated_total_servers": 500,
+  "results": {
+    "healthy": 9,
+    "failed": 5,
+    "success_rate": 64.3,
+    "average_response_time_ms": 10
+  },
+  "community_sample": {
+    "tested": 8,
+    "healthy": 3,
+    "failed": 5,
+    "success_rate": 37.5,
+    "sample_ports": [
+      8000,
+      8050,
+      8100,
+      8200,
+      8500,
+      9000,
+      9200,
+      9345
+    ]
+  },
+  "security_sample": {
+    "tested": 6,
+    "healthy": 6,
+    "failed": 0,
+    "success_rate": 100,
+    "sample_ports": [
+      9346,
+      9380,
+      9420,
+      9450,
+      9480,
+      9499
+    ]
+  },
+  "failed_servers": [
+    {
+      "port": 8000,
+      "type": "community",
+      "status": "failed",
+      "error": "ECONNREFUSED",
+      "responseTime": 28
+    },
+    {
+      "port": 8050,
+      "type": "community",
+      "status": "failed",
+      "error": "ECONNREFUSED",
+      "responseTime": 11
+    },
+    {
+      "port": 8100,
+      "type": "community",
+      "status": "failed",
+      "error": "ECONNREFUSED",
+      "responseTime": 11
+    },
+    {
+      "port": 8200,
+      "type": "community",
+      "status": "failed",
+      "error": "ECONNREFUSED",
+      "responseTime": 11
+    },
+    {
+      "port": 8500,
+      "type": "community",
+      "status": "failed",
+      "error": "ECONNREFUSED",
+      "responseTime": 10
+    }
+  ]
+}

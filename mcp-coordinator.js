@@ -27,9 +27,10 @@ class MCPCoordinator {
     this.categories = new Map();
     this.memoryPath = path.join(process.cwd(), '.git-memory');
     this.configPath = path.join(process.cwd(), 'mcp-coordinator-config.json');
-    this.batchSize = 50;
+    this.batchSize = 100; // Increased batch size for faster deployment
     this.currentPhase = 0;
     this.maxServers = 1000;
+    this.maxServersPerCategory = 100;
     
     this.initializeDirectories();
     this.setupTools();
@@ -79,18 +80,18 @@ class MCPCoordinator {
   }
 
   async createDefaultConfiguration() {
-    // Define categories with port ranges
+    // Define categories with expanded port ranges for 1000 servers (100 per category)
     const defaultCategories = {
-      'database': { portStart: 3100, portEnd: 3149, count: 0 },
-      'filesystem': { portStart: 3150, portEnd: 3199, count: 0 },
-      'api': { portStart: 3200, portEnd: 3249, count: 0 },
-      'ai-ml': { portStart: 3250, portEnd: 3299, count: 0 },
-      'version-control': { portStart: 3300, portEnd: 3349, count: 0 },
-      'dev-tools': { portStart: 3350, portEnd: 3399, count: 0 },
-      'system-ops': { portStart: 3400, portEnd: 3449, count: 0 },
-      'communication': { portStart: 3450, portEnd: 3499, count: 0 },
-      'business': { portStart: 3500, portEnd: 3549, count: 0 },
-      'iot-hardware': { portStart: 3550, portEnd: 3599, count: 0 }
+      'database': { portStart: 3100, portEnd: 3199, count: 0, maxServers: 100 },
+      'filesystem': { portStart: 3200, portEnd: 3299, count: 0, maxServers: 100 },
+      'api': { portStart: 3300, portEnd: 3399, count: 0, maxServers: 100 },
+      'ai-ml': { portStart: 3400, portEnd: 3499, count: 0, maxServers: 100 },
+      'version-control': { portStart: 3500, portEnd: 3599, count: 0, maxServers: 100 },
+      'dev-tools': { portStart: 3600, portEnd: 3699, count: 0, maxServers: 100 },
+      'system-ops': { portStart: 3700, portEnd: 3799, count: 0, maxServers: 100 },
+      'communication': { portStart: 3800, portEnd: 3899, count: 0, maxServers: 100 },
+      'business': { portStart: 3900, portEnd: 3999, count: 0, maxServers: 100 },
+      'iot-hardware': { portStart: 4000, portEnd: 4099, count: 0, maxServers: 100 }
     };
     
     for (const [category, config] of Object.entries(defaultCategories)) {
@@ -111,7 +112,7 @@ class MCPCoordinator {
         tools: [
           {
             name: 'deploy_batch',
-            description: 'Deploy a batch of MCP servers (50 servers per batch)',
+            description: 'Deploy a batch of MCP servers (up to 100 servers per batch for 1000-server capacity)',
             inputSchema: {
               type: 'object',
               properties: {
@@ -121,8 +122,13 @@ class MCPCoordinator {
                 },
                 count: {
                   type: 'number',
-                  description: 'Number of servers to deploy (max 50)',
-                  maximum: 50
+                  description: 'Number of servers to deploy (max 100 per batch)',
+                  maximum: 100
+                },
+                startIndex: {
+                  type: 'number',
+                  description: 'Starting index for server numbering (optional)',
+                  minimum: 0
                 }
               },
               required: ['category']

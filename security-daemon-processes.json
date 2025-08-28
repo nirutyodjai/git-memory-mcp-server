@@ -1,0 +1,775 @@
+{
+  "timestamp": "2025-08-27T20:45:25.621Z",
+  "processes": [
+    {
+      "port": 9346,
+      "pid": 25808,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9346.js"
+    },
+    {
+      "port": 9347,
+      "pid": 41388,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9347.js"
+    },
+    {
+      "port": 9348,
+      "pid": 25348,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9348.js"
+    },
+    {
+      "port": 9349,
+      "pid": 23676,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9349.js"
+    },
+    {
+      "port": 9350,
+      "pid": 3724,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9350.js"
+    },
+    {
+      "port": 9351,
+      "pid": 42820,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9351.js"
+    },
+    {
+      "port": 9352,
+      "pid": 44468,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9352.js"
+    },
+    {
+      "port": 9353,
+      "pid": 40216,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9353.js"
+    },
+    {
+      "port": 9354,
+      "pid": 31916,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9354.js"
+    },
+    {
+      "port": 9355,
+      "pid": 24048,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9355.js"
+    },
+    {
+      "port": 9356,
+      "pid": 44244,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9356.js"
+    },
+    {
+      "port": 9357,
+      "pid": 14108,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9357.js"
+    },
+    {
+      "port": 9358,
+      "pid": 20532,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9358.js"
+    },
+    {
+      "port": 9359,
+      "pid": 33608,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9359.js"
+    },
+    {
+      "port": 9360,
+      "pid": 9192,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9360.js"
+    },
+    {
+      "port": 9361,
+      "pid": 36876,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9361.js"
+    },
+    {
+      "port": 9362,
+      "pid": 21396,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9362.js"
+    },
+    {
+      "port": 9363,
+      "pid": 39504,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9363.js"
+    },
+    {
+      "port": 9364,
+      "pid": 29400,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9364.js"
+    },
+    {
+      "port": 9365,
+      "pid": 24320,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9365.js"
+    },
+    {
+      "port": 9366,
+      "pid": 42040,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9366.js"
+    },
+    {
+      "port": 9367,
+      "pid": 25272,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9367.js"
+    },
+    {
+      "port": 9368,
+      "pid": 17456,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9368.js"
+    },
+    {
+      "port": 9369,
+      "pid": 46784,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9369.js"
+    },
+    {
+      "port": 9370,
+      "pid": 45620,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9370.js"
+    },
+    {
+      "port": 9371,
+      "pid": 33076,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9371.js"
+    },
+    {
+      "port": 9372,
+      "pid": 46580,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9372.js"
+    },
+    {
+      "port": 9373,
+      "pid": 21488,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9373.js"
+    },
+    {
+      "port": 9374,
+      "pid": 30636,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9374.js"
+    },
+    {
+      "port": 9375,
+      "pid": 38708,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9375.js"
+    },
+    {
+      "port": 9376,
+      "pid": 36360,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9376.js"
+    },
+    {
+      "port": 9377,
+      "pid": 31644,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9377.js"
+    },
+    {
+      "port": 9378,
+      "pid": 22052,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9378.js"
+    },
+    {
+      "port": 9379,
+      "pid": 39016,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9379.js"
+    },
+    {
+      "port": 9380,
+      "pid": 28736,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9380.js"
+    },
+    {
+      "port": 9381,
+      "pid": 46552,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9381.js"
+    },
+    {
+      "port": 9382,
+      "pid": 41200,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9382.js"
+    },
+    {
+      "port": 9383,
+      "pid": 5200,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9383.js"
+    },
+    {
+      "port": 9384,
+      "pid": 41316,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9384.js"
+    },
+    {
+      "port": 9385,
+      "pid": 27304,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9385.js"
+    },
+    {
+      "port": 9386,
+      "pid": 19752,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9386.js"
+    },
+    {
+      "port": 9387,
+      "pid": 48840,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9387.js"
+    },
+    {
+      "port": 9388,
+      "pid": 42108,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9388.js"
+    },
+    {
+      "port": 9389,
+      "pid": 3964,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9389.js"
+    },
+    {
+      "port": 9390,
+      "pid": 46976,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9390.js"
+    },
+    {
+      "port": 9391,
+      "pid": 42464,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9391.js"
+    },
+    {
+      "port": 9392,
+      "pid": 47600,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9392.js"
+    },
+    {
+      "port": 9393,
+      "pid": 31776,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9393.js"
+    },
+    {
+      "port": 9394,
+      "pid": 8360,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9394.js"
+    },
+    {
+      "port": 9395,
+      "pid": 17512,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9395.js"
+    },
+    {
+      "port": 9396,
+      "pid": 8792,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9396.js"
+    },
+    {
+      "port": 9397,
+      "pid": 34312,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9397.js"
+    },
+    {
+      "port": 9398,
+      "pid": 46992,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9398.js"
+    },
+    {
+      "port": 9399,
+      "pid": 33776,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9399.js"
+    },
+    {
+      "port": 9400,
+      "pid": 35248,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9400.js"
+    },
+    {
+      "port": 9401,
+      "pid": 21404,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9401.js"
+    },
+    {
+      "port": 9402,
+      "pid": 45016,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9402.js"
+    },
+    {
+      "port": 9403,
+      "pid": 36368,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9403.js"
+    },
+    {
+      "port": 9404,
+      "pid": 31752,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9404.js"
+    },
+    {
+      "port": 9405,
+      "pid": 4368,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9405.js"
+    },
+    {
+      "port": 9406,
+      "pid": 34932,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9406.js"
+    },
+    {
+      "port": 9407,
+      "pid": 2452,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9407.js"
+    },
+    {
+      "port": 9408,
+      "pid": 26300,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9408.js"
+    },
+    {
+      "port": 9409,
+      "pid": 30008,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9409.js"
+    },
+    {
+      "port": 9410,
+      "pid": 36068,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9410.js"
+    },
+    {
+      "port": 9411,
+      "pid": 41256,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9411.js"
+    },
+    {
+      "port": 9412,
+      "pid": 19464,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9412.js"
+    },
+    {
+      "port": 9413,
+      "pid": 32352,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9413.js"
+    },
+    {
+      "port": 9414,
+      "pid": 38664,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9414.js"
+    },
+    {
+      "port": 9415,
+      "pid": 41132,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9415.js"
+    },
+    {
+      "port": 9416,
+      "pid": 47116,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9416.js"
+    },
+    {
+      "port": 9417,
+      "pid": 36956,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9417.js"
+    },
+    {
+      "port": 9418,
+      "pid": 26684,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9418.js"
+    },
+    {
+      "port": 9419,
+      "pid": 3960,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9419.js"
+    },
+    {
+      "port": 9420,
+      "pid": 3324,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9420.js"
+    },
+    {
+      "port": 9421,
+      "pid": 22392,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9421.js"
+    },
+    {
+      "port": 9422,
+      "pid": 42744,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9422.js"
+    },
+    {
+      "port": 9423,
+      "pid": 35520,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9423.js"
+    },
+    {
+      "port": 9424,
+      "pid": 8356,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9424.js"
+    },
+    {
+      "port": 9425,
+      "pid": 34672,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9425.js"
+    },
+    {
+      "port": 9426,
+      "pid": 48940,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9426.js"
+    },
+    {
+      "port": 9427,
+      "pid": 31076,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9427.js"
+    },
+    {
+      "port": 9428,
+      "pid": 18780,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9428.js"
+    },
+    {
+      "port": 9429,
+      "pid": 35832,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9429.js"
+    },
+    {
+      "port": 9430,
+      "pid": 29704,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9430.js"
+    },
+    {
+      "port": 9431,
+      "pid": 29968,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9431.js"
+    },
+    {
+      "port": 9432,
+      "pid": 4672,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9432.js"
+    },
+    {
+      "port": 9433,
+      "pid": 47796,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9433.js"
+    },
+    {
+      "port": 9434,
+      "pid": 39368,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9434.js"
+    },
+    {
+      "port": 9435,
+      "pid": 38644,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9435.js"
+    },
+    {
+      "port": 9436,
+      "pid": 37428,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9436.js"
+    },
+    {
+      "port": 9437,
+      "pid": 39844,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9437.js"
+    },
+    {
+      "port": 9438,
+      "pid": 40092,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9438.js"
+    },
+    {
+      "port": 9439,
+      "pid": 24820,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9439.js"
+    },
+    {
+      "port": 9440,
+      "pid": 44540,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9440.js"
+    },
+    {
+      "port": 9441,
+      "pid": 11948,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9441.js"
+    },
+    {
+      "port": 9442,
+      "pid": 31068,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9442.js"
+    },
+    {
+      "port": 9443,
+      "pid": 41140,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9443.js"
+    },
+    {
+      "port": 9444,
+      "pid": 38848,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9444.js"
+    },
+    {
+      "port": 9445,
+      "pid": 45660,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9445.js"
+    },
+    {
+      "port": 9446,
+      "pid": 47200,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9446.js"
+    },
+    {
+      "port": 9447,
+      "pid": 27524,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9447.js"
+    },
+    {
+      "port": 9448,
+      "pid": 47584,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9448.js"
+    },
+    {
+      "port": 9449,
+      "pid": 27448,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9449.js"
+    },
+    {
+      "port": 9450,
+      "pid": 36632,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9450.js"
+    },
+    {
+      "port": 9451,
+      "pid": 29728,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9451.js"
+    },
+    {
+      "port": 9452,
+      "pid": 31808,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9452.js"
+    },
+    {
+      "port": 9453,
+      "pid": 36740,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9453.js"
+    },
+    {
+      "port": 9454,
+      "pid": 25504,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9454.js"
+    },
+    {
+      "port": 9455,
+      "pid": 42416,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9455.js"
+    },
+    {
+      "port": 9456,
+      "pid": 45088,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9456.js"
+    },
+    {
+      "port": 9457,
+      "pid": 32608,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9457.js"
+    },
+    {
+      "port": 9458,
+      "pid": 48476,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9458.js"
+    },
+    {
+      "port": 9459,
+      "pid": 45336,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9459.js"
+    },
+    {
+      "port": 9460,
+      "pid": 24344,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9460.js"
+    },
+    {
+      "port": 9461,
+      "pid": 28068,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9461.js"
+    },
+    {
+      "port": 9462,
+      "pid": 9996,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9462.js"
+    },
+    {
+      "port": 9463,
+      "pid": 27652,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9463.js"
+    },
+    {
+      "port": 9464,
+      "pid": 30504,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9464.js"
+    },
+    {
+      "port": 9465,
+      "pid": 32792,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9465.js"
+    },
+    {
+      "port": 9466,
+      "pid": 46164,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9466.js"
+    },
+    {
+      "port": 9467,
+      "pid": 3972,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9467.js"
+    },
+    {
+      "port": 9468,
+      "pid": 38820,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9468.js"
+    },
+    {
+      "port": 9469,
+      "pid": 23628,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9469.js"
+    },
+    {
+      "port": 9470,
+      "pid": 32696,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9470.js"
+    },
+    {
+      "port": 9471,
+      "pid": 23588,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9471.js"
+    },
+    {
+      "port": 9472,
+      "pid": 45228,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9472.js"
+    },
+    {
+      "port": 9473,
+      "pid": 42836,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9473.js"
+    },
+    {
+      "port": 9474,
+      "pid": 8904,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9474.js"
+    },
+    {
+      "port": 9475,
+      "pid": 35336,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9475.js"
+    },
+    {
+      "port": 9476,
+      "pid": 6208,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9476.js"
+    },
+    {
+      "port": 9477,
+      "pid": 5636,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9477.js"
+    },
+    {
+      "port": 9478,
+      "pid": 20408,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9478.js"
+    },
+    {
+      "port": 9479,
+      "pid": 22992,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9479.js"
+    },
+    {
+      "port": 9480,
+      "pid": 34224,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9480.js"
+    },
+    {
+      "port": 9481,
+      "pid": 30684,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9481.js"
+    },
+    {
+      "port": 9482,
+      "pid": 41056,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9482.js"
+    },
+    {
+      "port": 9483,
+      "pid": 23256,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9483.js"
+    },
+    {
+      "port": 9484,
+      "pid": 32156,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9484.js"
+    },
+    {
+      "port": 9485,
+      "pid": 43208,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9485.js"
+    },
+    {
+      "port": 9486,
+      "pid": 40168,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9486.js"
+    },
+    {
+      "port": 9487,
+      "pid": 44964,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9487.js"
+    },
+    {
+      "port": 9488,
+      "pid": 21240,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9488.js"
+    },
+    {
+      "port": 9489,
+      "pid": 38976,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9489.js"
+    },
+    {
+      "port": 9490,
+      "pid": 44992,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9490.js"
+    },
+    {
+      "port": 9491,
+      "pid": 37672,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9491.js"
+    },
+    {
+      "port": 9492,
+      "pid": 1604,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9492.js"
+    },
+    {
+      "port": 9493,
+      "pid": 25544,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9493.js"
+    },
+    {
+      "port": 9494,
+      "pid": 16388,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9494.js"
+    },
+    {
+      "port": 9495,
+      "pid": 31312,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9495.js"
+    },
+    {
+      "port": 9496,
+      "pid": 39512,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9496.js"
+    },
+    {
+      "port": 9497,
+      "pid": 34620,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9497.js"
+    },
+    {
+      "port": 9498,
+      "pid": 34088,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9498.js"
+    },
+    {
+      "port": 9499,
+      "pid": 3304,
+      "file": "D:\\Ai Server\\git-memory-mcp-server\\security-server-9499.js"
+    }
+  ]
+}

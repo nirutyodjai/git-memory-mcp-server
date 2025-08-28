@@ -7,7 +7,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const { spawn } = require('child_process');
+const { spawn, execSync } = require('child_process');
 const http = require('http');
 const express = require('express');
 const WebSocket = require('ws');
@@ -356,65 +356,70 @@ class SharedDataCoordinator {
     }
 
     async executeGitMemoryOperation(operation, data = {}) {
-        return new Promise((resolve, reject) => {
-            let command, args;
+        try {
+            let result = '';
             
             switch (operation) {
                 case 'commit':
-                    command = 'git';
-                    args = ['add', '.', '&&', 'git', 'commit', '-m', '"' + ((data && data.message) || 'Shared data update') + '"'];
+                    // Check if there are changes to commit
+                    const status = execSync('git status --porcelain', { 
+                        cwd: this.gitMemoryPath,
+                        encoding: 'utf8' 
+                    });
+                    
+                    if (status.trim() === '') {
+                        result = 'No changes to commit';
+                        break;
+                    }
+                    
+                    // Add files first
+                    execSync('git add .', { 
+                        cwd: this.gitMemoryPath,
+                        encoding: 'utf8' 
+                    });
+                    
+                    // Then commit with message
+                    const message = (data && data.message) || 'Shared data update';
+                    result = execSync(`git commit -m "${message}"`, { 
+                        cwd: this.gitMemoryPath,
+                        encoding: 'utf8' 
+                    });
                     break;
                 case 'push':
-                    command = 'git';
-                    args = ['push'];
+                    result = execSync('git push', { 
+                        cwd: this.gitMemoryPath,
+                        encoding: 'utf8' 
+                    });
                     break;
                 case 'pull':
-                    command = 'git';
-                    args = ['pull'];
+                    result = execSync('git pull', { 
+                        cwd: this.gitMemoryPath,
+                        encoding: 'utf8' 
+                    });
                     break;
                 case 'status':
-                    command = 'git';
-                    args = ['status', '--porcelain'];
+                    result = execSync('git status --porcelain', { 
+                        cwd: this.gitMemoryPath,
+                        encoding: 'utf8' 
+                    });
                     break;
                 default:
-                    reject(new Error(`Unknown git operation: ${operation}`));
-                    return;
+                    throw new Error(`Unknown git operation: ${operation}`);
             }
             
-            const process = spawn(command, args, {
-                cwd: this.gitMemoryPath,
-                shell: true
-            });
-            
-            let output = '';
-            let error = '';
-            
-            process.stdout.on('data', (data) => {
-                output += data.toString();
-            });
-            
-            process.stderr.on('data', (data) => {
-                error += data.toString();
-            });
-            
-            process.on('close', (code) => {
-                if (code === 0) {
-                    resolve(output);
-                } else {
-                    reject(new Error(error || `Process exited with code ${code}`));
-                }
-            });
-        });
+            return result;
+        } catch (error) {
+            throw new Error(error.message);
+        }
     }
 
-    commitToGitMemory(message) {
-        this.executeGitMemoryOperation('commit', { message })
-            .then(() => {
-                console.log(`📝 Git commit: ${message}`);
-            })
-            .catch(error => {
-                console.error('Git commit error:', error.message);
-            });
+    async commitToGitMemory(message) {
+        try {
+            await this.executeGitMemoryOperation('commit', { message });
+            console.log(`✅ Git commit successful: ${message}`);
+        } catch (error) {
+            console.error('❌ Git commit error:', error.message);
+        }
     }
 
     startHealthCheck() {

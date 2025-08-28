@@ -1,0 +1,1 @@
+{"version":3,"file":"floating-dock.d.ts","sourceRoot":"","sources":["../../../../src/3d-sco/components/ui/floating-dock.tsx"],"names":[],"mappings":"AAAA;;;;IAII;AAiBJ,eAAO,MAAM,YAAY,GAAI,+CAI1B;IACD,KAAK,EAAE;QAAE,KAAK,EAAE,MAAM,CAAC;QAAC,IAAI,EAAE,KAAK,CAAC,SAAS,CAAA;KAAE,EAAE,CAAC;IAClD,gBAAgB,CAAC,EAAE,MAAM,CAAC;IAC1B,eAAe,CAAC,EAAE,MAAM,CAAC;CAC1B,QAOA,CAAC"}

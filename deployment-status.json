@@ -1,0 +1,43 @@
+{
+  "timestamp": "2025-08-27T20:15:00.000Z",
+  "totalServers": 500,
+  "deployedServers": 500,
+  "runningServers": 500,
+  "failedServers": 0,
+  "status": "success",
+  "deploymentSummary": {
+    "communityServers": 346,
+    "securityServers": 154,
+    "internalServers": 0
+  },
+  "serverCategories": {
+    "aggregator": 15,
+    "search": 25,
+    "productivity": 35,
+    "notes": 20,
+    "database": 30,
+    "api": 40,
+    "security": 154,
+    "ai-ml": 45,
+    "development": 50,
+    "monitoring": 25,
+    "communication": 30,
+    "file-management": 31
+  },
+  "portRange": {
+    "start": 9000,
+    "end": 9499
+  },
+  "healthStatus": {
+    "healthy": 496,
+    "unhealthy": 4,
+    "unknown": 0
+  },
+  "lastHealthCheck": "2025-08-27T20:14:00.000Z",
+  "gitMemoryIntegration": {
+    "enabled": true,
+    "syncedServers": 496,
+    "bridgeStatus": "running",
+    "lastSync": "2025-08-27T20:13:00.000Z"
+  }
+}

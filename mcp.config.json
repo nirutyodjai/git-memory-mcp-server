@@ -61,6 +61,50 @@
         "NODE_ENV": "production",
         "MCP_SERVER_NAME": "3D-SCO Playwright"
       }
+    },
+    "aindreyway-codex-keeper": {
+      "name": "Aindreyway Codex Keeper",
+      "description": "Code management and documentation tool",
+      "command": "npx",
+      "args": ["-y", "@aindreyway/mcp-codex-keeper@latest"],
+      "env": {
+        "NODE_ENV": "production",
+        "MCP_SERVER_NAME": "Aindreyway Codex Keeper",
+        "npm_config_cache_max": "1024000000",
+        "NODE_OPTIONS": "--max-old-space-size=512"
+      }
+    },
+    "figma-developer-mcp": {
+      "name": "Figma Developer MCP",
+      "description": "Design context provider for Figma integration",
+      "command": "npx",
+      "args": ["-y", "figma-developer-mcp", "--stdio"],
+      "env": {
+        "NODE_ENV": "production",
+        "MCP_SERVER_NAME": "Figma Developer MCP",
+        "FIGMA_API_KEY": "figd_T55K1_C02bkJ4e36LuRX0h53O_uSF58m9L53G4sv"
+      }
+    },
+    "puppeteer-server": {
+      "name": "Puppeteer Server",
+      "description": "Browser automation with Puppeteer",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-puppeteer"],
+      "env": {
+        "NODE_ENV": "production",
+        "MCP_SERVER_NAME": "Puppeteer Server"
+      }
+    },
+    "github-server": {
+      "name": "GitHub Server",
+      "description": "GitHub integration and repository management",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": {
+        "NODE_ENV": "production",
+        "MCP_SERVER_NAME": "GitHub Server",
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "git"
+      }
     }
   },
   "global": {

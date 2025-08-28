@@ -1,0 +1,75 @@
+{
+  "timestamp": "2025-08-27T20:28:48.882Z",
+  "tests": [
+    {
+      "name": "Concurrent Requests",
+      "status": "passed",
+      "details": {
+        "successful": 50,
+        "failed": 0,
+        "totalTime": 98,
+        "avgResponseTime": 46.98,
+        "minResponseTime": 29,
+        "maxResponseTime": 70
+      }
+    },
+    {
+      "name": "Load Balancing",
+      "status": "passed",
+      "details": {
+        "totalRequests": 100,
+        "totalTime": 159,
+        "serverDistribution": {
+          "proxy": 100
+        }
+      }
+    },
+    {
+      "name": "Memory Operations",
+      "status": "failed",
+      "details": {
+        "successful": 0,
+        "failed": 50,
+        "avgResponseTime": 1.2
+      }
+    },
+    {
+      "name": "System Stability",
+      "status": "passed",
+      "details": {
+        "testDuration": 10000,
+        "healthChecks": 10,
+        "proxyUptime": 100,
+        "bridgeUptime": 100
+      }
+    }
+  ],
+  "metrics": {
+    "totalDuration": 10471,
+    "concurrentPerformance": {
+      "successful": 50,
+      "failed": 0,
+      "avgResponseTime": 46.98,
+      "totalTime": 98
+    },
+    "loadBalancing": {
+      "distribution": [
+        [
+          "proxy",
+          100
+        ]
+      ],
+      "totalTime": 159
+    },
+    "memoryPerformance": {
+      "successful": 0,
+      "failed": 50,
+      "avgResponseTime": 1.2
+    },
+    "systemStability": {
+      "proxyUptime": 100,
+      "bridgeUptime": 100,
+      "healthChecks": 10
+    }
+  }
+}

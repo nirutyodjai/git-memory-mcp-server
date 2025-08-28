@@ -1,0 +1,86 @@
+{
+  "timestamp": "2025-08-27T20:19:20.041Z",
+  "totalTests": 12,
+  "passedTests": 9,
+  "failedTests": 3,
+  "warnings": 0,
+  "details": [
+    {
+      "test": "Load Server Configurations",
+      "status": "passed",
+      "details": "0 servers loaded",
+      "timestamp": "2025-08-27T20:19:20.046Z"
+    },
+    {
+      "test": "Git Memory Bridge Health",
+      "status": "passed",
+      "details": "Response time: 21.37ms",
+      "timestamp": "2025-08-27T20:19:20.068Z"
+    },
+    {
+      "test": "Memory Storage",
+      "status": "passed",
+      "details": "Test data stored successfully",
+      "timestamp": "2025-08-27T20:19:20.071Z"
+    },
+    {
+      "test": "Memory Endpoints",
+      "status": "failed",
+      "details": "Failed to retrieve test data",
+      "timestamp": "2025-08-27T20:19:20.075Z"
+    },
+    {
+      "test": "MCP Proxy Health",
+      "status": "passed",
+      "details": "Response time: 12.23ms",
+      "timestamp": "2025-08-27T20:19:20.088Z"
+    },
+    {
+      "test": "Proxy Server Count",
+      "status": "passed",
+      "details": "75 servers",
+      "timestamp": "2025-08-27T20:19:20.093Z"
+    },
+    {
+      "test": "Individual Server Health",
+      "status": "failed",
+      "details": "Only NaN% healthy",
+      "timestamp": "2025-08-27T20:19:20.094Z"
+    },
+    {
+      "test": "Memory Sharing Sync",
+      "status": "passed",
+      "details": "34.56ms, 496 servers",
+      "timestamp": "2025-08-27T20:19:20.129Z"
+    },
+    {
+      "test": "Load Balancing",
+      "status": "passed",
+      "details": "20/20 successful, avg 32.22ms",
+      "timestamp": "2025-08-27T20:19:20.171Z"
+    },
+    {
+      "test": "Data Consistency",
+      "status": "failed",
+      "details": "No memory categories found",
+      "timestamp": "2025-08-27T20:19:20.174Z"
+    },
+    {
+      "test": "System Resources",
+      "status": "passed",
+      "details": "Heap: 8MB, RSS: 50MB",
+      "timestamp": "2025-08-27T20:19:20.177Z"
+    },
+    {
+      "test": "Concurrent Operations",
+      "status": "passed",
+      "details": "10/10 successful",
+      "timestamp": "2025-08-27T20:19:20.195Z"
+    }
+  ],
+  "summary": {
+    "totalServers": 0,
+    "testDuration": "2025-08-27T20:19:20.196Z",
+    "successRate": "75.0%"
+  }
+}

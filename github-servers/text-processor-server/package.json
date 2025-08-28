@@ -1,0 +1,9 @@
+{
+  "name": "text-processor-server",
+  "version": "1.0.0",
+  "description": "Text processing and manipulation utilities",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  }
+}

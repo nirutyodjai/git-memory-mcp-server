@@ -1,0 +1,9 @@
+{
+  "name": "queue-server",
+  "version": "1.0.0",
+  "description": "Message queue and task processing",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  }
+}

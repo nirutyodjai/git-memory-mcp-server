@@ -984,5 +984,253 @@
       }
     ]
   ],
-  "lastUpdated": "2025-08-27T17:10:53.596Z"
+  "lastUpdated": "2025-08-27T17:10:53.596Z",
+  "servers": [
+    {
+      "name": "github-analytics-mcp",
+      "port": 5001,
+      "category": "analytics",
+      "description": "GitHub repository analytics and insights",
+      "features": [
+        "commit analysis",
+        "contributor stats",
+        "code metrics"
+      ],
+      "type": "github-data",
+      "status": "active",
+      "url": "http://localhost:5001",
+      "healthCheck": "/health",
+      "lastUpdated": "2025-08-27T19:13:56.124Z"
+    },
+    {
+      "name": "github-issues-mcp",
+      "port": 5002,
+      "category": "project-management",
+      "description": "GitHub Issues and Project management",
+      "features": [
+        "issue tracking",
+        "milestone management",
+        "project boards"
+      ],
+      "type": "github-data",
+      "status": "active",
+      "url": "http://localhost:5002",
+      "healthCheck": "/health",
+      "lastUpdated": "2025-08-27T19:13:56.124Z"
+    },
+    {
+      "name": "github-actions-mcp",
+      "port": 5003,
+      "category": "ci-cd",
+      "description": "GitHub Actions workflow management",
+      "features": [
+        "workflow automation",
+        "build monitoring",
+        "deployment tracking"
+      ],
+      "type": "github-data",
+      "status": "active",
+      "url": "http://localhost:5003",
+      "healthCheck": "/health",
+      "lastUpdated": "2025-08-27T19:13:56.124Z"
+    },
+    {
+      "name": "github-security-mcp",
+      "port": 5004,
+      "category": "security",
+      "description": "GitHub security and vulnerability scanning",
+      "features": [
+        "security alerts",
+        "dependency scanning",
+        "code scanning"
+      ],
+      "type": "github-data",
+      "status": "active",
+      "url": "http://localhost:5004",
+      "healthCheck": "/health",
+      "lastUpdated": "2025-08-27T19:13:56.124Z"
+    },
+    {
+      "name": "github-releases-mcp",
+      "port": 5005,
+      "category": "release-management",
+      "description": "GitHub releases and version management",
+      "features": [
+        "release automation",
+        "changelog generation",
+        "version tracking"
+      ],
+      "type": "github-data",
+      "status": "active",
+      "url": "http://localhost:5005",
+      "healthCheck": "/health",
+      "lastUpdated": "2025-08-27T19:13:56.124Z"
+    },
+    {
+      "name": "github-webhooks-mcp",
+      "port": 5006,
+      "category": "integration",
+      "description": "GitHub webhooks and event handling",
+      "features": [
+        "webhook management",
+        "event processing",
+        "real-time notifications"
+      ],
+      "type": "github-data",
+      "status": "active",
+      "url": "http://localhost:5006",
+      "healthCheck": "/health",
+      "lastUpdated": "2025-08-27T19:13:56.124Z"
+    },
+    {
+      "name": "github-search-mcp",
+      "port": 5007,
+      "category": "search",
+      "description": "Advanced GitHub search and discovery",
+      "features": [
+        "code search",
+        "repository discovery",
+        "user search"
+      ],
+      "type": "github-data",
+      "status": "active",
+      "url": "http://localhost:5007",
+      "healthCheck": "/health",
+      "lastUpdated": "2025-08-27T19:13:56.124Z"
+    },
+    {
+      "name": "github-graphql-mcp",
+      "port": 5008,
+      "category": "api",
+      "description": "GitHub GraphQL API integration",
+      "features": [
+        "GraphQL queries",
+        "advanced data fetching",
+        "schema exploration"
+      ],
+      "type": "github-data",
+      "status": "active",
+      "url": "http://localhost:5008",
+      "healthCheck": "/health",
+      "lastUpdated": "2025-08-27T19:13:56.124Z"
+    },
+    {
+      "name": "github-pages-mcp",
+      "port": 5009,
+      "category": "hosting",
+      "description": "GitHub Pages deployment and management",
+      "features": [
+        "static site deployment",
+        "custom domains",
+        "build automation"
+      ],
+      "type": "github-data",
+      "status": "active",
+      "url": "http://localhost:5009",
+      "healthCheck": "/health",
+      "lastUpdated": "2025-08-27T19:13:56.124Z"
+    },
+    {
+      "name": "github-packages-mcp",
+      "port": 5010,
+      "category": "package-management",
+      "description": "GitHub Packages registry management",
+      "features": [
+        "package publishing",
+        "registry management",
+        "dependency tracking"
+      ],
+      "type": "github-data",
+      "status": "active",
+      "url": "http://localhost:5010",
+      "healthCheck": "/health",
+      "lastUpdated": "2025-08-27T19:13:56.124Z"
+    },
+    {
+      "name": "github-codespaces-mcp",
+      "port": 5011,
+      "category": "development",
+      "description": "GitHub Codespaces management",
+      "features": [
+        "codespace creation",
+        "environment management",
+        "remote development"
+      ],
+      "type": "github-data",
+      "status": "active",
+      "url": "http://localhost:5011",
+      "healthCheck": "/health",
+      "lastUpdated": "2025-08-27T19:13:56.124Z"
+    },
+    {
+      "name": "github-discussions-mcp",
+      "port": 5012,
+      "category": "community",
+      "description": "GitHub Discussions and community management",
+      "features": [
+        "discussion threads",
+        "community engagement",
+        "Q&A management"
+      ],
+      "type": "github-data",
+      "status": "active",
+      "url": "http://localhost:5012",
+      "healthCheck": "/health",
+      "lastUpdated": "2025-08-27T19:13:56.124Z"
+    },
+    {
+      "name": "github-sponsors-mcp",
+      "port": 5013,
+      "category": "monetization",
+      "description": "GitHub Sponsors and funding management",
+      "features": [
+        "sponsorship tracking",
+        "funding goals",
+        "supporter management"
+      ],
+      "type": "github-data",
+      "status": "active",
+      "url": "http://localhost:5013",
+      "healthCheck": "/health",
+      "lastUpdated": "2025-08-27T19:13:56.124Z"
+    },
+    {
+      "name": "github-copilot-mcp",
+      "port": 5014,
+      "category": "ai-assistance",
+      "description": "GitHub Copilot integration and AI assistance",
+      "features": [
+        "code suggestions",
+        "AI-powered development",
+        "productivity enhancement"
+      ],
+      "type": "github-data",
+      "status": "active",
+      "url": "http://localhost:5014",
+      "healthCheck": "/health",
+      "lastUpdated": "2025-08-27T19:13:56.124Z"
+    },
+    {
+      "name": "github-enterprise-mcp",
+      "port": 5015,
+      "category": "enterprise",
+      "description": "GitHub Enterprise features and management",
+      "features": [
+        "enterprise administration",
+        "organization management",
+        "compliance tracking"
+      ],
+      "type": "github-data",
+      "status": "active",
+      "url": "http://localhost:5015",
+      "healthCheck": "/health",
+      "lastUpdated": "2025-08-27T19:13:56.124Z"
+    }
+  ],
+  "metadata": {
+    "totalServers": 15,
+    "githubDataServers": 15,
+    "lastUpdated": "2025-08-27T19:13:56.124Z",
+    "version": "2.0.0"
+  }
 }

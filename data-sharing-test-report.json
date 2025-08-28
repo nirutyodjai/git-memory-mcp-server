@@ -1,10 +1,10 @@
 {
-  "timestamp": "2025-08-27T17:36:22.574Z",
+  "timestamp": "2025-08-27T17:46:07.521Z",
   "summary": {
     "total": 7,
-    "passed": 6,
-    "failed": 1,
-    "successRate": "85.71%"
+    "passed": 7,
+    "failed": 0,
+    "successRate": "100.00%"
   },
   "tests": [
     {
@@ -75,13 +75,13 @@
               "capacity": 50
             }
           ],
-          "uptime": 549.1729504,
+          "uptime": 1134.0037277,
           "memory": {
-            "rss": 47775744,
-            "heapTotal": 12161024,
-            "heapUsed": 10545032,
-            "external": 2508510,
-            "arrayBuffers": 43231
+            "rss": 48500736,
+            "heapTotal": 12423168,
+            "heapUsed": 11249056,
+            "external": 2520828,
+            "arrayBuffers": 55549
           }
         }
       }
@@ -102,7 +102,7 @@
         "success": true,
         "message": "Data shared successfully",
         "dataType": "test-data",
-        "timestamp": "2025-08-27T17:36:20.465Z"
+        "timestamp": "2025-08-27T17:46:05.457Z"
       }
     },
     {
@@ -111,8 +111,12 @@
     },
     {
       "test": "Git Memory Operations",
-      "status": "FAIL",
-      "error": "warning: in the working copy of 'shared/test-data-index.json', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'shared/test-data/test-server-001-2025-08-27T17-36-20-453Z.json', LF will be replaced by CRLF the next time Git touches it\nerror: pathspec 'data' did not match any file(s) known to git\nerror: pathspec 'update' did not match any file(s) known to git\n"
+      "status": "PASS",
+      "details": {
+        "success": true,
+        "operation": "commit",
+        "result": "No changes to commit"
+      }
     },
     {
       "test": "Data Retrieval",
@@ -120,6 +124,34 @@
       "details": {
         "success": true,
         "data": [
+          {
+            "serverId": "test-server-001",
+            "dataType": "test-data",
+            "data": {
+              "message": "Hello from test server!",
+              "timestamp": "2025-08-27T17:43:41.532Z",
+              "testValue": 0.6242428878077204
+            },
+            "metadata": {
+              "type": "test-message",
+              "priority": "high"
+            },
+            "timestamp": "2025-08-27T17-43-41-534Z"
+          },
+          {
+            "serverId": "test-server-001",
+            "dataType": "test-data",
+            "data": {
+              "message": "Hello from test server!",
+              "timestamp": "2025-08-27T17:43:07.486Z",
+              "testValue": 0.5627567637782951
+            },
+            "metadata": {
+              "type": "test-message",
+              "priority": "high"
+            },
+            "timestamp": "2025-08-27T17-43-07-487Z"
+          },
           {
             "serverId": "test-server-001",
             "dataType": "test-data",
@@ -133,6 +165,20 @@
               "priority": "high"
             },
             "timestamp": "2025-08-27T17-36-20-453Z"
+          },
+          {
+            "serverId": "test-server-001",
+            "dataType": "test-data",
+            "data": {
+              "message": "Hello from test server!",
+              "timestamp": "2025-08-27T17:46:05.287Z",
+              "testValue": 0.9606966668383237
+            },
+            "metadata": {
+              "type": "test-message",
+              "priority": "high"
+            },
+            "timestamp": "2025-08-27T17-46-05-289Z"
           }
         ],
         "dataType": "test-data"

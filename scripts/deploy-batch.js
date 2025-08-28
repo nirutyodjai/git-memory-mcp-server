@@ -11,6 +11,10 @@ class BatchDeployer {
     this.configPath = path.join(process.cwd(), 'mcp-coordinator-config.json');
     this.processes = new Map();
     this.deploymentLog = [];
+    this.maxBatchSize = 100; // Increased for 1000-server capacity
+    this.maxConcurrentDeployments = 10; // Limit concurrent deployments
+    this.retryAttempts = 3;
+    this.deploymentTimeout = 30000; // 30 seconds timeout
   }
 
   async loadConfig() {
@@ -33,8 +37,13 @@ class BatchDeployer {
   }
 
   generateMCPServer(category, index, categoryConfig) {
-    const serverId = `${category}-server-${String(index).padStart(3, '0')}`;
-    const port = categoryConfig.portStart + index - 1;
+    const serverId = `${category}-${categoryConfig.portStart + index}`;
+    const port = categoryConfig.portStart + index;
+    
+    // Validate port range
+    if (port > categoryConfig.portEnd) {
+      throw new Error(`Port ${port} exceeds maximum for category ${category} (max: ${categoryConfig.portEnd})`);
+    }
     
     return {
       id: serverId,
@@ -315,6 +324,12 @@ module.exports = ${this.toPascalCase(category)}MCPServer;
       return { deployed: 0, skipped: 0, failed: 0 };
     }
 
+    // Validate deployment limits
+    if (count > this.maxBatchSize) {
+      console.log(chalk.yellow(`⚠️  Adjusting count from ${count} to ${this.maxBatchSize} (batch size limit)`));
+      count = this.maxBatchSize;
+    }
+
     const results = { deployed: 0, skipped: 0, failed: 0 };
     const deploymentBatch = [];
 
@@ -325,27 +340,26 @@ module.exports = ${this.toPascalCase(category)}MCPServer;
       deploymentBatch.push(server);
     }
 
-    // Create server files
+    // Create server files with concurrent deployment and retry mechanism
     const serversDir = path.join(process.cwd(), 'generated-servers', category);
     await fs.mkdir(serversDir, { recursive: true });
 
+    // Process deployments in concurrent batches
+    const deploymentPromises = [];
+    
     for (const server of deploymentBatch) {
-      try {
-        const serverFile = path.join(serversDir, `${server.id}.js`);
-        await fs.writeFile(serverFile, server.script);
-        
-        // Update server config with file path
-        server.scriptPath = serverFile;
-        server.status = 'deployed';
-        
-        config.mcpServers.push(server);
-        results.deployed++;
-        
-        console.log(chalk.green(`✅ Deployed: ${server.id} on port ${server.port}`));
-      } catch (error) {
-        console.error(chalk.red(`❌ Failed to deploy ${server.id}:`, error.message));
-        results.failed++;
+      const deployPromise = this.deployServerWithRetry(server, serversDir, config, results);
+      deploymentPromises.push(deployPromise);
+      
+      // Limit concurrent deployments
+      if (deploymentPromises.length >= this.maxConcurrentDeployments) {
+        await Promise.allSettled(deploymentPromises.splice(0, this.maxConcurrentDeployments));
       }
+    }
+    
+    // Deploy remaining servers
+    if (deploymentPromises.length > 0) {
+      await Promise.allSettled(deploymentPromises);
     }
 
     // Update statistics
@@ -359,6 +373,79 @@ module.exports = ${this.toPascalCase(category)}MCPServer;
     console.log(chalk.gray(`📊 Results: ${results.deployed} deployed, ${results.failed} failed`));
     
     return results;
+  }
+
+  async deployServerWithRetry(server, serversDir, config, results) {
+    for (let attempt = 1; attempt <= this.retryAttempts; attempt++) {
+      try {
+        await this.deploySingleServer(server, serversDir);
+        
+        // Update server config with file path
+        server.scriptPath = path.join(serversDir, `${server.id}.js`);
+        server.status = 'deployed';
+        
+        config.mcpServers.push(server);
+        results.deployed++;
+        
+        // Log deployment
+        this.deploymentLog.push({
+          serverId: server.id,
+          category: server.category,
+          port: server.port,
+          timestamp: new Date().toISOString(),
+          status: 'deployed',
+          attempt: attempt
+        });
+        
+        console.log(chalk.green(`✅ Deployed: ${server.id} on port ${server.port} (attempt ${attempt})`));
+        return { success: true, server: server.id };
+        
+      } catch (error) {
+        console.warn(chalk.yellow(`⚠️  Attempt ${attempt}/${this.retryAttempts} failed for ${server.id}: ${error.message}`));
+        
+        if (attempt === this.retryAttempts) {
+          console.error(chalk.red(`❌ Failed to deploy ${server.id} after ${this.retryAttempts} attempts`));
+          results.failed++;
+          return { success: false, server: server.id, error: error.message };
+        }
+        
+        // Wait before retry with exponential backoff
+        await new Promise(resolve => setTimeout(resolve, 1000 * Math.pow(2, attempt - 1)));
+      }
+    }
+  }
+  
+  async deploySingleServer(server, serversDir) {
+    return new Promise((resolve, reject) => {
+      const timeout = setTimeout(() => {
+        reject(new Error(`Deployment timeout for ${server.id}`));
+      }, this.deploymentTimeout);
+      
+      try {
+        // Simulate deployment process with file creation
+        const deploymentProcess = async () => {
+          const serverFile = path.join(serversDir, `${server.id}.js`);
+          await fs.writeFile(serverFile, server.script);
+          
+          // Simulate additional deployment steps
+          await new Promise(resolve => setTimeout(resolve, Math.random() * 1000 + 200));
+        };
+        
+        deploymentProcess()
+          .then(() => {
+            clearTimeout(timeout);
+            resolve();
+          })
+          .catch((error) => {
+            clearTimeout(timeout);
+            reject(error);
+          });
+        
+      } catch (error) {
+        clearTimeout(timeout);
+        reject(error);
+      }
+    });
   }
 
   async deployAllCategories() {

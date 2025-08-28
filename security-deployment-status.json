@@ -1,0 +1,1706 @@
+{
+  "total": 154,
+  "deployed": 154,
+  "failed": 0,
+  "running": 154,
+  "deploymentTime": "2025-08-27T20:02:02.116Z",
+  "duration": 7.145,
+  "runningServers": [
+    "mcp-server-vulnerability-scanner",
+    "mcp-server-penetration-testing",
+    "mcp-server-network-security",
+    "mcp-server-endpoint-protection",
+    "mcp-server-security-audit",
+    "mcp-server-threat-intelligence",
+    "mcp-server-incident-response",
+    "mcp-server-security-orchestration",
+    "mcp-server-identity-governance",
+    "mcp-server-zero-trust",
+    "mcp-server-cloud-security",
+    "mcp-server-application-security",
+    "mcp-server-data-loss-prevention",
+    "mcp-server-security-awareness",
+    "mcp-server-mobile-security",
+    "mcp-server-iot-security",
+    "mcp-server-blockchain-security",
+    "mcp-server-privacy-protection",
+    "mcp-server-security-metrics",
+    "mcp-server-threat-modeling",
+    "mcp-server-security-testing",
+    "mcp-server-compliance-automation",
+    "mcp-server-security-training",
+    "mcp-server-threat-detection",
+    "mcp-server-security-analytics",
+    "mcp-server-devsecops",
+    "mcp-server-red-team",
+    "mcp-server-blue-team",
+    "mcp-server-security-governance",
+    "mcp-server-cyber-threat-hunting",
+    "mcp-server-security-operations",
+    "mcp-server-digital-forensics",
+    "mcp-server-malware-analysis",
+    "mcp-server-security-architecture",
+    "mcp-server-insider-threat",
+    "mcp-server-supply-chain-security",
+    "mcp-server-api-security",
+    "mcp-server-web-security",
+    "mcp-server-email-security",
+    "mcp-server-dns-security",
+    "mcp-server-wireless-security",
+    "mcp-server-physical-security",
+    "mcp-server-social-engineering",
+    "mcp-server-security-awareness-training",
+    "mcp-server-cyber-insurance",
+    "mcp-server-security-vendor-management",
+    "mcp-server-security-budget-planning",
+    "mcp-server-security-communication",
+    "mcp-server-security-documentation",
+    "mcp-server-security-innovation",
+    "mcp-server-ai-security",
+    "mcp-server-quantum-security",
+    "mcp-server-edge-security",
+    "mcp-server-5g-security",
+    "mcp-server-autonomous-security",
+    "mcp-server-biometric-security",
+    "mcp-server-behavioral-analytics",
+    "mcp-server-threat-simulation",
+    "mcp-server-security-orchestration-advanced",
+    "mcp-server-cyber-deception",
+    "mcp-server-threat-attribution",
+    "mcp-server-security-data-science",
+    "mcp-server-continuous-monitoring",
+    "mcp-server-security-automation-framework",
+    "mcp-server-threat-landscape-analysis",
+    "mcp-server-security-maturity-assessment",
+    "mcp-server-cyber-resilience",
+    "mcp-server-security-culture",
+    "mcp-server-third-party-risk-advanced",
+    "mcp-server-security-investment-optimization",
+    "mcp-server-regulatory-intelligence",
+    "mcp-server-security-benchmarking",
+    "mcp-server-cyber-threat-sharing",
+    "mcp-server-security-innovation-lab",
+    "mcp-server-security-transformation",
+    "mcp-server-cyber-warfare-defense",
+    "mcp-server-security-ecosystem-management",
+    "mcp-server-security-talent-management",
+    "mcp-server-security-communication-advanced",
+    "mcp-server-security-strategy-execution",
+    "mcp-server-cyber-threat-prediction",
+    "mcp-server-security-performance-optimization",
+    "mcp-server-security-integration-platform",
+    "mcp-server-security-knowledge-management",
+    "mcp-server-security-quality-assurance",
+    "mcp-server-security-vendor-ecosystem",
+    "mcp-server-security-compliance-automation",
+    "mcp-server-security-risk-quantification",
+    "mcp-server-security-incident-learning",
+    "mcp-server-security-threat-modeling-advanced",
+    "mcp-server-security-data-governance",
+    "mcp-server-security-business-alignment",
+    "mcp-server-security-crisis-management",
+    "mcp-server-security-competitive-intelligence",
+    "mcp-server-security-partnership-management",
+    "mcp-server-security-future-planning",
+    "mcp-server-security-global-operations",
+    "mcp-server-security-sustainability",
+    "mcp-server-security-ethics",
+    "mcp-server-security-research-development",
+    "mcp-server-healthcare-security",
+    "mcp-server-financial-security-advanced",
+    "mcp-server-government-security",
+    "mcp-server-education-security",
+    "mcp-server-retail-security",
+    "mcp-server-manufacturing-security",
+    "mcp-server-energy-security",
+    "mcp-server-transportation-security",
+    "mcp-server-telecommunications-security",
+    "mcp-server-media-security",
+    "mcp-server-gaming-security",
+    "mcp-server-sports-security",
+    "mcp-server-hospitality-security",
+    "mcp-server-real-estate-security",
+    "mcp-server-legal-security",
+    "mcp-server-nonprofit-security",
+    "mcp-server-startup-security",
+    "mcp-server-enterprise-security-advanced",
+    "mcp-server-smb-security",
+    "mcp-server-remote-work-security",
+    "mcp-server-hybrid-work-security",
+    "mcp-server-digital-nomad-security",
+    "mcp-server-freelancer-security",
+    "mcp-server-consultant-security",
+    "mcp-server-contractor-security",
+    "mcp-server-vendor-security-advanced",
+    "mcp-server-customer-security",
+    "mcp-server-partner-security",
+    "mcp-server-investor-security",
+    "mcp-server-board-security",
+    "mcp-server-executive-security",
+    "mcp-server-employee-security",
+    "mcp-server-hr-security",
+    "mcp-server-it-security-advanced",
+    "mcp-server-operations-security",
+    "mcp-server-finance-security-advanced",
+    "mcp-server-marketing-security",
+    "mcp-server-sales-security",
+    "mcp-server-support-security",
+    "mcp-server-research-security",
+    "mcp-server-development-security-advanced",
+    "mcp-server-testing-security",
+    "mcp-server-deployment-security",
+    "mcp-server-maintenance-security",
+    "mcp-server-monitoring-security-advanced",
+    "mcp-server-backup-security",
+    "mcp-server-archive-security",
+    "mcp-server-disposal-security",
+    "mcp-server-legacy-security",
+    "mcp-server-emerging-security",
+    "mcp-server-integration-security-advanced",
+    "mcp-server-migration-security",
+    "mcp-server-transformation-security",
+    "mcp-server-optimization-security"
+  ],
+  "serverDetails": [
+    {
+      "name": "mcp-server-vulnerability-scanner",
+      "port": 9346,
+      "category": "security",
+      "tools": [
+        "scan_vulnerabilities",
+        "generate_report",
+        "track_cve"
+      ]
+    },
+    {
+      "name": "mcp-server-penetration-testing",
+      "port": 9347,
+      "category": "security",
+      "tools": [
+        "run_pentest",
+        "exploit_analysis",
+        "security_assessment"
+      ]
+    },
+    {
+      "name": "mcp-server-network-security",
+      "port": 9348,
+      "category": "security",
+      "tools": [
+        "firewall_config",
+        "intrusion_detection",
+        "network_monitoring"
+      ]
+    },
+    {
+      "name": "mcp-server-endpoint-protection",
+      "port": 9349,
+      "category": "security",
+      "tools": [
+        "antivirus_scan",
+        "malware_detection",
+        "endpoint_monitoring"
+      ]
+    },
+    {
+      "name": "mcp-server-security-audit",
+      "port": 9350,
+      "category": "security",
+      "tools": [
+        "audit_logs",
+        "compliance_check",
+        "security_metrics"
+      ]
+    },
+    {
+      "name": "mcp-server-threat-intelligence",
+      "port": 9351,
+      "category": "security",
+      "tools": [
+        "threat_feeds",
+        "ioc_analysis",
+        "threat_hunting"
+      ]
+    },
+    {
+      "name": "mcp-server-incident-response",
+      "port": 9352,
+      "category": "security",
+      "tools": [
+        "incident_tracking",
+        "forensics",
+        "response_automation"
+      ]
+    },
+    {
+      "name": "mcp-server-security-orchestration",
+      "port": 9353,
+      "category": "security",
+      "tools": [
+        "soar_workflows",
+        "playbook_execution",
+        "security_automation"
+      ]
+    },
+    {
+      "name": "mcp-server-identity-governance",
+      "port": 9354,
+      "category": "security",
+      "tools": [
+        "access_review",
+        "privilege_management",
+        "identity_lifecycle"
+      ]
+    },
+    {
+      "name": "mcp-server-zero-trust",
+      "port": 9355,
+      "category": "security",
+      "tools": [
+        "trust_verification",
+        "micro_segmentation",
+        "continuous_authentication"
+      ]
+    },
+    {
+      "name": "mcp-server-cloud-security",
+      "port": 9356,
+      "category": "security",
+      "tools": [
+        "cloud_posture",
+        "container_security",
+        "serverless_security"
+      ]
+    },
+    {
+      "name": "mcp-server-application-security",
+      "port": 9357,
+      "category": "security",
+      "tools": [
+        "sast_scan",
+        "dast_scan",
+        "code_analysis"
+      ]
+    },
+    {
+      "name": "mcp-server-data-loss-prevention",
+      "port": 9358,
+      "category": "security",
+      "tools": [
+        "dlp_policies",
+        "data_classification",
+        "leak_detection"
+      ]
+    },
+    {
+      "name": "mcp-server-security-awareness",
+      "port": 9359,
+      "category": "security",
+      "tools": [
+        "phishing_simulation",
+        "training_modules",
+        "awareness_metrics"
+      ]
+    },
+    {
+      "name": "mcp-server-mobile-security",
+      "port": 9360,
+      "category": "security",
+      "tools": [
+        "mobile_threat_defense",
+        "app_security",
+        "device_management"
+      ]
+    },
+    {
+      "name": "mcp-server-iot-security",
+      "port": 9361,
+      "category": "security",
+      "tools": [
+        "device_discovery",
+        "iot_monitoring",
+        "firmware_analysis"
+      ]
+    },
+    {
+      "name": "mcp-server-blockchain-security",
+      "port": 9362,
+      "category": "security",
+      "tools": [
+        "smart_contract_audit",
+        "crypto_analysis",
+        "defi_security"
+      ]
+    },
+    {
+      "name": "mcp-server-privacy-protection",
+      "port": 9363,
+      "category": "security",
+      "tools": [
+        "gdpr_compliance",
+        "data_anonymization",
+        "privacy_impact"
+      ]
+    },
+    {
+      "name": "mcp-server-security-metrics",
+      "port": 9364,
+      "category": "security",
+      "tools": [
+        "kpi_tracking",
+        "risk_scoring",
+        "security_dashboard"
+      ]
+    },
+    {
+      "name": "mcp-server-threat-modeling",
+      "port": 9365,
+      "category": "security",
+      "tools": [
+        "attack_trees",
+        "risk_analysis",
+        "security_design"
+      ]
+    },
+    {
+      "name": "mcp-server-security-testing",
+      "port": 9366,
+      "category": "security",
+      "tools": [
+        "security_tests",
+        "fuzz_testing",
+        "chaos_engineering"
+      ]
+    },
+    {
+      "name": "mcp-server-compliance-automation",
+      "port": 9367,
+      "category": "security",
+      "tools": [
+        "compliance_scanning",
+        "policy_enforcement",
+        "audit_automation"
+      ]
+    },
+    {
+      "name": "mcp-server-security-training",
+      "port": 9368,
+      "category": "security",
+      "tools": [
+        "cyber_ranges",
+        "simulation_exercises",
+        "skill_assessment"
+      ]
+    },
+    {
+      "name": "mcp-server-threat-detection",
+      "port": 9369,
+      "category": "security",
+      "tools": [
+        "anomaly_detection",
+        "behavioral_analysis",
+        "ml_detection"
+      ]
+    },
+    {
+      "name": "mcp-server-security-analytics",
+      "port": 9370,
+      "category": "security",
+      "tools": [
+        "log_analysis",
+        "correlation_rules",
+        "threat_analytics"
+      ]
+    },
+    {
+      "name": "mcp-server-devsecops",
+      "port": 9371,
+      "category": "security",
+      "tools": [
+        "pipeline_security",
+        "shift_left",
+        "secure_coding"
+      ]
+    },
+    {
+      "name": "mcp-server-red-team",
+      "port": 9372,
+      "category": "security",
+      "tools": [
+        "attack_simulation",
+        "adversary_emulation",
+        "purple_team"
+      ]
+    },
+    {
+      "name": "mcp-server-blue-team",
+      "port": 9373,
+      "category": "security",
+      "tools": [
+        "defense_strategies",
+        "monitoring_tools",
+        "incident_handling"
+      ]
+    },
+    {
+      "name": "mcp-server-security-governance",
+      "port": 9374,
+      "category": "security",
+      "tools": [
+        "policy_management",
+        "risk_governance",
+        "security_strategy"
+      ]
+    },
+    {
+      "name": "mcp-server-cyber-threat-hunting",
+      "port": 9375,
+      "category": "security",
+      "tools": [
+        "hunt_queries",
+        "threat_research",
+        "proactive_detection"
+      ]
+    },
+    {
+      "name": "mcp-server-security-operations",
+      "port": 9376,
+      "category": "security",
+      "tools": [
+        "soc_operations",
+        "alert_triage",
+        "case_management"
+      ]
+    },
+    {
+      "name": "mcp-server-digital-forensics",
+      "port": 9377,
+      "category": "security",
+      "tools": [
+        "evidence_collection",
+        "memory_analysis",
+        "timeline_reconstruction"
+      ]
+    },
+    {
+      "name": "mcp-server-malware-analysis",
+      "port": 9378,
+      "category": "security",
+      "tools": [
+        "static_analysis",
+        "dynamic_analysis",
+        "sandbox_execution"
+      ]
+    },
+    {
+      "name": "mcp-server-security-architecture",
+      "port": 9379,
+      "category": "security",
+      "tools": [
+        "security_patterns",
+        "architecture_review",
+        "threat_surface"
+      ]
+    },
+    {
+      "name": "mcp-server-insider-threat",
+      "port": 9380,
+      "category": "security",
+      "tools": [
+        "behavior_monitoring",
+        "privilege_abuse",
+        "data_exfiltration"
+      ]
+    },
+    {
+      "name": "mcp-server-supply-chain-security",
+      "port": 9381,
+      "category": "security",
+      "tools": [
+        "vendor_assessment",
+        "third_party_risk",
+        "supply_chain_monitoring"
+      ]
+    },
+    {
+      "name": "mcp-server-api-security",
+      "port": 9382,
+      "category": "security",
+      "tools": [
+        "api_testing",
+        "oauth_security",
+        "rate_limiting"
+      ]
+    },
+    {
+      "name": "mcp-server-web-security",
+      "port": 9383,
+      "category": "security",
+      "tools": [
+        "xss_protection",
+        "csrf_prevention",
+        "sql_injection_detection"
+      ]
+    },
+    {
+      "name": "mcp-server-email-security",
+      "port": 9384,
+      "category": "security",
+      "tools": [
+        "phishing_detection",
+        "email_encryption",
+        "spam_filtering"
+      ]
+    },
+    {
+      "name": "mcp-server-dns-security",
+      "port": 9385,
+      "category": "security",
+      "tools": [
+        "dns_filtering",
+        "domain_reputation",
+        "dns_monitoring"
+      ]
+    },
+    {
+      "name": "mcp-server-wireless-security",
+      "port": 9386,
+      "category": "security",
+      "tools": [
+        "wifi_security",
+        "rogue_ap_detection",
+        "wireless_monitoring"
+      ]
+    },
+    {
+      "name": "mcp-server-physical-security",
+      "port": 9387,
+      "category": "security",
+      "tools": [
+        "access_control",
+        "surveillance_systems",
+        "badge_management"
+      ]
+    },
+    {
+      "name": "mcp-server-social-engineering",
+      "port": 9388,
+      "category": "security",
+      "tools": [
+        "phishing_campaigns",
+        "vishing_detection",
+        "pretexting_analysis"
+      ]
+    },
+    {
+      "name": "mcp-server-security-awareness-training",
+      "port": 9389,
+      "category": "security",
+      "tools": [
+        "training_content",
+        "assessment_tools",
+        "behavior_change"
+      ]
+    },
+    {
+      "name": "mcp-server-cyber-insurance",
+      "port": 9390,
+      "category": "security",
+      "tools": [
+        "risk_assessment",
+        "coverage_analysis",
+        "claims_management"
+      ]
+    },
+    {
+      "name": "mcp-server-security-vendor-management",
+      "port": 9391,
+      "category": "security",
+      "tools": [
+        "vendor_evaluation",
+        "contract_management",
+        "performance_monitoring"
+      ]
+    },
+    {
+      "name": "mcp-server-security-budget-planning",
+      "port": 9392,
+      "category": "security",
+      "tools": [
+        "budget_allocation",
+        "roi_analysis",
+        "cost_optimization"
+      ]
+    },
+    {
+      "name": "mcp-server-security-communication",
+      "port": 9393,
+      "category": "security",
+      "tools": [
+        "incident_communication",
+        "stakeholder_updates",
+        "crisis_communication"
+      ]
+    },
+    {
+      "name": "mcp-server-security-documentation",
+      "port": 9394,
+      "category": "security",
+      "tools": [
+        "policy_documentation",
+        "procedure_management",
+        "knowledge_base"
+      ]
+    },
+    {
+      "name": "mcp-server-security-innovation",
+      "port": 9395,
+      "category": "security",
+      "tools": [
+        "emerging_threats",
+        "new_technologies",
+        "research_development"
+      ]
+    },
+    {
+      "name": "mcp-server-ai-security",
+      "port": 9396,
+      "category": "ai-security",
+      "tools": [
+        "model_security",
+        "adversarial_detection",
+        "ai_governance"
+      ]
+    },
+    {
+      "name": "mcp-server-quantum-security",
+      "port": 9397,
+      "category": "quantum-security",
+      "tools": [
+        "quantum_cryptography",
+        "post_quantum_crypto",
+        "quantum_key_distribution"
+      ]
+    },
+    {
+      "name": "mcp-server-edge-security",
+      "port": 9398,
+      "category": "edge-security",
+      "tools": [
+        "edge_protection",
+        "distributed_security",
+        "micro_services_security"
+      ]
+    },
+    {
+      "name": "mcp-server-5g-security",
+      "port": 9399,
+      "category": "5g-security",
+      "tools": [
+        "network_slicing_security",
+        "5g_threat_detection",
+        "mobile_edge_security"
+      ]
+    },
+    {
+      "name": "mcp-server-autonomous-security",
+      "port": 9400,
+      "category": "autonomous-security",
+      "tools": [
+        "self_healing_systems",
+        "automated_response",
+        "adaptive_security"
+      ]
+    },
+    {
+      "name": "mcp-server-biometric-security",
+      "port": 9401,
+      "category": "biometric-security",
+      "tools": [
+        "fingerprint_auth",
+        "facial_recognition",
+        "voice_authentication"
+      ]
+    },
+    {
+      "name": "mcp-server-behavioral-analytics",
+      "port": 9402,
+      "category": "behavioral-analytics",
+      "tools": [
+        "user_behavior",
+        "anomaly_scoring",
+        "risk_profiling"
+      ]
+    },
+    {
+      "name": "mcp-server-threat-simulation",
+      "port": 9403,
+      "category": "threat-simulation",
+      "tools": [
+        "attack_scenarios",
+        "breach_simulation",
+        "tabletop_exercises"
+      ]
+    },
+    {
+      "name": "mcp-server-security-orchestration-advanced",
+      "port": 9404,
+      "category": "security-orchestration",
+      "tools": [
+        "complex_workflows",
+        "multi_vendor_integration",
+        "adaptive_playbooks"
+      ]
+    },
+    {
+      "name": "mcp-server-cyber-deception",
+      "port": 9405,
+      "category": "cyber-deception",
+      "tools": [
+        "honeypots",
+        "decoy_systems",
+        "deception_analytics"
+      ]
+    },
+    {
+      "name": "mcp-server-threat-attribution",
+      "port": 9406,
+      "category": "threat-attribution",
+      "tools": [
+        "attacker_profiling",
+        "campaign_tracking",
+        "attribution_analysis"
+      ]
+    },
+    {
+      "name": "mcp-server-security-data-science",
+      "port": 9407,
+      "category": "security-data-science",
+      "tools": [
+        "ml_models",
+        "predictive_analytics",
+        "security_insights"
+      ]
+    },
+    {
+      "name": "mcp-server-continuous-monitoring",
+      "port": 9408,
+      "category": "continuous-monitoring",
+      "tools": [
+        "real_time_monitoring",
+        "continuous_assessment",
+        "dynamic_baselines"
+      ]
+    },
+    {
+      "name": "mcp-server-security-automation-framework",
+      "port": 9409,
+      "category": "security-automation",
+      "tools": [
+        "automation_engine",
+        "workflow_designer",
+        "integration_hub"
+      ]
+    },
+    {
+      "name": "mcp-server-threat-landscape-analysis",
+      "port": 9410,
+      "category": "threat-analysis",
+      "tools": [
+        "landscape_mapping",
+        "trend_analysis",
+        "threat_forecasting"
+      ]
+    },
+    {
+      "name": "mcp-server-security-maturity-assessment",
+      "port": 9411,
+      "category": "security-maturity",
+      "tools": [
+        "maturity_models",
+        "capability_assessment",
+        "improvement_roadmap"
+      ]
+    },
+    {
+      "name": "mcp-server-cyber-resilience",
+      "port": 9412,
+      "category": "cyber-resilience",
+      "tools": [
+        "resilience_planning",
+        "recovery_strategies",
+        "business_continuity"
+      ]
+    },
+    {
+      "name": "mcp-server-security-culture",
+      "port": 9413,
+      "category": "security-culture",
+      "tools": [
+        "culture_assessment",
+        "behavior_change",
+        "security_champions"
+      ]
+    },
+    {
+      "name": "mcp-server-third-party-risk-advanced",
+      "port": 9414,
+      "category": "third-party-risk",
+      "tools": [
+        "vendor_scoring",
+        "supply_chain_mapping",
+        "continuous_monitoring"
+      ]
+    },
+    {
+      "name": "mcp-server-security-investment-optimization",
+      "port": 9415,
+      "category": "security-investment",
+      "tools": [
+        "investment_analysis",
+        "portfolio_optimization",
+        "risk_return_modeling"
+      ]
+    },
+    {
+      "name": "mcp-server-regulatory-intelligence",
+      "port": 9416,
+      "category": "regulatory-intelligence",
+      "tools": [
+        "regulation_tracking",
+        "compliance_mapping",
+        "impact_analysis"
+      ]
+    },
+    {
+      "name": "mcp-server-security-benchmarking",
+      "port": 9417,
+      "category": "security-benchmarking",
+      "tools": [
+        "peer_comparison",
+        "industry_standards",
+        "performance_metrics"
+      ]
+    },
+    {
+      "name": "mcp-server-cyber-threat-sharing",
+      "port": 9418,
+      "category": "threat-sharing",
+      "tools": [
+        "threat_feeds_sharing",
+        "community_intelligence",
+        "collaborative_defense"
+      ]
+    },
+    {
+      "name": "mcp-server-security-innovation-lab",
+      "port": 9419,
+      "category": "security-innovation",
+      "tools": [
+        "proof_of_concept",
+        "technology_evaluation",
+        "innovation_pipeline"
+      ]
+    },
+    {
+      "name": "mcp-server-security-transformation",
+      "port": 9420,
+      "category": "security-transformation",
+      "tools": [
+        "transformation_planning",
+        "change_management",
+        "digital_security"
+      ]
+    },
+    {
+      "name": "mcp-server-cyber-warfare-defense",
+      "port": 9421,
+      "category": "cyber-warfare",
+      "tools": [
+        "nation_state_threats",
+        "apt_defense",
+        "geopolitical_analysis"
+      ]
+    },
+    {
+      "name": "mcp-server-security-ecosystem-management",
+      "port": 9422,
+      "category": "security-ecosystem",
+      "tools": [
+        "ecosystem_mapping",
+        "partnership_management",
+        "collaborative_security"
+      ]
+    },
+    {
+      "name": "mcp-server-security-talent-management",
+      "port": 9423,
+      "category": "security-talent",
+      "tools": [
+        "skill_gap_analysis",
+        "talent_development",
+        "retention_strategies"
+      ]
+    },
+    {
+      "name": "mcp-server-security-communication-advanced",
+      "port": 9424,
+      "category": "security-communication",
+      "tools": [
+        "executive_reporting",
+        "board_presentations",
+        "stakeholder_engagement"
+      ]
+    },
+    {
+      "name": "mcp-server-security-strategy-execution",
+      "port": 9425,
+      "category": "security-strategy",
+      "tools": [
+        "strategy_implementation",
+        "milestone_tracking",
+        "success_metrics"
+      ]
+    },
+    {
+      "name": "mcp-server-cyber-threat-prediction",
+      "port": 9426,
+      "category": "threat-prediction",
+      "tools": [
+        "predictive_modeling",
+        "threat_forecasting",
+        "early_warning_systems"
+      ]
+    },
+    {
+      "name": "mcp-server-security-performance-optimization",
+      "port": 9427,
+      "category": "security-performance",
+      "tools": [
+        "performance_tuning",
+        "efficiency_optimization",
+        "resource_allocation"
+      ]
+    },
+    {
+      "name": "mcp-server-security-integration-platform",
+      "port": 9428,
+      "category": "security-integration",
+      "tools": [
+        "api_gateway",
+        "data_normalization",
+        "unified_dashboard"
+      ]
+    },
+    {
+      "name": "mcp-server-security-knowledge-management",
+      "port": 9429,
+      "category": "security-knowledge",
+      "tools": [
+        "knowledge_capture",
+        "expertise_sharing",
+        "learning_systems"
+      ]
+    },
+    {
+      "name": "mcp-server-security-quality-assurance",
+      "port": 9430,
+      "category": "security-qa",
+      "tools": [
+        "quality_metrics",
+        "testing_frameworks",
+        "continuous_improvement"
+      ]
+    },
+    {
+      "name": "mcp-server-security-vendor-ecosystem",
+      "port": 9431,
+      "category": "security-vendor",
+      "tools": [
+        "vendor_marketplace",
+        "solution_comparison",
+        "procurement_support"
+      ]
+    },
+    {
+      "name": "mcp-server-security-compliance-automation",
+      "port": 9432,
+      "category": "compliance-automation",
+      "tools": [
+        "automated_audits",
+        "compliance_reporting",
+        "remediation_workflows"
+      ]
+    },
+    {
+      "name": "mcp-server-security-risk-quantification",
+      "port": 9433,
+      "category": "risk-quantification",
+      "tools": [
+        "risk_modeling",
+        "financial_impact",
+        "probability_analysis"
+      ]
+    },
+    {
+      "name": "mcp-server-security-incident-learning",
+      "port": 9434,
+      "category": "incident-learning",
+      "tools": [
+        "lessons_learned",
+        "pattern_analysis",
+        "improvement_recommendations"
+      ]
+    },
+    {
+      "name": "mcp-server-security-threat-modeling-advanced",
+      "port": 9435,
+      "category": "threat-modeling",
+      "tools": [
+        "advanced_modeling",
+        "attack_simulation",
+        "defense_optimization"
+      ]
+    },
+    {
+      "name": "mcp-server-security-data-governance",
+      "port": 9436,
+      "category": "data-governance",
+      "tools": [
+        "data_classification",
+        "access_controls",
+        "data_lifecycle"
+      ]
+    },
+    {
+      "name": "mcp-server-security-business-alignment",
+      "port": 9437,
+      "category": "business-alignment",
+      "tools": [
+        "business_impact",
+        "value_demonstration",
+        "strategic_alignment"
+      ]
+    },
+    {
+      "name": "mcp-server-security-crisis-management",
+      "port": 9438,
+      "category": "crisis-management",
+      "tools": [
+        "crisis_response",
+        "communication_plans",
+        "recovery_coordination"
+      ]
+    },
+    {
+      "name": "mcp-server-security-competitive-intelligence",
+      "port": 9439,
+      "category": "competitive-intelligence",
+      "tools": [
+        "market_analysis",
+        "competitor_tracking",
+        "technology_trends"
+      ]
+    },
+    {
+      "name": "mcp-server-security-partnership-management",
+      "port": 9440,
+      "category": "partnership-management",
+      "tools": [
+        "partner_evaluation",
+        "collaboration_frameworks",
+        "joint_initiatives"
+      ]
+    },
+    {
+      "name": "mcp-server-security-future-planning",
+      "port": 9441,
+      "category": "future-planning",
+      "tools": [
+        "scenario_planning",
+        "technology_roadmap",
+        "strategic_foresight"
+      ]
+    },
+    {
+      "name": "mcp-server-security-global-operations",
+      "port": 9442,
+      "category": "global-operations",
+      "tools": [
+        "multi_region_security",
+        "cultural_adaptation",
+        "global_coordination"
+      ]
+    },
+    {
+      "name": "mcp-server-security-sustainability",
+      "port": 9443,
+      "category": "security-sustainability",
+      "tools": [
+        "green_security",
+        "sustainable_practices",
+        "environmental_impact"
+      ]
+    },
+    {
+      "name": "mcp-server-security-ethics",
+      "port": 9444,
+      "category": "security-ethics",
+      "tools": [
+        "ethical_guidelines",
+        "privacy_protection",
+        "responsible_disclosure"
+      ]
+    },
+    {
+      "name": "mcp-server-security-research-development",
+      "port": 9445,
+      "category": "security-rd",
+      "tools": [
+        "research_projects",
+        "innovation_tracking",
+        "technology_evaluation"
+      ]
+    },
+    {
+      "name": "mcp-server-healthcare-security",
+      "port": 9446,
+      "category": "healthcare-security",
+      "tools": [
+        "hipaa_compliance",
+        "medical_device_security",
+        "patient_data_protection"
+      ]
+    },
+    {
+      "name": "mcp-server-financial-security-advanced",
+      "port": 9447,
+      "category": "financial-security",
+      "tools": [
+        "pci_dss_compliance",
+        "fraud_prevention",
+        "transaction_monitoring"
+      ]
+    },
+    {
+      "name": "mcp-server-government-security",
+      "port": 9448,
+      "category": "government-security",
+      "tools": [
+        "classified_data_protection",
+        "national_security",
+        "government_compliance"
+      ]
+    },
+    {
+      "name": "mcp-server-education-security",
+      "port": 9449,
+      "category": "education-security",
+      "tools": [
+        "student_data_protection",
+        "ferpa_compliance",
+        "campus_security"
+      ]
+    },
+    {
+      "name": "mcp-server-retail-security",
+      "port": 9450,
+      "category": "retail-security",
+      "tools": [
+        "pos_security",
+        "customer_data_protection",
+        "supply_chain_security"
+      ]
+    },
+    {
+      "name": "mcp-server-manufacturing-security",
+      "port": 9451,
+      "category": "manufacturing-security",
+      "tools": [
+        "ot_security",
+        "industrial_control_systems",
+        "production_line_security"
+      ]
+    },
+    {
+      "name": "mcp-server-energy-security",
+      "port": 9452,
+      "category": "energy-security",
+      "tools": [
+        "scada_security",
+        "smart_grid_protection",
+        "critical_infrastructure"
+      ]
+    },
+    {
+      "name": "mcp-server-transportation-security",
+      "port": 9453,
+      "category": "transportation-security",
+      "tools": [
+        "vehicle_security",
+        "traffic_systems",
+        "logistics_protection"
+      ]
+    },
+    {
+      "name": "mcp-server-telecommunications-security",
+      "port": 9454,
+      "category": "telecom-security",
+      "tools": [
+        "network_infrastructure",
+        "communication_security",
+        "service_protection"
+      ]
+    },
+    {
+      "name": "mcp-server-media-security",
+      "port": 9455,
+      "category": "media-security",
+      "tools": [
+        "content_protection",
+        "intellectual_property",
+        "broadcast_security"
+      ]
+    },
+    {
+      "name": "mcp-server-gaming-security",
+      "port": 9456,
+      "category": "gaming-security",
+      "tools": [
+        "anti_cheat",
+        "player_protection",
+        "virtual_economy_security"
+      ]
+    },
+    {
+      "name": "mcp-server-sports-security",
+      "port": 9457,
+      "category": "sports-security",
+      "tools": [
+        "athlete_data_protection",
+        "event_security",
+        "fan_safety"
+      ]
+    },
+    {
+      "name": "mcp-server-hospitality-security",
+      "port": 9458,
+      "category": "hospitality-security",
+      "tools": [
+        "guest_data_protection",
+        "property_security",
+        "payment_security"
+      ]
+    },
+    {
+      "name": "mcp-server-real-estate-security",
+      "port": 9459,
+      "category": "real-estate-security",
+      "tools": [
+        "property_data_protection",
+        "transaction_security",
+        "smart_building_security"
+      ]
+    },
+    {
+      "name": "mcp-server-legal-security",
+      "port": 9460,
+      "category": "legal-security",
+      "tools": [
+        "attorney_client_privilege",
+        "case_data_protection",
+        "legal_compliance"
+      ]
+    },
+    {
+      "name": "mcp-server-nonprofit-security",
+      "port": 9461,
+      "category": "nonprofit-security",
+      "tools": [
+        "donor_data_protection",
+        "volunteer_security",
+        "mission_critical_systems"
+      ]
+    },
+    {
+      "name": "mcp-server-startup-security",
+      "port": 9462,
+      "category": "startup-security",
+      "tools": [
+        "lean_security",
+        "rapid_deployment",
+        "cost_effective_solutions"
+      ]
+    },
+    {
+      "name": "mcp-server-enterprise-security-advanced",
+      "port": 9463,
+      "category": "enterprise-security",
+      "tools": [
+        "large_scale_deployment",
+        "complex_integrations",
+        "global_coordination"
+      ]
+    },
+    {
+      "name": "mcp-server-smb-security",
+      "port": 9464,
+      "category": "smb-security",
+      "tools": [
+        "small_business_solutions",
+        "affordable_security",
+        "simplified_management"
+      ]
+    },
+    {
+      "name": "mcp-server-remote-work-security",
+      "port": 9465,
+      "category": "remote-work-security",
+      "tools": [
+        "home_office_security",
+        "remote_access",
+        "distributed_workforce"
+      ]
+    },
+    {
+      "name": "mcp-server-hybrid-work-security",
+      "port": 9466,
+      "category": "hybrid-work-security",
+      "tools": [
+        "flexible_access",
+        "location_aware_security",
+        "seamless_transitions"
+      ]
+    },
+    {
+      "name": "mcp-server-digital-nomad-security",
+      "port": 9467,
+      "category": "digital-nomad-security",
+      "tools": [
+        "travel_security",
+        "public_wifi_protection",
+        "mobile_security"
+      ]
+    },
+    {
+      "name": "mcp-server-freelancer-security",
+      "port": 9468,
+      "category": "freelancer-security",
+      "tools": [
+        "client_data_protection",
+        "project_security",
+        "personal_brand_protection"
+      ]
+    },
+    {
+      "name": "mcp-server-consultant-security",
+      "port": 9469,
+      "category": "consultant-security",
+      "tools": [
+        "multi_client_security",
+        "confidentiality_management",
+        "expertise_protection"
+      ]
+    },
+    {
+      "name": "mcp-server-contractor-security",
+      "port": 9470,
+      "category": "contractor-security",
+      "tools": [
+        "temporary_access",
+        "project_based_security",
+        "handoff_procedures"
+      ]
+    },
+    {
+      "name": "mcp-server-vendor-security-advanced",
+      "port": 9471,
+      "category": "vendor-security",
+      "tools": [
+        "supplier_risk_management",
+        "vendor_onboarding",
+        "performance_monitoring"
+      ]
+    },
+    {
+      "name": "mcp-server-customer-security",
+      "port": 9472,
+      "category": "customer-security",
+      "tools": [
+        "customer_data_protection",
+        "service_security",
+        "trust_building"
+      ]
+    },
+    {
+      "name": "mcp-server-partner-security",
+      "port": 9473,
+      "category": "partner-security",
+      "tools": [
+        "partnership_security",
+        "shared_resources",
+        "collaborative_protection"
+      ]
+    },
+    {
+      "name": "mcp-server-investor-security",
+      "port": 9474,
+      "category": "investor-security",
+      "tools": [
+        "financial_data_protection",
+        "due_diligence_security",
+        "investor_relations"
+      ]
+    },
+    {
+      "name": "mcp-server-board-security",
+      "port": 9475,
+      "category": "board-security",
+      "tools": [
+        "board_communications",
+        "governance_security",
+        "executive_protection"
+      ]
+    },
+    {
+      "name": "mcp-server-executive-security",
+      "port": 9476,
+      "category": "executive-security",
+      "tools": [
+        "c_suite_protection",
+        "executive_communications",
+        "leadership_security"
+      ]
+    },
+    {
+      "name": "mcp-server-employee-security",
+      "port": 9477,
+      "category": "employee-security",
+      "tools": [
+        "workforce_protection",
+        "employee_privacy",
+        "workplace_security"
+      ]
+    },
+    {
+      "name": "mcp-server-hr-security",
+      "port": 9478,
+      "category": "hr-security",
+      "tools": [
+        "personnel_data_protection",
+        "recruitment_security",
+        "employee_lifecycle"
+      ]
+    },
+    {
+      "name": "mcp-server-it-security-advanced",
+      "port": 9479,
+      "category": "it-security",
+      "tools": [
+        "infrastructure_protection",
+        "system_administration",
+        "technical_controls"
+      ]
+    },
+    {
+      "name": "mcp-server-operations-security",
+      "port": 9480,
+      "category": "operations-security",
+      "tools": [
+        "operational_resilience",
+        "process_security",
+        "service_continuity"
+      ]
+    },
+    {
+      "name": "mcp-server-finance-security-advanced",
+      "port": 9481,
+      "category": "finance-security",
+      "tools": [
+        "financial_controls",
+        "audit_security",
+        "regulatory_reporting"
+      ]
+    },
+    {
+      "name": "mcp-server-marketing-security",
+      "port": 9482,
+      "category": "marketing-security",
+      "tools": [
+        "campaign_security",
+        "customer_insights_protection",
+        "brand_protection"
+      ]
+    },
+    {
+      "name": "mcp-server-sales-security",
+      "port": 9483,
+      "category": "sales-security",
+      "tools": [
+        "crm_security",
+        "sales_data_protection",
+        "customer_relationship_security"
+      ]
+    },
+    {
+      "name": "mcp-server-support-security",
+      "port": 9484,
+      "category": "support-security",
+      "tools": [
+        "helpdesk_security",
+        "customer_support_protection",
+        "service_desk_security"
+      ]
+    },
+    {
+      "name": "mcp-server-research-security",
+      "port": 9485,
+      "category": "research-security",
+      "tools": [
+        "intellectual_property_protection",
+        "research_data_security",
+        "innovation_protection"
+      ]
+    },
+    {
+      "name": "mcp-server-development-security-advanced",
+      "port": 9486,
+      "category": "development-security",
+      "tools": [
+        "secure_coding",
+        "development_lifecycle",
+        "code_protection"
+      ]
+    },
+    {
+      "name": "mcp-server-testing-security",
+      "port": 9487,
+      "category": "testing-security",
+      "tools": [
+        "test_data_protection",
+        "qa_security",
+        "testing_environment_security"
+      ]
+    },
+    {
+      "name": "mcp-server-deployment-security",
+      "port": 9488,
+      "category": "deployment-security",
+      "tools": [
+        "secure_deployment",
+        "release_security",
+        "production_protection"
+      ]
+    },
+    {
+      "name": "mcp-server-maintenance-security",
+      "port": 9489,
+      "category": "maintenance-security",
+      "tools": [
+        "system_maintenance",
+        "security_updates",
+        "patch_management"
+      ]
+    },
+    {
+      "name": "mcp-server-monitoring-security-advanced",
+      "port": 9490,
+      "category": "monitoring-security",
+      "tools": [
+        "security_monitoring",
+        "alert_management",
+        "incident_detection"
+      ]
+    },
+    {
+      "name": "mcp-server-backup-security",
+      "port": 9491,
+      "category": "backup-security",
+      "tools": [
+        "backup_protection",
+        "recovery_security",
+        "data_integrity"
+      ]
+    },
+    {
+      "name": "mcp-server-archive-security",
+      "port": 9492,
+      "category": "archive-security",
+      "tools": [
+        "long_term_storage",
+        "archive_protection",
+        "retention_security"
+      ]
+    },
+    {
+      "name": "mcp-server-disposal-security",
+      "port": 9493,
+      "category": "disposal-security",
+      "tools": [
+        "secure_disposal",
+        "data_destruction",
+        "asset_retirement"
+      ]
+    },
+    {
+      "name": "mcp-server-legacy-security",
+      "port": 9494,
+      "category": "legacy-security",
+      "tools": [
+        "legacy_system_protection",
+        "modernization_security",
+        "transition_planning"
+      ]
+    },
+    {
+      "name": "mcp-server-emerging-security",
+      "port": 9495,
+      "category": "emerging-security",
+      "tools": [
+        "new_threat_detection",
+        "technology_adaptation",
+        "future_readiness"
+      ]
+    },
+    {
+      "name": "mcp-server-integration-security-advanced",
+      "port": 9496,
+      "category": "integration-security",
+      "tools": [
+        "system_integration",
+        "api_security_advanced",
+        "data_flow_protection"
+      ]
+    },
+    {
+      "name": "mcp-server-migration-security",
+      "port": 9497,
+      "category": "migration-security",
+      "tools": [
+        "secure_migration",
+        "data_transfer_protection",
+        "transition_security"
+      ]
+    },
+    {
+      "name": "mcp-server-transformation-security",
+      "port": 9498,
+      "category": "transformation-security",
+      "tools": [
+        "digital_transformation",
+        "change_security",
+        "modernization_protection"
+      ]
+    },
+    {
+      "name": "mcp-server-optimization-security",
+      "port": 9499,
+      "category": "optimization-security",
+      "tools": [
+        "performance_security",
+        "efficiency_protection",
+        "resource_optimization"
+      ]
+    }
+  ]
+}
