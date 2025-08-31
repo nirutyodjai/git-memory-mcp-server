@@ -1,0 +1,18 @@
+{
+  "data": {
+    "test": true,
+    "timestamp": "2025-08-31T06:29:51.069Z"
+  },
+  "metadata": {
+    "tags": [],
+    "stored_at": "2025-08-31T06:29:51.069Z",
+    "ttl": "2025-08-31T06:30:51.069Z",
+    "compression_enabled": false,
+    "semantic_indexed": true
+  },
+  "_meta": {
+    "key": "health_check_1756621791069",
+    "stored_at": "2025-08-31T06:29:51.070Z",
+    "checksum": "c33e908d629caabd38401b8ea91751435249f5c5aa611fcd80d038164bb3a4bf"
+  }
+}
