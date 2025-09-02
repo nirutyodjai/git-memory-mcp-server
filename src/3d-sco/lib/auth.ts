@@ -1,9 +1,18 @@
 import { NextRequest } from 'next/server';
 
 // Admin credentials (in production, use environment variables)
-const ADMIN_USERNAME = process.env.ADMIN_USERNAME || 'admin';
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin123';
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
+const ADMIN_USERNAME = process.env.ADMIN_USERNAME || (() => {
+  console.warn('Warning: ADMIN_USERNAME not set in environment variables. Using default.');
+  return 'admin';
+})();
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || (() => {
+  console.warn('Warning: ADMIN_PASSWORD not set in environment variables. Using default.');
+  return 'password';
+})();
+const JWT_SECRET = process.env.JWT_SECRET || (() => {
+  console.warn('Warning: JWT_SECRET not set in environment variables. Using insecure default.');
+  return 'your-secret-key';
+})();
 
 export interface AdminUser {
   id: string;

@@ -1,0 +1,25 @@
+{
+  "server": {
+    "port": 80,
+    "httpsPort": 443,
+    "host": "0.0.0.0"
+  },
+  "ssl": {
+    "enabled": true
+  },
+  "auth": {
+    "enabled": true
+  },
+  "cache": {
+    "redis": {
+      "enabled": true
+    }
+  },
+  "logging": {
+    "level": "info",
+    "destination": "both"
+  },
+  "monitoring": {
+    "enabled": true
+  }
+}

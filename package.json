@@ -4,14 +4,19 @@
   "description": "MCP Server for Git repository management with memory and AI capabilities",
   "main": "dist/index.js",
   "bin": {
-    "git-memory-mcp-server": "dist/index.js"
+    "git-memory": "./git-memory-client.js",
+    "git-memory-coordinator": "./git-memory-coordinator.js",
+    "git-memory-client": "./git-memory-client.js"
   },
   "files": [
-    "dist/**/*",
-    "docs/README.md",
-    "package.json",
-    "config/**/*",
-    "examples/**/*"
+    "git-memory-coordinator.js",
+    "git-memory-client.js",
+    "create-1000-servers-no-debug.js",
+    "restart-servers-with-memory.js",
+    "test-git-memory.js",
+    "mcp.config.json",
+    "README.md",
+    "LICENSE"
   ],
   "scripts": {
     "build": "tsc -p config/tsconfig.json",
@@ -19,7 +24,7 @@
     "start": "node git-memory-coordinator.js",
     "client": "node git-memory-client.js",
     "prepublishOnly": "npm run build",
-    "test": "node test-git-memory.js",
+    "test": "jest -c config/jest.config.cjs",
     "test:watch": "jest -c config/jest.config.cjs --watch",
     "test:coverage": "jest -c config/jest.config.cjs --coverage",
     "test:ci": "jest -c config/jest.config.cjs --ci --coverage --watchAll=false",
@@ -36,6 +41,16 @@
     "proxy": "node mcp-proxy-server.js",
     "dashboard": "node mcp-proxy-server.js",
     "coordinator:http": "node mcp-coordinator.js --http",
+    "mcp:5500": "node start-mcp-5500.js",
+    "mcp:5500:dev": "NODE_ENV=development node start-mcp-5500.js",
+    "mcp:5500:prod": "NODE_ENV=production node start-mcp-5500.js",
+    "trae:server": "node start-mcp-5500.js",
+    "trae:dev": "NODE_ENV=development DEBUG=mcp:* node start-mcp-5500.js",
+    "multi:server": "node src/multi-system-server.js",
+    "multi:dev": "cross-env NODE_ENV=development nodemon src/multi-system-server.js",
+    "multi:prod": "cross-env NODE_ENV=production node src/multi-system-server.js",
+    "multi:5501": "cross-env MCP_MULTI_PORT=5501 node src/multi-system-server.js",
+    "multi:test": "cross-env NODE_ENV=test jest --testPathPattern=multi-system",
     "deploy:batch": "node scripts/deploy-batch.js",
     "health:check": "node scripts/health-check.js",
     "scale:system": "node scripts/scale-system.js",
@@ -71,11 +86,6 @@
     "email": "support@git-memory.dev"
   },
   "license": "MIT",
-  "bin": {
-    "git-memory": "./git-memory-client.js",
-    "git-memory-coordinator": "./git-memory-coordinator.js",
-    "git-memory-client": "./git-memory-client.js"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nirutyodjai/git-memory-mcp-server.git"
@@ -87,16 +97,6 @@
   "engines": {
     "node": ">=18.0.0"
   },
-  "files": [
-    "git-memory-coordinator.js",
-    "git-memory-client.js",
-    "create-1000-servers-no-debug.js",
-    "restart-servers-with-memory.js",
-    "test-git-memory.js",
-    "mcp.config.json",
-    "README.md",
-    "LICENSE"
-  ],
   "preferGlobal": true,
   "os": [
     "win32",
@@ -118,25 +118,63 @@
     "git_memory_path": ".git-memory"
   },
   "dependencies": {
+    "@grpc/grpc-js": "^1.13.4",
     "@modelcontextprotocol/sdk": "^0.6.0",
+    "@prisma/client": "^6.15.0",
+    "apollo-server-express": "^3.13.0",
     "axios": "^1.11.0",
+    "bcrypt": "^6.0.0",
+    "bcryptjs": "^3.0.2",
     "chalk": "^4.1.2",
+    "chokidar": "^4.0.3",
     "commander": "^11.1.0",
+    "compression": "^1.8.1",
     "cors": "^2.8.5",
-    "dotenv": "^16.3.1",
-    "express": "^4.18.2",
-    "fs-extra": "^11.1.1",
+    "crypto-js": "^4.2.0",
+    "dotenv": "^16.6.1",
+    "express": "^4.21.2",
+    "express-rate-limit": "^8.0.1",
+    "fs-extra": "^11.3.1",
+    "graphql": "^16.11.0",
+    "helmet": "^8.1.0",
     "http-proxy-middleware": "^3.0.5",
+    "ioredis": "^5.7.0",
+    "joi": "^18.0.1",
+    "js-yaml": "^4.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "kafkajs": "^2.2.4",
+    "lodash": "^4.17.21",
+    "moment": "^2.30.1",
+    "mongodb": "^6.19.0",
+    "multer": "^2.0.2",
+    "mysql2": "^3.14.3",
     "node-cron": "^3.0.3",
+    "nodemailer": "^7.0.5",
+    "passport": "^0.7.0",
+    "prisma": "^6.15.0",
+    "prom-client": "^15.1.3",
+    "prometheus-client": "^0.1.1",
+    "redis": "^5.8.2",
     "simple-git": "^3.27.0",
+    "socket.io": "^4.8.1",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
     "uuid": "^9.0.1",
-    "winston": "^3.11.0",
-    "ws": "^8.14.2"
+    "validator": "^13.15.15",
+    "winston": "^3.17.0",
+    "ws": "^8.18.3"
   },
   "devDependencies": {
+    "@babel/core": "^7.28.3",
+    "@babel/preset-env": "^7.28.3",
     "@types/jest": "^29.5.12",
+    "@types/lru-cache": "^7.10.9",
     "@types/node": "^22.10.2",
+    "@types/pg": "^8.15.5",
+    "babel-jest": "^30.1.1",
+    "cross-env": "^10.0.0",
     "jest": "^29.7.0",
+    "nodemon": "^3.1.10",
     "ts-jest": "^29.1.2",
     "typescript": "^5.7.2"
   }

@@ -1,0 +1,30 @@
+{
+  "system": {
+    "totalMemory": 34176884736,
+    "recommendedNodeMemory": 8192,
+    "maxProcesses": 15,
+    "gcInterval": 30000
+  },
+  "nodeOptions": {
+    "maxOldSpaceSize": 8192,
+    "maxSemiSpaceSize": 512,
+    "initialOldSpaceSize": 2048,
+    "optimizeForSize": true,
+    "exposeGc": true
+  },
+  "monitoring": {
+    "enabled": true,
+    "interval": 10000,
+    "alertThreshold": 85,
+    "logFile": "memory-usage.log"
+  },
+  "optimization": {
+    "autoGc": true,
+    "gcThreshold": 1024,
+    "processRestart": {
+      "enabled": true,
+      "memoryThreshold": 4096,
+      "interval": 3600000
+    }
+  }
+}

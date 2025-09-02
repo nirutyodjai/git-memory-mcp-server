@@ -1,0 +1,347 @@
+{
+  "performance": {
+    "description": "Performance configuration for MCP Proxy Server 500",
+    "version": "1.0.0",
+    "lastUpdated": "2024-01-27",
+    
+    "server": {
+      "maxConnections": 500,
+      "connectionTimeout": 30000,
+      "keepAliveTimeout": 60000,
+      "requestTimeout": 45000,
+      "maxRequestSize": "10MB",
+      "compressionEnabled": true,
+      "compressionLevel": 6,
+      "etag": true,
+      "trustProxy": true
+    },
+    
+    "clustering": {
+      "enabled": true,
+      "workers": "auto",
+      "maxWorkers": 8,
+      "restartDelay": 5000,
+      "killTimeout": 30000,
+      "windowsHide": true
+    },
+    
+    "connectionPool": {
+      "maxPoolSize": 100,
+      "minPoolSize": 10,
+      "acquireTimeoutMillis": 30000,
+      "createTimeoutMillis": 30000,
+      "destroyTimeoutMillis": 5000,
+      "idleTimeoutMillis": 300000,
+      "reapIntervalMillis": 1000,
+      "createRetryIntervalMillis": 200,
+      "validateOnBorrow": true,
+      "validateOnReturn": false
+    },
+    
+    "loadBalancing": {
+      "strategy": "least-connections",
+      "healthCheckWeight": 0.3,
+      "responseTimeWeight": 0.4,
+      "connectionCountWeight": 0.3,
+      "stickySession": false,
+      "sessionTimeout": 1800000,
+      "failoverEnabled": true,
+      "maxFailoverAttempts": 3,
+      "failoverDelay": 1000
+    },
+    
+    "caching": {
+      "enabled": true,
+      "strategy": "lru",
+      "maxSize": 10000,
+      "ttl": 300000,
+      "checkPeriod": 60000,
+      "useClones": false,
+      "deleteOnExpire": true,
+      "enableStatistics": true,
+      "compressionEnabled": true
+    },
+    
+    "rateLimiting": {
+      "enabled": true,
+      "windowMs": 60000,
+      "maxRequests": 1000,
+      "skipSuccessfulRequests": false,
+      "skipFailedRequests": false,
+      "keyGenerator": "ip",
+      "onLimitReached": "log",
+      "headers": true
+    },
+    
+    "healthChecks": {
+      "interval": 30000,
+      "timeout": 10000,
+      "retries": 3,
+      "retryDelay": 5000,
+      "unhealthyThreshold": 3,
+      "healthyThreshold": 2,
+      "gracePeriod": 60000,
+      "parallelChecks": true,
+      "maxParallelChecks": 50
+    },
+    
+    "monitoring": {
+      "metricsInterval": 10000,
+      "historySize": 1000,
+      "enableGC": true,
+      "enableMemory": true,
+      "enableCPU": true,
+      "enableEventLoop": true,
+      "enableHandles": true,
+      "enableRequests": true,
+      "enableNetwork": true
+    },
+    
+    "memory": {
+      "maxHeapSize": "2048MB",
+      "maxOldSpaceSize": "1536MB",
+      "gcInterval": 300000,
+      "enableGCOptimization": true,
+      "memoryWarningThreshold": 0.8,
+      "memoryCriticalThreshold": 0.9,
+      "enableMemoryProfiling": false
+    },
+    
+    "cpu": {
+      "maxCpuUsage": 0.8,
+      "cpuWarningThreshold": 0.7,
+      "cpuCriticalThreshold": 0.85,
+      "enableCpuProfiling": false,
+      "profileDuration": 30000
+    },
+    
+    "eventLoop": {
+      "lagThreshold": 100,
+      "lagWarningThreshold": 50,
+      "lagCriticalThreshold": 200,
+      "monitoringInterval": 5000
+    },
+    
+    "network": {
+      "tcpNoDelay": true,
+      "tcpKeepAlive": true,
+      "keepAliveInitialDelay": 0,
+      "maxSockets": 500,
+      "maxFreeSockets": 256,
+      "timeout": 30000,
+      "freeSocketTimeout": 15000
+    },
+    
+    "optimization": {
+      "enableV8Optimization": true,
+      "v8Flags": [
+        "--max-old-space-size=2048",
+        "--optimize-for-size",
+        "--gc-interval=300",
+        "--expose-gc"
+      ],
+      "enableJIT": true,
+      "enableInlining": true,
+      "enableTurboFan": true
+    },
+    
+    "logging": {
+      "level": "info",
+      "enableConsole": true,
+      "enableFile": true,
+      "enableRotation": true,
+      "maxFileSize": "100MB",
+      "maxFiles": 10,
+      "enableCompression": true,
+      "bufferSize": 1000,
+      "flushInterval": 5000
+    },
+    
+    "security": {
+      "enableHelmet": true,
+      "enableCors": true,
+      "corsOrigins": ["*"],
+      "enableCSP": false,
+      "enableHSTS": false,
+      "enableXSSProtection": true,
+      "enableNoSniff": true,
+      "enableFrameguard": true
+    },
+    
+    "database": {
+      "connectionPoolSize": 20,
+      "connectionTimeout": 30000,
+      "queryTimeout": 60000,
+      "enableQueryCache": true,
+      "queryCacheSize": 1000,
+      "queryCacheTTL": 300000,
+      "enablePreparedStatements": true,
+      "maxRetries": 3,
+      "retryDelay": 1000
+    },
+    
+    "websocket": {
+      "maxConnections": 500,
+      "pingInterval": 30000,
+      "pongTimeout": 5000,
+      "maxPayload": 1048576,
+      "compression": true,
+      "enablePerMessageDeflate": true,
+      "concurrencyLimit": 10,
+      "threshold": 1024
+    },
+    
+    "http": {
+      "maxHeaderSize": 16384,
+      "maxHeadersCount": 2000,
+      "enableHttp2": false,
+      "enableHttps": false,
+      "keepAliveTimeout": 5000,
+      "headersTimeout": 60000,
+      "requestTimeout": 300000
+    },
+    
+    "alerts": {
+      "enabled": true,
+      "channels": ["console", "file"],
+      "thresholds": {
+        "responseTime": 1000,
+        "errorRate": 0.05,
+        "memoryUsage": 0.8,
+        "cpuUsage": 0.8,
+        "connectionCount": 450,
+        "queueLength": 100
+      },
+      "cooldownPeriod": 300000,
+      "maxAlertsPerHour": 10
+    },
+    
+    "gracefulShutdown": {
+      "enabled": true,
+      "timeout": 30000,
+      "forceExitTimeout": 60000,
+      "signals": ["SIGTERM", "SIGINT"],
+      "closeConnections": true,
+      "waitForRequests": true
+    },
+    
+    "benchmarks": {
+      "targetResponseTime": 100,
+      "targetThroughput": 1000,
+      "targetConcurrency": 500,
+      "targetErrorRate": 0.01,
+      "targetMemoryUsage": 0.7,
+      "targetCpuUsage": 0.7,
+      "targetAvailability": 0.999
+    },
+    
+    "tuning": {
+      "autoTuning": {
+        "enabled": true,
+        "interval": 300000,
+        "metrics": ["responseTime", "throughput", "errorRate"],
+        "adjustmentFactor": 0.1,
+        "maxAdjustment": 0.5,
+        "stabilizationPeriod": 600000
+      },
+      
+      "adaptiveScaling": {
+        "enabled": true,
+        "scaleUpThreshold": 0.8,
+        "scaleDownThreshold": 0.3,
+        "scaleUpFactor": 1.5,
+        "scaleDownFactor": 0.7,
+        "cooldownPeriod": 300000,
+        "maxInstances": 10,
+        "minInstances": 2
+      },
+      
+      "circuitBreaker": {
+        "enabled": true,
+        "failureThreshold": 5,
+        "successThreshold": 3,
+        "timeout": 60000,
+        "resetTimeout": 30000,
+        "monitoringPeriod": 10000
+      }
+    },
+    
+    "experimental": {
+      "enableWorkerThreads": false,
+      "workerThreadPoolSize": 4,
+      "enableAsyncHooks": false,
+      "enableStreamPipeline": true,
+      "enableHttp3": false,
+      "enableQuic": false
+    }
+  },
+  
+  "profiles": {
+    "development": {
+      "server": {
+        "maxConnections": 50,
+        "connectionTimeout": 10000
+      },
+      "clustering": {
+        "enabled": false
+      },
+      "caching": {
+        "enabled": false
+      },
+      "logging": {
+        "level": "debug"
+      }
+    },
+    
+    "testing": {
+      "server": {
+        "maxConnections": 100,
+        "connectionTimeout": 5000
+      },
+      "healthChecks": {
+        "interval": 5000
+      },
+      "monitoring": {
+        "metricsInterval": 1000
+      }
+    },
+    
+    "production": {
+      "server": {
+        "maxConnections": 500,
+        "connectionTimeout": 30000
+      },
+      "clustering": {
+        "enabled": true,
+        "workers": "auto"
+      },
+      "caching": {
+        "enabled": true,
+        "maxSize": 10000
+      },
+      "logging": {
+        "level": "info",
+        "enableFile": true
+      }
+    },
+    
+    "high-performance": {
+      "server": {
+        "maxConnections": 1000,
+        "connectionTimeout": 15000
+      },
+      "clustering": {
+        "enabled": true,
+        "workers": 16
+      },
+      "caching": {
+        "enabled": true,
+        "maxSize": 50000,
+        "ttl": 600000
+      },
+      "memory": {
+        "maxHeapSize": "4096MB"
+      }
+    }
+  }
+}

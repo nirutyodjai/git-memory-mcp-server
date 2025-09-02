@@ -1,0 +1,445 @@
+# Trae MCP Configuration for Git Memory MCP Server
+# This configuration enables integration with trae-agent-main
+
+name: "Git Memory MCP Server"
+version: "1.2.1"
+description: "Advanced MCP server with Git-based memory persistence and semantic storage"
+
+# Server Configuration
+server:
+  host: "localhost"
+  port: 5500  # Updated to use port 5500 as requested
+  protocol: "http"
+  base_path: "/api/v1"
+  timeout: 30000
+  max_retries: 3
+  
+  # Alternative endpoints for load balancing
+  endpoints:
+    - "http://localhost:5500"
+    - "http://localhost:5501"  # Backup endpoint
+    - "https://gitmemory.comdee.co.th"  # Production endpoint
+
+# Authentication
+auth:
+  type: "bearer"
+  token_endpoint: "/auth/token"
+  refresh_endpoint: "/auth/refresh"
+  required: true
+
+# MCP Protocol Tools
+tools:
+  # Git Operations
+  - name: "git_status"
+    description: "Get the current status of a Git repository"
+    endpoint: "/git/status"
+    method: "POST"
+    parameters:
+      - name: "repository_path"
+        type: "string"
+        required: true
+        description: "Path to the Git repository"
+      - name: "include_untracked"
+        type: "boolean"
+        required: false
+        default: true
+        description: "Include untracked files in status"
+    response_format: "json"
+    
+  - name: "git_log"
+    description: "Get commit history from a Git repository"
+    endpoint: "/git/log"
+    method: "POST"
+    parameters:
+      - name: "repository_path"
+        type: "string"
+        required: true
+        description: "Path to the Git repository"
+      - name: "limit"
+        type: "integer"
+        required: false
+        default: 10
+        description: "Maximum number of commits to retrieve"
+      - name: "branch"
+        type: "string"
+        required: false
+        description: "Specific branch to get log from"
+    response_format: "json"
+    
+  - name: "git_diff"
+    description: "Get differences between commits or working directory"
+    endpoint: "/git/diff"
+    method: "POST"
+    parameters:
+      - name: "repository_path"
+        type: "string"
+        required: true
+        description: "Path to the Git repository"
+      - name: "from_commit"
+        type: "string"
+        required: false
+        description: "Starting commit hash"
+      - name: "to_commit"
+        type: "string"
+        required: false
+        description: "Ending commit hash"
+      - name: "file_path"
+        type: "string"
+        required: false
+        description: "Specific file to diff"
+    response_format: "json"
+    
+  - name: "git_clone"
+    description: "Clone a Git repository"
+    endpoint: "/git/clone"
+    method: "POST"
+    parameters:
+      - name: "repository_url"
+        type: "string"
+        required: true
+        description: "URL of the repository to clone"
+      - name: "destination_path"
+        type: "string"
+        required: true
+        description: "Local path where to clone the repository"
+      - name: "branch"
+        type: "string"
+        required: false
+        description: "Specific branch to clone"
+      - name: "depth"
+        type: "integer"
+        required: false
+        description: "Shallow clone depth"
+    response_format: "json"
+    
+  - name: "git_commit"
+    description: "Create a new commit in the repository"
+    endpoint: "/git/commit"
+    method: "POST"
+    parameters:
+      - name: "repository_path"
+        type: "string"
+        required: true
+        description: "Path to the Git repository"
+      - name: "message"
+        type: "string"
+        required: true
+        description: "Commit message"
+      - name: "files"
+        type: "array"
+        required: false
+        description: "Specific files to commit (if empty, commits all staged files)"
+      - name: "author_name"
+        type: "string"
+        required: false
+        description: "Author name for the commit"
+      - name: "author_email"
+        type: "string"
+        required: false
+        description: "Author email for the commit"
+    response_format: "json"
+    
+  - name: "git_branch"
+    description: "Manage Git branches (list, create, switch, delete)"
+    endpoint: "/git/branch"
+    method: "POST"
+    parameters:
+      - name: "repository_path"
+        type: "string"
+        required: true
+        description: "Path to the Git repository"
+      - name: "action"
+        type: "string"
+        required: true
+        enum: ["list", "create", "switch", "delete"]
+        description: "Branch operation to perform"
+      - name: "branch_name"
+        type: "string"
+        required: false
+        description: "Branch name (required for create, switch, delete)"
+      - name: "from_branch"
+        type: "string"
+        required: false
+        description: "Source branch for creating new branch"
+    response_format: "json"
+
+  # Memory Operations
+  - name: "memory_store"
+    description: "Store data in Git-based memory with semantic indexing"
+    endpoint: "/memory/store"
+    method: "POST"
+    parameters:
+      - name: "key"
+        type: "string"
+        required: true
+        description: "Unique identifier for the memory entry"
+      - name: "data"
+        type: "object"
+        required: true
+        description: "Data to store in memory"
+      - name: "metadata"
+        type: "object"
+        required: false
+        description: "Additional metadata for the memory entry"
+      - name: "tags"
+        type: "array"
+        required: false
+        description: "Tags for categorizing the memory entry"
+      - name: "ttl"
+        type: "integer"
+        required: false
+        description: "Time to live in seconds (0 for permanent)"
+    response_format: "json"
+    
+  - name: "memory_retrieve"
+    description: "Retrieve data from Git-based memory"
+    endpoint: "/memory/retrieve"
+    method: "POST"
+    parameters:
+      - name: "key"
+        type: "string"
+        required: false
+        description: "Specific key to retrieve"
+      - name: "query"
+        type: "string"
+        required: false
+        description: "Semantic search query"
+      - name: "tags"
+        type: "array"
+        required: false
+        description: "Filter by tags"
+      - name: "limit"
+        type: "integer"
+        required: false
+        default: 10
+        description: "Maximum number of results"
+      - name: "similarity_threshold"
+        type: "number"
+        required: false
+        default: 0.7
+        description: "Minimum similarity score for semantic search"
+    response_format: "json"
+    
+  - name: "memory_list"
+    description: "List all memory entries with optional filtering"
+    endpoint: "/memory/list"
+    method: "POST"
+    parameters:
+      - name: "tags"
+        type: "array"
+        required: false
+        description: "Filter by tags"
+      - name: "limit"
+        type: "integer"
+        required: false
+        default: 50
+        description: "Maximum number of entries to return"
+      - name: "offset"
+        type: "integer"
+        required: false
+        default: 0
+        description: "Number of entries to skip"
+      - name: "sort_by"
+        type: "string"
+        required: false
+        default: "created_at"
+        enum: ["created_at", "updated_at", "key", "size"]
+        description: "Field to sort by"
+      - name: "sort_order"
+        type: "string"
+        required: false
+        default: "desc"
+        enum: ["asc", "desc"]
+        description: "Sort order"
+    response_format: "json"
+    
+  - name: "memory_delete"
+    description: "Delete memory entries"
+    endpoint: "/memory/delete"
+    method: "POST"
+    parameters:
+      - name: "key"
+        type: "string"
+        required: false
+        description: "Specific key to delete"
+      - name: "keys"
+        type: "array"
+        required: false
+        description: "Multiple keys to delete"
+      - name: "tags"
+        type: "array"
+        required: false
+        description: "Delete all entries with these tags"
+      - name: "confirm"
+        type: "boolean"
+        required: true
+        default: false
+        description: "Confirmation flag to prevent accidental deletion"
+    response_format: "json"
+
+  # Semantic Search Operations
+  - name: "semantic_search"
+    description: "Perform semantic search across all stored memories"
+    endpoint: "/semantic/search"
+    method: "POST"
+    parameters:
+      - name: "query"
+        type: "string"
+        required: true
+        description: "Natural language search query"
+      - name: "limit"
+        type: "integer"
+        required: false
+        default: 10
+        description: "Maximum number of results"
+      - name: "threshold"
+        type: "number"
+        required: false
+        default: 0.7
+        description: "Minimum similarity threshold"
+      - name: "include_metadata"
+        type: "boolean"
+        required: false
+        default: true
+        description: "Include metadata in results"
+    response_format: "json"
+    
+  - name: "semantic_index"
+    description: "Rebuild or update semantic index"
+    endpoint: "/semantic/index"
+    method: "POST"
+    parameters:
+      - name: "force_rebuild"
+        type: "boolean"
+        required: false
+        default: false
+        description: "Force complete index rebuild"
+      - name: "batch_size"
+        type: "integer"
+        required: false
+        default: 100
+        description: "Number of entries to process in each batch"
+    response_format: "json"
+
+  # Health and Status
+  - name: "health_check"
+    description: "Check server health and status"
+    endpoint: "/health"
+    method: "GET"
+    parameters: []
+    response_format: "json"
+    
+  - name: "server_stats"
+    description: "Get detailed server statistics"
+    endpoint: "/stats"
+    method: "GET"
+    parameters:
+      - name: "include_memory"
+        type: "boolean"
+        required: false
+        default: true
+        description: "Include memory usage statistics"
+      - name: "include_git"
+        type: "boolean"
+        required: false
+        default: true
+        description: "Include Git repository statistics"
+    response_format: "json"
+
+# Error Handling
+error_handling:
+  retry_on_failure: true
+  max_retries: 3
+  retry_delay: 1000
+  timeout: 30000
+  
+# Logging
+logging:
+  level: "info"
+  format: "json"
+  include_request_id: true
+  
+# Rate Limiting
+rate_limiting:
+  enabled: true
+  requests_per_minute: 100
+  burst_limit: 20
+  
+# Features
+features:
+  git_operations: true
+  semantic_memory: true
+  vector_search: true
+  compression: true
+  encryption: false
+  backup: true
+  
+# Compatibility
+compatibility:
+  mcp_version: "1.0.0"
+  trae_agent_version: ">=1.0.0"
+  node_version: ">=18.0.0"
+
+# Environment-specific Configuration
+environments:
+  development:
+    server:
+      port: 5500
+      host: "localhost"
+    logging:
+      level: "debug"
+    features:
+      encryption: false
+      
+  staging:
+    server:
+      port: 5500
+      host: "staging.gitmemory.comdee.co.th"
+      protocol: "https"
+    logging:
+      level: "info"
+      
+  production:
+    server:
+      port: 443
+      host: "gitmemory.comdee.co.th"
+      protocol: "https"
+    logging:
+      level: "warn"
+    features:
+      encryption: true
+      
+# MCP Protocol Capabilities
+capabilities:
+  tools: true
+  resources: true
+  prompts: true
+  logging: true
+  streaming: true
+  notifications: true
+  progress: true
+  cancellation: true
+  
+# Monitoring and Health
+monitoring:
+  health_endpoint: "/health"
+  metrics_endpoint: "/metrics"
+  status_endpoint: "/status"
+  interval: 30000
+  
+# Security Configuration
+security:
+  cors:
+    enabled: true
+    origins: ["*"]
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
+  headers:
+    x_frame_options: "DENY"
+    x_content_type_options: "nosniff"
+    
+# Performance Settings
+performance:
+  max_concurrent_requests: 100
+  request_timeout: 30000
+  cache_ttl: 300000
+  memory_limit: "2GB"

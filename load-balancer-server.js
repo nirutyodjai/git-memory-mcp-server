@@ -16,7 +16,7 @@ const path = require('path');
 class MCPLoadBalancer {
     constructor() {
         this.port = 8080;
-        this.coordinatorUrl = 'http://localhost:3000';
+        this.coordinatorUrl = 'http://localhost:9000';
         this.app = express();
         this.servers = [];
         this.currentIndex = 0;

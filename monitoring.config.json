@@ -1,0 +1,234 @@
+{
+  "monitoring": {
+    "enabled": true,
+    "version": "2.0.0",
+    "description": "Enhanced Monitoring Configuration for Git Memory MCP Server",
+    
+    "metrics": {
+      "enabled": true,
+      "interval": 5000,
+      "retention": {
+        "realTime": 3600000,
+        "hourly": 86400000,
+        "daily": 2592000000,
+        "monthly": 31536000000
+      },
+      "aggregation": {
+        "enabled": true,
+        "intervals": ["1m", "5m", "15m", "1h", "1d"]
+      }
+    },
+    
+    "alerts": {
+      "enabled": true,
+      "severity": {
+        "critical": {
+          "responseTime": 5000,
+          "errorRate": 10,
+          "memoryUsage": 95,
+          "cpuUsage": 95,
+          "diskUsage": 95,
+          "upstreamFailures": 5
+        },
+        "warning": {
+          "responseTime": 2000,
+          "errorRate": 5,
+          "memoryUsage": 85,
+          "cpuUsage": 80,
+          "diskUsage": 85,
+          "upstreamFailures": 3
+        },
+        "info": {
+          "responseTime": 1000,
+          "errorRate": 2,
+          "memoryUsage": 70,
+          "cpuUsage": 60,
+          "diskUsage": 70,
+          "upstreamFailures": 1
+        }
+      },
+      "notifications": {
+        "console": {
+          "enabled": true,
+          "level": "warning"
+        },
+        "email": {
+          "enabled": false,
+          "smtp": {
+            "host": "smtp.gmail.com",
+            "port": 587,
+            "secure": false,
+            "auth": {
+              "user": "",
+              "pass": ""
+            }
+          },
+          "recipients": [],
+          "level": "critical"
+        },
+        "webhook": {
+          "enabled": false,
+          "url": "",
+          "method": "POST",
+          "headers": {
+            "Content-Type": "application/json"
+          },
+          "level": "warning"
+        },
+        "slack": {
+          "enabled": false,
+          "webhookUrl": "",
+          "channel": "#alerts",
+          "level": "warning"
+        }
+      },
+      "cooldown": {
+        "critical": 300000,
+        "warning": 600000,
+        "info": 900000
+      }
+    },
+    
+    "healthCheck": {
+      "enabled": true,
+      "interval": 30000,
+      "timeout": 5000,
+      "retries": 3,
+      "endpoints": [
+        "/health",
+        "/status",
+        "/metrics",
+        "/info"
+      ],
+      "expectedStatus": [200, 201],
+      "customChecks": {
+        "database": {
+          "enabled": true,
+          "timeout": 3000
+        },
+        "memory": {
+          "enabled": true,
+          "timeout": 1000
+        },
+        "upstream": {
+          "enabled": true,
+          "timeout": 5000
+        }
+      }
+    },
+    
+    "dashboard": {
+      "enabled": true,
+      "port": 8081,
+      "host": "0.0.0.0",
+      "ssl": {
+        "enabled": false,
+        "cert": null,
+        "key": null
+      },
+      "authentication": {
+        "enabled": false,
+        "username": "admin",
+        "password": "admin123"
+      },
+      "features": {
+        "realTimeMetrics": true,
+        "historicalData": true,
+        "alertManagement": true,
+        "serverManagement": true,
+        "logViewer": true,
+        "exportData": true
+      },
+      "refreshInterval": 5000
+    },
+    
+    "logging": {
+      "enabled": true,
+      "level": "info",
+      "format": "json",
+      "rotation": {
+        "enabled": true,
+        "maxSize": "10MB",
+        "maxFiles": 10,
+        "datePattern": "YYYY-MM-DD"
+      },
+      "destinations": {
+        "console": {
+          "enabled": true,
+          "colorize": true
+        },
+        "file": {
+          "enabled": true,
+          "path": "./logs/monitoring.log"
+        },
+        "elasticsearch": {
+          "enabled": false,
+          "host": "localhost:9200",
+          "index": "mcp-monitoring"
+        }
+      }
+    },
+    
+    "performance": {
+      "enabled": true,
+      "profiling": {
+        "enabled": false,
+        "interval": 60000,
+        "duration": 30000
+      },
+      "tracing": {
+        "enabled": false,
+        "sampleRate": 0.1
+      },
+      "benchmarking": {
+        "enabled": true,
+        "interval": 300000,
+        "endpoints": ["/health", "/api/status"]
+      }
+    },
+    
+    "security": {
+      "enabled": true,
+      "monitoring": {
+        "failedLogins": {
+          "enabled": true,
+          "threshold": 5,
+          "window": 300000
+        },
+        "suspiciousActivity": {
+          "enabled": true,
+          "patterns": [
+            "multiple_failed_requests",
+            "unusual_request_patterns",
+            "high_error_rates"
+          ]
+        },
+        "rateLimitViolations": {
+          "enabled": true,
+          "threshold": 10
+        }
+      }
+    },
+    
+    "integration": {
+      "prometheus": {
+        "enabled": false,
+        "endpoint": "/metrics",
+        "port": 9090
+      },
+      "grafana": {
+        "enabled": false,
+        "dashboardUrl": ""
+      },
+      "datadog": {
+        "enabled": false,
+        "apiKey": "",
+        "tags": ["env:production", "service:mcp-server"]
+      },
+      "newrelic": {
+        "enabled": false,
+        "licenseKey": ""
+      }
+    }
+  }
+}

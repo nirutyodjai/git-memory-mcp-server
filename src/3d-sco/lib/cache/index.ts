@@ -21,7 +21,6 @@ export async function initializeRedis(): Promise<void> {
         url: process.env.REDIS_URL,
         socket: {
           connectTimeout: 5000,
-          lazyConnect: true,
         },
       });
 
@@ -129,7 +128,7 @@ export async function clear(pattern?: string, options?: CacheOptions): Promise<b
 
   // Fallback to memory cache
   if (pattern) {
-    const keys = Array.from(memoryCache.keys()).filter(k => k.startsWith(searchPattern.replace('*', '')));
+    const keys = Array.from(memoryCache.keys()).filter((k) => (k as string).startsWith(searchPattern.replace('*', '')));
     keys.forEach(key => memoryCache.delete(key));
   } else {
     memoryCache.clear();
@@ -199,7 +198,7 @@ export async function cleanup(): Promise<void> {
 }
 
 // Initialize cache on module load
-if (typeof window === 'undefined') {
+if (typeof globalThis !== 'undefined' && typeof (globalThis as any).window === 'undefined') {
   initializeRedis().catch(console.error);
 }
 

@@ -8,7 +8,8 @@ import {
   ListToolsRequestSchema,
   McpError,
 } from '@modelcontextprotocol/sdk/types.js';
-import { simpleGit, SimpleGit } from 'simple-git';
+import simpleGit from 'simple-git';
+type SimpleGit = ReturnType<typeof simpleGit>;
 import * as fs from 'fs';
 import * as path from 'path';
 import * as zlib from 'zlib';
@@ -31,6 +32,8 @@ export class GitMemoryServer {
   private compressionEnabled: boolean;
   private lastSaveTime: number;
   private readonly SAVE_DEBOUNCE_MS = 1000;
+
+  private isInitialized: boolean = false;
 
   constructor() {
     this.server = new Server(
@@ -55,6 +58,22 @@ export class GitMemoryServer {
     
     // Cleanup cache periodically
     setInterval(() => this.cleanupCache(), 60000); // Every minute
+  }
+
+  async initialize(): Promise<void> {
+    if (this.isInitialized) {
+      console.log('GitMemoryServer already initialized');
+      return;
+    }
+
+    try {
+      await this.loadMemory();
+      this.isInitialized = true;
+      console.log('GitMemoryServer initialized successfully');
+    } catch (error) {
+      console.error('Failed to initialize GitMemoryServer:', error);
+      throw error;
+    }
   }
 
   private async initializeAsync(): Promise<void> {
@@ -1021,5 +1040,11 @@ export class GitMemoryServer {
   }
 }
 
-const server = new GitMemoryServer();
-server.run().catch(console.error);
+// Export the class for use in other modules
+export default GitMemoryServer;
+
+// Only run the server if this file is executed directly
+if (require.main === module) {
+  const server = new GitMemoryServer();
+  server.run().catch(console.error);
+}

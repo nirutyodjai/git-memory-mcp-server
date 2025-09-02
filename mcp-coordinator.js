@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+require('dotenv').config();
 const { Server } = require('@modelcontextprotocol/sdk/server/index.js');
 const { StdioServerTransport } = require('@modelcontextprotocol/sdk/server/stdio.js');
 const { CallToolRequestSchema, ListToolsRequestSchema } = require('@modelcontextprotocol/sdk/types.js');
@@ -8,6 +9,8 @@ const path = require('path');
 const { execSync, spawn } = require('child_process');
 const http = require('http');
 const express = require('express');
+const axios = require('axios');
+const { v4: uuidv4 } = require('uuid');
 
 class MCPCoordinator {
   constructor() {
@@ -744,13 +747,50 @@ server.run().catch(console.error);
     app.use((req, res, next) => {
       res.header('Access-Control-Allow-Origin', '*');
       res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-      res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+      res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization, X-Request-Id');
       if (req.method === 'OPTIONS') {
         res.sendStatus(200);
       } else {
         next();
       }
     });
+
+    // Attach request id and standard 200 OK helper for new endpoints
+    app.use((req, res, next) => {
+      const reqId = req.headers['x-request-id'] || uuidv4();
+      res.setHeader('X-Request-Id', reqId);
+      req.requestId = reqId;
+      next();
+    });
+
+    const ok = (res, data, meta = {}) => {
+      return res.status(200).json({
+        code: 200,
+        ok: true,
+        data,
+        meta: Object.assign({
+          requestId: res.getHeader('X-Request-Id'),
+          service: 'mcp-coordinator',
+          version: '1.0.0'
+        }, meta),
+        ts: new Date().toISOString()
+      });
+    };
+
+    const fail = (res, message, details) => {
+      return res.status(200).json({
+        code: 200,
+        ok: false,
+        error: message,
+        details: details || null,
+        meta: {
+          requestId: res.getHeader('X-Request-Id'),
+          service: 'mcp-coordinator',
+          version: '1.0.0'
+        },
+        ts: new Date().toISOString()
+      });
+    };
     
     // API endpoints
     app.get('/servers', async (req, res) => {
@@ -795,6 +835,114 @@ server.run().catch(console.error);
           memory: process.memoryUsage()
         }
       });
+    });
+
+    // New: Standardized 200 OK AI inference endpoint
+    app.post('/ai/infer', async (req, res) => {
+      try {
+        const { provider = (process.env.AI_PROVIDER || 'mock'), model, messages, prompt, temperature, max_tokens, baseUrl, options } = req.body || {};
+
+        const normMessages = Array.isArray(messages) && messages.length > 0
+          ? messages
+          : [{ role: 'user', content: typeof prompt === 'string' ? prompt : JSON.stringify(prompt || '') }];
+
+        const pickFirstText = (msgs) => {
+          const last = msgs[msgs.length - 1];
+          if (!last) return '';
+          if (typeof last.content === 'string') return last.content;
+          if (Array.isArray(last.content)) {
+            const t = last.content.find((c) => c && (c.text || c.content || c.value));
+            return t?.text || t?.content || t?.value || '';
+          }
+          return '';
+        };
+
+        const doOpenAI = async () => {
+          const OPENAI_BASE = (baseUrl || process.env.OPENAI_BASE_URL || 'https://api.openai.com').replace(/\/$/, '');
+          const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+          if (!OPENAI_API_KEY) return fail(res, 'OPENAI_API_KEY is not configured');
+          const body = {
+            model: model || process.env.OPENAI_DEFAULT_MODEL || 'gpt-4o-mini',
+            messages: normMessages,
+            temperature: typeof temperature === 'number' ? temperature : undefined,
+            max_tokens: typeof max_tokens === 'number' ? max_tokens : undefined,
+            stream: false
+          };
+          const r = await axios.post(`${OPENAI_BASE}/v1/chat/completions`, body, {
+            headers: { Authorization: `Bearer ${OPENAI_API_KEY}` }
+          });
+          const d = r.data;
+          const text = d?.choices?.[0]?.message?.content || '';
+          return ok(res, {
+            provider: 'openai',
+            model: body.model,
+            output: text,
+            usage: d?.usage || null,
+            raw: d
+          });
+        };
+
+        const doOllama = async () => {
+          const OLLAMA_HOST = (process.env.OLLAMA_HOST || 'http://localhost:11434').replace(/\/$/, '');
+          const body = {
+            model: model || process.env.OLLAMA_MODEL || 'llama3.1',
+            prompt: pickFirstText(normMessages),
+            stream: false,
+            options: Object.assign({}, options || {}, typeof temperature === 'number' ? { temperature } : {})
+          };
+          const r = await axios.post(`${OLLAMA_HOST}/api/generate`, body, {});
+          const d = r.data;
+          return ok(res, {
+            provider: 'ollama',
+            model: body.model,
+            output: d?.response || '',
+            raw: d
+          });
+        };
+
+        const doMock = async () => {
+          const text = pickFirstText(normMessages);
+          return ok(res, {
+            provider: 'mock',
+            model: model || 'mock-echo',
+            output: `[mock] ${text}`,
+            raw: { echo: text }
+          });
+        };
+
+        if (provider === 'openai') return await doOpenAI();
+        if (provider === 'ollama') return await doOllama();
+        if (provider === 'mock') return await doMock();
+
+        return fail(res, `Provider not supported yet: ${provider}`);
+      } catch (error) {
+        return fail(res, 'Inference error', { message: error.message });
+      }
+    });
+
+    // New: Memory ingest endpoint to Git Memory shared space
+    app.post('/memory/ingest', async (req, res) => {
+      try {
+        const { source = 'unknown', content, metadata } = req.body || {};
+        if (!content) return fail(res, 'content is required');
+
+        const id = uuidv4();
+        const dir = path.join(this.memoryPath, 'shared', 'ingest');
+        await fs.mkdir(dir, { recursive: true });
+        const payload = {
+          id,
+          source,
+          content,
+          metadata: metadata || {},
+          createdAt: new Date().toISOString()
+        };
+        const filePath = path.join(dir, `${id}.json`);
+        await fs.writeFile(filePath, JSON.stringify(payload, null, 2));
+        await this.gitCommit(`Ingest memory: ${source} (${id})`);
+        return ok(res, { id, path: filePath });
+      } catch (error) {
+        return fail(res, 'Ingest error', { message: error.message });
+      }
     });
     
     const port = process.env.MCP_COORDINATOR_PORT || 3000;

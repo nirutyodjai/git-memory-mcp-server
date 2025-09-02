@@ -33,12 +33,15 @@ var __importStar = (this && this.__importStar) || (function () {
         return result;
     };
 })();
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GitMemoryServer = void 0;
 const index_js_1 = require("@modelcontextprotocol/sdk/server/index.js");
 const stdio_js_1 = require("@modelcontextprotocol/sdk/server/stdio.js");
 const types_js_1 = require("@modelcontextprotocol/sdk/types.js");
-const simple_git_1 = require("simple-git");
+const simple_git_1 = __importDefault(require("simple-git"));
 const fs = __importStar(require("fs"));
 const path = __importStar(require("path"));
 const zlib = __importStar(require("zlib"));
@@ -48,6 +51,7 @@ class GitMemoryServer {
         this.CACHE_SIZE = 1000;
         this.CACHE_TTL = 300000; // 5 minutes
         this.SAVE_DEBOUNCE_MS = 1000;
+        this.isInitialized = false;
         this.server = new index_js_1.Server({
             name: 'git-memory-mcp-server',
             version: '1.1.0',
@@ -56,7 +60,7 @@ class GitMemoryServer {
                 tools: {},
             },
         });
-        this.git = (0, simple_git_1.simpleGit)();
+        this.git = (0, simple_git_1.default)();
         this.memoryCache = new Map();
         this.memoryFile = path.join(process.cwd(), '.git-memory.json');
         this.compressionEnabled = process.env.MCP_COMPRESSION === 'true';
@@ -65,6 +69,21 @@ class GitMemoryServer {
         this.setupToolHandlers();
         // Cleanup cache periodically
         setInterval(() => this.cleanupCache(), 60000); // Every minute
+    }
+    async initialize() {
+        if (this.isInitialized) {
+            console.log('GitMemoryServer already initialized');
+            return;
+        }
+        try {
+            await this.loadMemory();
+            this.isInitialized = true;
+            console.log('GitMemoryServer initialized successfully');
+        }
+        catch (error) {
+            console.error('Failed to initialize GitMemoryServer:', error);
+            throw error;
+        }
     }
     async initializeAsync() {
         await this.loadMemory();
@@ -922,6 +941,11 @@ class GitMemoryServer {
     }
 }
 exports.GitMemoryServer = GitMemoryServer;
-const server = new GitMemoryServer();
-server.run().catch(console.error);
+// Export the class for use in other modules
+exports.default = GitMemoryServer;
+// Only run the server if this file is executed directly
+if (require.main === module) {
+    const server = new GitMemoryServer();
+    server.run().catch(console.error);
+}
 //# sourceMappingURL=index.js.map

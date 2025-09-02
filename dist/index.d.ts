@@ -10,7 +10,9 @@ export declare class GitMemoryServer {
     private compressionEnabled;
     private lastSaveTime;
     private readonly SAVE_DEBOUNCE_MS;
+    private isInitialized;
     constructor();
+    initialize(): Promise<void>;
     private initializeAsync;
     private loadMemory;
     private saveMemory;
@@ -40,4 +42,5 @@ export declare class GitMemoryServer {
     private handleGitMerge;
     run(): Promise<void>;
 }
+export default GitMemoryServer;
 //# sourceMappingURL=index.d.ts.map

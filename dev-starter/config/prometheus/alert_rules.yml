@@ -1,0 +1,292 @@
+# Prometheus Alert Rules for Git Memory MCP Server
+# Production monitoring alerts with comprehensive coverage
+
+groups:
+  # Application Health Alerts
+  - name: application.rules
+    rules:
+      - alert: ApplicationDown
+        expr: up{job="git-memory-mcp-server"} == 0
+        for: 1m
+        labels:
+          severity: critical
+          service: git-memory-mcp-server
+        annotations:
+          summary: "Git Memory MCP Server is down"
+          description: "The Git Memory MCP Server has been down for more than 1 minute."
+          runbook_url: "https://docs.comdee.co.th/runbooks/application-down"
+
+      - alert: HighErrorRate
+        expr: (
+          rate(http_requests_total{job="git-memory-mcp-server",status=~"5.."}[5m]) /
+          rate(http_requests_total{job="git-memory-mcp-server"}[5m])
+        ) > 0.05
+        for: 5m
+        labels:
+          severity: warning
+          service: git-memory-mcp-server
+        annotations:
+          summary: "High error rate detected"
+          description: "Error rate is {{ $value | humanizePercentage }} for the last 5 minutes."
+
+      - alert: HighResponseTime
+        expr: (
+          histogram_quantile(0.95, rate(http_request_duration_seconds_bucket{job="git-memory-mcp-server"}[5m]))
+        ) > 1
+        for: 5m
+        labels:
+          severity: warning
+          service: git-memory-mcp-server
+        annotations:
+          summary: "High response time detected"
+          description: "95th percentile response time is {{ $value }}s for the last 5 minutes."
+
+      - alert: LowThroughput
+        expr: rate(http_requests_total{job="git-memory-mcp-server"}[5m]) < 1
+        for: 10m
+        labels:
+          severity: info
+          service: git-memory-mcp-server
+        annotations:
+          summary: "Low request throughput"
+          description: "Request rate is {{ $value }} requests/second for the last 5 minutes."
+
+  # System Resource Alerts
+  - name: system.rules
+    rules:
+      - alert: HighCPUUsage
+        expr: (
+          100 - (avg by (instance) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100)
+        ) > 80
+        for: 5m
+        labels:
+          severity: warning
+          service: system
+        annotations:
+          summary: "High CPU usage detected"
+          description: "CPU usage is {{ $value }}% on {{ $labels.instance }}."
+
+      - alert: HighMemoryUsage
+        expr: (
+          (node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes) / node_memory_MemTotal_bytes * 100
+        ) > 85
+        for: 5m
+        labels:
+          severity: warning
+          service: system
+        annotations:
+          summary: "High memory usage detected"
+          description: "Memory usage is {{ $value }}% on {{ $labels.instance }}."
+
+      - alert: HighDiskUsage
+        expr: (
+          (node_filesystem_size_bytes{fstype!="tmpfs"} - node_filesystem_free_bytes{fstype!="tmpfs"}) /
+          node_filesystem_size_bytes{fstype!="tmpfs"} * 100
+        ) > 85
+        for: 5m
+        labels:
+          severity: warning
+          service: system
+        annotations:
+          summary: "High disk usage detected"
+          description: "Disk usage is {{ $value }}% on {{ $labels.instance }} ({{ $labels.mountpoint }})."
+
+      - alert: DiskSpaceCritical
+        expr: (
+          (node_filesystem_size_bytes{fstype!="tmpfs"} - node_filesystem_free_bytes{fstype!="tmpfs"}) /
+          node_filesystem_size_bytes{fstype!="tmpfs"} * 100
+        ) > 95
+        for: 1m
+        labels:
+          severity: critical
+          service: system
+        annotations:
+          summary: "Critical disk space usage"
+          description: "Disk usage is {{ $value }}% on {{ $labels.instance }} ({{ $labels.mountpoint }}). Immediate action required."
+
+  # Container Alerts
+  - name: container.rules
+    rules:
+      - alert: ContainerDown
+        expr: absent(container_last_seen{name=~"git-memory.*"})
+        for: 1m
+        labels:
+          severity: critical
+          service: docker
+        annotations:
+          summary: "Container is down"
+          description: "Container {{ $labels.name }} has been down for more than 1 minute."
+
+      - alert: ContainerHighCPU
+        expr: (
+          rate(container_cpu_usage_seconds_total{name=~"git-memory.*"}[5m]) * 100
+        ) > 80
+        for: 5m
+        labels:
+          severity: warning
+          service: docker
+        annotations:
+          summary: "Container high CPU usage"
+          description: "Container {{ $labels.name }} CPU usage is {{ $value }}%."
+
+      - alert: ContainerHighMemory
+        expr: (
+          container_memory_usage_bytes{name=~"git-memory.*"} / container_spec_memory_limit_bytes{name=~"git-memory.*"} * 100
+        ) > 85
+        for: 5m
+        labels:
+          severity: warning
+          service: docker
+        annotations:
+          summary: "Container high memory usage"
+          description: "Container {{ $labels.name }} memory usage is {{ $value }}%."
+
+      - alert: ContainerRestarting
+        expr: rate(container_start_time_seconds{name=~"git-memory.*"}[5m]) > 0
+        for: 1m
+        labels:
+          severity: warning
+          service: docker
+        annotations:
+          summary: "Container is restarting"
+          description: "Container {{ $labels.name }} has restarted {{ $value }} times in the last 5 minutes."
+
+  # Database Alerts
+  - name: database.rules
+    rules:
+      - alert: DatabaseConnectionsHigh
+        expr: pg_stat_activity_count > 80
+        for: 5m
+        labels:
+          severity: warning
+          service: database
+        annotations:
+          summary: "High database connections"
+          description: "Database has {{ $value }} active connections."
+
+      - alert: DatabaseSlowQueries
+        expr: pg_stat_activity_max_tx_duration > 300
+        for: 2m
+        labels:
+          severity: warning
+          service: database
+        annotations:
+          summary: "Slow database queries detected"
+          description: "Longest running query is {{ $value }} seconds."
+
+  # Redis Alerts
+  - name: redis.rules
+    rules:
+      - alert: RedisDown
+        expr: redis_up == 0
+        for: 1m
+        labels:
+          severity: critical
+          service: redis
+        annotations:
+          summary: "Redis is down"
+          description: "Redis instance has been down for more than 1 minute."
+
+      - alert: RedisHighMemoryUsage
+        expr: (redis_memory_used_bytes / redis_memory_max_bytes * 100) > 85
+        for: 5m
+        labels:
+          severity: warning
+          service: redis
+        annotations:
+          summary: "Redis high memory usage"
+          description: "Redis memory usage is {{ $value }}%."
+
+      - alert: RedisHighConnections
+        expr: redis_connected_clients > 100
+        for: 5m
+        labels:
+          severity: warning
+          service: redis
+        annotations:
+          summary: "Redis high connection count"
+          description: "Redis has {{ $value }} connected clients."
+
+  # SSL Certificate Alerts
+  - name: ssl.rules
+    rules:
+      - alert: SSLCertificateExpiringSoon
+        expr: (ssl_cert_not_after - time()) / 86400 < 30
+        for: 1h
+        labels:
+          severity: warning
+          service: ssl
+        annotations:
+          summary: "SSL certificate expiring soon"
+          description: "SSL certificate for {{ $labels.instance }} expires in {{ $value }} days."
+
+      - alert: SSLCertificateExpired
+        expr: ssl_cert_not_after < time()
+        for: 1m
+        labels:
+          severity: critical
+          service: ssl
+        annotations:
+          summary: "SSL certificate expired"
+          description: "SSL certificate for {{ $labels.instance }} has expired."
+
+  # Network Alerts
+  - name: network.rules
+    rules:
+      - alert: HighNetworkTraffic
+        expr: (
+          rate(node_network_receive_bytes_total[5m]) + rate(node_network_transmit_bytes_total[5m])
+        ) > 100000000  # 100MB/s
+        for: 5m
+        labels:
+          severity: info
+          service: network
+        annotations:
+          summary: "High network traffic"
+          description: "Network traffic is {{ $value | humanizeBytes }}/s on {{ $labels.instance }}."
+
+      - alert: NetworkInterfaceDown
+        expr: node_network_up == 0
+        for: 1m
+        labels:
+          severity: warning
+          service: network
+        annotations:
+          summary: "Network interface down"
+          description: "Network interface {{ $labels.device }} is down on {{ $labels.instance }}."
+
+  # Business Logic Alerts
+  - name: business.rules
+    rules:
+      - alert: HighPaymentFailureRate
+        expr: (
+          rate(payment_transactions_total{status="failed"}[5m]) /
+          rate(payment_transactions_total[5m])
+        ) > 0.1
+        for: 5m
+        labels:
+          severity: critical
+          service: payment
+        annotations:
+          summary: "High payment failure rate"
+          description: "Payment failure rate is {{ $value | humanizePercentage }} for the last 5 minutes."
+
+      - alert: LowUserRegistrations
+        expr: rate(user_registrations_total[1h]) < 1
+        for: 2h
+        labels:
+          severity: info
+          service: business
+        annotations:
+          summary: "Low user registration rate"
+          description: "User registration rate is {{ $value }} registrations/hour for the last hour."
+
+      - alert: HighAPIKeyUsage
+        expr: api_key_usage_rate > 0.9
+        for: 5m
+        labels:
+          severity: warning
+          service: api
+        annotations:
+          summary: "High API key usage"
+          description: "API key {{ $labels.api_key }} is at {{ $value | humanizePercentage }} of its limit."

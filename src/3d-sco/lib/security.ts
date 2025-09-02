@@ -145,7 +145,10 @@ export class InputValidator {
 
 // CSRF protection
 export class CSRFProtection {
-  private static readonly SECRET_KEY = process.env.CSRF_SECRET || 'default-csrf-secret';
+  private static readonly SECRET_KEY = process.env.CSRF_SECRET || (() => {
+    console.warn('Warning: CSRF_SECRET not set in environment variables. Using insecure default.');
+    return 'default-csrf-secret';
+  })();
 
   // Generate CSRF token
   static generateToken(sessionId: string): string {

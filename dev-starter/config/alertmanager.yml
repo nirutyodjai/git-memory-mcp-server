@@ -1,0 +1,404 @@
+# Alertmanager Configuration for Git Memory MCP Server Production
+# This configuration defines how alerts are routed, grouped, and sent to various receivers
+
+global:
+  # SMTP configuration for email alerts
+  smtp_smarthost: 'smtp.gmail.com:587'
+  smtp_from: 'alerts@comdee.co.th'
+  smtp_auth_username: 'alerts@comdee.co.th'
+  smtp_auth_password: '${SMTP_PASSWORD}'
+  smtp_require_tls: true
+  
+  # Slack API URL (will be set via environment variable)
+  slack_api_url: '${SLACK_WEBHOOK_URL}'
+  
+  # Default template paths
+  templates:
+    - '/etc/alertmanager/templates/*.tmpl'
+
+# Route configuration
+route:
+  # Default receiver for all alerts
+  receiver: 'default-receiver'
+  
+  # Group alerts by these labels
+  group_by: ['alertname', 'cluster', 'service']
+  
+  # Wait time before sending initial notification
+  group_wait: 30s
+  
+  # Wait time before sending notification about new alerts added to group
+  group_interval: 5m
+  
+  # Wait time before re-sending notification
+  repeat_interval: 12h
+  
+  # Child routes for specific alert types
+  routes:
+    # Critical alerts - immediate notification
+    - match:
+        severity: critical
+      receiver: 'critical-alerts'
+      group_wait: 10s
+      group_interval: 1m
+      repeat_interval: 5m
+      routes:
+        # Database critical alerts
+        - match:
+            service: database
+          receiver: 'database-critical'
+        # Security critical alerts
+        - match:
+            service: security
+          receiver: 'security-critical'
+        # Payment system critical alerts
+        - match:
+            service: payment
+          receiver: 'payment-critical'
+    
+    # Warning alerts - standard notification
+    - match:
+        severity: warning
+      receiver: 'warning-alerts'
+      group_wait: 1m
+      group_interval: 10m
+      repeat_interval: 2h
+    
+    # Info alerts - low priority notification
+    - match:
+        severity: info
+      receiver: 'info-alerts'
+      group_wait: 5m
+      group_interval: 30m
+      repeat_interval: 24h
+    
+    # Business alerts - business team notification
+    - match_re:
+        alertname: '(PaymentFailureRate|SubscriptionCancellationRate|UserRegistrationDrop|RevenueAlert)'
+      receiver: 'business-alerts'
+      group_wait: 2m
+      group_interval: 15m
+      repeat_interval: 4h
+    
+    # Infrastructure alerts - DevOps team notification
+    - match_re:
+        alertname: '(HighCPUUsage|HighMemoryUsage|DiskSpaceAlmostFull|NetworkTrafficHigh|ContainerRestarting)'
+      receiver: 'infrastructure-alerts'
+      group_wait: 1m
+      group_interval: 5m
+      repeat_interval: 1h
+
+# Inhibition rules - suppress certain alerts when others are firing
+inhibit_rules:
+  # Suppress warning alerts when critical alerts are firing for the same service
+  - source_match:
+      severity: 'critical'
+    target_match:
+      severity: 'warning'
+    equal: ['service', 'instance']
+  
+  # Suppress individual service alerts when entire application is down
+  - source_match:
+      alertname: 'ApplicationDown'
+    target_match_re:
+      alertname: '(APIGatewayDown|DashboardDown|DatabaseDown)'
+    equal: ['instance']
+  
+  # Suppress high error rate alerts when service is down
+  - source_match_re:
+      alertname: '(ApplicationDown|APIGatewayDown|DashboardDown)'
+    target_match:
+      alertname: 'HighErrorRate'
+    equal: ['service']
+
+# Receivers configuration
+receivers:
+  # Default receiver - basic email notification
+  - name: 'default-receiver'
+    email_configs:
+      - to: 'devops@comdee.co.th'
+        subject: '[Git Memory] {{ .GroupLabels.alertname }} - {{ .Status | toUpper }}'
+        body: |
+          {{ range .Alerts }}
+          Alert: {{ .Annotations.summary }}
+          Description: {{ .Annotations.description }}
+          Severity: {{ .Labels.severity }}
+          Service: {{ .Labels.service }}
+          Instance: {{ .Labels.instance }}
+          Started: {{ .StartsAt.Format "2006-01-02 15:04:05" }}
+          {{ if .EndsAt }}Ended: {{ .EndsAt.Format "2006-01-02 15:04:05" }}{{ end }}
+          
+          Labels:
+          {{ range .Labels.SortedPairs }}- {{ .Name }}: {{ .Value }}
+          {{ end }}
+          
+          Annotations:
+          {{ range .Annotations.SortedPairs }}- {{ .Name }}: {{ .Value }}
+          {{ end }}
+          {{ end }}
+        html: |
+          <h2>Git Memory Alert - {{ .Status | toUpper }}</h2>
+          {{ range .Alerts }}
+          <h3>{{ .Annotations.summary }}</h3>
+          <p><strong>Description:</strong> {{ .Annotations.description }}</p>
+          <p><strong>Severity:</strong> <span style="color: {{ if eq .Labels.severity "critical" }}red{{ else if eq .Labels.severity "warning" }}orange{{ else }}blue{{ end }}">{{ .Labels.severity | toUpper }}</span></p>
+          <p><strong>Service:</strong> {{ .Labels.service }}</p>
+          <p><strong>Instance:</strong> {{ .Labels.instance }}</p>
+          <p><strong>Started:</strong> {{ .StartsAt.Format "2006-01-02 15:04:05" }}</p>
+          {{ if .EndsAt }}<p><strong>Ended:</strong> {{ .EndsAt.Format "2006-01-02 15:04:05" }}</p>{{ end }}
+          
+          <h4>Labels:</h4>
+          <ul>
+          {{ range .Labels.SortedPairs }}<li>{{ .Name }}: {{ .Value }}</li>{{ end }}
+          </ul>
+          
+          <h4>Annotations:</h4>
+          <ul>
+          {{ range .Annotations.SortedPairs }}<li>{{ .Name }}: {{ .Value }}</li>{{ end }}
+          </ul>
+          <hr>
+          {{ end }}
+
+  # Critical alerts - immediate notification via multiple channels
+  - name: 'critical-alerts'
+    email_configs:
+      - to: 'devops@comdee.co.th,cto@comdee.co.th'
+        subject: '🚨 [CRITICAL] Git Memory - {{ .GroupLabels.alertname }}'
+        body: |
+          CRITICAL ALERT DETECTED!
+          
+          {{ range .Alerts }}
+          Alert: {{ .Annotations.summary }}
+          Description: {{ .Annotations.description }}
+          Service: {{ .Labels.service }}
+          Instance: {{ .Labels.instance }}
+          Started: {{ .StartsAt.Format "2006-01-02 15:04:05" }}
+          
+          IMMEDIATE ACTION REQUIRED!
+          {{ end }}
+    slack_configs:
+      - channel: '#alerts-critical'
+        title: '🚨 Critical Alert - {{ .GroupLabels.alertname }}'
+        text: |
+          {{ range .Alerts }}
+          *Alert:* {{ .Annotations.summary }}
+          *Description:* {{ .Annotations.description }}
+          *Service:* {{ .Labels.service }}
+          *Instance:* {{ .Labels.instance }}
+          *Started:* {{ .StartsAt.Format "2006-01-02 15:04:05" }}
+          {{ end }}
+        color: 'danger'
+        send_resolved: true
+
+  # Database critical alerts
+  - name: 'database-critical'
+    email_configs:
+      - to: 'devops@comdee.co.th,database-admin@comdee.co.th'
+        subject: '🔥 [DATABASE CRITICAL] Git Memory - {{ .GroupLabels.alertname }}'
+        body: |
+          DATABASE CRITICAL ALERT!
+          
+          {{ range .Alerts }}
+          Alert: {{ .Annotations.summary }}
+          Description: {{ .Annotations.description }}
+          Database: {{ .Labels.database | default "Unknown" }}
+          Instance: {{ .Labels.instance }}
+          Started: {{ .StartsAt.Format "2006-01-02 15:04:05" }}
+          
+          DATABASE TEAM ATTENTION REQUIRED!
+          {{ end }}
+    slack_configs:
+      - channel: '#alerts-database'
+        title: '🔥 Database Critical Alert'
+        text: |
+          {{ range .Alerts }}
+          *Alert:* {{ .Annotations.summary }}
+          *Description:* {{ .Annotations.description }}
+          *Database:* {{ .Labels.database | default "Unknown" }}
+          *Instance:* {{ .Labels.instance }}
+          {{ end }}
+        color: 'danger'
+
+  # Security critical alerts
+  - name: 'security-critical'
+    email_configs:
+      - to: 'security@comdee.co.th,devops@comdee.co.th,cto@comdee.co.th'
+        subject: '🛡️ [SECURITY CRITICAL] Git Memory - {{ .GroupLabels.alertname }}'
+        body: |
+          SECURITY CRITICAL ALERT!
+          
+          {{ range .Alerts }}
+          Alert: {{ .Annotations.summary }}
+          Description: {{ .Annotations.description }}
+          Source IP: {{ .Labels.source_ip | default "Unknown" }}
+          User: {{ .Labels.user_id | default "Unknown" }}
+          Started: {{ .StartsAt.Format "2006-01-02 15:04:05" }}
+          
+          SECURITY TEAM IMMEDIATE RESPONSE REQUIRED!
+          {{ end }}
+    slack_configs:
+      - channel: '#alerts-security'
+        title: '🛡️ Security Critical Alert'
+        text: |
+          {{ range .Alerts }}
+          *Alert:* {{ .Annotations.summary }}
+          *Description:* {{ .Annotations.description }}
+          *Source IP:* {{ .Labels.source_ip | default "Unknown" }}
+          *User:* {{ .Labels.user_id | default "Unknown" }}
+          {{ end }}
+        color: 'danger'
+
+  # Payment critical alerts
+  - name: 'payment-critical'
+    email_configs:
+      - to: 'finance@comdee.co.th,devops@comdee.co.th'
+        subject: '💳 [PAYMENT CRITICAL] Git Memory - {{ .GroupLabels.alertname }}'
+        body: |
+          PAYMENT SYSTEM CRITICAL ALERT!
+          
+          {{ range .Alerts }}
+          Alert: {{ .Annotations.summary }}
+          Description: {{ .Annotations.description }}
+          Payment Provider: {{ .Labels.payment_provider | default "Unknown" }}
+          Started: {{ .StartsAt.Format "2006-01-02 15:04:05" }}
+          
+          FINANCE TEAM ATTENTION REQUIRED!
+          {{ end }}
+    slack_configs:
+      - channel: '#alerts-payment'
+        title: '💳 Payment Critical Alert'
+        text: |
+          {{ range .Alerts }}
+          *Alert:* {{ .Annotations.summary }}
+          *Description:* {{ .Annotations.description }}
+          *Payment Provider:* {{ .Labels.payment_provider | default "Unknown" }}
+          {{ end }}
+        color: 'danger'
+
+  # Warning alerts
+  - name: 'warning-alerts'
+    email_configs:
+      - to: 'devops@comdee.co.th'
+        subject: '⚠️ [WARNING] Git Memory - {{ .GroupLabels.alertname }}'
+        body: |
+          Warning Alert Detected
+          
+          {{ range .Alerts }}
+          Alert: {{ .Annotations.summary }}
+          Description: {{ .Annotations.description }}
+          Service: {{ .Labels.service }}
+          Instance: {{ .Labels.instance }}
+          Started: {{ .StartsAt.Format "2006-01-02 15:04:05" }}
+          {{ end }}
+    slack_configs:
+      - channel: '#alerts-warning'
+        title: '⚠️ Warning Alert - {{ .GroupLabels.alertname }}'
+        text: |
+          {{ range .Alerts }}
+          *Alert:* {{ .Annotations.summary }}
+          *Description:* {{ .Annotations.description }}
+          *Service:* {{ .Labels.service }}
+          {{ end }}
+        color: 'warning'
+        send_resolved: true
+
+  # Info alerts
+  - name: 'info-alerts'
+    slack_configs:
+      - channel: '#alerts-info'
+        title: 'ℹ️ Info Alert - {{ .GroupLabels.alertname }}'
+        text: |
+          {{ range .Alerts }}
+          *Alert:* {{ .Annotations.summary }}
+          *Description:* {{ .Annotations.description }}
+          *Service:* {{ .Labels.service }}
+          {{ end }}
+        color: 'good'
+        send_resolved: true
+
+  # Business alerts
+  - name: 'business-alerts'
+    email_configs:
+      - to: 'business@comdee.co.th,ceo@comdee.co.th'
+        subject: '📊 [BUSINESS ALERT] Git Memory - {{ .GroupLabels.alertname }}'
+        body: |
+          Business Metric Alert
+          
+          {{ range .Alerts }}
+          Alert: {{ .Annotations.summary }}
+          Description: {{ .Annotations.description }}
+          Metric: {{ .Labels.metric_name | default "Unknown" }}
+          Value: {{ .Labels.metric_value | default "Unknown" }}
+          Started: {{ .StartsAt.Format "2006-01-02 15:04:05" }}
+          
+          Business team review recommended.
+          {{ end }}
+    slack_configs:
+      - channel: '#alerts-business'
+        title: '📊 Business Alert - {{ .GroupLabels.alertname }}'
+        text: |
+          {{ range .Alerts }}
+          *Alert:* {{ .Annotations.summary }}
+          *Description:* {{ .Annotations.description }}
+          *Metric:* {{ .Labels.metric_name | default "Unknown" }}
+          *Value:* {{ .Labels.metric_value | default "Unknown" }}
+          {{ end }}
+        color: 'warning'
+
+  # Infrastructure alerts
+  - name: 'infrastructure-alerts'
+    email_configs:
+      - to: 'devops@comdee.co.th,infrastructure@comdee.co.th'
+        subject: '🏗️ [INFRASTRUCTURE] Git Memory - {{ .GroupLabels.alertname }}'
+        body: |
+          Infrastructure Alert
+          
+          {{ range .Alerts }}
+          Alert: {{ .Annotations.summary }}
+          Description: {{ .Annotations.description }}
+          Instance: {{ .Labels.instance }}
+          Resource: {{ .Labels.resource | default "Unknown" }}
+          Started: {{ .StartsAt.Format "2006-01-02 15:04:05" }}
+          {{ end }}
+    slack_configs:
+      - channel: '#alerts-infrastructure'
+        title: '🏗️ Infrastructure Alert - {{ .GroupLabels.alertname }}'
+        text: |
+          {{ range .Alerts }}
+          *Alert:* {{ .Annotations.summary }}
+          *Description:* {{ .Annotations.description }}
+          *Instance:* {{ .Labels.instance }}
+          *Resource:* {{ .Labels.resource | default "Unknown" }}
+          {{ end }}
+        color: 'warning'
+        send_resolved: true
+
+# Time intervals for grouping and repeat notifications
+time_intervals:
+  - name: 'business-hours'
+    time_intervals:
+      - times:
+          - start_time: '09:00'
+            end_time: '18:00'
+        weekdays: ['monday:friday']
+        location: 'Asia/Bangkok'
+  
+  - name: 'off-hours'
+    time_intervals:
+      - times:
+          - start_time: '18:01'
+            end_time: '08:59'
+        weekdays: ['monday:friday']
+        location: 'Asia/Bangkok'
+      - weekdays: ['saturday', 'sunday']
+        location: 'Asia/Bangkok'
+
+# Mute time intervals (maintenance windows)
+mute_time_intervals:
+  - name: 'maintenance-window'
+    time_intervals:
+      - times:
+          - start_time: '02:00'
+            end_time: '04:00'
+        weekdays: ['sunday']
+        location: 'Asia/Bangkok'

@@ -1,0 +1,328 @@
+# MCP Multi-System Configuration
+# การกำหนดค่าสำหรับระบบ MCP หลายระบบ
+
+# Global Settings
+global:
+  maxConcurrentSystems: 15
+  healthCheckInterval: 30000  # 30 seconds
+  retryAttempts: 3
+  retryDelay: 1000
+  loadBalancing: true
+  connectionTimeout: 10000
+  requestTimeout: 30000
+  
+# System Definitions
+systems:
+  # Git Memory System - Primary
+  git-memory-primary:
+    type: "git-memory"
+    priority: 1
+    enabled: true
+    config:
+      repositoryPath: "./git-memory-repo"
+      compression: true
+      maxFileSize: "10MB"
+      autoCommit: true
+      branchStrategy: "feature-based"
+    healthCheck:
+      endpoint: "/health"
+      interval: 30000
+      timeout: 5000
+    resources:
+      maxMemory: "512MB"
+      maxCpu: "50%"
+      
+  # Git Memory System - Secondary (Backup)
+  git-memory-secondary:
+    type: "git-memory"
+    priority: 2
+    enabled: true
+    config:
+      repositoryPath: "./git-memory-backup"
+      compression: true
+      maxFileSize: "10MB"
+      autoCommit: true
+      branchStrategy: "backup"
+      syncWithPrimary: true
+    healthCheck:
+      endpoint: "/health"
+      interval: 60000
+      timeout: 5000
+    resources:
+      maxMemory: "256MB"
+      maxCpu: "25%"
+      
+  # Semantic Memory System
+  semantic-memory:
+    type: "semantic-memory"
+    priority: 1
+    enabled: true
+    config:
+      vectorDimensions: 1536
+      indexType: "faiss"
+      similarityThreshold: 0.8
+      maxVectors: 100000
+      embeddingModel: "text-embedding-ada-002"
+    healthCheck:
+      endpoint: "/health"
+      interval: 45000
+      timeout: 5000
+    resources:
+      maxMemory: "1GB"
+      maxCpu: "75%"
+      
+  # MCP Protocol Handler
+  mcp-protocol-handler:
+    type: "mcp-protocol"
+    priority: 1
+    enabled: true
+    config:
+      protocolVersion: "1.0"
+      maxConcurrentRequests: 100
+      rateLimiting:
+        enabled: true
+        requestsPerMinute: 1000
+        burstLimit: 50
+    healthCheck:
+      endpoint: "/health"
+      interval: 15000
+      timeout: 3000
+    resources:
+      maxMemory: "256MB"
+      maxCpu: "30%"
+      
+  # External MCP System Integration
+  external-mcp-system:
+    type: "external-mcp"
+    priority: 3
+    enabled: false  # Disabled by default
+    config:
+      endpoint: "https://external-mcp.example.com"
+      apiKey: "${EXTERNAL_MCP_API_KEY}"
+      timeout: 15000
+      retryPolicy:
+        maxRetries: 3
+        backoffMultiplier: 2
+        initialDelay: 1000
+    healthCheck:
+      endpoint: "/api/health"
+      interval: 60000
+      timeout: 10000
+    resources:
+      maxMemory: "128MB"
+      maxCpu: "20%"
+      
+  # Distributed Memory System
+  distributed-memory:
+    type: "distributed-memory"
+    priority: 2
+    enabled: true
+    config:
+      nodes:
+        - "localhost:6379"  # Redis
+        - "localhost:6380"  # Redis Backup
+      replicationFactor: 2
+      consistencyLevel: "eventual"
+      partitioning: "hash-based"
+    healthCheck:
+      endpoint: "/cluster/health"
+      interval: 30000
+      timeout: 5000
+    resources:
+      maxMemory: "512MB"
+      maxCpu: "40%"
+      
+# Load Balancing Configuration
+loadBalancing:
+  strategy: "weighted-round-robin"  # round-robin, least-connections, weighted-round-robin
+  weights:
+    git-memory-primary: 10
+    git-memory-secondary: 5
+    semantic-memory: 8
+    mcp-protocol-handler: 10
+    distributed-memory: 7
+  healthCheckRequired: true
+  failoverEnabled: true
+  
+# Routing Rules
+routing:
+  rules:
+    # Git operations route to git-memory systems
+    - pattern: "git.*"
+      targetSystems: ["git-memory-primary", "git-memory-secondary"]
+      strategy: "primary-backup"
+      
+    # Semantic search routes to semantic-memory
+    - pattern: "semantic.*|search.*|similarity.*"
+      targetSystems: ["semantic-memory"]
+      strategy: "direct"
+      
+    # Protocol operations route to protocol handler
+    - pattern: "protocol.*|mcp.*"
+      targetSystems: ["mcp-protocol-handler"]
+      strategy: "direct"
+      
+    # Memory operations can use distributed system
+    - pattern: "memory.*|store.*|retrieve.*"
+      targetSystems: ["git-memory-primary", "distributed-memory"]
+      strategy: "load-balanced"
+      
+  # Default routing
+  default:
+    targetSystems: ["git-memory-primary", "mcp-protocol-handler"]
+    strategy: "load-balanced"
+    
+# Monitoring and Metrics
+monitoring:
+  enabled: true
+  metricsCollection:
+    interval: 10000  # 10 seconds
+    retention: "24h"
+    
+  alerts:
+    enabled: true
+    thresholds:
+      responseTime: 5000  # 5 seconds
+      errorRate: 0.05     # 5%
+      memoryUsage: 0.8    # 80%
+      cpuUsage: 0.8       # 80%
+      
+  exporters:
+    prometheus:
+      enabled: true
+      port: 9090
+      path: "/metrics"
+      
+    grafana:
+      enabled: false
+      dashboardUrl: "http://localhost:3000"
+      
+# Security Configuration
+security:
+  authentication:
+    enabled: true
+    type: "jwt"  # jwt, api-key, oauth2
+    
+  authorization:
+    enabled: true
+    rbac:
+      enabled: true
+      roles:
+        admin:
+          permissions: ["*"]
+        user:
+          permissions: ["read", "write"]
+        readonly:
+          permissions: ["read"]
+          
+  encryption:
+    enabled: true
+    algorithm: "AES-256-GCM"
+    keyRotation: "30d"
+    
+  rateLimiting:
+    enabled: true
+    global:
+      requestsPerMinute: 5000
+      burstLimit: 100
+    perSystem:
+      requestsPerMinute: 1000
+      burstLimit: 50
+      
+# Caching Configuration
+caching:
+  enabled: true
+  
+  # L1 Cache (In-Memory)
+  l1Cache:
+    enabled: true
+    maxSize: 1000
+    ttl: 300000  # 5 minutes
+    
+  # L2 Cache (Redis)
+  l2Cache:
+    enabled: true
+    redis:
+      host: "localhost"
+      port: 6379
+      db: 1
+    maxSize: 10000
+    ttl: 3600000  # 1 hour
+    
+  # Cache Strategies
+  strategies:
+    - pattern: "git.status"
+      ttl: 30000   # 30 seconds
+      
+    - pattern: "semantic.search"
+      ttl: 600000  # 10 minutes
+      
+    - pattern: "memory.retrieve"
+      ttl: 300000  # 5 minutes
+      
+# Backup and Recovery
+backup:
+  enabled: true
+  
+  schedule:
+    full: "0 2 * * 0"     # Weekly full backup (Sunday 2 AM)
+    incremental: "0 */6 * * *"  # Every 6 hours
+    
+  retention:
+    full: "30d"
+    incremental: "7d"
+    
+  storage:
+    type: "local"  # local, s3, gcs, azure
+    path: "./backups"
+    compression: true
+    encryption: true
+    
+# Development and Testing
+development:
+  enabled: false
+  
+  mockSystems:
+    enabled: false
+    
+  debugging:
+    enabled: false
+    logLevel: "debug"
+    
+  testing:
+    enabled: false
+    testDataPath: "./test-data"
+    
+# Environment-specific overrides
+environments:
+  development:
+    global:
+      maxConcurrentSystems: 5
+    systems:
+      external-mcp-system:
+        enabled: false
+    monitoring:
+      alerts:
+        enabled: false
+        
+  staging:
+    global:
+      maxConcurrentSystems: 10
+    monitoring:
+      alerts:
+        thresholds:
+          responseTime: 10000
+          
+  production:
+    global:
+      maxConcurrentSystems: 20
+    systems:
+      external-mcp-system:
+        enabled: true
+    security:
+      authentication:
+        enabled: true
+      authorization:
+        enabled: true
+    backup:
+      enabled: true

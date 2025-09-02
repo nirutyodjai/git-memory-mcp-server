@@ -1,0 +1,356 @@
+global:
+  smtp_smarthost: '${SMTP_HOST}:587'
+  smtp_from: '${SMTP_FROM_ADDRESS}'
+  smtp_auth_username: '${SMTP_USER}'
+  smtp_auth_password: '${SMTP_PASSWORD}'
+  smtp_require_tls: true
+  
+  # Slack webhook URL for notifications
+  slack_api_url: '${SLACK_WEBHOOK_URL}'
+  
+  # Default notification settings
+  resolve_timeout: 5m
+
+# Inhibit rules - prevent duplicate alerts
+inhibit_rules:
+  # Inhibit any warning-level alerts if the same alert is already critical
+  - source_match:
+      severity: 'critical'
+    target_match:
+      severity: 'warning'
+    equal: ['alertname', 'instance']
+
+  # Inhibit database alerts if the application is down
+  - source_match:
+      alertname: 'ApplicationDown'
+    target_match_re:
+      alertname: '^(DatabaseDown|RedisDown)$'
+    equal: ['instance']
+
+# Route tree for alert distribution
+route:
+  group_by: ['alertname', 'cluster', 'service']
+  group_wait: 10s
+  group_interval: 10s
+  repeat_interval: 1h
+  receiver: 'default-receiver'
+  
+  routes:
+    # Critical alerts - immediate notification
+    - match:
+        severity: critical
+      receiver: 'critical-alerts'
+      group_wait: 0s
+      repeat_interval: 5m
+      continue: true
+    
+    # Application-specific alerts
+    - match:
+        service: git-memory
+      receiver: 'application-team'
+      group_interval: 5m
+      repeat_interval: 30m
+    
+    # Database alerts
+    - match:
+        service: database
+      receiver: 'database-team'
+      group_interval: 5m
+      repeat_interval: 30m
+    
+    # Infrastructure alerts
+    - match:
+        service: system
+      receiver: 'infrastructure-team'
+      group_interval: 10m
+      repeat_interval: 1h
+    
+    # SSL certificate alerts
+    - match:
+        service: ssl
+      receiver: 'security-team'
+      group_interval: 1h
+      repeat_interval: 24h
+    
+    # Business metrics alerts
+    - match:
+        service: business
+      receiver: 'business-team'
+      group_interval: 30m
+      repeat_interval: 4h
+    
+    # Payment alerts
+    - match:
+        service: payment
+      receiver: 'payment-team'
+      group_wait: 0s
+      group_interval: 1m
+      repeat_interval: 15m
+    
+    # SLA violation alerts
+    - match:
+        service: sla
+      receiver: 'sla-alerts'
+      group_wait: 0s
+      repeat_interval: 10m
+      continue: true
+
+# Notification receivers
+receivers:
+  # Default receiver
+  - name: 'default-receiver'
+    email_configs:
+      - to: '${ALERT_EMAIL_DEFAULT}'
+        subject: '[Git Memory] {{ .GroupLabels.alertname }} - {{ .Status | toUpper }}'
+        body: |
+          {{ range .Alerts }}
+          Alert: {{ .Annotations.summary }}
+          Description: {{ .Annotations.description }}
+          Instance: {{ .Labels.instance }}
+          Severity: {{ .Labels.severity }}
+          Time: {{ .StartsAt.Format "2006-01-02 15:04:05" }}
+          {{ if .Annotations.runbook_url }}
+          Runbook: {{ .Annotations.runbook_url }}
+          {{ end }}
+          {{ end }}
+
+  # Critical alerts - multiple channels
+  - name: 'critical-alerts'
+    email_configs:
+      - to: '${ALERT_EMAIL_CRITICAL}'
+        subject: '🚨 [CRITICAL] Git Memory Alert: {{ .GroupLabels.alertname }}'
+        body: |
+          CRITICAL ALERT DETECTED!
+          
+          {{ range .Alerts }}
+          🔥 Alert: {{ .Annotations.summary }}
+          📝 Description: {{ .Annotations.description }}
+          🖥️  Instance: {{ .Labels.instance }}
+          ⚠️  Severity: {{ .Labels.severity }}
+          🕐 Time: {{ .StartsAt.Format "2006-01-02 15:04:05" }}
+          {{ if .Annotations.runbook_url }}
+          📖 Runbook: {{ .Annotations.runbook_url }}
+          {{ end }}
+          {{ end }}
+          
+          Please investigate immediately!
+    
+    slack_configs:
+      - api_url: '${SLACK_WEBHOOK_URL}'
+        channel: '#alerts-critical'
+        title: '🚨 Critical Alert: {{ .GroupLabels.alertname }}'
+        text: |
+          {{ range .Alerts }}
+          *Alert:* {{ .Annotations.summary }}
+          *Description:* {{ .Annotations.description }}
+          *Instance:* {{ .Labels.instance }}
+          *Severity:* {{ .Labels.severity }}
+          *Time:* {{ .StartsAt.Format "2006-01-02 15:04:05" }}
+          {{ if .Annotations.runbook_url }}
+          *Runbook:* {{ .Annotations.runbook_url }}
+          {{ end }}
+          {{ end }}
+        color: 'danger'
+        send_resolved: true
+
+  # Application team alerts
+  - name: 'application-team'
+    email_configs:
+      - to: '${ALERT_EMAIL_APP_TEAM}'
+        subject: '[Git Memory App] {{ .GroupLabels.alertname }} - {{ .Status | toUpper }}'
+        body: |
+          Application Alert:
+          
+          {{ range .Alerts }}
+          Alert: {{ .Annotations.summary }}
+          Description: {{ .Annotations.description }}
+          Instance: {{ .Labels.instance }}
+          Severity: {{ .Labels.severity }}
+          Time: {{ .StartsAt.Format "2006-01-02 15:04:05" }}
+          {{ end }}
+    
+    slack_configs:
+      - api_url: '${SLACK_WEBHOOK_URL}'
+        channel: '#alerts-application'
+        title: 'Application Alert: {{ .GroupLabels.alertname }}'
+        text: |
+          {{ range .Alerts }}
+          *Alert:* {{ .Annotations.summary }}
+          *Description:* {{ .Annotations.description }}
+          *Instance:* {{ .Labels.instance }}
+          *Severity:* {{ .Labels.severity }}
+          {{ end }}
+        color: '{{ if eq .Status "firing" }}warning{{ else }}good{{ end }}'
+        send_resolved: true
+
+  # Database team alerts
+  - name: 'database-team'
+    email_configs:
+      - to: '${ALERT_EMAIL_DB_TEAM}'
+        subject: '[Git Memory DB] {{ .GroupLabels.alertname }} - {{ .Status | toUpper }}'
+        body: |
+          Database Alert:
+          
+          {{ range .Alerts }}
+          Alert: {{ .Annotations.summary }}
+          Description: {{ .Annotations.description }}
+          Instance: {{ .Labels.instance }}
+          Severity: {{ .Labels.severity }}
+          Time: {{ .StartsAt.Format "2006-01-02 15:04:05" }}
+          {{ end }}
+    
+    slack_configs:
+      - api_url: '${SLACK_WEBHOOK_URL}'
+        channel: '#alerts-database'
+        title: 'Database Alert: {{ .GroupLabels.alertname }}'
+        color: '{{ if eq .Status "firing" }}warning{{ else }}good{{ end }}'
+        send_resolved: true
+
+  # Infrastructure team alerts
+  - name: 'infrastructure-team'
+    email_configs:
+      - to: '${ALERT_EMAIL_INFRA_TEAM}'
+        subject: '[Git Memory Infra] {{ .GroupLabels.alertname }} - {{ .Status | toUpper }}'
+        body: |
+          Infrastructure Alert:
+          
+          {{ range .Alerts }}
+          Alert: {{ .Annotations.summary }}
+          Description: {{ .Annotations.description }}
+          Instance: {{ .Labels.instance }}
+          Severity: {{ .Labels.severity }}
+          Time: {{ .StartsAt.Format "2006-01-02 15:04:05" }}
+          {{ end }}
+    
+    slack_configs:
+      - api_url: '${SLACK_WEBHOOK_URL}'
+        channel: '#alerts-infrastructure'
+        title: 'Infrastructure Alert: {{ .GroupLabels.alertname }}'
+        color: '{{ if eq .Status "firing" }}warning{{ else }}good{{ end }}'
+        send_resolved: true
+
+  # Security team alerts
+  - name: 'security-team'
+    email_configs:
+      - to: '${ALERT_EMAIL_SECURITY_TEAM}'
+        subject: '[Git Memory Security] {{ .GroupLabels.alertname }} - {{ .Status | toUpper }}'
+        body: |
+          Security Alert:
+          
+          {{ range .Alerts }}
+          Alert: {{ .Annotations.summary }}
+          Description: {{ .Annotations.description }}
+          Instance: {{ .Labels.instance }}
+          Severity: {{ .Labels.severity }}
+          Time: {{ .StartsAt.Format "2006-01-02 15:04:05" }}
+          {{ if .Annotations.runbook_url }}
+          Runbook: {{ .Annotations.runbook_url }}
+          {{ end }}
+          {{ end }}
+    
+    slack_configs:
+      - api_url: '${SLACK_WEBHOOK_URL}'
+        channel: '#alerts-security'
+        title: 'Security Alert: {{ .GroupLabels.alertname }}'
+        color: 'danger'
+        send_resolved: true
+
+  # Business team alerts
+  - name: 'business-team'
+    email_configs:
+      - to: '${ALERT_EMAIL_BUSINESS_TEAM}'
+        subject: '[Git Memory Business] {{ .GroupLabels.alertname }} - {{ .Status | toUpper }}'
+        body: |
+          Business Metrics Alert:
+          
+          {{ range .Alerts }}
+          Alert: {{ .Annotations.summary }}
+          Description: {{ .Annotations.description }}
+          Instance: {{ .Labels.instance }}
+          Severity: {{ .Labels.severity }}
+          Time: {{ .StartsAt.Format "2006-01-02 15:04:05" }}
+          {{ end }}
+    
+    slack_configs:
+      - api_url: '${SLACK_WEBHOOK_URL}'
+        channel: '#alerts-business'
+        title: 'Business Alert: {{ .GroupLabels.alertname }}'
+        color: '{{ if eq .Status "firing" }}warning{{ else }}good{{ end }}'
+        send_resolved: true
+
+  # Payment team alerts
+  - name: 'payment-team'
+    email_configs:
+      - to: '${ALERT_EMAIL_PAYMENT_TEAM}'
+        subject: '💳 [Git Memory Payment] {{ .GroupLabels.alertname }} - {{ .Status | toUpper }}'
+        body: |
+          Payment System Alert:
+          
+          {{ range .Alerts }}
+          Alert: {{ .Annotations.summary }}
+          Description: {{ .Annotations.description }}
+          Instance: {{ .Labels.instance }}
+          Severity: {{ .Labels.severity }}
+          Time: {{ .StartsAt.Format "2006-01-02 15:04:05" }}
+          {{ end }}
+          
+          Please investigate payment issues immediately!
+    
+    slack_configs:
+      - api_url: '${SLACK_WEBHOOK_URL}'
+        channel: '#alerts-payment'
+        title: '💳 Payment Alert: {{ .GroupLabels.alertname }}'
+        color: 'danger'
+        send_resolved: true
+
+  # SLA alerts
+  - name: 'sla-alerts'
+    email_configs:
+      - to: '${ALERT_EMAIL_SLA}'
+        subject: '📊 [SLA VIOLATION] Git Memory: {{ .GroupLabels.alertname }}'
+        body: |
+          SLA VIOLATION DETECTED!
+          
+          {{ range .Alerts }}
+          Alert: {{ .Annotations.summary }}
+          Description: {{ .Annotations.description }}
+          Instance: {{ .Labels.instance }}
+          Severity: {{ .Labels.severity }}
+          Time: {{ .StartsAt.Format "2006-01-02 15:04:05" }}
+          {{ if .Annotations.runbook_url }}
+          Runbook: {{ .Annotations.runbook_url }}
+          {{ end }}
+          {{ end }}
+          
+          Immediate action required to restore SLA compliance!
+    
+    slack_configs:
+      - api_url: '${SLACK_WEBHOOK_URL}'
+        channel: '#alerts-sla'
+        title: '📊 SLA Violation: {{ .GroupLabels.alertname }}'
+        color: 'danger'
+        send_resolved: true
+
+# Templates for custom message formatting
+templates:
+  - '/etc/alertmanager/templates/*.tmpl'
+
+# Time intervals for grouping and repetition
+time_intervals:
+  - name: 'business-hours'
+    time_intervals:
+      - times:
+          - start_time: '09:00'
+            end_time: '18:00'
+        weekdays: ['monday:friday']
+        location: 'Asia/Bangkok'
+  
+  - name: 'off-hours'
+    time_intervals:
+      - times:
+          - start_time: '18:01'
+            end_time: '08:59'
+        weekdays: ['monday:friday']
+        location: 'Asia/Bangkok'
+      - weekdays: ['saturday', 'sunday']
+        location: 'Asia/Bangkok'

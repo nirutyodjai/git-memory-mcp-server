@@ -1,0 +1,1236 @@
+{
+  "currentPhase": 0,
+  "mcpServers": [
+    [
+      "database-3100",
+      {
+        "id": "database-3100",
+        "category": "database",
+        "port": 3100,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:46:54.036Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\database-3100",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-database-3100.js"
+      }
+    ],
+    [
+      "database-3101",
+      {
+        "id": "database-3101",
+        "category": "database",
+        "port": 3101,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:46:54.038Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\database-3101",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-database-3101.js"
+      }
+    ],
+    [
+      "database-3102",
+      {
+        "id": "database-3102",
+        "category": "database",
+        "port": 3102,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:46:54.039Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\database-3102",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-database-3102.js"
+      }
+    ],
+    [
+      "database-3103",
+      {
+        "id": "database-3103",
+        "category": "database",
+        "port": 3103,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:46:54.040Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\database-3103",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-database-3103.js"
+      }
+    ],
+    [
+      "database-3104",
+      {
+        "id": "database-3104",
+        "category": "database",
+        "port": 3104,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:46:54.041Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\database-3104",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-database-3104.js"
+      }
+    ],
+    [
+      "database-3105",
+      {
+        "id": "database-3105",
+        "category": "database",
+        "port": 3105,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:46:54.042Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\database-3105",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-database-3105.js"
+      }
+    ],
+    [
+      "database-3106",
+      {
+        "id": "database-3106",
+        "category": "database",
+        "port": 3106,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:46:54.043Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\database-3106",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-database-3106.js"
+      }
+    ],
+    [
+      "database-3107",
+      {
+        "id": "database-3107",
+        "category": "database",
+        "port": 3107,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:46:54.044Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\database-3107",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-database-3107.js"
+      }
+    ],
+    [
+      "database-3108",
+      {
+        "id": "database-3108",
+        "category": "database",
+        "port": 3108,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:46:54.045Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\database-3108",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-database-3108.js"
+      }
+    ],
+    [
+      "database-3109",
+      {
+        "id": "database-3109",
+        "category": "database",
+        "port": 3109,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:46:54.046Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\database-3109",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-database-3109.js"
+      }
+    ],
+    [
+      "api-3200",
+      {
+        "id": "api-3200",
+        "category": "api",
+        "port": 3200,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:03.175Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\api-3200",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-api-3200.js"
+      }
+    ],
+    [
+      "api-3201",
+      {
+        "id": "api-3201",
+        "category": "api",
+        "port": 3201,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:03.176Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\api-3201",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-api-3201.js"
+      }
+    ],
+    [
+      "api-3202",
+      {
+        "id": "api-3202",
+        "category": "api",
+        "port": 3202,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:03.177Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\api-3202",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-api-3202.js"
+      }
+    ],
+    [
+      "api-3203",
+      {
+        "id": "api-3203",
+        "category": "api",
+        "port": 3203,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:03.177Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\api-3203",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-api-3203.js"
+      }
+    ],
+    [
+      "api-3204",
+      {
+        "id": "api-3204",
+        "category": "api",
+        "port": 3204,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:03.178Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\api-3204",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-api-3204.js"
+      }
+    ],
+    [
+      "api-3205",
+      {
+        "id": "api-3205",
+        "category": "api",
+        "port": 3205,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:03.179Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\api-3205",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-api-3205.js"
+      }
+    ],
+    [
+      "api-3206",
+      {
+        "id": "api-3206",
+        "category": "api",
+        "port": 3206,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:03.179Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\api-3206",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-api-3206.js"
+      }
+    ],
+    [
+      "api-3207",
+      {
+        "id": "api-3207",
+        "category": "api",
+        "port": 3207,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:03.180Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\api-3207",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-api-3207.js"
+      }
+    ],
+    [
+      "api-3208",
+      {
+        "id": "api-3208",
+        "category": "api",
+        "port": 3208,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:03.181Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\api-3208",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-api-3208.js"
+      }
+    ],
+    [
+      "api-3209",
+      {
+        "id": "api-3209",
+        "category": "api",
+        "port": 3209,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:03.181Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\api-3209",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-api-3209.js"
+      }
+    ],
+    [
+      "api-3210",
+      {
+        "id": "api-3210",
+        "category": "api",
+        "port": 3210,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:03.182Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\api-3210",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-api-3210.js"
+      }
+    ],
+    [
+      "api-3211",
+      {
+        "id": "api-3211",
+        "category": "api",
+        "port": 3211,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:03.184Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\api-3211",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-api-3211.js"
+      }
+    ],
+    [
+      "api-3212",
+      {
+        "id": "api-3212",
+        "category": "api",
+        "port": 3212,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:03.185Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\api-3212",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-api-3212.js"
+      }
+    ],
+    [
+      "api-3213",
+      {
+        "id": "api-3213",
+        "category": "api",
+        "port": 3213,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:03.185Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\api-3213",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-api-3213.js"
+      }
+    ],
+    [
+      "api-3214",
+      {
+        "id": "api-3214",
+        "category": "api",
+        "port": 3214,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:03.186Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\api-3214",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-api-3214.js"
+      }
+    ],
+    [
+      "filesystem-3150",
+      {
+        "id": "filesystem-3150",
+        "category": "filesystem",
+        "port": 3150,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:26.866Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\filesystem-3150",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-filesystem-3150.js"
+      }
+    ],
+    [
+      "filesystem-3151",
+      {
+        "id": "filesystem-3151",
+        "category": "filesystem",
+        "port": 3151,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:26.867Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\filesystem-3151",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-filesystem-3151.js"
+      }
+    ],
+    [
+      "filesystem-3152",
+      {
+        "id": "filesystem-3152",
+        "category": "filesystem",
+        "port": 3152,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:26.867Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\filesystem-3152",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-filesystem-3152.js"
+      }
+    ],
+    [
+      "filesystem-3153",
+      {
+        "id": "filesystem-3153",
+        "category": "filesystem",
+        "port": 3153,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:26.868Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\filesystem-3153",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-filesystem-3153.js"
+      }
+    ],
+    [
+      "filesystem-3154",
+      {
+        "id": "filesystem-3154",
+        "category": "filesystem",
+        "port": 3154,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:26.869Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\filesystem-3154",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-filesystem-3154.js"
+      }
+    ],
+    [
+      "filesystem-3155",
+      {
+        "id": "filesystem-3155",
+        "category": "filesystem",
+        "port": 3155,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:26.869Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\filesystem-3155",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-filesystem-3155.js"
+      }
+    ],
+    [
+      "filesystem-3156",
+      {
+        "id": "filesystem-3156",
+        "category": "filesystem",
+        "port": 3156,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:26.870Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\filesystem-3156",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-filesystem-3156.js"
+      }
+    ],
+    [
+      "filesystem-3157",
+      {
+        "id": "filesystem-3157",
+        "category": "filesystem",
+        "port": 3157,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:26.871Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\filesystem-3157",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-filesystem-3157.js"
+      }
+    ],
+    [
+      "filesystem-3158",
+      {
+        "id": "filesystem-3158",
+        "category": "filesystem",
+        "port": 3158,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:26.871Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\filesystem-3158",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-filesystem-3158.js"
+      }
+    ],
+    [
+      "filesystem-3159",
+      {
+        "id": "filesystem-3159",
+        "category": "filesystem",
+        "port": 3159,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:26.872Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\filesystem-3159",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-filesystem-3159.js"
+      }
+    ],
+    [
+      "filesystem-3160",
+      {
+        "id": "filesystem-3160",
+        "category": "filesystem",
+        "port": 3160,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:26.872Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\filesystem-3160",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-filesystem-3160.js"
+      }
+    ],
+    [
+      "filesystem-3161",
+      {
+        "id": "filesystem-3161",
+        "category": "filesystem",
+        "port": 3161,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:26.873Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\filesystem-3161",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-filesystem-3161.js"
+      }
+    ],
+    [
+      "filesystem-3162",
+      {
+        "id": "filesystem-3162",
+        "category": "filesystem",
+        "port": 3162,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:26.874Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\filesystem-3162",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-filesystem-3162.js"
+      }
+    ],
+    [
+      "filesystem-3163",
+      {
+        "id": "filesystem-3163",
+        "category": "filesystem",
+        "port": 3163,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:26.874Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\filesystem-3163",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-filesystem-3163.js"
+      }
+    ],
+    [
+      "filesystem-3164",
+      {
+        "id": "filesystem-3164",
+        "category": "filesystem",
+        "port": 3164,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:26.875Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\filesystem-3164",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-filesystem-3164.js"
+      }
+    ],
+    [
+      "filesystem-3165",
+      {
+        "id": "filesystem-3165",
+        "category": "filesystem",
+        "port": 3165,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:26.876Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\filesystem-3165",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-filesystem-3165.js"
+      }
+    ],
+    [
+      "filesystem-3166",
+      {
+        "id": "filesystem-3166",
+        "category": "filesystem",
+        "port": 3166,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:26.876Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\filesystem-3166",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-filesystem-3166.js"
+      }
+    ],
+    [
+      "filesystem-3167",
+      {
+        "id": "filesystem-3167",
+        "category": "filesystem",
+        "port": 3167,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:26.877Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\filesystem-3167",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-filesystem-3167.js"
+      }
+    ],
+    [
+      "filesystem-3168",
+      {
+        "id": "filesystem-3168",
+        "category": "filesystem",
+        "port": 3168,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:26.877Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\filesystem-3168",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-filesystem-3168.js"
+      }
+    ],
+    [
+      "filesystem-3169",
+      {
+        "id": "filesystem-3169",
+        "category": "filesystem",
+        "port": 3169,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:26.878Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\filesystem-3169",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-filesystem-3169.js"
+      }
+    ],
+    [
+      "ai-ml-3250",
+      {
+        "id": "ai-ml-3250",
+        "category": "ai-ml",
+        "port": 3250,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:34.310Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\ai-ml-3250",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-ai-ml-3250.js"
+      }
+    ],
+    [
+      "ai-ml-3251",
+      {
+        "id": "ai-ml-3251",
+        "category": "ai-ml",
+        "port": 3251,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:34.311Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\ai-ml-3251",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-ai-ml-3251.js"
+      }
+    ],
+    [
+      "ai-ml-3252",
+      {
+        "id": "ai-ml-3252",
+        "category": "ai-ml",
+        "port": 3252,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:34.311Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\ai-ml-3252",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-ai-ml-3252.js"
+      }
+    ],
+    [
+      "ai-ml-3253",
+      {
+        "id": "ai-ml-3253",
+        "category": "ai-ml",
+        "port": 3253,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:34.312Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\ai-ml-3253",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-ai-ml-3253.js"
+      }
+    ],
+    [
+      "ai-ml-3254",
+      {
+        "id": "ai-ml-3254",
+        "category": "ai-ml",
+        "port": 3254,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:34.313Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\ai-ml-3254",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-ai-ml-3254.js"
+      }
+    ],
+    [
+      "ai-ml-3255",
+      {
+        "id": "ai-ml-3255",
+        "category": "ai-ml",
+        "port": 3255,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:34.313Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\ai-ml-3255",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-ai-ml-3255.js"
+      }
+    ],
+    [
+      "ai-ml-3256",
+      {
+        "id": "ai-ml-3256",
+        "category": "ai-ml",
+        "port": 3256,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:34.314Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\ai-ml-3256",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-ai-ml-3256.js"
+      }
+    ],
+    [
+      "ai-ml-3257",
+      {
+        "id": "ai-ml-3257",
+        "category": "ai-ml",
+        "port": 3257,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:34.315Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\ai-ml-3257",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-ai-ml-3257.js"
+      }
+    ],
+    [
+      "ai-ml-3258",
+      {
+        "id": "ai-ml-3258",
+        "category": "ai-ml",
+        "port": 3258,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:34.315Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\ai-ml-3258",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-ai-ml-3258.js"
+      }
+    ],
+    [
+      "ai-ml-3259",
+      {
+        "id": "ai-ml-3259",
+        "category": "ai-ml",
+        "port": 3259,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:34.316Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\ai-ml-3259",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-ai-ml-3259.js"
+      }
+    ],
+    [
+      "ai-ml-3260",
+      {
+        "id": "ai-ml-3260",
+        "category": "ai-ml",
+        "port": 3260,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:34.316Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\ai-ml-3260",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-ai-ml-3260.js"
+      }
+    ],
+    [
+      "ai-ml-3261",
+      {
+        "id": "ai-ml-3261",
+        "category": "ai-ml",
+        "port": 3261,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:34.317Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\ai-ml-3261",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-ai-ml-3261.js"
+      }
+    ],
+    [
+      "ai-ml-3262",
+      {
+        "id": "ai-ml-3262",
+        "category": "ai-ml",
+        "port": 3262,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:34.317Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\ai-ml-3262",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-ai-ml-3262.js"
+      }
+    ],
+    [
+      "ai-ml-3263",
+      {
+        "id": "ai-ml-3263",
+        "category": "ai-ml",
+        "port": 3263,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:34.318Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\ai-ml-3263",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-ai-ml-3263.js"
+      }
+    ],
+    [
+      "ai-ml-3264",
+      {
+        "id": "ai-ml-3264",
+        "category": "ai-ml",
+        "port": 3264,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:34.319Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\ai-ml-3264",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-ai-ml-3264.js"
+      }
+    ],
+    [
+      "ai-ml-3265",
+      {
+        "id": "ai-ml-3265",
+        "category": "ai-ml",
+        "port": 3265,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:34.319Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\ai-ml-3265",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-ai-ml-3265.js"
+      }
+    ],
+    [
+      "ai-ml-3266",
+      {
+        "id": "ai-ml-3266",
+        "category": "ai-ml",
+        "port": 3266,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:34.320Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\ai-ml-3266",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-ai-ml-3266.js"
+      }
+    ],
+    [
+      "ai-ml-3267",
+      {
+        "id": "ai-ml-3267",
+        "category": "ai-ml",
+        "port": 3267,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:34.321Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\ai-ml-3267",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-ai-ml-3267.js"
+      }
+    ],
+    [
+      "ai-ml-3268",
+      {
+        "id": "ai-ml-3268",
+        "category": "ai-ml",
+        "port": 3268,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:34.322Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\ai-ml-3268",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-ai-ml-3268.js"
+      }
+    ],
+    [
+      "ai-ml-3269",
+      {
+        "id": "ai-ml-3269",
+        "category": "ai-ml",
+        "port": 3269,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:34.323Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\ai-ml-3269",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-ai-ml-3269.js"
+      }
+    ],
+    [
+      "ai-ml-3270",
+      {
+        "id": "ai-ml-3270",
+        "category": "ai-ml",
+        "port": 3270,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:34.324Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\ai-ml-3270",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-ai-ml-3270.js"
+      }
+    ],
+    [
+      "ai-ml-3271",
+      {
+        "id": "ai-ml-3271",
+        "category": "ai-ml",
+        "port": 3271,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:34.325Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\ai-ml-3271",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-ai-ml-3271.js"
+      }
+    ],
+    [
+      "ai-ml-3272",
+      {
+        "id": "ai-ml-3272",
+        "category": "ai-ml",
+        "port": 3272,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:34.326Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\ai-ml-3272",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-ai-ml-3272.js"
+      }
+    ],
+    [
+      "ai-ml-3273",
+      {
+        "id": "ai-ml-3273",
+        "category": "ai-ml",
+        "port": 3273,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:34.326Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\ai-ml-3273",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-ai-ml-3273.js"
+      }
+    ],
+    [
+      "ai-ml-3274",
+      {
+        "id": "ai-ml-3274",
+        "category": "ai-ml",
+        "port": 3274,
+        "status": "deploying",
+        "createdAt": "2025-08-27T16:47:34.327Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\ai-ml-3274",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-ai-ml-3274.js"
+      }
+    ],
+    [
+      "ai-ml-3275",
+      {
+        "id": "ai-ml-3275",
+        "category": "ai-ml",
+        "port": 3275,
+        "status": "deploying",
+        "createdAt": "2025-08-27T17:10:53.593Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\ai-ml-3275",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-ai-ml-3275.js"
+      }
+    ],
+    [
+      "ai-ml-3276",
+      {
+        "id": "ai-ml-3276",
+        "category": "ai-ml",
+        "port": 3276,
+        "status": "deploying",
+        "createdAt": "2025-08-27T17:10:53.593Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\ai-ml-3276",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-ai-ml-3276.js"
+      }
+    ],
+    [
+      "ai-ml-3277",
+      {
+        "id": "ai-ml-3277",
+        "category": "ai-ml",
+        "port": 3277,
+        "status": "deploying",
+        "createdAt": "2025-08-27T17:10:53.594Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\ai-ml-3277",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-ai-ml-3277.js"
+      }
+    ],
+    [
+      "ai-ml-3278",
+      {
+        "id": "ai-ml-3278",
+        "category": "ai-ml",
+        "port": 3278,
+        "status": "deploying",
+        "createdAt": "2025-08-27T17:10:53.595Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\ai-ml-3278",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-ai-ml-3278.js"
+      }
+    ],
+    [
+      "ai-ml-3279",
+      {
+        "id": "ai-ml-3279",
+        "category": "ai-ml",
+        "port": 3279,
+        "status": "deploying",
+        "createdAt": "2025-08-27T17:10:53.595Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\ai-ml-3279",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-ai-ml-3279.js"
+      }
+    ]
+  ],
+  "categories": [
+    [
+      "database",
+      {
+        "portStart": 3100,
+        "portEnd": 3149,
+        "count": 10
+      }
+    ],
+    [
+      "filesystem",
+      {
+        "portStart": 3150,
+        "portEnd": 3199,
+        "count": 20
+      }
+    ],
+    [
+      "api",
+      {
+        "portStart": 3200,
+        "portEnd": 3249,
+        "count": 15
+      }
+    ],
+    [
+      "ai-ml",
+      {
+        "portStart": 3250,
+        "portEnd": 3299,
+        "count": 30
+      }
+    ],
+    [
+      "version-control",
+      {
+        "portStart": 3300,
+        "portEnd": 3349,
+        "count": 0
+      }
+    ],
+    [
+      "dev-tools",
+      {
+        "portStart": 3350,
+        "portEnd": 3399,
+        "count": 0
+      }
+    ],
+    [
+      "system-ops",
+      {
+        "portStart": 3400,
+        "portEnd": 3449,
+        "count": 0
+      }
+    ],
+    [
+      "communication",
+      {
+        "portStart": 3450,
+        "portEnd": 3499,
+        "count": 0
+      }
+    ],
+    [
+      "business",
+      {
+        "portStart": 3500,
+        "portEnd": 3549,
+        "count": 0
+      }
+    ],
+    [
+      "iot-hardware",
+      {
+        "portStart": 3550,
+        "portEnd": 3599,
+        "count": 0
+      }
+    ]
+  ],
+  "lastUpdated": "2025-08-27T17:10:53.596Z",
+  "servers": [
+    {
+      "name": "github-analytics-mcp",
+      "port": 5001,
+      "category": "analytics",
+      "description": "GitHub repository analytics and insights",
+      "features": [
+        "commit analysis",
+        "contributor stats",
+        "code metrics"
+      ],
+      "type": "github-data",
+      "status": "active",
+      "url": "http://localhost:5001",
+      "healthCheck": "/health",
+      "lastUpdated": "2025-08-27T19:13:56.124Z"
+    },
+    {
+      "name": "github-issues-mcp",
+      "port": 5002,
+      "category": "project-management",
+      "description": "GitHub Issues and Project management",
+      "features": [
+        "issue tracking",
+        "milestone management",
+        "project boards"
+      ],
+      "type": "github-data",
+      "status": "active",
+      "url": "http://localhost:5002",
+      "healthCheck": "/health",
+      "lastUpdated": "2025-08-27T19:13:56.124Z"
+    },
+    {
+      "name": "github-actions-mcp",
+      "port": 5003,
+      "category": "ci-cd",
+      "description": "GitHub Actions workflow management",
+      "features": [
+        "workflow automation",
+        "build monitoring",
+        "deployment tracking"
+      ],
+      "type": "github-data",
+      "status": "active",
+      "url": "http://localhost:5003",
+      "healthCheck": "/health",
+      "lastUpdated": "2025-08-27T19:13:56.124Z"
+    },
+    {
+      "name": "github-security-mcp",
+      "port": 5004,
+      "category": "security",
+      "description": "GitHub security and vulnerability scanning",
+      "features": [
+        "security alerts",
+        "dependency scanning",
+        "code scanning"
+      ],
+      "type": "github-data",
+      "status": "active",
+      "url": "http://localhost:5004",
+      "healthCheck": "/health",
+      "lastUpdated": "2025-08-27T19:13:56.124Z"
+    },
+    {
+      "name": "github-releases-mcp",
+      "port": 5005,
+      "category": "release-management",
+      "description": "GitHub releases and version management",
+      "features": [
+        "release automation",
+        "changelog generation",
+        "version tracking"
+      ],
+      "type": "github-data",
+      "status": "active",
+      "url": "http://localhost:5005",
+      "healthCheck": "/health",
+      "lastUpdated": "2025-08-27T19:13:56.124Z"
+    },
+    {
+      "name": "github-webhooks-mcp",
+      "port": 5006,
+      "category": "integration",
+      "description": "GitHub webhooks and event handling",
+      "features": [
+        "webhook management",
+        "event processing",
+        "real-time notifications"
+      ],
+      "type": "github-data",
+      "status": "active",
+      "url": "http://localhost:5006",
+      "healthCheck": "/health",
+      "lastUpdated": "2025-08-27T19:13:56.124Z"
+    },
+    {
+      "name": "github-search-mcp",
+      "port": 5007,
+      "category": "search",
+      "description": "Advanced GitHub search and discovery",
+      "features": [
+        "code search",
+        "repository discovery",
+        "user search"
+      ],
+      "type": "github-data",
+      "status": "active",
+      "url": "http://localhost:5007",
+      "healthCheck": "/health",
+      "lastUpdated": "2025-08-27T19:13:56.124Z"
+    },
+    {
+      "name": "github-graphql-mcp",
+      "port": 5008,
+      "category": "api",
+      "description": "GitHub GraphQL API integration",
+      "features": [
+        "GraphQL queries",
+        "advanced data fetching",
+        "schema exploration"
+      ],
+      "type": "github-data",
+      "status": "active",
+      "url": "http://localhost:5008",
+      "healthCheck": "/health",
+      "lastUpdated": "2025-08-27T19:13:56.124Z"
+    },
+    {
+      "name": "github-pages-mcp",
+      "port": 5009,
+      "category": "hosting",
+      "description": "GitHub Pages deployment and management",
+      "features": [
+        "static site deployment",
+        "custom domains",
+        "build automation"
+      ],
+      "type": "github-data",
+      "status": "active",
+      "url": "http://localhost:5009",
+      "healthCheck": "/health",
+      "lastUpdated": "2025-08-27T19:13:56.124Z"
+    },
+    {
+      "name": "github-packages-mcp",
+      "port": 5010,
+      "category": "package-management",
+      "description": "GitHub Packages registry management",
+      "features": [
+        "package publishing",
+        "registry management",
+        "dependency tracking"
+      ],
+      "type": "github-data",
+      "status": "active",
+      "url": "http://localhost:5010",
+      "healthCheck": "/health",
+      "lastUpdated": "2025-08-27T19:13:56.124Z"
+    },
+    {
+      "name": "github-codespaces-mcp",
+      "port": 5011,
+      "category": "development",
+      "description": "GitHub Codespaces management",
+      "features": [
+        "codespace creation",
+        "environment management",
+        "remote development"
+      ],
+      "type": "github-data",
+      "status": "active",
+      "url": "http://localhost:5011",
+      "healthCheck": "/health",
+      "lastUpdated": "2025-08-27T19:13:56.124Z"
+    },
+    {
+      "name": "github-discussions-mcp",
+      "port": 5012,
+      "category": "community",
+      "description": "GitHub Discussions and community management",
+      "features": [
+        "discussion threads",
+        "community engagement",
+        "Q&A management"
+      ],
+      "type": "github-data",
+      "status": "active",
+      "url": "http://localhost:5012",
+      "healthCheck": "/health",
+      "lastUpdated": "2025-08-27T19:13:56.124Z"
+    },
+    {
+      "name": "github-sponsors-mcp",
+      "port": 5013,
+      "category": "monetization",
+      "description": "GitHub Sponsors and funding management",
+      "features": [
+        "sponsorship tracking",
+        "funding goals",
+        "supporter management"
+      ],
+      "type": "github-data",
+      "status": "active",
+      "url": "http://localhost:5013",
+      "healthCheck": "/health",
+      "lastUpdated": "2025-08-27T19:13:56.124Z"
+    },
+    {
+      "name": "github-copilot-mcp",
+      "port": 5014,
+      "category": "ai-assistance",
+      "description": "GitHub Copilot integration and AI assistance",
+      "features": [
+        "code suggestions",
+        "AI-powered development",
+        "productivity enhancement"
+      ],
+      "type": "github-data",
+      "status": "active",
+      "url": "http://localhost:5014",
+      "healthCheck": "/health",
+      "lastUpdated": "2025-08-27T19:13:56.124Z"
+    },
+    {
+      "name": "github-enterprise-mcp",
+      "port": 5015,
+      "category": "enterprise",
+      "description": "GitHub Enterprise features and management",
+      "features": [
+        "enterprise administration",
+        "organization management",
+        "compliance tracking"
+      ],
+      "type": "github-data",
+      "status": "active",
+      "url": "http://localhost:5015",
+      "healthCheck": "/health",
+      "lastUpdated": "2025-08-27T19:13:56.124Z"
+    }
+  ],
+  "metadata": {
+    "totalServers": 15,
+    "githubDataServers": 15,
+    "lastUpdated": "2025-08-27T19:13:56.124Z",
+    "version": "2.0.0"
+  }
+}

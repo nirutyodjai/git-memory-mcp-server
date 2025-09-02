@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "git-memory": {
+      "command": "git-memory-mcp-server",
+      "args": [],
+      "env": {
+        "DEBUG": "git-memory-mcp-server"
+      }
+    }
+  },
+  "globalShortcut": {
+    "enabled": true,
+    "key": "CommandOrControl+Shift+C"
+  }
+}

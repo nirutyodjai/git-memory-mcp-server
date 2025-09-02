@@ -1,0 +1,39 @@
+{
+  "name": "git-memory-mcp-email-distribution",
+  "version": "1.0.0",
+  "description": "Email distribution system for Git Memory MCP Server promotional campaigns",
+  "main": "email-distribution.js",
+  "scripts": {
+    "start": "node email-distribution.js",
+    "dry-run": "node email-distribution.js --dry-run",
+    "list": "node email-distribution.js --list",
+    "templates": "node email-distribution.js --templates",
+    "install-deps": "npm install nodemailer dotenv",
+    "setup": "npm run install-deps && echo 'Please set EMAIL_USER and EMAIL_PASS environment variables'"
+  },
+  "dependencies": {
+    "nodemailer": "^6.9.8",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "@types/nodemailer": "^6.4.14"
+  },
+  "keywords": [
+    "email",
+    "distribution",
+    "mcp",
+    "git-memory",
+    "promotional",
+    "marketing",
+    "automation"
+  ],
+  "author": "Git Memory MCP Server Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/git-memory-mcp-server.git"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

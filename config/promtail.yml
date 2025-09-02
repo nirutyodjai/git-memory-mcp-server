@@ -1,0 +1,799 @@
+# =============================================================================
+# Promtail Configuration for Git Memory MCP Server Production
+# =============================================================================
+# Description: Log aggregation configuration for Loki integration
+# Author: NEXUS AI Development Team
+# Version: 1.0.0
+# =============================================================================
+
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+  log_level: info
+  log_format: json
+  disable_reporting: true
+
+positions:
+  filename: /tmp/positions.yaml
+
+clients:
+  - url: http://loki:3100/loki/api/v1/push
+    tenant_id: git-memory-mcp
+    batchwait: 1s
+    batchsize: 1048576
+    timeout: 10s
+    backoff_config:
+      min_period: 500ms
+      max_period: 5m
+      max_retries: 10
+    external_labels:
+      environment: production
+      service: git-memory-mcp-server
+      region: ${REGION:-us-east-1}
+      datacenter: ${DATACENTER:-dc1}
+
+scrape_configs:
+  # Application Logs
+  - job_name: git-memory-app
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: git-memory-app
+          service: git-memory-mcp-server
+          environment: production
+          log_type: application
+          __path__: /app/logs/app.log
+    pipeline_stages:
+      - json:
+          expressions:
+            timestamp: timestamp
+            level: level
+            message: message
+            module: module
+            userId: userId
+            requestId: requestId
+            duration: duration
+            statusCode: statusCode
+            method: method
+            url: url
+            userAgent: userAgent
+            ip: ip
+      - timestamp:
+          source: timestamp
+          format: RFC3339Nano
+      - labels:
+          level:
+          module:
+          userId:
+          requestId:
+      - output:
+          source: message
+
+  # Error Logs
+  - job_name: git-memory-errors
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: git-memory-errors
+          service: git-memory-mcp-server
+          environment: production
+          log_type: error
+          __path__: /app/logs/error.log
+    pipeline_stages:
+      - json:
+          expressions:
+            timestamp: timestamp
+            level: level
+            message: message
+            stack: stack
+            error: error
+            module: module
+            requestId: requestId
+      - timestamp:
+          source: timestamp
+          format: RFC3339Nano
+      - labels:
+          level:
+          module:
+          requestId:
+      - output:
+          source: message
+
+  # Access Logs (Nginx)
+  - job_name: nginx-access
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: nginx-access
+          service: nginx
+          environment: production
+          log_type: access
+          __path__: /var/log/nginx/access.log
+    pipeline_stages:
+      - regex:
+          expression: '^(?P<remote_addr>[\w\.]+) - (?P<remote_user>\S+) \[(?P<time_local>[^\]]+)\] "(?P<method>\S+) (?P<request_uri>\S+) (?P<server_protocol>\S+)" (?P<status>\d+) (?P<body_bytes_sent>\d+) "(?P<http_referer>[^"]*)" "(?P<http_user_agent>[^"]*)" "(?P<http_x_forwarded_for>[^"]*)" rt=(?P<request_time>[\d\.]+) uct="(?P<upstream_connect_time>[\d\.-]+)" uht="(?P<upstream_header_time>[\d\.-]+)" urt="(?P<upstream_response_time>[\d\.-]+)"'
+      - timestamp:
+          source: time_local
+          format: 02/Jan/2006:15:04:05 -0700
+      - labels:
+          method:
+          status:
+          remote_addr:
+      - metrics:
+          nginx_requests_total:
+            type: Counter
+            description: "Total number of requests"
+            config:
+              action: inc
+              match_all: true
+          nginx_request_duration_seconds:
+            type: Histogram
+            description: "Request duration in seconds"
+            config:
+              value: request_time
+              buckets: [0.1, 0.5, 1.0, 2.0, 5.0, 10.0]
+
+  # Error Logs (Nginx)
+  - job_name: nginx-error
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: nginx-error
+          service: nginx
+          environment: production
+          log_type: error
+          __path__: /var/log/nginx/error.log
+    pipeline_stages:
+      - regex:
+          expression: '^(?P<timestamp>\d{4}/\d{2}/\d{2} \d{2}:\d{2}:\d{2}) \[(?P<level>\w+)\] (?P<pid>\d+)#(?P<tid>\d+): (?P<message>.*)'
+      - timestamp:
+          source: timestamp
+          format: 2006/01/02 15:04:05
+      - labels:
+          level:
+          pid:
+      - output:
+          source: message
+
+  # System Logs
+  - job_name: system-logs
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: system-logs
+          service: system
+          environment: production
+          log_type: system
+          __path__: /var/log/syslog
+    pipeline_stages:
+      - regex:
+          expression: '^(?P<timestamp>\w{3}\s+\d{1,2}\s+\d{2}:\d{2}:\d{2}) (?P<hostname>\S+) (?P<service>\S+)(\[(?P<pid>\d+)\])?: (?P<message>.*)'
+      - timestamp:
+          source: timestamp
+          format: Jan 02 15:04:05
+          location: Local
+      - labels:
+          hostname:
+          service:
+          pid:
+      - output:
+          source: message
+
+  # Docker Container Logs
+  - job_name: docker-containers
+    docker_sd_configs:
+      - host: unix:///var/run/docker.sock
+        refresh_interval: 5s
+    relabel_configs:
+      - source_labels: ['__meta_docker_container_name']
+        regex: '/(.*?)'
+        target_label: container_name
+      - source_labels: ['__meta_docker_container_log_stream']
+        target_label: stream
+      - source_labels: ['__meta_docker_container_label_com_docker_compose_service']
+        target_label: compose_service
+      - source_labels: ['__meta_docker_container_label_com_docker_compose_project']
+        target_label: compose_project
+    pipeline_stages:
+      - json:
+          expressions:
+            output: log
+            stream: stream
+            time: time
+      - timestamp:
+          source: time
+          format: RFC3339Nano
+      - output:
+          source: output
+
+  # MCP Server Logs
+  - job_name: mcp-servers
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: mcp-servers
+          service: mcp-servers
+          environment: production
+          log_type: mcp
+          __path__: /app/logs/mcp-*.log
+    pipeline_stages:
+      - json:
+          expressions:
+            timestamp: timestamp
+            level: level
+            message: message
+            serverId: serverId
+            serverName: serverName
+            method: method
+            params: params
+            result: result
+            error: error
+            duration: duration
+      - timestamp:
+          source: timestamp
+          format: RFC3339Nano
+      - labels:
+          level:
+          serverId:
+          serverName:
+          method:
+      - output:
+          source: message
+
+  # Payment Logs
+  - job_name: payment-logs
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: payment-logs
+          service: payment
+          environment: production
+          log_type: payment
+          __path__: /app/logs/payment.log
+    pipeline_stages:
+      - json:
+          expressions:
+            timestamp: timestamp
+            level: level
+            message: message
+            userId: userId
+            paymentId: paymentId
+            amount: amount
+            currency: currency
+            status: status
+            provider: provider
+            requestId: requestId
+      - timestamp:
+          source: timestamp
+          format: RFC3339Nano
+      - labels:
+          level:
+          userId:
+          status:
+          provider:
+      - output:
+          source: message
+
+  # Security Logs
+  - job_name: security-logs
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: security-logs
+          service: security
+          environment: production
+          log_type: security
+          __path__: /app/logs/security.log
+    pipeline_stages:
+      - json:
+          expressions:
+            timestamp: timestamp
+            level: level
+            message: message
+            userId: userId
+            ip: ip
+            userAgent: userAgent
+            action: action
+            resource: resource
+            result: result
+            risk: risk
+            requestId: requestId
+      - timestamp:
+          source: timestamp
+          format: RFC3339Nano
+      - labels:
+          level:
+          userId:
+          action:
+          result:
+          risk:
+      - output:
+          source: message
+
+  # Audit Logs
+  - job_name: audit-logs
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: audit-logs
+          service: audit
+          environment: production
+          log_type: audit
+          __path__: /app/logs/audit.log
+    pipeline_stages:
+      - json:
+          expressions:
+            timestamp: timestamp
+            level: level
+            message: message
+            userId: userId
+            action: action
+            resource: resource
+            resourceId: resourceId
+            changes: changes
+            ip: ip
+            userAgent: userAgent
+            requestId: requestId
+      - timestamp:
+          source: timestamp
+          format: RFC3339Nano
+      - labels:
+          level:
+          userId:
+          action:
+          resource:
+      - output:
+          source: message
+
+# Metrics configuration
+metrics:
+  global:
+    scrape_interval: 15s
+    evaluation_interval: 15s
+  configs:
+    - name: promtail
+      scrape_configs:
+        - job_name: promtail
+          static_configs:
+            - targets: ['localhost:9080']
+
+# Limits configuration
+limits_config:
+  readline_rate: 10000
+  readline_burst: 20000
+  max_streams: 0
+  max_line_size: 256000
+  max_line_size_truncate: false
+
+# Target configuration
+target_config:
+  sync_period: 10s
+# This configuration sets up Promtail for log collection and forwarding to Loki
+
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+  log_level: info
+
+positions:
+  filename: /tmp/positions.yaml
+
+clients:
+  - url: http://loki:3100/loki/api/v1/push
+    tenant_id: git-memory
+    batchwait: 1s
+    batchsize: 1048576
+    timeout: 10s
+    backoff_config:
+      min_period: 500ms
+      max_period: 5m
+      max_retries: 10
+    external_labels:
+      environment: production
+      service: git-memory-mcp-server
+
+scrape_configs:
+  # Application logs
+  - job_name: git-memory-app
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: git-memory-app
+          service: application
+          environment: production
+          __path__: /var/log/git-memory/app*.log
+    pipeline_stages:
+      - json:
+          expressions:
+            timestamp: timestamp
+            level: level
+            message: message
+            module: module
+            user_id: user_id
+            request_id: request_id
+            ip: ip
+            method: method
+            url: url
+            status_code: status_code
+            response_time: response_time
+      - timestamp:
+          source: timestamp
+          format: RFC3339Nano
+      - labels:
+          level:
+          module:
+          method:
+          status_code:
+      - output:
+          source: message
+
+  # API Gateway logs
+  - job_name: git-memory-api-gateway
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: git-memory-api-gateway
+          service: api-gateway
+          environment: production
+          __path__: /var/log/git-memory/api-gateway*.log
+    pipeline_stages:
+      - json:
+          expressions:
+            timestamp: timestamp
+            level: level
+            message: message
+            request_id: request_id
+            method: method
+            path: path
+            status_code: status_code
+            response_time: response_time
+            user_agent: user_agent
+            ip: ip
+      - timestamp:
+          source: timestamp
+          format: RFC3339Nano
+      - labels:
+          level:
+          method:
+          status_code:
+      - output:
+          source: message
+
+  # Authentication logs
+  - job_name: git-memory-auth
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: git-memory-auth
+          service: authentication
+          environment: production
+          __path__: /var/log/git-memory/auth*.log
+    pipeline_stages:
+      - json:
+          expressions:
+            timestamp: timestamp
+            level: level
+            message: message
+            user_id: user_id
+            action: action
+            ip: ip
+            user_agent: user_agent
+            success: success
+      - timestamp:
+          source: timestamp
+          format: RFC3339Nano
+      - labels:
+          level:
+          action:
+          success:
+      - output:
+          source: message
+
+  # Payment system logs
+  - job_name: git-memory-payment
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: git-memory-payment
+          service: payment
+          environment: production
+          __path__: /var/log/git-memory/payment*.log
+    pipeline_stages:
+      - json:
+          expressions:
+            timestamp: timestamp
+            level: level
+            message: message
+            user_id: user_id
+            transaction_id: transaction_id
+            amount: amount
+            currency: currency
+            status: status
+            payment_method: payment_method
+      - timestamp:
+          source: timestamp
+          format: RFC3339Nano
+      - labels:
+          level:
+          status:
+          payment_method:
+      - output:
+          source: message
+
+  # Security logs
+  - job_name: git-memory-security
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: git-memory-security
+          service: security
+          environment: production
+          __path__: /var/log/git-memory/security*.log
+    pipeline_stages:
+      - json:
+          expressions:
+            timestamp: timestamp
+            level: level
+            message: message
+            event_type: event_type
+            user_id: user_id
+            ip: ip
+            user_agent: user_agent
+            severity: severity
+      - timestamp:
+          source: timestamp
+          format: RFC3339Nano
+      - labels:
+          level:
+          event_type:
+          severity:
+      - output:
+          source: message
+
+  # Database logs
+  - job_name: git-memory-database
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: git-memory-database
+          service: database
+          environment: production
+          __path__: /var/log/git-memory/database*.log
+    pipeline_stages:
+      - json:
+          expressions:
+            timestamp: timestamp
+            level: level
+            message: message
+            query_type: query_type
+            duration: duration
+            rows_affected: rows_affected
+      - timestamp:
+          source: timestamp
+          format: RFC3339Nano
+      - labels:
+          level:
+          query_type:
+      - output:
+          source: message
+
+  # Error logs
+  - job_name: git-memory-errors
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: git-memory-errors
+          service: application
+          environment: production
+          __path__: /var/log/git-memory/error*.log
+    pipeline_stages:
+      - json:
+          expressions:
+            timestamp: timestamp
+            level: level
+            message: message
+            error_code: error_code
+            stack_trace: stack_trace
+            user_id: user_id
+            request_id: request_id
+      - timestamp:
+          source: timestamp
+          format: RFC3339Nano
+      - labels:
+          level:
+          error_code:
+      - output:
+          source: message
+
+  # Nginx access logs
+  - job_name: nginx-access
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: nginx-access
+          service: nginx
+          environment: production
+          __path__: /var/log/nginx/git-memory-access.log
+    pipeline_stages:
+      - regex:
+          expression: '^(?P<remote_addr>[\w\.]+) - (?P<remote_user>\S+) \[(?P<time_local>[\w:/]+\s[+\-]\d{4})\] "(?P<method>\S+) (?P<request>\S+) (?P<protocol>\S+)" (?P<status>\d{3}) (?P<body_bytes_sent>\d+) "(?P<http_referer>[^"]*)" "(?P<http_user_agent>[^"]*)" "(?P<http_x_forwarded_for>[^"]*)" (?P<request_time>[\d\.]+) (?P<upstream_response_time>[\d\.\-]+)'
+      - timestamp:
+          source: time_local
+          format: 02/Jan/2006:15:04:05 -0700
+      - labels:
+          method:
+          status:
+      - output:
+          source: request
+
+  # Nginx error logs
+  - job_name: nginx-error
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: nginx-error
+          service: nginx
+          environment: production
+          __path__: /var/log/nginx/git-memory-error.log
+    pipeline_stages:
+      - regex:
+          expression: '^(?P<timestamp>\d{4}/\d{2}/\d{2} \d{2}:\d{2}:\d{2}) \[(?P<level>\w+)\] (?P<pid>\d+)#(?P<tid>\d+): (?P<message>.*)'
+      - timestamp:
+          source: timestamp
+          format: 2006/01/02 15:04:05
+      - labels:
+          level:
+      - output:
+          source: message
+
+  # Docker container logs
+  - job_name: docker-containers
+    docker_sd_configs:
+      - host: unix:///var/run/docker.sock
+        refresh_interval: 5s
+        filters:
+          - name: label
+            values: ["logging=promtail"]
+    relabel_configs:
+      - source_labels: ['__meta_docker_container_name']
+        regex: '/(.*?)'
+        target_label: 'container_name'
+      - source_labels: ['__meta_docker_container_log_stream']
+        target_label: 'logstream'
+      - source_labels: ['__meta_docker_container_label_logging_jobname']
+        target_label: 'job'
+    pipeline_stages:
+      - json:
+          expressions:
+            output: log
+            stream: stream
+            attrs:
+      - json:
+          source: attrs
+          expressions:
+            tag: tag
+      - regex:
+          source: tag
+          expression: '^(?P<container_name>(?:[^|]*))\.(?P<container_id>(?:[^|]*))'
+      - timestamp:
+          source: time
+          format: RFC3339Nano
+      - labels:
+          stream:
+          container_name:
+      - output:
+          source: output
+
+  # System logs
+  - job_name: syslog
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: syslog
+          service: system
+          environment: production
+          __path__: /var/log/syslog
+    pipeline_stages:
+      - regex:
+          expression: '^(?P<timestamp>\w{3}\s+\d{1,2}\s+\d{2}:\d{2}:\d{2}) (?P<hostname>\S+) (?P<service>\S+)(?:\[(?P<pid>\d+)\])?: (?P<message>.*)'
+      - timestamp:
+          source: timestamp
+          format: Jan 02 15:04:05
+          location: UTC
+      - labels:
+          hostname:
+          service:
+      - output:
+          source: message
+
+  # Audit logs
+  - job_name: git-memory-audit
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: git-memory-audit
+          service: audit
+          environment: production
+          __path__: /var/log/git-memory/audit*.log
+    pipeline_stages:
+      - json:
+          expressions:
+            timestamp: timestamp
+            level: level
+            message: message
+            user_id: user_id
+            action: action
+            resource: resource
+            resource_id: resource_id
+            ip: ip
+            user_agent: user_agent
+            result: result
+      - timestamp:
+          source: timestamp
+          format: RFC3339Nano
+      - labels:
+          level:
+          action:
+          resource:
+          result:
+      - output:
+          source: message
+
+  # Performance logs
+  - job_name: git-memory-performance
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: git-memory-performance
+          service: performance
+          environment: production
+          __path__: /var/log/git-memory/performance*.log
+    pipeline_stages:
+      - json:
+          expressions:
+            timestamp: timestamp
+            level: level
+            message: message
+            metric_name: metric_name
+            metric_value: metric_value
+            unit: unit
+            tags: tags
+      - timestamp:
+          source: timestamp
+          format: RFC3339Nano
+      - labels:
+          level:
+          metric_name:
+          unit:
+      - output:
+          source: message
+
+# Target configuration
+target_config:
+  sync_period: 10s
+
+# Limits
+limits_config:
+  readline_rate: 10000
+  readline_burst: 20000

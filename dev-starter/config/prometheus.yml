@@ -1,0 +1,288 @@
+# Git Memory MCP Server - Prometheus Configuration for Production
+# This configuration sets up comprehensive monitoring for the production environment
+
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    cluster: 'git-memory-production'
+    environment: 'production'
+
+# Alertmanager configuration
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          - alertmanager:9093
+
+# Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
+rule_files:
+  - "alert_rules.yml"
+  - "recording_rules.yml"
+
+# A scrape configuration containing exactly one endpoint to scrape:
+scrape_configs:
+  # Git Memory MCP Server Application
+  - job_name: 'git-memory-app'
+    static_configs:
+      - targets: ['git-memory-app:3000']
+    metrics_path: '/metrics'
+    scrape_interval: 10s
+    scrape_timeout: 5s
+    honor_labels: true
+    params:
+      format: ['prometheus']
+
+  # API Gateway Metrics
+  - job_name: 'api-gateway'
+    static_configs:
+      - targets: ['git-memory-app:8080']
+    metrics_path: '/api/v1/metrics'
+    scrape_interval: 10s
+    scrape_timeout: 5s
+
+  # Dashboard Metrics
+  - job_name: 'dashboard'
+    static_configs:
+      - targets: ['git-memory-app:8081']
+    metrics_path: '/dashboard/metrics'
+    scrape_interval: 15s
+    scrape_timeout: 5s
+
+  # PostgreSQL Database
+  - job_name: 'postgresql'
+    static_configs:
+      - targets: ['postgres:5432']
+    metrics_path: '/metrics'
+    scrape_interval: 30s
+    scrape_timeout: 10s
+    params:
+      # Use postgres_exporter
+      collect[]:
+        - 'pg_stat_database'
+        - 'pg_stat_user_tables'
+        - 'pg_stat_bgwriter'
+        - 'pg_locks'
+        - 'pg_stat_replication'
+
+  # Redis Cache
+  - job_name: 'redis'
+    static_configs:
+      - targets: ['redis:6379']
+    metrics_path: '/metrics'
+    scrape_interval: 30s
+    scrape_timeout: 10s
+
+  # Nginx Reverse Proxy
+  - job_name: 'nginx'
+    static_configs:
+      - targets: ['nginx:80']
+    metrics_path: '/nginx_status'
+    scrape_interval: 30s
+    scrape_timeout: 10s
+
+  # Node Exporter (System Metrics)
+  - job_name: 'node-exporter'
+    static_configs:
+      - targets: ['node-exporter:9100']
+    scrape_interval: 30s
+    scrape_timeout: 10s
+    honor_labels: true
+
+  # cAdvisor (Container Metrics)
+  - job_name: 'cadvisor'
+    static_configs:
+      - targets: ['cadvisor:8080']
+    scrape_interval: 30s
+    scrape_timeout: 10s
+    honor_labels: true
+    metrics_path: '/metrics'
+
+  # Prometheus itself
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+    scrape_interval: 30s
+    scrape_timeout: 10s
+
+  # Grafana
+  - job_name: 'grafana'
+    static_configs:
+      - targets: ['grafana:3000']
+    metrics_path: '/metrics'
+    scrape_interval: 30s
+    scrape_timeout: 10s
+
+  # Alertmanager
+  - job_name: 'alertmanager'
+    static_configs:
+      - targets: ['alertmanager:9093']
+    scrape_interval: 30s
+    scrape_timeout: 10s
+
+  # Loki (Log Aggregation)
+  - job_name: 'loki'
+    static_configs:
+      - targets: ['loki:3100']
+    metrics_path: '/metrics'
+    scrape_interval: 30s
+    scrape_timeout: 10s
+
+  # Custom Business Metrics
+  - job_name: 'business-metrics'
+    static_configs:
+      - targets: ['git-memory-app:3000']
+    metrics_path: '/api/v1/business-metrics'
+    scrape_interval: 60s
+    scrape_timeout: 15s
+    honor_labels: true
+
+  # Health Check Endpoints
+  - job_name: 'health-checks'
+    static_configs:
+      - targets: 
+        - 'git-memory-app:3000'
+        - 'git-memory-app:8080'
+        - 'git-memory-app:8081'
+    metrics_path: '/health'
+    scrape_interval: 10s
+    scrape_timeout: 5s
+    honor_labels: true
+
+  # SSL Certificate Monitoring
+  - job_name: 'ssl-certificates'
+    static_configs:
+      - targets:
+        - 'gitmemory.comdee.co.th:443'
+        - 'api.gitmemory.comdee.co.th:443'
+        - 'dashboard.gitmemory.comdee.co.th:443'
+    metrics_path: '/probe'
+    params:
+      module: [ssl_expire]
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: blackbox-exporter:9115
+    scrape_interval: 300s
+    scrape_timeout: 30s
+
+  # HTTP Endpoint Monitoring
+  - job_name: 'http-endpoints'
+    static_configs:
+      - targets:
+        - 'https://gitmemory.comdee.co.th'
+        - 'https://api.gitmemory.comdee.co.th/health'
+        - 'https://dashboard.gitmemory.comdee.co.th/health'
+    metrics_path: '/probe'
+    params:
+      module: [http_2xx]
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: blackbox-exporter:9115
+    scrape_interval: 60s
+    scrape_timeout: 30s
+
+  # DNS Monitoring
+  - job_name: 'dns-monitoring'
+    static_configs:
+      - targets:
+        - 'gitmemory.comdee.co.th'
+        - 'api.gitmemory.comdee.co.th'
+        - 'dashboard.gitmemory.comdee.co.th'
+    metrics_path: '/probe'
+    params:
+      module: [dns]
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: blackbox-exporter:9115
+    scrape_interval: 300s
+    scrape_timeout: 30s
+
+  # Payment System Monitoring (Stripe Webhooks)
+  - job_name: 'payment-webhooks'
+    static_configs:
+      - targets: ['git-memory-app:3000']
+    metrics_path: '/api/v1/payments/metrics'
+    scrape_interval: 30s
+    scrape_timeout: 10s
+    honor_labels: true
+
+  # Subscription System Monitoring
+  - job_name: 'subscription-metrics'
+    static_configs:
+      - targets: ['git-memory-app:3000']
+    metrics_path: '/api/v1/subscriptions/metrics'
+    scrape_interval: 60s
+    scrape_timeout: 15s
+    honor_labels: true
+
+  # User Activity Monitoring
+  - job_name: 'user-activity'
+    static_configs:
+      - targets: ['git-memory-app:3000']
+    metrics_path: '/api/v1/users/activity-metrics'
+    scrape_interval: 120s
+    scrape_timeout: 20s
+    honor_labels: true
+
+  # Git Repository Metrics
+  - job_name: 'git-repository-metrics'
+    static_configs:
+      - targets: ['git-memory-app:3000']
+    metrics_path: '/api/v1/git/metrics'
+    scrape_interval: 300s
+    scrape_timeout: 30s
+    honor_labels: true
+
+# Remote write configuration for long-term storage (optional)
+# remote_write:
+#   - url: "https://prometheus-remote-write-endpoint.com/api/v1/write"
+#     basic_auth:
+#       username: "your-username"
+#       password: "your-password"
+#     queue_config:
+#       max_samples_per_send: 1000
+#       max_shards: 200
+#       capacity: 2500
+
+# Remote read configuration (optional)
+# remote_read:
+#   - url: "https://prometheus-remote-read-endpoint.com/api/v1/read"
+#     basic_auth:
+#       username: "your-username"
+#       password: "your-password"
+
+# Storage configuration
+storage:
+  tsdb:
+    path: /prometheus/data
+    retention.time: 30d
+    retention.size: 10GB
+    wal-compression: true
+
+# Web configuration
+web:
+  console.templates: /etc/prometheus/consoles
+  console.libraries: /etc/prometheus/console_libraries
+  enable-lifecycle: true
+  enable-admin-api: true
+  max-connections: 512
+  read-timeout: 30s
+  route-prefix: /
+  external-url: https://monitoring.gitmemory.comdee.co.th
+
+# Log configuration
+log:
+  level: info
+  format: json

@@ -10,29 +10,35 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = "file:./dev.db"
 }
 
 // User Management
 model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  username  String   @unique
-  name      String?
-  avatar    String?
-  bio       String?
-  role      Role     @default(USER)
-  verified  Boolean  @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id            String   @id @default(cuid())
+  email         String   @unique
+  username      String   @unique
+  password      String
+  firstName     String?
+  lastName      String?
+  role          Role     @default(USER)
+  isActive      Boolean  @default(true)
+  emailVerified Boolean  @default(false)
+  profile       String?  // JSON string for profile data
+  lastLoginAt   DateTime?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
   // Relations
-  posts     Post[]
-  comments  Comment[]
-  likes     Like[]
-  sessions  Session[]
-  analytics UserAnalytics[]
+  posts         Post[]
+  comments      Comment[]
+  likes         Like[]
+  sessions      Session[]
+  analytics     UserAnalytics[]
+  subscriptions Subscription[]
+  usageRecords  UsageRecord[]
+  apiKeys       ApiKey[]
 
   @@map("users")
 }
@@ -42,6 +48,8 @@ model Session {
   userId    String
   token     String   @unique
   expiresAt DateTime
+  userAgent String?
+  ipAddress String?
   createdAt DateTime @default(now())
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -61,7 +69,7 @@ model Post {
   viewCount   Int      @default(0)
   likeCount   Int      @default(0)
   commentCount Int     @default(0)
-  tags        String[]
+  tags        String?  // JSON array or comma-separated values
   metadata    Json?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -149,9 +157,166 @@ model SystemAnalytics {
   @@map("system_analytics")
 }
 
+// Payment & Subscription Management
+model Plan {
+  id          String   @id @default(cuid())
+  name        String   @unique // Free, Pro, Enterprise
+  displayName String
+  description String?
+  price       Float    // Monthly price in USD
+  currency    String   @default("USD")
+  interval    String   @default("month") // month, year
+  features    Json     // JSON array of features
+  limits      Json     // JSON object with usage limits
+  isActive    Boolean  @default(true)
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  subscriptions Subscription[]
+
+  @@map("plans")
+}
+
+model Subscription {
+  id                String            @id @default(cuid())
+  userId            String
+  planId            String
+  status            SubscriptionStatus @default(ACTIVE)
+  currentPeriodStart DateTime
+  currentPeriodEnd   DateTime
+  cancelAtPeriodEnd  Boolean          @default(false)
+  canceledAt         DateTime?
+  trialStart         DateTime?
+  trialEnd           DateTime?
+  metadata           Json?
+  createdAt          DateTime         @default(now())
+  updatedAt          DateTime         @updatedAt
+
+  // Relations
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  plan     Plan      @relation(fields: [planId], references: [id])
+  payments Payment[]
+  invoices Invoice[]
+
+  @@map("subscriptions")
+}
+
+model Payment {
+  id             String        @id @default(cuid())
+  subscriptionId String
+  amount         Float
+  currency       String        @default("USD")
+  status         PaymentStatus @default(PENDING)
+  paymentMethod  String?       // stripe, paypal, etc.
+  transactionId  String?       // External payment ID
+  failureReason  String?
+  paidAt         DateTime?
+  refundedAt     DateTime?
+  metadata       Json?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  // Relations
+  subscription Subscription @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+  invoice      Invoice?     @relation(fields: [invoiceId], references: [id])
+  invoiceId    String?
+
+  @@map("payments")
+}
+
+model Invoice {
+  id             String        @id @default(cuid())
+  subscriptionId String
+  invoiceNumber  String        @unique
+  amount         Float
+  currency       String        @default("USD")
+  status         InvoiceStatus @default(DRAFT)
+  dueDate        DateTime
+  paidAt         DateTime?
+  voidedAt       DateTime?
+  description    String?
+  lineItems      Json          // JSON array of line items
+  taxAmount      Float?        @default(0)
+  discountAmount Float?        @default(0)
+  totalAmount    Float
+  metadata       Json?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  // Relations
+  subscription Subscription @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+  payments     Payment[]
+
+  @@map("invoices")
+}
+
+model UsageRecord {
+  id             String   @id @default(cuid())
+  userId         String
+  subscriptionId String?
+  metricName     String   // api_calls, storage_mb, servers_count
+  quantity       Int
+  timestamp      DateTime @default(now())
+  metadata       Json?
+  createdAt      DateTime @default(now())
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, metricName, timestamp])
+  @@map("usage_records")
+}
+
+model ApiKey {
+  id          String   @id @default(cuid())
+  userId      String
+  name        String
+  keyHash     String   @unique // Hashed API key
+  keyPrefix   String   // First 8 characters for display
+  permissions Json     // JSON array of permissions
+  lastUsedAt  DateTime?
+  expiresAt   DateTime?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("api_keys")
+}
+
 // Enums
 enum Role {
   USER
   ADMIN
   MODERATOR
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  CANCELED
+  PAST_DUE
+  UNPAID
+  TRIALING
+  INCOMPLETE
+  INCOMPLETE_EXPIRED
+}
+
+enum PaymentStatus {
+  PENDING
+  SUCCEEDED
+  FAILED
+  CANCELED
+  REFUNDED
+}
+
+enum InvoiceStatus {
+  DRAFT
+  OPEN
+  PAID
+  VOID
+  UNCOLLECTIBLE
 }
