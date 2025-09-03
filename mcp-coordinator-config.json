@@ -8400,6 +8400,1206 @@
         "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4299",
         "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4299.js"
       }
+    ],
+    [
+      "media-4300",
+      {
+        "id": "media-4300",
+        "category": "media",
+        "port": 4300,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:14.956Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4300",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4300.js"
+      }
+    ],
+    [
+      "media-4301",
+      {
+        "id": "media-4301",
+        "category": "media",
+        "port": 4301,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:14.957Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4301",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4301.js"
+      }
+    ],
+    [
+      "media-4302",
+      {
+        "id": "media-4302",
+        "category": "media",
+        "port": 4302,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:14.958Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4302",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4302.js"
+      }
+    ],
+    [
+      "media-4303",
+      {
+        "id": "media-4303",
+        "category": "media",
+        "port": 4303,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:14.959Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4303",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4303.js"
+      }
+    ],
+    [
+      "media-4304",
+      {
+        "id": "media-4304",
+        "category": "media",
+        "port": 4304,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:14.960Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4304",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4304.js"
+      }
+    ],
+    [
+      "media-4305",
+      {
+        "id": "media-4305",
+        "category": "media",
+        "port": 4305,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:14.961Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4305",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4305.js"
+      }
+    ],
+    [
+      "media-4306",
+      {
+        "id": "media-4306",
+        "category": "media",
+        "port": 4306,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:14.962Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4306",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4306.js"
+      }
+    ],
+    [
+      "media-4307",
+      {
+        "id": "media-4307",
+        "category": "media",
+        "port": 4307,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:14.963Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4307",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4307.js"
+      }
+    ],
+    [
+      "media-4308",
+      {
+        "id": "media-4308",
+        "category": "media",
+        "port": 4308,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:14.964Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4308",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4308.js"
+      }
+    ],
+    [
+      "media-4309",
+      {
+        "id": "media-4309",
+        "category": "media",
+        "port": 4309,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:14.965Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4309",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4309.js"
+      }
+    ],
+    [
+      "media-4310",
+      {
+        "id": "media-4310",
+        "category": "media",
+        "port": 4310,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:14.966Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4310",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4310.js"
+      }
+    ],
+    [
+      "media-4311",
+      {
+        "id": "media-4311",
+        "category": "media",
+        "port": 4311,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:14.967Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4311",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4311.js"
+      }
+    ],
+    [
+      "media-4312",
+      {
+        "id": "media-4312",
+        "category": "media",
+        "port": 4312,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:14.968Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4312",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4312.js"
+      }
+    ],
+    [
+      "media-4313",
+      {
+        "id": "media-4313",
+        "category": "media",
+        "port": 4313,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:14.969Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4313",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4313.js"
+      }
+    ],
+    [
+      "media-4314",
+      {
+        "id": "media-4314",
+        "category": "media",
+        "port": 4314,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:14.970Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4314",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4314.js"
+      }
+    ],
+    [
+      "media-4315",
+      {
+        "id": "media-4315",
+        "category": "media",
+        "port": 4315,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:14.971Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4315",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4315.js"
+      }
+    ],
+    [
+      "media-4316",
+      {
+        "id": "media-4316",
+        "category": "media",
+        "port": 4316,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:14.972Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4316",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4316.js"
+      }
+    ],
+    [
+      "media-4317",
+      {
+        "id": "media-4317",
+        "category": "media",
+        "port": 4317,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:14.973Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4317",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4317.js"
+      }
+    ],
+    [
+      "media-4318",
+      {
+        "id": "media-4318",
+        "category": "media",
+        "port": 4318,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:14.974Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4318",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4318.js"
+      }
+    ],
+    [
+      "media-4319",
+      {
+        "id": "media-4319",
+        "category": "media",
+        "port": 4319,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:14.975Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4319",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4319.js"
+      }
+    ],
+    [
+      "media-4320",
+      {
+        "id": "media-4320",
+        "category": "media",
+        "port": 4320,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:14.976Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4320",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4320.js"
+      }
+    ],
+    [
+      "media-4321",
+      {
+        "id": "media-4321",
+        "category": "media",
+        "port": 4321,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:14.977Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4321",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4321.js"
+      }
+    ],
+    [
+      "media-4322",
+      {
+        "id": "media-4322",
+        "category": "media",
+        "port": 4322,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:14.977Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4322",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4322.js"
+      }
+    ],
+    [
+      "media-4323",
+      {
+        "id": "media-4323",
+        "category": "media",
+        "port": 4323,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:14.978Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4323",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4323.js"
+      }
+    ],
+    [
+      "media-4324",
+      {
+        "id": "media-4324",
+        "category": "media",
+        "port": 4324,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:14.980Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4324",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4324.js"
+      }
+    ],
+    [
+      "media-4325",
+      {
+        "id": "media-4325",
+        "category": "media",
+        "port": 4325,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:14.981Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4325",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4325.js"
+      }
+    ],
+    [
+      "media-4326",
+      {
+        "id": "media-4326",
+        "category": "media",
+        "port": 4326,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:14.981Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4326",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4326.js"
+      }
+    ],
+    [
+      "media-4327",
+      {
+        "id": "media-4327",
+        "category": "media",
+        "port": 4327,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:14.982Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4327",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4327.js"
+      }
+    ],
+    [
+      "media-4328",
+      {
+        "id": "media-4328",
+        "category": "media",
+        "port": 4328,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:14.983Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4328",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4328.js"
+      }
+    ],
+    [
+      "media-4329",
+      {
+        "id": "media-4329",
+        "category": "media",
+        "port": 4329,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:14.984Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4329",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4329.js"
+      }
+    ],
+    [
+      "media-4330",
+      {
+        "id": "media-4330",
+        "category": "media",
+        "port": 4330,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:14.985Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4330",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4330.js"
+      }
+    ],
+    [
+      "media-4331",
+      {
+        "id": "media-4331",
+        "category": "media",
+        "port": 4331,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:14.986Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4331",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4331.js"
+      }
+    ],
+    [
+      "media-4332",
+      {
+        "id": "media-4332",
+        "category": "media",
+        "port": 4332,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:14.987Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4332",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4332.js"
+      }
+    ],
+    [
+      "media-4333",
+      {
+        "id": "media-4333",
+        "category": "media",
+        "port": 4333,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:14.988Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4333",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4333.js"
+      }
+    ],
+    [
+      "media-4334",
+      {
+        "id": "media-4334",
+        "category": "media",
+        "port": 4334,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:14.989Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4334",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4334.js"
+      }
+    ],
+    [
+      "media-4335",
+      {
+        "id": "media-4335",
+        "category": "media",
+        "port": 4335,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:14.990Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4335",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4335.js"
+      }
+    ],
+    [
+      "media-4336",
+      {
+        "id": "media-4336",
+        "category": "media",
+        "port": 4336,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:14.991Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4336",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4336.js"
+      }
+    ],
+    [
+      "media-4337",
+      {
+        "id": "media-4337",
+        "category": "media",
+        "port": 4337,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:14.992Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4337",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4337.js"
+      }
+    ],
+    [
+      "media-4338",
+      {
+        "id": "media-4338",
+        "category": "media",
+        "port": 4338,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:14.992Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4338",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4338.js"
+      }
+    ],
+    [
+      "media-4339",
+      {
+        "id": "media-4339",
+        "category": "media",
+        "port": 4339,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:14.993Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4339",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4339.js"
+      }
+    ],
+    [
+      "media-4340",
+      {
+        "id": "media-4340",
+        "category": "media",
+        "port": 4340,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:14.994Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4340",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4340.js"
+      }
+    ],
+    [
+      "media-4341",
+      {
+        "id": "media-4341",
+        "category": "media",
+        "port": 4341,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:14.995Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4341",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4341.js"
+      }
+    ],
+    [
+      "media-4342",
+      {
+        "id": "media-4342",
+        "category": "media",
+        "port": 4342,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:14.996Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4342",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4342.js"
+      }
+    ],
+    [
+      "media-4343",
+      {
+        "id": "media-4343",
+        "category": "media",
+        "port": 4343,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:14.997Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4343",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4343.js"
+      }
+    ],
+    [
+      "media-4344",
+      {
+        "id": "media-4344",
+        "category": "media",
+        "port": 4344,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:14.998Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4344",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4344.js"
+      }
+    ],
+    [
+      "media-4345",
+      {
+        "id": "media-4345",
+        "category": "media",
+        "port": 4345,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:14.999Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4345",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4345.js"
+      }
+    ],
+    [
+      "media-4346",
+      {
+        "id": "media-4346",
+        "category": "media",
+        "port": 4346,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:15.000Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4346",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4346.js"
+      }
+    ],
+    [
+      "media-4347",
+      {
+        "id": "media-4347",
+        "category": "media",
+        "port": 4347,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:15.001Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4347",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4347.js"
+      }
+    ],
+    [
+      "media-4348",
+      {
+        "id": "media-4348",
+        "category": "media",
+        "port": 4348,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:15.002Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4348",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4348.js"
+      }
+    ],
+    [
+      "media-4349",
+      {
+        "id": "media-4349",
+        "category": "media",
+        "port": 4349,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:15.003Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4349",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4349.js"
+      }
+    ],
+    [
+      "media-4350",
+      {
+        "id": "media-4350",
+        "category": "media",
+        "port": 4350,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:15.004Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4350",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4350.js"
+      }
+    ],
+    [
+      "media-4351",
+      {
+        "id": "media-4351",
+        "category": "media",
+        "port": 4351,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:15.005Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4351",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4351.js"
+      }
+    ],
+    [
+      "media-4352",
+      {
+        "id": "media-4352",
+        "category": "media",
+        "port": 4352,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:15.006Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4352",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4352.js"
+      }
+    ],
+    [
+      "media-4353",
+      {
+        "id": "media-4353",
+        "category": "media",
+        "port": 4353,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:15.007Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4353",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4353.js"
+      }
+    ],
+    [
+      "media-4354",
+      {
+        "id": "media-4354",
+        "category": "media",
+        "port": 4354,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:15.008Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4354",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4354.js"
+      }
+    ],
+    [
+      "media-4355",
+      {
+        "id": "media-4355",
+        "category": "media",
+        "port": 4355,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:15.009Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4355",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4355.js"
+      }
+    ],
+    [
+      "media-4356",
+      {
+        "id": "media-4356",
+        "category": "media",
+        "port": 4356,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:15.010Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4356",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4356.js"
+      }
+    ],
+    [
+      "media-4357",
+      {
+        "id": "media-4357",
+        "category": "media",
+        "port": 4357,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:15.010Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4357",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4357.js"
+      }
+    ],
+    [
+      "media-4358",
+      {
+        "id": "media-4358",
+        "category": "media",
+        "port": 4358,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:15.012Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4358",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4358.js"
+      }
+    ],
+    [
+      "media-4359",
+      {
+        "id": "media-4359",
+        "category": "media",
+        "port": 4359,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:15.012Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4359",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4359.js"
+      }
+    ],
+    [
+      "media-4360",
+      {
+        "id": "media-4360",
+        "category": "media",
+        "port": 4360,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:15.013Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4360",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4360.js"
+      }
+    ],
+    [
+      "media-4361",
+      {
+        "id": "media-4361",
+        "category": "media",
+        "port": 4361,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:15.014Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4361",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4361.js"
+      }
+    ],
+    [
+      "media-4362",
+      {
+        "id": "media-4362",
+        "category": "media",
+        "port": 4362,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:15.015Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4362",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4362.js"
+      }
+    ],
+    [
+      "media-4363",
+      {
+        "id": "media-4363",
+        "category": "media",
+        "port": 4363,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:15.016Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4363",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4363.js"
+      }
+    ],
+    [
+      "media-4364",
+      {
+        "id": "media-4364",
+        "category": "media",
+        "port": 4364,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:15.017Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4364",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4364.js"
+      }
+    ],
+    [
+      "media-4365",
+      {
+        "id": "media-4365",
+        "category": "media",
+        "port": 4365,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:15.018Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4365",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4365.js"
+      }
+    ],
+    [
+      "media-4366",
+      {
+        "id": "media-4366",
+        "category": "media",
+        "port": 4366,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:15.019Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4366",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4366.js"
+      }
+    ],
+    [
+      "media-4367",
+      {
+        "id": "media-4367",
+        "category": "media",
+        "port": 4367,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:15.020Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4367",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4367.js"
+      }
+    ],
+    [
+      "media-4368",
+      {
+        "id": "media-4368",
+        "category": "media",
+        "port": 4368,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:15.021Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4368",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4368.js"
+      }
+    ],
+    [
+      "media-4369",
+      {
+        "id": "media-4369",
+        "category": "media",
+        "port": 4369,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:15.022Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4369",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4369.js"
+      }
+    ],
+    [
+      "media-4370",
+      {
+        "id": "media-4370",
+        "category": "media",
+        "port": 4370,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:15.023Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4370",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4370.js"
+      }
+    ],
+    [
+      "media-4371",
+      {
+        "id": "media-4371",
+        "category": "media",
+        "port": 4371,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:15.024Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4371",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4371.js"
+      }
+    ],
+    [
+      "media-4372",
+      {
+        "id": "media-4372",
+        "category": "media",
+        "port": 4372,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:15.025Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4372",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4372.js"
+      }
+    ],
+    [
+      "media-4373",
+      {
+        "id": "media-4373",
+        "category": "media",
+        "port": 4373,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:15.026Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4373",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4373.js"
+      }
+    ],
+    [
+      "media-4374",
+      {
+        "id": "media-4374",
+        "category": "media",
+        "port": 4374,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:15.027Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4374",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4374.js"
+      }
+    ],
+    [
+      "media-4375",
+      {
+        "id": "media-4375",
+        "category": "media",
+        "port": 4375,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:15.027Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4375",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4375.js"
+      }
+    ],
+    [
+      "media-4376",
+      {
+        "id": "media-4376",
+        "category": "media",
+        "port": 4376,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:15.028Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4376",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4376.js"
+      }
+    ],
+    [
+      "media-4377",
+      {
+        "id": "media-4377",
+        "category": "media",
+        "port": 4377,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:15.029Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4377",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4377.js"
+      }
+    ],
+    [
+      "media-4378",
+      {
+        "id": "media-4378",
+        "category": "media",
+        "port": 4378,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:15.030Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4378",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4378.js"
+      }
+    ],
+    [
+      "media-4379",
+      {
+        "id": "media-4379",
+        "category": "media",
+        "port": 4379,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:15.031Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4379",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4379.js"
+      }
+    ],
+    [
+      "media-4380",
+      {
+        "id": "media-4380",
+        "category": "media",
+        "port": 4380,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:15.032Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4380",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4380.js"
+      }
+    ],
+    [
+      "media-4381",
+      {
+        "id": "media-4381",
+        "category": "media",
+        "port": 4381,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:15.033Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4381",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4381.js"
+      }
+    ],
+    [
+      "media-4382",
+      {
+        "id": "media-4382",
+        "category": "media",
+        "port": 4382,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:15.034Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4382",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4382.js"
+      }
+    ],
+    [
+      "media-4383",
+      {
+        "id": "media-4383",
+        "category": "media",
+        "port": 4383,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:15.035Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4383",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4383.js"
+      }
+    ],
+    [
+      "media-4384",
+      {
+        "id": "media-4384",
+        "category": "media",
+        "port": 4384,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:15.036Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4384",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4384.js"
+      }
+    ],
+    [
+      "media-4385",
+      {
+        "id": "media-4385",
+        "category": "media",
+        "port": 4385,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:15.037Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4385",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4385.js"
+      }
+    ],
+    [
+      "media-4386",
+      {
+        "id": "media-4386",
+        "category": "media",
+        "port": 4386,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:15.038Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4386",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4386.js"
+      }
+    ],
+    [
+      "media-4387",
+      {
+        "id": "media-4387",
+        "category": "media",
+        "port": 4387,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:15.039Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4387",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4387.js"
+      }
+    ],
+    [
+      "media-4388",
+      {
+        "id": "media-4388",
+        "category": "media",
+        "port": 4388,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:15.040Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4388",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4388.js"
+      }
+    ],
+    [
+      "media-4389",
+      {
+        "id": "media-4389",
+        "category": "media",
+        "port": 4389,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:15.041Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4389",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4389.js"
+      }
+    ],
+    [
+      "media-4390",
+      {
+        "id": "media-4390",
+        "category": "media",
+        "port": 4390,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:15.042Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4390",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4390.js"
+      }
+    ],
+    [
+      "media-4391",
+      {
+        "id": "media-4391",
+        "category": "media",
+        "port": 4391,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:15.043Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4391",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4391.js"
+      }
+    ],
+    [
+      "media-4392",
+      {
+        "id": "media-4392",
+        "category": "media",
+        "port": 4392,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:15.043Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4392",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4392.js"
+      }
+    ],
+    [
+      "media-4393",
+      {
+        "id": "media-4393",
+        "category": "media",
+        "port": 4393,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:15.044Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4393",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4393.js"
+      }
+    ],
+    [
+      "media-4394",
+      {
+        "id": "media-4394",
+        "category": "media",
+        "port": 4394,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:15.045Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4394",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4394.js"
+      }
+    ],
+    [
+      "media-4395",
+      {
+        "id": "media-4395",
+        "category": "media",
+        "port": 4395,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:15.046Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4395",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4395.js"
+      }
+    ],
+    [
+      "media-4396",
+      {
+        "id": "media-4396",
+        "category": "media",
+        "port": 4396,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:15.047Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4396",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4396.js"
+      }
+    ],
+    [
+      "media-4397",
+      {
+        "id": "media-4397",
+        "category": "media",
+        "port": 4397,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:15.048Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4397",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4397.js"
+      }
+    ],
+    [
+      "media-4398",
+      {
+        "id": "media-4398",
+        "category": "media",
+        "port": 4398,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:15.049Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4398",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4398.js"
+      }
+    ],
+    [
+      "media-4399",
+      {
+        "id": "media-4399",
+        "category": "media",
+        "port": 4399,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:15.050Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\media-4399",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-media-4399.js"
+      }
     ]
   ],
   "categories": [
@@ -8517,7 +9717,7 @@
         "portStart": 4300,
         "portEnd": 4399,
         "maxServers": 100,
-        "count": 0
+        "count": 100
       }
     ],
     [
@@ -8539,5 +9739,5 @@
       }
     ]
   ],
-  "lastUpdated": "2025-09-03T03:20:09.374Z"
+  "lastUpdated": "2025-09-03T03:20:15.051Z"
 }
