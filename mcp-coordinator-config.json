@@ -1,5 +1,5 @@
 {
-  "currentPhase": 1,
+  "currentPhase": 2,
   "mcpServers": [
     [
       "database-3100",
@@ -3000,6 +3000,606 @@
         "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\version-control-3349",
         "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-version-control-3349.js"
       }
+    ],
+    [
+      "dev-tools-3350",
+      {
+        "id": "dev-tools-3350",
+        "category": "dev-tools",
+        "port": 3350,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:41.696Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\dev-tools-3350",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-dev-tools-3350.js"
+      }
+    ],
+    [
+      "dev-tools-3351",
+      {
+        "id": "dev-tools-3351",
+        "category": "dev-tools",
+        "port": 3351,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:41.697Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\dev-tools-3351",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-dev-tools-3351.js"
+      }
+    ],
+    [
+      "dev-tools-3352",
+      {
+        "id": "dev-tools-3352",
+        "category": "dev-tools",
+        "port": 3352,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:41.698Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\dev-tools-3352",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-dev-tools-3352.js"
+      }
+    ],
+    [
+      "dev-tools-3353",
+      {
+        "id": "dev-tools-3353",
+        "category": "dev-tools",
+        "port": 3353,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:41.699Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\dev-tools-3353",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-dev-tools-3353.js"
+      }
+    ],
+    [
+      "dev-tools-3354",
+      {
+        "id": "dev-tools-3354",
+        "category": "dev-tools",
+        "port": 3354,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:41.702Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\dev-tools-3354",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-dev-tools-3354.js"
+      }
+    ],
+    [
+      "dev-tools-3355",
+      {
+        "id": "dev-tools-3355",
+        "category": "dev-tools",
+        "port": 3355,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:41.705Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\dev-tools-3355",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-dev-tools-3355.js"
+      }
+    ],
+    [
+      "dev-tools-3356",
+      {
+        "id": "dev-tools-3356",
+        "category": "dev-tools",
+        "port": 3356,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:41.707Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\dev-tools-3356",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-dev-tools-3356.js"
+      }
+    ],
+    [
+      "dev-tools-3357",
+      {
+        "id": "dev-tools-3357",
+        "category": "dev-tools",
+        "port": 3357,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:41.708Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\dev-tools-3357",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-dev-tools-3357.js"
+      }
+    ],
+    [
+      "dev-tools-3358",
+      {
+        "id": "dev-tools-3358",
+        "category": "dev-tools",
+        "port": 3358,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:41.709Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\dev-tools-3358",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-dev-tools-3358.js"
+      }
+    ],
+    [
+      "dev-tools-3359",
+      {
+        "id": "dev-tools-3359",
+        "category": "dev-tools",
+        "port": 3359,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:41.710Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\dev-tools-3359",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-dev-tools-3359.js"
+      }
+    ],
+    [
+      "dev-tools-3360",
+      {
+        "id": "dev-tools-3360",
+        "category": "dev-tools",
+        "port": 3360,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:41.711Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\dev-tools-3360",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-dev-tools-3360.js"
+      }
+    ],
+    [
+      "dev-tools-3361",
+      {
+        "id": "dev-tools-3361",
+        "category": "dev-tools",
+        "port": 3361,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:41.712Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\dev-tools-3361",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-dev-tools-3361.js"
+      }
+    ],
+    [
+      "dev-tools-3362",
+      {
+        "id": "dev-tools-3362",
+        "category": "dev-tools",
+        "port": 3362,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:41.713Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\dev-tools-3362",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-dev-tools-3362.js"
+      }
+    ],
+    [
+      "dev-tools-3363",
+      {
+        "id": "dev-tools-3363",
+        "category": "dev-tools",
+        "port": 3363,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:41.714Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\dev-tools-3363",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-dev-tools-3363.js"
+      }
+    ],
+    [
+      "dev-tools-3364",
+      {
+        "id": "dev-tools-3364",
+        "category": "dev-tools",
+        "port": 3364,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:41.715Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\dev-tools-3364",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-dev-tools-3364.js"
+      }
+    ],
+    [
+      "dev-tools-3365",
+      {
+        "id": "dev-tools-3365",
+        "category": "dev-tools",
+        "port": 3365,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:41.716Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\dev-tools-3365",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-dev-tools-3365.js"
+      }
+    ],
+    [
+      "dev-tools-3366",
+      {
+        "id": "dev-tools-3366",
+        "category": "dev-tools",
+        "port": 3366,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:41.717Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\dev-tools-3366",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-dev-tools-3366.js"
+      }
+    ],
+    [
+      "dev-tools-3367",
+      {
+        "id": "dev-tools-3367",
+        "category": "dev-tools",
+        "port": 3367,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:41.718Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\dev-tools-3367",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-dev-tools-3367.js"
+      }
+    ],
+    [
+      "dev-tools-3368",
+      {
+        "id": "dev-tools-3368",
+        "category": "dev-tools",
+        "port": 3368,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:41.719Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\dev-tools-3368",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-dev-tools-3368.js"
+      }
+    ],
+    [
+      "dev-tools-3369",
+      {
+        "id": "dev-tools-3369",
+        "category": "dev-tools",
+        "port": 3369,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:41.720Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\dev-tools-3369",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-dev-tools-3369.js"
+      }
+    ],
+    [
+      "dev-tools-3370",
+      {
+        "id": "dev-tools-3370",
+        "category": "dev-tools",
+        "port": 3370,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:41.721Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\dev-tools-3370",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-dev-tools-3370.js"
+      }
+    ],
+    [
+      "dev-tools-3371",
+      {
+        "id": "dev-tools-3371",
+        "category": "dev-tools",
+        "port": 3371,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:41.722Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\dev-tools-3371",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-dev-tools-3371.js"
+      }
+    ],
+    [
+      "dev-tools-3372",
+      {
+        "id": "dev-tools-3372",
+        "category": "dev-tools",
+        "port": 3372,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:41.727Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\dev-tools-3372",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-dev-tools-3372.js"
+      }
+    ],
+    [
+      "dev-tools-3373",
+      {
+        "id": "dev-tools-3373",
+        "category": "dev-tools",
+        "port": 3373,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:41.729Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\dev-tools-3373",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-dev-tools-3373.js"
+      }
+    ],
+    [
+      "dev-tools-3374",
+      {
+        "id": "dev-tools-3374",
+        "category": "dev-tools",
+        "port": 3374,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:41.730Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\dev-tools-3374",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-dev-tools-3374.js"
+      }
+    ],
+    [
+      "dev-tools-3375",
+      {
+        "id": "dev-tools-3375",
+        "category": "dev-tools",
+        "port": 3375,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:41.731Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\dev-tools-3375",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-dev-tools-3375.js"
+      }
+    ],
+    [
+      "dev-tools-3376",
+      {
+        "id": "dev-tools-3376",
+        "category": "dev-tools",
+        "port": 3376,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:41.732Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\dev-tools-3376",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-dev-tools-3376.js"
+      }
+    ],
+    [
+      "dev-tools-3377",
+      {
+        "id": "dev-tools-3377",
+        "category": "dev-tools",
+        "port": 3377,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:41.733Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\dev-tools-3377",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-dev-tools-3377.js"
+      }
+    ],
+    [
+      "dev-tools-3378",
+      {
+        "id": "dev-tools-3378",
+        "category": "dev-tools",
+        "port": 3378,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:41.734Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\dev-tools-3378",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-dev-tools-3378.js"
+      }
+    ],
+    [
+      "dev-tools-3379",
+      {
+        "id": "dev-tools-3379",
+        "category": "dev-tools",
+        "port": 3379,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:41.735Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\dev-tools-3379",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-dev-tools-3379.js"
+      }
+    ],
+    [
+      "dev-tools-3380",
+      {
+        "id": "dev-tools-3380",
+        "category": "dev-tools",
+        "port": 3380,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:41.736Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\dev-tools-3380",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-dev-tools-3380.js"
+      }
+    ],
+    [
+      "dev-tools-3381",
+      {
+        "id": "dev-tools-3381",
+        "category": "dev-tools",
+        "port": 3381,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:41.737Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\dev-tools-3381",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-dev-tools-3381.js"
+      }
+    ],
+    [
+      "dev-tools-3382",
+      {
+        "id": "dev-tools-3382",
+        "category": "dev-tools",
+        "port": 3382,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:41.738Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\dev-tools-3382",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-dev-tools-3382.js"
+      }
+    ],
+    [
+      "dev-tools-3383",
+      {
+        "id": "dev-tools-3383",
+        "category": "dev-tools",
+        "port": 3383,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:41.739Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\dev-tools-3383",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-dev-tools-3383.js"
+      }
+    ],
+    [
+      "dev-tools-3384",
+      {
+        "id": "dev-tools-3384",
+        "category": "dev-tools",
+        "port": 3384,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:41.740Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\dev-tools-3384",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-dev-tools-3384.js"
+      }
+    ],
+    [
+      "dev-tools-3385",
+      {
+        "id": "dev-tools-3385",
+        "category": "dev-tools",
+        "port": 3385,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:41.740Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\dev-tools-3385",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-dev-tools-3385.js"
+      }
+    ],
+    [
+      "dev-tools-3386",
+      {
+        "id": "dev-tools-3386",
+        "category": "dev-tools",
+        "port": 3386,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:41.741Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\dev-tools-3386",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-dev-tools-3386.js"
+      }
+    ],
+    [
+      "dev-tools-3387",
+      {
+        "id": "dev-tools-3387",
+        "category": "dev-tools",
+        "port": 3387,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:41.742Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\dev-tools-3387",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-dev-tools-3387.js"
+      }
+    ],
+    [
+      "dev-tools-3388",
+      {
+        "id": "dev-tools-3388",
+        "category": "dev-tools",
+        "port": 3388,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:41.743Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\dev-tools-3388",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-dev-tools-3388.js"
+      }
+    ],
+    [
+      "dev-tools-3389",
+      {
+        "id": "dev-tools-3389",
+        "category": "dev-tools",
+        "port": 3389,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:41.744Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\dev-tools-3389",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-dev-tools-3389.js"
+      }
+    ],
+    [
+      "dev-tools-3390",
+      {
+        "id": "dev-tools-3390",
+        "category": "dev-tools",
+        "port": 3390,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:41.745Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\dev-tools-3390",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-dev-tools-3390.js"
+      }
+    ],
+    [
+      "dev-tools-3391",
+      {
+        "id": "dev-tools-3391",
+        "category": "dev-tools",
+        "port": 3391,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:41.746Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\dev-tools-3391",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-dev-tools-3391.js"
+      }
+    ],
+    [
+      "dev-tools-3392",
+      {
+        "id": "dev-tools-3392",
+        "category": "dev-tools",
+        "port": 3392,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:41.747Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\dev-tools-3392",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-dev-tools-3392.js"
+      }
+    ],
+    [
+      "dev-tools-3393",
+      {
+        "id": "dev-tools-3393",
+        "category": "dev-tools",
+        "port": 3393,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:41.748Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\dev-tools-3393",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-dev-tools-3393.js"
+      }
+    ],
+    [
+      "dev-tools-3394",
+      {
+        "id": "dev-tools-3394",
+        "category": "dev-tools",
+        "port": 3394,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:41.749Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\dev-tools-3394",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-dev-tools-3394.js"
+      }
+    ],
+    [
+      "dev-tools-3395",
+      {
+        "id": "dev-tools-3395",
+        "category": "dev-tools",
+        "port": 3395,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:41.750Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\dev-tools-3395",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-dev-tools-3395.js"
+      }
+    ],
+    [
+      "dev-tools-3396",
+      {
+        "id": "dev-tools-3396",
+        "category": "dev-tools",
+        "port": 3396,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:41.751Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\dev-tools-3396",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-dev-tools-3396.js"
+      }
+    ],
+    [
+      "dev-tools-3397",
+      {
+        "id": "dev-tools-3397",
+        "category": "dev-tools",
+        "port": 3397,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:41.752Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\dev-tools-3397",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-dev-tools-3397.js"
+      }
+    ],
+    [
+      "dev-tools-3398",
+      {
+        "id": "dev-tools-3398",
+        "category": "dev-tools",
+        "port": 3398,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:41.752Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\dev-tools-3398",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-dev-tools-3398.js"
+      }
+    ],
+    [
+      "dev-tools-3399",
+      {
+        "id": "dev-tools-3399",
+        "category": "dev-tools",
+        "port": 3399,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:41.753Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\dev-tools-3399",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-dev-tools-3399.js"
+      }
     ]
   ],
   "categories": [
@@ -3053,7 +3653,7 @@
       {
         "portStart": 3350,
         "portEnd": 3399,
-        "count": 0,
+        "count": 50,
         "maxServers": 100
       }
     ],
@@ -3139,5 +3739,5 @@
       }
     ]
   ],
-  "lastUpdated": "2025-09-03T03:17:22.124Z"
+  "lastUpdated": "2025-09-03T03:17:41.754Z"
 }
