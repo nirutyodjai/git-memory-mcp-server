@@ -1,5 +1,5 @@
 {
-  "currentPhase": 0,
+  "currentPhase": 1,
   "mcpServers": [
     [
       "database-3100",
@@ -2400,6 +2400,606 @@
         "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\ai-ml-3299",
         "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-ai-ml-3299.js"
       }
+    ],
+    [
+      "version-control-3300",
+      {
+        "id": "version-control-3300",
+        "category": "version-control",
+        "port": 3300,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:22.071Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\version-control-3300",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-version-control-3300.js"
+      }
+    ],
+    [
+      "version-control-3301",
+      {
+        "id": "version-control-3301",
+        "category": "version-control",
+        "port": 3301,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:22.073Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\version-control-3301",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-version-control-3301.js"
+      }
+    ],
+    [
+      "version-control-3302",
+      {
+        "id": "version-control-3302",
+        "category": "version-control",
+        "port": 3302,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:22.074Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\version-control-3302",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-version-control-3302.js"
+      }
+    ],
+    [
+      "version-control-3303",
+      {
+        "id": "version-control-3303",
+        "category": "version-control",
+        "port": 3303,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:22.076Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\version-control-3303",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-version-control-3303.js"
+      }
+    ],
+    [
+      "version-control-3304",
+      {
+        "id": "version-control-3304",
+        "category": "version-control",
+        "port": 3304,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:22.077Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\version-control-3304",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-version-control-3304.js"
+      }
+    ],
+    [
+      "version-control-3305",
+      {
+        "id": "version-control-3305",
+        "category": "version-control",
+        "port": 3305,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:22.078Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\version-control-3305",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-version-control-3305.js"
+      }
+    ],
+    [
+      "version-control-3306",
+      {
+        "id": "version-control-3306",
+        "category": "version-control",
+        "port": 3306,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:22.079Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\version-control-3306",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-version-control-3306.js"
+      }
+    ],
+    [
+      "version-control-3307",
+      {
+        "id": "version-control-3307",
+        "category": "version-control",
+        "port": 3307,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:22.080Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\version-control-3307",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-version-control-3307.js"
+      }
+    ],
+    [
+      "version-control-3308",
+      {
+        "id": "version-control-3308",
+        "category": "version-control",
+        "port": 3308,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:22.081Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\version-control-3308",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-version-control-3308.js"
+      }
+    ],
+    [
+      "version-control-3309",
+      {
+        "id": "version-control-3309",
+        "category": "version-control",
+        "port": 3309,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:22.082Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\version-control-3309",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-version-control-3309.js"
+      }
+    ],
+    [
+      "version-control-3310",
+      {
+        "id": "version-control-3310",
+        "category": "version-control",
+        "port": 3310,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:22.083Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\version-control-3310",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-version-control-3310.js"
+      }
+    ],
+    [
+      "version-control-3311",
+      {
+        "id": "version-control-3311",
+        "category": "version-control",
+        "port": 3311,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:22.084Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\version-control-3311",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-version-control-3311.js"
+      }
+    ],
+    [
+      "version-control-3312",
+      {
+        "id": "version-control-3312",
+        "category": "version-control",
+        "port": 3312,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:22.085Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\version-control-3312",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-version-control-3312.js"
+      }
+    ],
+    [
+      "version-control-3313",
+      {
+        "id": "version-control-3313",
+        "category": "version-control",
+        "port": 3313,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:22.086Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\version-control-3313",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-version-control-3313.js"
+      }
+    ],
+    [
+      "version-control-3314",
+      {
+        "id": "version-control-3314",
+        "category": "version-control",
+        "port": 3314,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:22.087Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\version-control-3314",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-version-control-3314.js"
+      }
+    ],
+    [
+      "version-control-3315",
+      {
+        "id": "version-control-3315",
+        "category": "version-control",
+        "port": 3315,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:22.088Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\version-control-3315",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-version-control-3315.js"
+      }
+    ],
+    [
+      "version-control-3316",
+      {
+        "id": "version-control-3316",
+        "category": "version-control",
+        "port": 3316,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:22.089Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\version-control-3316",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-version-control-3316.js"
+      }
+    ],
+    [
+      "version-control-3317",
+      {
+        "id": "version-control-3317",
+        "category": "version-control",
+        "port": 3317,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:22.090Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\version-control-3317",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-version-control-3317.js"
+      }
+    ],
+    [
+      "version-control-3318",
+      {
+        "id": "version-control-3318",
+        "category": "version-control",
+        "port": 3318,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:22.091Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\version-control-3318",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-version-control-3318.js"
+      }
+    ],
+    [
+      "version-control-3319",
+      {
+        "id": "version-control-3319",
+        "category": "version-control",
+        "port": 3319,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:22.092Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\version-control-3319",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-version-control-3319.js"
+      }
+    ],
+    [
+      "version-control-3320",
+      {
+        "id": "version-control-3320",
+        "category": "version-control",
+        "port": 3320,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:22.093Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\version-control-3320",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-version-control-3320.js"
+      }
+    ],
+    [
+      "version-control-3321",
+      {
+        "id": "version-control-3321",
+        "category": "version-control",
+        "port": 3321,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:22.094Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\version-control-3321",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-version-control-3321.js"
+      }
+    ],
+    [
+      "version-control-3322",
+      {
+        "id": "version-control-3322",
+        "category": "version-control",
+        "port": 3322,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:22.094Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\version-control-3322",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-version-control-3322.js"
+      }
+    ],
+    [
+      "version-control-3323",
+      {
+        "id": "version-control-3323",
+        "category": "version-control",
+        "port": 3323,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:22.095Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\version-control-3323",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-version-control-3323.js"
+      }
+    ],
+    [
+      "version-control-3324",
+      {
+        "id": "version-control-3324",
+        "category": "version-control",
+        "port": 3324,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:22.096Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\version-control-3324",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-version-control-3324.js"
+      }
+    ],
+    [
+      "version-control-3325",
+      {
+        "id": "version-control-3325",
+        "category": "version-control",
+        "port": 3325,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:22.097Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\version-control-3325",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-version-control-3325.js"
+      }
+    ],
+    [
+      "version-control-3326",
+      {
+        "id": "version-control-3326",
+        "category": "version-control",
+        "port": 3326,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:22.098Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\version-control-3326",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-version-control-3326.js"
+      }
+    ],
+    [
+      "version-control-3327",
+      {
+        "id": "version-control-3327",
+        "category": "version-control",
+        "port": 3327,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:22.099Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\version-control-3327",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-version-control-3327.js"
+      }
+    ],
+    [
+      "version-control-3328",
+      {
+        "id": "version-control-3328",
+        "category": "version-control",
+        "port": 3328,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:22.100Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\version-control-3328",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-version-control-3328.js"
+      }
+    ],
+    [
+      "version-control-3329",
+      {
+        "id": "version-control-3329",
+        "category": "version-control",
+        "port": 3329,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:22.100Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\version-control-3329",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-version-control-3329.js"
+      }
+    ],
+    [
+      "version-control-3330",
+      {
+        "id": "version-control-3330",
+        "category": "version-control",
+        "port": 3330,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:22.101Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\version-control-3330",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-version-control-3330.js"
+      }
+    ],
+    [
+      "version-control-3331",
+      {
+        "id": "version-control-3331",
+        "category": "version-control",
+        "port": 3331,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:22.102Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\version-control-3331",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-version-control-3331.js"
+      }
+    ],
+    [
+      "version-control-3332",
+      {
+        "id": "version-control-3332",
+        "category": "version-control",
+        "port": 3332,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:22.103Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\version-control-3332",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-version-control-3332.js"
+      }
+    ],
+    [
+      "version-control-3333",
+      {
+        "id": "version-control-3333",
+        "category": "version-control",
+        "port": 3333,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:22.104Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\version-control-3333",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-version-control-3333.js"
+      }
+    ],
+    [
+      "version-control-3334",
+      {
+        "id": "version-control-3334",
+        "category": "version-control",
+        "port": 3334,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:22.105Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\version-control-3334",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-version-control-3334.js"
+      }
+    ],
+    [
+      "version-control-3335",
+      {
+        "id": "version-control-3335",
+        "category": "version-control",
+        "port": 3335,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:22.106Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\version-control-3335",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-version-control-3335.js"
+      }
+    ],
+    [
+      "version-control-3336",
+      {
+        "id": "version-control-3336",
+        "category": "version-control",
+        "port": 3336,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:22.109Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\version-control-3336",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-version-control-3336.js"
+      }
+    ],
+    [
+      "version-control-3337",
+      {
+        "id": "version-control-3337",
+        "category": "version-control",
+        "port": 3337,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:22.110Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\version-control-3337",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-version-control-3337.js"
+      }
+    ],
+    [
+      "version-control-3338",
+      {
+        "id": "version-control-3338",
+        "category": "version-control",
+        "port": 3338,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:22.111Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\version-control-3338",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-version-control-3338.js"
+      }
+    ],
+    [
+      "version-control-3339",
+      {
+        "id": "version-control-3339",
+        "category": "version-control",
+        "port": 3339,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:22.112Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\version-control-3339",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-version-control-3339.js"
+      }
+    ],
+    [
+      "version-control-3340",
+      {
+        "id": "version-control-3340",
+        "category": "version-control",
+        "port": 3340,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:22.114Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\version-control-3340",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-version-control-3340.js"
+      }
+    ],
+    [
+      "version-control-3341",
+      {
+        "id": "version-control-3341",
+        "category": "version-control",
+        "port": 3341,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:22.114Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\version-control-3341",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-version-control-3341.js"
+      }
+    ],
+    [
+      "version-control-3342",
+      {
+        "id": "version-control-3342",
+        "category": "version-control",
+        "port": 3342,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:22.115Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\version-control-3342",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-version-control-3342.js"
+      }
+    ],
+    [
+      "version-control-3343",
+      {
+        "id": "version-control-3343",
+        "category": "version-control",
+        "port": 3343,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:22.116Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\version-control-3343",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-version-control-3343.js"
+      }
+    ],
+    [
+      "version-control-3344",
+      {
+        "id": "version-control-3344",
+        "category": "version-control",
+        "port": 3344,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:22.117Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\version-control-3344",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-version-control-3344.js"
+      }
+    ],
+    [
+      "version-control-3345",
+      {
+        "id": "version-control-3345",
+        "category": "version-control",
+        "port": 3345,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:22.118Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\version-control-3345",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-version-control-3345.js"
+      }
+    ],
+    [
+      "version-control-3346",
+      {
+        "id": "version-control-3346",
+        "category": "version-control",
+        "port": 3346,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:22.119Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\version-control-3346",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-version-control-3346.js"
+      }
+    ],
+    [
+      "version-control-3347",
+      {
+        "id": "version-control-3347",
+        "category": "version-control",
+        "port": 3347,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:22.120Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\version-control-3347",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-version-control-3347.js"
+      }
+    ],
+    [
+      "version-control-3348",
+      {
+        "id": "version-control-3348",
+        "category": "version-control",
+        "port": 3348,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:22.122Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\version-control-3348",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-version-control-3348.js"
+      }
+    ],
+    [
+      "version-control-3349",
+      {
+        "id": "version-control-3349",
+        "category": "version-control",
+        "port": 3349,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:17:22.123Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\version-control-3349",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-version-control-3349.js"
+      }
     ]
   ],
   "categories": [
@@ -2444,7 +3044,7 @@
       {
         "portStart": 3300,
         "portEnd": 3349,
-        "count": 0,
+        "count": 50,
         "maxServers": 100
       }
     ],
@@ -2539,5 +3139,5 @@
       }
     ]
   ],
-  "lastUpdated": "2025-09-03T03:13:50.267Z"
+  "lastUpdated": "2025-09-03T03:17:22.124Z"
 }
