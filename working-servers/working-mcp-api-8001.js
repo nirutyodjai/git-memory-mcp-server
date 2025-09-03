@@ -4,7 +4,8 @@ const cors = require('cors');
 class workingmcpapi8001Server {
     constructor() {
         this.name = 'working-mcp-api-8001';
-        this.port = 8001;
+        this.port = parseInt(process.env.PORT || process.env.SERVER_PORT || process.env.MCP_PORT || 8001, 10);
+        this.strictPort = process.env.PORT_STRICT === '1' || process.env.MCP_SERVER_PORT_STRICT === '1';
         this.category = 'api';
         this.startTime = Date.now();
         this.requestCount = 0;
@@ -84,18 +85,30 @@ class workingmcpapi8001Server {
     }
 
     startServer() {
-        const server = this.app.listen(this.port, () => {
-            console.log(`[${this.name}] Server running on port ${this.port}`);
-        });
-        
-        server.on('error', (err) => {
-            if (err.code === 'EADDRINUSE') {
-                console.error(`[${this.name}] Port ${this.port} is already in use`);
-                process.exit(1);
-            } else {
-                console.error(`[${this.name}] Server error:`, err.message);
-            }
-        });
+        const maxAttempts = parseInt(process.env.PORT_MAX_ATTEMPTS || '50', 10);
+        let attempt = 0;
+        const listenOnce = () => {
+            const server = this.app.listen(this.port, () => {
+                console.log(`[${this.name}] Server running on port ${this.port}`);
+            });
+            
+            server.on('error', (err) => {
+                if (err.code === 'EADDRINUSE' && !this.strictPort && attempt < maxAttempts) {
+                    console.warn(`[${this.name}] Port ${this.port} in use. Trying next port...`);
+                    attempt++;
+                    this.port++;
+                    const backoff = Math.min(1000, 100 + attempt * 50);
+                    setTimeout(listenOnce, backoff);
+                } else if (err.code === 'EADDRINUSE') {
+                    console.error(`[${this.name}] Port ${this.port} is already in use and strict mode is enabled or attempts exceeded.`);
+                    process.exit(1);
+                } else {
+                    console.error(`[${this.name}] Server error:`, err.message);
+                    process.exit(1);
+                }
+            });
+        };
+        listenOnce();
     }
 }
 

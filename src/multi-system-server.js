@@ -30,8 +30,12 @@ class MultiSystemMCPServer {
   constructor() {
     this.app = express();
     this.server = null;
-    this.port = process.env.MCP_MULTI_PORT || 5501;
+    // Support multiple env vars with sane defaults
+    this.port = parseInt(process.env.MCP_MULTI_PORT || process.env.PORT || '5501', 10);
     this.host = process.env.MCP_MULTI_HOST || 'localhost';
+    // Strict port binding and attempt limits via env
+    this.strictPort = ['1','true','yes','on'].includes(String(process.env.MCP_MULTI_PORT_STRICT || process.env.PORT_STRICT || '').toLowerCase());
+    this.maxPortAttempts = parseInt(process.env.MCP_MULTI_PORT_MAX_ATTEMPTS || process.env.PORT_MAX_ATTEMPTS || '50', 10);
     
     // Configuration
     this.config = null;
@@ -570,43 +574,57 @@ class MultiSystemMCPServer {
       }
       
       return new Promise((resolve, reject) => {
-        this.server = this.app.listen(this.port, this.host, (error) => {
-          if (error) {
-            logger.error('Failed to start server', {
+        let attempt = 0;
+        const tryListen = () => {
+          const currentPort = this.port;
+          const server = this.app.listen(this.port, this.host, () => {
+            // Successful start
+            this.server = server;
+            this.isRunning = true;
+            this.startTime = new Date();
+            
+            logger.info('Multi-System MCP Server started successfully', {
               port: this.port,
               host: this.host,
-              error: error.message
+              environment: process.env.NODE_ENV || 'development',
+              pid: process.pid,
+              startTime: this.startTime.toISOString()
             });
-            reject(error);
-            return;
-          }
-          
-          this.isRunning = true;
-          this.startTime = new Date();
-          
-          logger.info('Multi-System MCP Server started successfully', {
-            port: this.port,
-            host: this.host,
-            environment: process.env.NODE_ENV || 'development',
-            pid: process.pid,
-            startTime: this.startTime.toISOString()
+            
+            resolve({
+              port: this.port,
+              host: this.host,
+              url: `http://${this.host}:${this.port}`,
+              startTime: this.startTime
+            });
           });
           
-          resolve({
-            port: this.port,
-            host: this.host,
-            url: `http://${this.host}:${this.port}`,
-            startTime: this.startTime
+          // Handle listen errors for this attempt only
+          server.once('error', (error) => {
+            if (error && error.code === 'EADDRINUSE' && !this.strictPort && attempt < this.maxPortAttempts) {
+              attempt++;
+              const backoff = Math.min(1000, 100 + attempt * 50);
+              logger.warn('Port in use, retrying on next port', {
+                previousPort: currentPort,
+                nextPort: currentPort + 1,
+                attempt,
+                maxAttempts: this.maxPortAttempts
+              });
+              this.port = currentPort + 1;
+              setTimeout(tryListen, backoff);
+            } else {
+              logger.error('Failed to start server', {
+                port: currentPort,
+                host: this.host,
+                code: error?.code,
+                error: error?.message || String(error)
+              });
+              reject(error);
+            }
           });
-        });
+        };
         
-        this.server.on('error', (error) => {
-          logger.error('Server error', {
-            error: error.message,
-            code: error.code
-          });
-          reject(error);
-        });
+        tryListen();
       });
       
     } catch (error) {

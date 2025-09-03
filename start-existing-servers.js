@@ -3,6 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 const { spawn } = require('child_process');
+const http = require('http');
 
 /**
  * MCP Existing Server Starter
@@ -12,14 +13,18 @@ class MCPExistingServerStarter {
     constructor() {
         this.baseDir = __dirname;
         this.runningServers = new Map();
-        this.targetServerCount = 500;
-        this.startPort = 3300;
+        this.targetServerCount = parseInt(process.env.STARTER_TARGET_COUNT || '500', 10);
+        // Configure starting port and max attempts via env
+        this.startPort = parseInt(process.env.STARTER_PORT_START || '3300', 10);
+        this.maxAttemptsPerServer = parseInt(process.env.STARTER_PORT_MAX_ATTEMPTS || process.env.PORT_MAX_ATTEMPTS || '10', 10);
         this.serverCategories = [
             'web', 'api', 'database', 'filesystem', 'monitoring',
             'analytics', 'ai-ml', 'security', 'cache', 'queue',
             'notification', 'auth', 'logging', 'config', 'backup',
             'search', 'media', 'email', 'chat', 'payment'
         ];
+        // Reserve ports to prevent concurrent batches from colliding
+        this.reservedPorts = new Set();
     }
 
     /**
@@ -66,261 +71,176 @@ class MCPExistingServerStarter {
     }
 
     /**
-     * เริ่มต้น server
+     * เริ่มต้น server (with automatic port increment and retry)
      */
     async startServer(serverInfo) {
-        return new Promise((resolve) => {
-            console.log(`🚀 Starting server: ${serverInfo.file} on port ${serverInfo.port}`);
-            
+        const basePort = Number.isFinite(serverInfo.port) ? serverInfo.port : this.startPort;
+        let attempt = 0;
+        let currentPort = this.getNextAvailablePort(basePort);
+
+        const tryOnce = (port) => new Promise((resolve) => {
+            console.log(`🚀 Starting server: ${serverInfo.file} on port ${port}`);
+
+            const env = {
+                ...process.env,
+                PORT: String(port),
+                MCP_PORT: String(port),
+                SERVER_PORT: String(port),
+                // Turn off strict port bindings if present in target servers
+                PORT_STRICT: '0',
+                MCP_PORT_STRICT: '0',
+                MCP_SERVER_PORT_STRICT: '0',
+                SERVER_PORT_STRICT: '0',
+            };
+
             const serverProcess = spawn('node', [serverInfo.path], {
                 stdio: ['pipe', 'pipe', 'pipe'],
-                cwd: this.baseDir
+                cwd: this.baseDir,
+                env
             });
 
             let started = false;
+            const timeoutMs = parseInt(process.env.STARTER_STARTUP_TIMEOUT_MS || '8000', 10);
+            const probeIntervalMs = parseInt(process.env.STARTER_PROBE_INTERVAL_MS || '600', 10);
+            const probePaths = ['/health', '/'];
+
             const timeout = setTimeout(() => {
                 if (!started) {
-                    console.log(`⚠️  Server ${serverInfo.file} startup timeout`);
-                    resolve(false);
+                    console.log(`⚠️  Server ${serverInfo.file} startup timeout on port ${port}`);
+                    try { serverProcess.kill('SIGTERM'); } catch {}
+                    resolve({ ok: false, reason: 'timeout' });
                 }
-            }, 5000);
+            }, timeoutMs);
+
+            let probeTimer = setInterval(() => {
+                if (started) return;
+                // probe sequentially two paths
+                const tryPath = (idx) => {
+                    if (idx >= probePaths.length) return;
+                    const req = http.get({ hostname: '127.0.0.1', port, path: probePaths[idx], timeout: 1000 }, (res) => {
+                        if (!started && res && res.statusCode) {
+                            started = true;
+                            clearTimeout(timeout);
+                            clearInterval(probeTimer);
+                            this.runningServers.set(port, {
+                                process: serverProcess,
+                                info: { ...serverInfo, port },
+                                startTime: Date.now()
+                            });
+                            console.log(`✅ Server ${serverInfo.file} responded on port ${port} (status ${res.statusCode})`);
+                            resolve({ ok: true });
+                            res.resume();
+                            return;
+                        }
+                    });
+                    req.on('error', () => {
+                        // try next path if this one fails
+                        tryPath(idx + 1);
+                    });
+                };
+                tryPath(0);
+            }, probeIntervalMs);
 
             serverProcess.stdout.on('data', (data) => {
+                if (started) return;
                 const output = data.toString();
+                // Heuristic signals that server is up
                 if (output.includes('Server running') || output.includes('listening') || output.includes('started')) {
-                    if (!started) {
-                        started = true;
-                        clearTimeout(timeout);
-                        this.runningServers.set(serverInfo.port, {
-                            process: serverProcess,
-                            info: serverInfo,
-                            startTime: Date.now()
-                        });
-                        console.log(`✅ Server ${serverInfo.file} started successfully`);
-                        resolve(true);
-                    }
+                    started = true;
+                    clearTimeout(timeout);
+                    clearInterval(probeTimer);
+                    this.runningServers.set(port, {
+                        process: serverProcess,
+                        info: { ...serverInfo, port },
+                        startTime: Date.now()
+                    });
+                    console.log(`✅ Server ${serverInfo.file} started successfully on port ${port}`);
+                    resolve({ ok: true });
                 }
             });
 
             serverProcess.stderr.on('data', (data) => {
+                if (started) return;
                 const error = data.toString();
                 if (error.includes('EADDRINUSE') || error.includes('address already in use')) {
-                    console.log(`⚠️  Port ${serverInfo.port} already in use, skipping ${serverInfo.file}`);
-                    if (!started) {
-                        started = true;
-                        clearTimeout(timeout);
-                        resolve(false);
-                    }
+                    console.log(`⚠️  Port ${port} already in use for ${serverInfo.file}`);
+                    try { serverProcess.kill('SIGTERM'); } catch {}
+                    clearTimeout(timeout);
+                    clearInterval(probeTimer);
+                    resolve({ ok: false, reason: 'EADDRINUSE' });
                 }
             });
 
             serverProcess.on('error', (error) => {
-                console.log(`❌ Error starting ${serverInfo.file}:`, error.message);
-                if (!started) {
-                    started = true;
-                    clearTimeout(timeout);
-                    resolve(false);
-                }
+                if (started) return;
+                console.log(`❌ Error starting ${serverInfo.file} on port ${port}:`, error.message);
+                clearTimeout(timeout);
+                clearInterval(probeTimer);
+                resolve({ ok: false, reason: 'spawn_error', error });
             });
 
             serverProcess.on('exit', (code) => {
-                if (this.runningServers.has(serverInfo.port)) {
-                    this.runningServers.delete(serverInfo.port);
-                    console.log(`🔄 Server ${serverInfo.file} exited with code ${code}`);
+                if (!started) {
+                    clearTimeout(timeout);
+                    clearInterval(probeTimer);
+                    resolve({ ok: false, reason: 'exit', code });
+                } else {
+                    if (this.runningServers.has(port)) {
+                        this.runningServers.delete(port);
+                        console.log(`🔄 Server ${serverInfo.file} exited with code ${code}`);
+                    }
                 }
             });
         });
+
+        while (attempt < this.maxAttemptsPerServer) {
+            const result = await tryOnce(currentPort);
+            if (result.ok) {
+                // keep port reserved while running
+                return true;
+            }
+
+            // Release the reserved port if not used successfully
+            this.releaseReservedPort(currentPort);
+
+            if (result.reason === 'EADDRINUSE' || result.reason === 'timeout') {
+                attempt++;
+                // exponential backoff (capped)
+                const backoff = Math.min(1000 * Math.pow(2, attempt - 1), 4000);
+                if (backoff > 0) {
+                    await new Promise((r) => setTimeout(r, backoff));
+                }
+                currentPort = this.getNextAvailablePort(currentPort + 1);
+                console.log(`↪️  Retrying ${serverInfo.file} on port ${currentPort} (attempt ${attempt}/${this.maxAttemptsPerServer})`);
+                continue;
+            }
+
+            // For other failures, don't keep retrying endlessly
+            console.log(`⏭️  Skipping ${serverInfo.file} due to failure: ${result.reason || 'unknown'}`);
+            return false;
+        }
+
+        console.log(`⏭️  Skipping ${serverInfo.file} after ${this.maxAttemptsPerServer} attempts`);
+        return false;
     }
 
     /**
-     * สร้าง server script ใหม่
+     * Get next available port (reserving it immediately)
      */
-    generateServerScript(category, port) {
-        const serverScript = `#!/usr/bin/env node
-
-const { Server } = require('@modelcontextprotocol/sdk/server/index.js');
-const { StdioServerTransport } = require('@modelcontextprotocol/sdk/server/stdio.js');
-const { CallToolRequestSchema, ListToolsRequestSchema } = require('@modelcontextprotocol/sdk/types.js');
-
-/**
- * MCP ${category.toUpperCase()} Server - Port ${port}
- * Provides ${category} functionality for MCP clients
- */
-class MCP${category.charAt(0).toUpperCase() + category.slice(1)}Server {
-    constructor() {
-        this.server = new Server(
-            {
-                name: 'mcp-${category}-server-${port}',
-                version: '1.0.0',
-            },
-            {
-                capabilities: {
-                    tools: {},
-                },
-            }
-        );
-        
-        this.setupToolHandlers();
-        this.setupErrorHandling();
+    getNextAvailablePort(fromPort) {
+        let p = typeof fromPort === 'number' ? fromPort : this.startPort;
+        while (this.runningServers.has(p) || this.reservedPorts.has(p)) {
+            p++;
+        }
+        this.reservedPorts.add(p);
+        return p;
     }
 
-    setupToolHandlers() {
-        this.server.setRequestHandler(ListToolsRequestSchema, async () => {
-            return {
-                tools: [
-                    {
-                        name: '${category}_status',
-                        description: 'Get ${category} server status and information',
-                        inputSchema: {
-                            type: 'object',
-                            properties: {},
-                        },
-                    },
-                    {
-                        name: '${category}_health_check',
-                        description: 'Perform health check for ${category} services',
-                        inputSchema: {
-                            type: 'object',
-                            properties: {
-                                detailed: {
-                                    type: 'boolean',
-                                    description: 'Return detailed health information',
-                                    default: false
-                                }
-                            },
-                        },
-                    },
-                    {
-                        name: '${category}_info',
-                        description: 'Get detailed information about ${category} capabilities',
-                        inputSchema: {
-                            type: 'object',
-                            properties: {},
-                        },
-                    }
-                ],
-            };
-        });
-
-        this.server.setRequestHandler(CallToolRequestSchema, async (request) => {
-            const { name, arguments: args } = request.params;
-
-            try {
-                switch (name) {
-                    case '${category}_status':
-                        return {
-                            content: [
-                                {
-                                    type: 'text',
-                                    text: JSON.stringify({
-                                        server: 'mcp-${category}-server-${port}',
-                                        status: 'running',
-                                        port: ${port},
-                                        category: '${category}',
-                                        uptime: process.uptime(),
-                                        memory: process.memoryUsage(),
-                                        timestamp: new Date().toISOString()
-                                    }, null, 2)
-                                }
-                            ]
-                        };
-
-                    case '${category}_health_check':
-                        const healthData = {
-                            status: 'healthy',
-                            server: 'mcp-${category}-server-${port}',
-                            port: ${port},
-                            category: '${category}',
-                            checks: {
-                                memory: process.memoryUsage().heapUsed < 100 * 1024 * 1024,
-                                uptime: process.uptime() > 0,
-                                responsive: true
-                            },
-                            timestamp: new Date().toISOString()
-                        };
-                        
-                        if (args?.detailed) {
-                            healthData.details = {
-                                pid: process.pid,
-                                platform: process.platform,
-                                nodeVersion: process.version,
-                                memoryUsage: process.memoryUsage(),
-                                cpuUsage: process.cpuUsage()
-                            };
-                        }
-                        
-                        return {
-                            content: [
-                                {
-                                    type: 'text',
-                                    text: JSON.stringify(healthData, null, 2)
-                                }
-                            ]
-                        };
-
-                    case '${category}_info':
-                        return {
-                            content: [
-                                {
-                                    type: 'text',
-                                    text: JSON.stringify({
-                                        server: 'mcp-${category}-server-${port}',
-                                        category: '${category}',
-                                        port: ${port},
-                                        capabilities: [
-                                            'Status monitoring',
-                                            'Health checking',
-                                            'Information retrieval',
-                                            '${category.charAt(0).toUpperCase() + category.slice(1)} operations'
-                                        ],
-                                        version: '1.0.0',
-                                        description: 'MCP server providing ${category} functionality',
-                                        timestamp: new Date().toISOString()
-                                    }, null, 2)
-                                }
-                            ]
-                        };
-
-                    default:
-                        throw new Error(\`Unknown tool: \${name}\`);
-                }
-            } catch (error) {
-                return {
-                    content: [
-                        {
-                            type: 'text',
-                            text: \`Error: \${error.message}\`
-                        }
-                    ],
-                    isError: true
-                };
-            }
-        });
-    }
-
-    setupErrorHandling() {
-        this.server.onerror = (error) => {
-            console.error('[MCP ${category.toUpperCase()} Server] Error:', error);
-        };
-
-        process.on('SIGINT', async () => {
-            console.log('\n[MCP ${category.toUpperCase()} Server] Shutting down...');
-            await this.server.close();
-            process.exit(0);
-        });
-    }
-
-    async run() {
-        const transport = new StdioServerTransport();
-        await this.server.connect(transport);
-        console.log('[MCP ${category.toUpperCase()} Server] Server running on port ${port}');
-    }
-}
-
-const server = new MCP${category.charAt(0).toUpperCase() + category.slice(1)}Server();
-server.run().catch(console.error);
-`;
-        return serverScript;
+    /**
+     * Release a reserved port when not used
+     */
+    releaseReservedPort(port) {
+        this.reservedPorts.delete(port);
     }
 
     /**
@@ -359,8 +279,14 @@ server.run().catch(console.error);
         const batchSize = 10;
         
         for (let i = 0; i < existingServers.length; i += batchSize) {
-            const batch = existingServers.slice(i, i + batchSize);
-            console.log(`\n🚀 Starting batch ${Math.floor(i/batchSize) + 1} (${batch.length} servers)...`);
+            const remainingNeeded = this.targetServerCount - successCount;
+            if (remainingNeeded <= 0) {
+                console.log('✅ Reached target server count. Skipping remaining existing servers.');
+                break;
+            }
+
+            const batch = existingServers.slice(i, i + Math.min(batchSize, remainingNeeded));
+            console.log(`\n🚀 Starting batch ${Math.floor(i/batchSize) + 1} (${batch.length} servers, target remaining: ${remainingNeeded})...`);
             
             const promises = batch.map(server => this.startServer(server));
             const results = await Promise.all(promises);
@@ -371,8 +297,8 @@ server.run().catch(console.error);
             console.log(`✅ Batch completed: ${batchSuccess}/${batch.length} servers started`);
             console.log(`📈 Total progress: ${successCount}/${existingServers.length} existing servers running`);
             
-            // Wait between batches
-            if (i + batchSize < existingServers.length) {
+            // Wait between batches if still need more
+            if (i + batchSize < existingServers.length && (this.targetServerCount - successCount) > 0) {
                 await new Promise(resolve => setTimeout(resolve, 2000));
             }
         }
@@ -500,6 +426,40 @@ server.run().catch(console.error);
 
         process.on('SIGINT', cleanup);
         process.on('SIGTERM', cleanup);
+    }
+
+    /**
+     * Generate minimal server script content
+     */
+    generateServerScript(category, port) {
+        const safePort = Number.isFinite(port) ? port : this.startPort;
+        const lines = [
+            "#!/usr/bin/env node",
+            "const http = require('http');",
+            "const DEFAULT_PORT = '" + String(safePort) + "';",
+            "const port = parseInt(process.env.PORT || process.env.MCP_PORT || process.env.SERVER_PORT || DEFAULT_PORT, 10);",
+            "const server = http.createServer((req, res) => {",
+            "  if (req.url === '/health') {",
+            "    res.writeHead(200, { 'content-type': 'application/json' });",
+            "    res.end(JSON.stringify({ ok: true, category: '" + category + "', port }));",
+            "    return;",
+            "  }",
+            "  res.writeHead(200, { 'content-type': 'text/plain' });",
+            "  res.end('OK');",
+            "});",
+            "server.listen(port, () => {",
+            "  console.log('Server running on port ' + port);",
+            "});",
+            "server.on('error', (err) => {",
+            "  if (err && err.code === 'EADDRINUSE') {",
+            "    console.error('EADDRINUSE: address already in use for port ' + port);",
+            "  } else {",
+            "    console.error(err && (err.stack || err.message) || String(err));",
+            "  }",
+            "  process.exit(1);",
+            "});",
+        ];
+        return lines.join('\n');
     }
 }
 
