@@ -2160,6 +2160,246 @@
         "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\api-3249",
         "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-api-3249.js"
       }
+    ],
+    [
+      "ai-ml-3280",
+      {
+        "id": "ai-ml-3280",
+        "category": "ai-ml",
+        "port": 3280,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:13:50.239Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\ai-ml-3280",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-ai-ml-3280.js"
+      }
+    ],
+    [
+      "ai-ml-3281",
+      {
+        "id": "ai-ml-3281",
+        "category": "ai-ml",
+        "port": 3281,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:13:50.248Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\ai-ml-3281",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-ai-ml-3281.js"
+      }
+    ],
+    [
+      "ai-ml-3282",
+      {
+        "id": "ai-ml-3282",
+        "category": "ai-ml",
+        "port": 3282,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:13:50.250Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\ai-ml-3282",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-ai-ml-3282.js"
+      }
+    ],
+    [
+      "ai-ml-3283",
+      {
+        "id": "ai-ml-3283",
+        "category": "ai-ml",
+        "port": 3283,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:13:50.251Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\ai-ml-3283",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-ai-ml-3283.js"
+      }
+    ],
+    [
+      "ai-ml-3284",
+      {
+        "id": "ai-ml-3284",
+        "category": "ai-ml",
+        "port": 3284,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:13:50.252Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\ai-ml-3284",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-ai-ml-3284.js"
+      }
+    ],
+    [
+      "ai-ml-3285",
+      {
+        "id": "ai-ml-3285",
+        "category": "ai-ml",
+        "port": 3285,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:13:50.253Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\ai-ml-3285",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-ai-ml-3285.js"
+      }
+    ],
+    [
+      "ai-ml-3286",
+      {
+        "id": "ai-ml-3286",
+        "category": "ai-ml",
+        "port": 3286,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:13:50.254Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\ai-ml-3286",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-ai-ml-3286.js"
+      }
+    ],
+    [
+      "ai-ml-3287",
+      {
+        "id": "ai-ml-3287",
+        "category": "ai-ml",
+        "port": 3287,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:13:50.255Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\ai-ml-3287",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-ai-ml-3287.js"
+      }
+    ],
+    [
+      "ai-ml-3288",
+      {
+        "id": "ai-ml-3288",
+        "category": "ai-ml",
+        "port": 3288,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:13:50.256Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\ai-ml-3288",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-ai-ml-3288.js"
+      }
+    ],
+    [
+      "ai-ml-3289",
+      {
+        "id": "ai-ml-3289",
+        "category": "ai-ml",
+        "port": 3289,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:13:50.257Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\ai-ml-3289",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-ai-ml-3289.js"
+      }
+    ],
+    [
+      "ai-ml-3290",
+      {
+        "id": "ai-ml-3290",
+        "category": "ai-ml",
+        "port": 3290,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:13:50.258Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\ai-ml-3290",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-ai-ml-3290.js"
+      }
+    ],
+    [
+      "ai-ml-3291",
+      {
+        "id": "ai-ml-3291",
+        "category": "ai-ml",
+        "port": 3291,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:13:50.259Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\ai-ml-3291",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-ai-ml-3291.js"
+      }
+    ],
+    [
+      "ai-ml-3292",
+      {
+        "id": "ai-ml-3292",
+        "category": "ai-ml",
+        "port": 3292,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:13:50.260Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\ai-ml-3292",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-ai-ml-3292.js"
+      }
+    ],
+    [
+      "ai-ml-3293",
+      {
+        "id": "ai-ml-3293",
+        "category": "ai-ml",
+        "port": 3293,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:13:50.261Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\ai-ml-3293",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-ai-ml-3293.js"
+      }
+    ],
+    [
+      "ai-ml-3294",
+      {
+        "id": "ai-ml-3294",
+        "category": "ai-ml",
+        "port": 3294,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:13:50.261Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\ai-ml-3294",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-ai-ml-3294.js"
+      }
+    ],
+    [
+      "ai-ml-3295",
+      {
+        "id": "ai-ml-3295",
+        "category": "ai-ml",
+        "port": 3295,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:13:50.262Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\ai-ml-3295",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-ai-ml-3295.js"
+      }
+    ],
+    [
+      "ai-ml-3296",
+      {
+        "id": "ai-ml-3296",
+        "category": "ai-ml",
+        "port": 3296,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:13:50.263Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\ai-ml-3296",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-ai-ml-3296.js"
+      }
+    ],
+    [
+      "ai-ml-3297",
+      {
+        "id": "ai-ml-3297",
+        "category": "ai-ml",
+        "port": 3297,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:13:50.264Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\ai-ml-3297",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-ai-ml-3297.js"
+      }
+    ],
+    [
+      "ai-ml-3298",
+      {
+        "id": "ai-ml-3298",
+        "category": "ai-ml",
+        "port": 3298,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:13:50.265Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\ai-ml-3298",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-ai-ml-3298.js"
+      }
+    ],
+    [
+      "ai-ml-3299",
+      {
+        "id": "ai-ml-3299",
+        "category": "ai-ml",
+        "port": 3299,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:13:50.266Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\ai-ml-3299",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-ai-ml-3299.js"
+      }
     ]
   ],
   "categories": [
@@ -2195,7 +2435,7 @@
       {
         "portStart": 3250,
         "portEnd": 3299,
-        "count": 30,
+        "count": 50,
         "maxServers": 100
       }
     ],
@@ -2299,5 +2539,5 @@
       }
     ]
   ],
-  "lastUpdated": "2025-09-03T03:13:27.610Z"
+  "lastUpdated": "2025-09-03T03:13:50.267Z"
 }
