@@ -1,5 +1,5 @@
 {
-  "currentPhase": 5,
+  "currentPhase": 6,
   "mcpServers": [
     [
       "database-3100",
@@ -5400,6 +5400,606 @@
         "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\business-3549",
         "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-business-3549.js"
       }
+    ],
+    [
+      "iot-hardware-3550",
+      {
+        "id": "iot-hardware-3550",
+        "category": "iot-hardware",
+        "port": 3550,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:19:23.001Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\iot-hardware-3550",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-iot-hardware-3550.js"
+      }
+    ],
+    [
+      "iot-hardware-3551",
+      {
+        "id": "iot-hardware-3551",
+        "category": "iot-hardware",
+        "port": 3551,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:19:23.002Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\iot-hardware-3551",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-iot-hardware-3551.js"
+      }
+    ],
+    [
+      "iot-hardware-3552",
+      {
+        "id": "iot-hardware-3552",
+        "category": "iot-hardware",
+        "port": 3552,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:19:23.015Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\iot-hardware-3552",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-iot-hardware-3552.js"
+      }
+    ],
+    [
+      "iot-hardware-3553",
+      {
+        "id": "iot-hardware-3553",
+        "category": "iot-hardware",
+        "port": 3553,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:19:23.017Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\iot-hardware-3553",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-iot-hardware-3553.js"
+      }
+    ],
+    [
+      "iot-hardware-3554",
+      {
+        "id": "iot-hardware-3554",
+        "category": "iot-hardware",
+        "port": 3554,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:19:23.018Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\iot-hardware-3554",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-iot-hardware-3554.js"
+      }
+    ],
+    [
+      "iot-hardware-3555",
+      {
+        "id": "iot-hardware-3555",
+        "category": "iot-hardware",
+        "port": 3555,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:19:23.019Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\iot-hardware-3555",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-iot-hardware-3555.js"
+      }
+    ],
+    [
+      "iot-hardware-3556",
+      {
+        "id": "iot-hardware-3556",
+        "category": "iot-hardware",
+        "port": 3556,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:19:23.031Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\iot-hardware-3556",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-iot-hardware-3556.js"
+      }
+    ],
+    [
+      "iot-hardware-3557",
+      {
+        "id": "iot-hardware-3557",
+        "category": "iot-hardware",
+        "port": 3557,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:19:23.032Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\iot-hardware-3557",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-iot-hardware-3557.js"
+      }
+    ],
+    [
+      "iot-hardware-3558",
+      {
+        "id": "iot-hardware-3558",
+        "category": "iot-hardware",
+        "port": 3558,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:19:23.033Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\iot-hardware-3558",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-iot-hardware-3558.js"
+      }
+    ],
+    [
+      "iot-hardware-3559",
+      {
+        "id": "iot-hardware-3559",
+        "category": "iot-hardware",
+        "port": 3559,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:19:23.035Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\iot-hardware-3559",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-iot-hardware-3559.js"
+      }
+    ],
+    [
+      "iot-hardware-3560",
+      {
+        "id": "iot-hardware-3560",
+        "category": "iot-hardware",
+        "port": 3560,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:19:23.036Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\iot-hardware-3560",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-iot-hardware-3560.js"
+      }
+    ],
+    [
+      "iot-hardware-3561",
+      {
+        "id": "iot-hardware-3561",
+        "category": "iot-hardware",
+        "port": 3561,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:19:23.037Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\iot-hardware-3561",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-iot-hardware-3561.js"
+      }
+    ],
+    [
+      "iot-hardware-3562",
+      {
+        "id": "iot-hardware-3562",
+        "category": "iot-hardware",
+        "port": 3562,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:19:23.039Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\iot-hardware-3562",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-iot-hardware-3562.js"
+      }
+    ],
+    [
+      "iot-hardware-3563",
+      {
+        "id": "iot-hardware-3563",
+        "category": "iot-hardware",
+        "port": 3563,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:19:23.040Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\iot-hardware-3563",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-iot-hardware-3563.js"
+      }
+    ],
+    [
+      "iot-hardware-3564",
+      {
+        "id": "iot-hardware-3564",
+        "category": "iot-hardware",
+        "port": 3564,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:19:23.041Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\iot-hardware-3564",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-iot-hardware-3564.js"
+      }
+    ],
+    [
+      "iot-hardware-3565",
+      {
+        "id": "iot-hardware-3565",
+        "category": "iot-hardware",
+        "port": 3565,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:19:23.042Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\iot-hardware-3565",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-iot-hardware-3565.js"
+      }
+    ],
+    [
+      "iot-hardware-3566",
+      {
+        "id": "iot-hardware-3566",
+        "category": "iot-hardware",
+        "port": 3566,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:19:23.043Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\iot-hardware-3566",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-iot-hardware-3566.js"
+      }
+    ],
+    [
+      "iot-hardware-3567",
+      {
+        "id": "iot-hardware-3567",
+        "category": "iot-hardware",
+        "port": 3567,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:19:23.044Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\iot-hardware-3567",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-iot-hardware-3567.js"
+      }
+    ],
+    [
+      "iot-hardware-3568",
+      {
+        "id": "iot-hardware-3568",
+        "category": "iot-hardware",
+        "port": 3568,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:19:23.045Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\iot-hardware-3568",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-iot-hardware-3568.js"
+      }
+    ],
+    [
+      "iot-hardware-3569",
+      {
+        "id": "iot-hardware-3569",
+        "category": "iot-hardware",
+        "port": 3569,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:19:23.046Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\iot-hardware-3569",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-iot-hardware-3569.js"
+      }
+    ],
+    [
+      "iot-hardware-3570",
+      {
+        "id": "iot-hardware-3570",
+        "category": "iot-hardware",
+        "port": 3570,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:19:23.046Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\iot-hardware-3570",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-iot-hardware-3570.js"
+      }
+    ],
+    [
+      "iot-hardware-3571",
+      {
+        "id": "iot-hardware-3571",
+        "category": "iot-hardware",
+        "port": 3571,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:19:23.047Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\iot-hardware-3571",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-iot-hardware-3571.js"
+      }
+    ],
+    [
+      "iot-hardware-3572",
+      {
+        "id": "iot-hardware-3572",
+        "category": "iot-hardware",
+        "port": 3572,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:19:23.048Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\iot-hardware-3572",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-iot-hardware-3572.js"
+      }
+    ],
+    [
+      "iot-hardware-3573",
+      {
+        "id": "iot-hardware-3573",
+        "category": "iot-hardware",
+        "port": 3573,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:19:23.049Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\iot-hardware-3573",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-iot-hardware-3573.js"
+      }
+    ],
+    [
+      "iot-hardware-3574",
+      {
+        "id": "iot-hardware-3574",
+        "category": "iot-hardware",
+        "port": 3574,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:19:23.050Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\iot-hardware-3574",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-iot-hardware-3574.js"
+      }
+    ],
+    [
+      "iot-hardware-3575",
+      {
+        "id": "iot-hardware-3575",
+        "category": "iot-hardware",
+        "port": 3575,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:19:23.051Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\iot-hardware-3575",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-iot-hardware-3575.js"
+      }
+    ],
+    [
+      "iot-hardware-3576",
+      {
+        "id": "iot-hardware-3576",
+        "category": "iot-hardware",
+        "port": 3576,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:19:23.052Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\iot-hardware-3576",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-iot-hardware-3576.js"
+      }
+    ],
+    [
+      "iot-hardware-3577",
+      {
+        "id": "iot-hardware-3577",
+        "category": "iot-hardware",
+        "port": 3577,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:19:23.053Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\iot-hardware-3577",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-iot-hardware-3577.js"
+      }
+    ],
+    [
+      "iot-hardware-3578",
+      {
+        "id": "iot-hardware-3578",
+        "category": "iot-hardware",
+        "port": 3578,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:19:23.054Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\iot-hardware-3578",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-iot-hardware-3578.js"
+      }
+    ],
+    [
+      "iot-hardware-3579",
+      {
+        "id": "iot-hardware-3579",
+        "category": "iot-hardware",
+        "port": 3579,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:19:23.055Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\iot-hardware-3579",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-iot-hardware-3579.js"
+      }
+    ],
+    [
+      "iot-hardware-3580",
+      {
+        "id": "iot-hardware-3580",
+        "category": "iot-hardware",
+        "port": 3580,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:19:23.056Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\iot-hardware-3580",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-iot-hardware-3580.js"
+      }
+    ],
+    [
+      "iot-hardware-3581",
+      {
+        "id": "iot-hardware-3581",
+        "category": "iot-hardware",
+        "port": 3581,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:19:23.057Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\iot-hardware-3581",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-iot-hardware-3581.js"
+      }
+    ],
+    [
+      "iot-hardware-3582",
+      {
+        "id": "iot-hardware-3582",
+        "category": "iot-hardware",
+        "port": 3582,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:19:23.058Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\iot-hardware-3582",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-iot-hardware-3582.js"
+      }
+    ],
+    [
+      "iot-hardware-3583",
+      {
+        "id": "iot-hardware-3583",
+        "category": "iot-hardware",
+        "port": 3583,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:19:23.059Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\iot-hardware-3583",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-iot-hardware-3583.js"
+      }
+    ],
+    [
+      "iot-hardware-3584",
+      {
+        "id": "iot-hardware-3584",
+        "category": "iot-hardware",
+        "port": 3584,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:19:23.060Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\iot-hardware-3584",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-iot-hardware-3584.js"
+      }
+    ],
+    [
+      "iot-hardware-3585",
+      {
+        "id": "iot-hardware-3585",
+        "category": "iot-hardware",
+        "port": 3585,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:19:23.061Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\iot-hardware-3585",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-iot-hardware-3585.js"
+      }
+    ],
+    [
+      "iot-hardware-3586",
+      {
+        "id": "iot-hardware-3586",
+        "category": "iot-hardware",
+        "port": 3586,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:19:23.062Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\iot-hardware-3586",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-iot-hardware-3586.js"
+      }
+    ],
+    [
+      "iot-hardware-3587",
+      {
+        "id": "iot-hardware-3587",
+        "category": "iot-hardware",
+        "port": 3587,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:19:23.063Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\iot-hardware-3587",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-iot-hardware-3587.js"
+      }
+    ],
+    [
+      "iot-hardware-3588",
+      {
+        "id": "iot-hardware-3588",
+        "category": "iot-hardware",
+        "port": 3588,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:19:23.064Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\iot-hardware-3588",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-iot-hardware-3588.js"
+      }
+    ],
+    [
+      "iot-hardware-3589",
+      {
+        "id": "iot-hardware-3589",
+        "category": "iot-hardware",
+        "port": 3589,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:19:23.065Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\iot-hardware-3589",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-iot-hardware-3589.js"
+      }
+    ],
+    [
+      "iot-hardware-3590",
+      {
+        "id": "iot-hardware-3590",
+        "category": "iot-hardware",
+        "port": 3590,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:19:23.066Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\iot-hardware-3590",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-iot-hardware-3590.js"
+      }
+    ],
+    [
+      "iot-hardware-3591",
+      {
+        "id": "iot-hardware-3591",
+        "category": "iot-hardware",
+        "port": 3591,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:19:23.067Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\iot-hardware-3591",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-iot-hardware-3591.js"
+      }
+    ],
+    [
+      "iot-hardware-3592",
+      {
+        "id": "iot-hardware-3592",
+        "category": "iot-hardware",
+        "port": 3592,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:19:23.068Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\iot-hardware-3592",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-iot-hardware-3592.js"
+      }
+    ],
+    [
+      "iot-hardware-3593",
+      {
+        "id": "iot-hardware-3593",
+        "category": "iot-hardware",
+        "port": 3593,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:19:23.069Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\iot-hardware-3593",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-iot-hardware-3593.js"
+      }
+    ],
+    [
+      "iot-hardware-3594",
+      {
+        "id": "iot-hardware-3594",
+        "category": "iot-hardware",
+        "port": 3594,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:19:23.070Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\iot-hardware-3594",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-iot-hardware-3594.js"
+      }
+    ],
+    [
+      "iot-hardware-3595",
+      {
+        "id": "iot-hardware-3595",
+        "category": "iot-hardware",
+        "port": 3595,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:19:23.072Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\iot-hardware-3595",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-iot-hardware-3595.js"
+      }
+    ],
+    [
+      "iot-hardware-3596",
+      {
+        "id": "iot-hardware-3596",
+        "category": "iot-hardware",
+        "port": 3596,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:19:23.073Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\iot-hardware-3596",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-iot-hardware-3596.js"
+      }
+    ],
+    [
+      "iot-hardware-3597",
+      {
+        "id": "iot-hardware-3597",
+        "category": "iot-hardware",
+        "port": 3597,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:19:23.074Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\iot-hardware-3597",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-iot-hardware-3597.js"
+      }
+    ],
+    [
+      "iot-hardware-3598",
+      {
+        "id": "iot-hardware-3598",
+        "category": "iot-hardware",
+        "port": 3598,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:19:23.075Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\iot-hardware-3598",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-iot-hardware-3598.js"
+      }
+    ],
+    [
+      "iot-hardware-3599",
+      {
+        "id": "iot-hardware-3599",
+        "category": "iot-hardware",
+        "port": 3599,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:19:23.076Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\iot-hardware-3599",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-iot-hardware-3599.js"
+      }
     ]
   ],
   "categories": [
@@ -5489,7 +6089,7 @@
       {
         "portStart": 3550,
         "portEnd": 3599,
-        "count": 0,
+        "count": 50,
         "maxServers": 100
       }
     ],
@@ -5539,5 +6139,5 @@
       }
     ]
   ],
-  "lastUpdated": "2025-09-03T03:19:18.239Z"
+  "lastUpdated": "2025-09-03T03:19:23.077Z"
 }
