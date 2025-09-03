@@ -7200,6 +7200,1206 @@
         "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\data-science-4199",
         "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-data-science-4199.js"
       }
+    ],
+    [
+      "security-4200",
+      {
+        "id": "security-4200",
+        "category": "security",
+        "port": 4200,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.282Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4200",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4200.js"
+      }
+    ],
+    [
+      "security-4201",
+      {
+        "id": "security-4201",
+        "category": "security",
+        "port": 4201,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.283Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4201",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4201.js"
+      }
+    ],
+    [
+      "security-4202",
+      {
+        "id": "security-4202",
+        "category": "security",
+        "port": 4202,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.284Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4202",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4202.js"
+      }
+    ],
+    [
+      "security-4203",
+      {
+        "id": "security-4203",
+        "category": "security",
+        "port": 4203,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.285Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4203",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4203.js"
+      }
+    ],
+    [
+      "security-4204",
+      {
+        "id": "security-4204",
+        "category": "security",
+        "port": 4204,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.286Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4204",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4204.js"
+      }
+    ],
+    [
+      "security-4205",
+      {
+        "id": "security-4205",
+        "category": "security",
+        "port": 4205,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.287Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4205",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4205.js"
+      }
+    ],
+    [
+      "security-4206",
+      {
+        "id": "security-4206",
+        "category": "security",
+        "port": 4206,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.288Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4206",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4206.js"
+      }
+    ],
+    [
+      "security-4207",
+      {
+        "id": "security-4207",
+        "category": "security",
+        "port": 4207,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.289Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4207",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4207.js"
+      }
+    ],
+    [
+      "security-4208",
+      {
+        "id": "security-4208",
+        "category": "security",
+        "port": 4208,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.290Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4208",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4208.js"
+      }
+    ],
+    [
+      "security-4209",
+      {
+        "id": "security-4209",
+        "category": "security",
+        "port": 4209,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.291Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4209",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4209.js"
+      }
+    ],
+    [
+      "security-4210",
+      {
+        "id": "security-4210",
+        "category": "security",
+        "port": 4210,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.292Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4210",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4210.js"
+      }
+    ],
+    [
+      "security-4211",
+      {
+        "id": "security-4211",
+        "category": "security",
+        "port": 4211,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.292Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4211",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4211.js"
+      }
+    ],
+    [
+      "security-4212",
+      {
+        "id": "security-4212",
+        "category": "security",
+        "port": 4212,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.293Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4212",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4212.js"
+      }
+    ],
+    [
+      "security-4213",
+      {
+        "id": "security-4213",
+        "category": "security",
+        "port": 4213,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.294Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4213",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4213.js"
+      }
+    ],
+    [
+      "security-4214",
+      {
+        "id": "security-4214",
+        "category": "security",
+        "port": 4214,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.295Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4214",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4214.js"
+      }
+    ],
+    [
+      "security-4215",
+      {
+        "id": "security-4215",
+        "category": "security",
+        "port": 4215,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.296Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4215",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4215.js"
+      }
+    ],
+    [
+      "security-4216",
+      {
+        "id": "security-4216",
+        "category": "security",
+        "port": 4216,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.297Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4216",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4216.js"
+      }
+    ],
+    [
+      "security-4217",
+      {
+        "id": "security-4217",
+        "category": "security",
+        "port": 4217,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.298Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4217",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4217.js"
+      }
+    ],
+    [
+      "security-4218",
+      {
+        "id": "security-4218",
+        "category": "security",
+        "port": 4218,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.299Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4218",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4218.js"
+      }
+    ],
+    [
+      "security-4219",
+      {
+        "id": "security-4219",
+        "category": "security",
+        "port": 4219,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.299Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4219",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4219.js"
+      }
+    ],
+    [
+      "security-4220",
+      {
+        "id": "security-4220",
+        "category": "security",
+        "port": 4220,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.300Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4220",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4220.js"
+      }
+    ],
+    [
+      "security-4221",
+      {
+        "id": "security-4221",
+        "category": "security",
+        "port": 4221,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.301Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4221",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4221.js"
+      }
+    ],
+    [
+      "security-4222",
+      {
+        "id": "security-4222",
+        "category": "security",
+        "port": 4222,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.302Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4222",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4222.js"
+      }
+    ],
+    [
+      "security-4223",
+      {
+        "id": "security-4223",
+        "category": "security",
+        "port": 4223,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.303Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4223",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4223.js"
+      }
+    ],
+    [
+      "security-4224",
+      {
+        "id": "security-4224",
+        "category": "security",
+        "port": 4224,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.304Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4224",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4224.js"
+      }
+    ],
+    [
+      "security-4225",
+      {
+        "id": "security-4225",
+        "category": "security",
+        "port": 4225,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.305Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4225",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4225.js"
+      }
+    ],
+    [
+      "security-4226",
+      {
+        "id": "security-4226",
+        "category": "security",
+        "port": 4226,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.306Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4226",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4226.js"
+      }
+    ],
+    [
+      "security-4227",
+      {
+        "id": "security-4227",
+        "category": "security",
+        "port": 4227,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.307Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4227",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4227.js"
+      }
+    ],
+    [
+      "security-4228",
+      {
+        "id": "security-4228",
+        "category": "security",
+        "port": 4228,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.308Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4228",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4228.js"
+      }
+    ],
+    [
+      "security-4229",
+      {
+        "id": "security-4229",
+        "category": "security",
+        "port": 4229,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.309Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4229",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4229.js"
+      }
+    ],
+    [
+      "security-4230",
+      {
+        "id": "security-4230",
+        "category": "security",
+        "port": 4230,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.310Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4230",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4230.js"
+      }
+    ],
+    [
+      "security-4231",
+      {
+        "id": "security-4231",
+        "category": "security",
+        "port": 4231,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.311Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4231",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4231.js"
+      }
+    ],
+    [
+      "security-4232",
+      {
+        "id": "security-4232",
+        "category": "security",
+        "port": 4232,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.312Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4232",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4232.js"
+      }
+    ],
+    [
+      "security-4233",
+      {
+        "id": "security-4233",
+        "category": "security",
+        "port": 4233,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.313Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4233",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4233.js"
+      }
+    ],
+    [
+      "security-4234",
+      {
+        "id": "security-4234",
+        "category": "security",
+        "port": 4234,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.313Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4234",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4234.js"
+      }
+    ],
+    [
+      "security-4235",
+      {
+        "id": "security-4235",
+        "category": "security",
+        "port": 4235,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.314Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4235",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4235.js"
+      }
+    ],
+    [
+      "security-4236",
+      {
+        "id": "security-4236",
+        "category": "security",
+        "port": 4236,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.315Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4236",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4236.js"
+      }
+    ],
+    [
+      "security-4237",
+      {
+        "id": "security-4237",
+        "category": "security",
+        "port": 4237,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.316Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4237",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4237.js"
+      }
+    ],
+    [
+      "security-4238",
+      {
+        "id": "security-4238",
+        "category": "security",
+        "port": 4238,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.317Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4238",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4238.js"
+      }
+    ],
+    [
+      "security-4239",
+      {
+        "id": "security-4239",
+        "category": "security",
+        "port": 4239,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.318Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4239",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4239.js"
+      }
+    ],
+    [
+      "security-4240",
+      {
+        "id": "security-4240",
+        "category": "security",
+        "port": 4240,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.319Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4240",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4240.js"
+      }
+    ],
+    [
+      "security-4241",
+      {
+        "id": "security-4241",
+        "category": "security",
+        "port": 4241,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.320Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4241",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4241.js"
+      }
+    ],
+    [
+      "security-4242",
+      {
+        "id": "security-4242",
+        "category": "security",
+        "port": 4242,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.321Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4242",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4242.js"
+      }
+    ],
+    [
+      "security-4243",
+      {
+        "id": "security-4243",
+        "category": "security",
+        "port": 4243,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.322Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4243",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4243.js"
+      }
+    ],
+    [
+      "security-4244",
+      {
+        "id": "security-4244",
+        "category": "security",
+        "port": 4244,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.323Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4244",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4244.js"
+      }
+    ],
+    [
+      "security-4245",
+      {
+        "id": "security-4245",
+        "category": "security",
+        "port": 4245,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.324Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4245",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4245.js"
+      }
+    ],
+    [
+      "security-4246",
+      {
+        "id": "security-4246",
+        "category": "security",
+        "port": 4246,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.325Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4246",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4246.js"
+      }
+    ],
+    [
+      "security-4247",
+      {
+        "id": "security-4247",
+        "category": "security",
+        "port": 4247,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.326Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4247",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4247.js"
+      }
+    ],
+    [
+      "security-4248",
+      {
+        "id": "security-4248",
+        "category": "security",
+        "port": 4248,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.326Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4248",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4248.js"
+      }
+    ],
+    [
+      "security-4249",
+      {
+        "id": "security-4249",
+        "category": "security",
+        "port": 4249,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.327Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4249",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4249.js"
+      }
+    ],
+    [
+      "security-4250",
+      {
+        "id": "security-4250",
+        "category": "security",
+        "port": 4250,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.328Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4250",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4250.js"
+      }
+    ],
+    [
+      "security-4251",
+      {
+        "id": "security-4251",
+        "category": "security",
+        "port": 4251,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.329Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4251",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4251.js"
+      }
+    ],
+    [
+      "security-4252",
+      {
+        "id": "security-4252",
+        "category": "security",
+        "port": 4252,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.330Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4252",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4252.js"
+      }
+    ],
+    [
+      "security-4253",
+      {
+        "id": "security-4253",
+        "category": "security",
+        "port": 4253,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.331Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4253",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4253.js"
+      }
+    ],
+    [
+      "security-4254",
+      {
+        "id": "security-4254",
+        "category": "security",
+        "port": 4254,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.332Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4254",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4254.js"
+      }
+    ],
+    [
+      "security-4255",
+      {
+        "id": "security-4255",
+        "category": "security",
+        "port": 4255,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.333Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4255",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4255.js"
+      }
+    ],
+    [
+      "security-4256",
+      {
+        "id": "security-4256",
+        "category": "security",
+        "port": 4256,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.334Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4256",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4256.js"
+      }
+    ],
+    [
+      "security-4257",
+      {
+        "id": "security-4257",
+        "category": "security",
+        "port": 4257,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.335Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4257",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4257.js"
+      }
+    ],
+    [
+      "security-4258",
+      {
+        "id": "security-4258",
+        "category": "security",
+        "port": 4258,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.336Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4258",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4258.js"
+      }
+    ],
+    [
+      "security-4259",
+      {
+        "id": "security-4259",
+        "category": "security",
+        "port": 4259,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.337Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4259",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4259.js"
+      }
+    ],
+    [
+      "security-4260",
+      {
+        "id": "security-4260",
+        "category": "security",
+        "port": 4260,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.338Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4260",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4260.js"
+      }
+    ],
+    [
+      "security-4261",
+      {
+        "id": "security-4261",
+        "category": "security",
+        "port": 4261,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.339Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4261",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4261.js"
+      }
+    ],
+    [
+      "security-4262",
+      {
+        "id": "security-4262",
+        "category": "security",
+        "port": 4262,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.340Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4262",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4262.js"
+      }
+    ],
+    [
+      "security-4263",
+      {
+        "id": "security-4263",
+        "category": "security",
+        "port": 4263,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.340Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4263",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4263.js"
+      }
+    ],
+    [
+      "security-4264",
+      {
+        "id": "security-4264",
+        "category": "security",
+        "port": 4264,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.341Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4264",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4264.js"
+      }
+    ],
+    [
+      "security-4265",
+      {
+        "id": "security-4265",
+        "category": "security",
+        "port": 4265,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.342Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4265",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4265.js"
+      }
+    ],
+    [
+      "security-4266",
+      {
+        "id": "security-4266",
+        "category": "security",
+        "port": 4266,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.343Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4266",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4266.js"
+      }
+    ],
+    [
+      "security-4267",
+      {
+        "id": "security-4267",
+        "category": "security",
+        "port": 4267,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.344Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4267",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4267.js"
+      }
+    ],
+    [
+      "security-4268",
+      {
+        "id": "security-4268",
+        "category": "security",
+        "port": 4268,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.345Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4268",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4268.js"
+      }
+    ],
+    [
+      "security-4269",
+      {
+        "id": "security-4269",
+        "category": "security",
+        "port": 4269,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.346Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4269",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4269.js"
+      }
+    ],
+    [
+      "security-4270",
+      {
+        "id": "security-4270",
+        "category": "security",
+        "port": 4270,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.346Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4270",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4270.js"
+      }
+    ],
+    [
+      "security-4271",
+      {
+        "id": "security-4271",
+        "category": "security",
+        "port": 4271,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.347Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4271",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4271.js"
+      }
+    ],
+    [
+      "security-4272",
+      {
+        "id": "security-4272",
+        "category": "security",
+        "port": 4272,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.348Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4272",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4272.js"
+      }
+    ],
+    [
+      "security-4273",
+      {
+        "id": "security-4273",
+        "category": "security",
+        "port": 4273,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.349Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4273",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4273.js"
+      }
+    ],
+    [
+      "security-4274",
+      {
+        "id": "security-4274",
+        "category": "security",
+        "port": 4274,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.350Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4274",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4274.js"
+      }
+    ],
+    [
+      "security-4275",
+      {
+        "id": "security-4275",
+        "category": "security",
+        "port": 4275,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.351Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4275",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4275.js"
+      }
+    ],
+    [
+      "security-4276",
+      {
+        "id": "security-4276",
+        "category": "security",
+        "port": 4276,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.352Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4276",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4276.js"
+      }
+    ],
+    [
+      "security-4277",
+      {
+        "id": "security-4277",
+        "category": "security",
+        "port": 4277,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.353Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4277",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4277.js"
+      }
+    ],
+    [
+      "security-4278",
+      {
+        "id": "security-4278",
+        "category": "security",
+        "port": 4278,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.353Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4278",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4278.js"
+      }
+    ],
+    [
+      "security-4279",
+      {
+        "id": "security-4279",
+        "category": "security",
+        "port": 4279,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.354Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4279",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4279.js"
+      }
+    ],
+    [
+      "security-4280",
+      {
+        "id": "security-4280",
+        "category": "security",
+        "port": 4280,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.355Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4280",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4280.js"
+      }
+    ],
+    [
+      "security-4281",
+      {
+        "id": "security-4281",
+        "category": "security",
+        "port": 4281,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.356Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4281",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4281.js"
+      }
+    ],
+    [
+      "security-4282",
+      {
+        "id": "security-4282",
+        "category": "security",
+        "port": 4282,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.357Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4282",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4282.js"
+      }
+    ],
+    [
+      "security-4283",
+      {
+        "id": "security-4283",
+        "category": "security",
+        "port": 4283,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.358Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4283",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4283.js"
+      }
+    ],
+    [
+      "security-4284",
+      {
+        "id": "security-4284",
+        "category": "security",
+        "port": 4284,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.359Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4284",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4284.js"
+      }
+    ],
+    [
+      "security-4285",
+      {
+        "id": "security-4285",
+        "category": "security",
+        "port": 4285,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.360Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4285",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4285.js"
+      }
+    ],
+    [
+      "security-4286",
+      {
+        "id": "security-4286",
+        "category": "security",
+        "port": 4286,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.361Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4286",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4286.js"
+      }
+    ],
+    [
+      "security-4287",
+      {
+        "id": "security-4287",
+        "category": "security",
+        "port": 4287,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.362Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4287",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4287.js"
+      }
+    ],
+    [
+      "security-4288",
+      {
+        "id": "security-4288",
+        "category": "security",
+        "port": 4288,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.363Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4288",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4288.js"
+      }
+    ],
+    [
+      "security-4289",
+      {
+        "id": "security-4289",
+        "category": "security",
+        "port": 4289,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.364Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4289",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4289.js"
+      }
+    ],
+    [
+      "security-4290",
+      {
+        "id": "security-4290",
+        "category": "security",
+        "port": 4290,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.365Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4290",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4290.js"
+      }
+    ],
+    [
+      "security-4291",
+      {
+        "id": "security-4291",
+        "category": "security",
+        "port": 4291,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.366Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4291",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4291.js"
+      }
+    ],
+    [
+      "security-4292",
+      {
+        "id": "security-4292",
+        "category": "security",
+        "port": 4292,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.367Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4292",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4292.js"
+      }
+    ],
+    [
+      "security-4293",
+      {
+        "id": "security-4293",
+        "category": "security",
+        "port": 4293,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.368Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4293",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4293.js"
+      }
+    ],
+    [
+      "security-4294",
+      {
+        "id": "security-4294",
+        "category": "security",
+        "port": 4294,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.369Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4294",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4294.js"
+      }
+    ],
+    [
+      "security-4295",
+      {
+        "id": "security-4295",
+        "category": "security",
+        "port": 4295,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.370Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4295",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4295.js"
+      }
+    ],
+    [
+      "security-4296",
+      {
+        "id": "security-4296",
+        "category": "security",
+        "port": 4296,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.371Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4296",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4296.js"
+      }
+    ],
+    [
+      "security-4297",
+      {
+        "id": "security-4297",
+        "category": "security",
+        "port": 4297,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.372Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4297",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4297.js"
+      }
+    ],
+    [
+      "security-4298",
+      {
+        "id": "security-4298",
+        "category": "security",
+        "port": 4298,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.373Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4298",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4298.js"
+      }
+    ],
+    [
+      "security-4299",
+      {
+        "id": "security-4299",
+        "category": "security",
+        "port": 4299,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:09.373Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\security-4299",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-security-4299.js"
+      }
     ]
   ],
   "categories": [
@@ -7308,7 +8508,7 @@
         "portStart": 4200,
         "portEnd": 4299,
         "maxServers": 100,
-        "count": 0
+        "count": 100
       }
     ],
     [
@@ -7339,5 +8539,5 @@
       }
     ]
   ],
-  "lastUpdated": "2025-09-03T03:20:04.230Z"
+  "lastUpdated": "2025-09-03T03:20:09.374Z"
 }
