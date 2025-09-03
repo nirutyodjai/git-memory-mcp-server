@@ -1,0 +1,61 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "removeComments": false,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "noImplicitReturns": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "baseUrl": ".",
+    "paths": {
+      "@comdee/core/*": ["packages/core/src/*"],
+      "@comdee/mcp-integration/*": ["packages/mcp-integration/src/*"],
+      "@comdee/ui-components/*": ["packages/ui-components/src/*"],
+      "@comdee/git-memory/*": ["packages/git-memory/src/*"],
+      "@comdee/plugins/*": ["packages/plugins/src/*"]
+    },
+    "types": ["node", "jest"]
+  },
+  "include": [
+    "packages/*/src/**/*",
+    "apps/*/src/**/*",
+    "**/*.ts",
+    "**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "build",
+    "**/*.test.ts",
+    "**/*.test.tsx",
+    "coverage"
+  ],
+  "references": [
+    { "path": "./packages/core" },
+    { "path": "./packages/mcp-integration" },
+    { "path": "./packages/ui-components" },
+    { "path": "./packages/git-memory" },
+    { "path": "./packages/plugins" },
+    { "path": "./apps/desktop" },
+    { "path": "./apps/web" }
+  ]
+}

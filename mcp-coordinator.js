@@ -837,6 +837,124 @@ server.run().catch(console.error);
       });
     });
 
+    // New: AI providers health endpoint
+    app.get('/ai/providers/health', async (req, res) => {
+      try {
+        const toInt = (v, d) => {
+          const n = parseInt(v, 10);
+          return Number.isFinite(n) ? n : d;
+        };
+        const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
+        const timeoutMs = clamp(toInt(req.query.timeoutMs, 2000), 300, 20000);
+
+        const requested = (req.query.provider || req.query.providers || '').toString().trim();
+        const list = requested
+          ? Array.from(new Set(requested.split(',').map(s => s.trim().toLowerCase()).filter(Boolean)))
+          : ['ollama', 'openai'];
+
+        const results = {};
+
+        // Ollama health
+        if (list.includes('ollama')) {
+          const sanitize = (v) => (v || '').toString().trim().replace(/^['"]|['"]$/g, '').replace(/\/$/, '');
+          const OLLAMA_BASE = sanitize(req.query.ollamaBaseUrl || req.query.ollama_base || process.env.OLLAMA_BASE_URL || process.env.OLLAMA_HOST || 'http://localhost:11434');
+
+          const tryEndpoints = async () => {
+            const endpoints = ['/api/version', '/api/tags'];
+            for (const p of endpoints) {
+              const url = new URL(p, OLLAMA_BASE).toString();
+              const started = Date.now();
+              try {
+                const r = await axios.get(url, { timeout: timeoutMs });
+                const latencyMs = Date.now() - started;
+                const data = r.data || {};
+                return {
+                  healthy: true,
+                  reachable: true,
+                  status: 'ok',
+                  statusCode: r.status,
+                  baseUrl: OLLAMA_BASE,
+                  endpoint: url,
+                  latencyMs,
+                  version: typeof data.version === 'string' ? data.version : undefined,
+                  raw: undefined
+                };
+              } catch (error) {
+                const latencyMs = Date.now() - started;
+                // Try next endpoint, but if this is the last, return failure
+                if (p === endpoints[endpoints.length - 1]) {
+                  return {
+                    healthy: false,
+                    reachable: !['ECONNREFUSED', 'ENOTFOUND', 'EAI_AGAIN', 'ETIMEDOUT'].includes(error?.code || ''),
+                    status: (error?.code === 'ECONNABORTED' || error?.message?.includes('timeout')) ? 'timeout' : 'error',
+                    statusCode: error?.response?.status || null,
+                    baseUrl: OLLAMA_BASE,
+                    endpoint: url,
+                    latencyMs,
+                    error: error?.message || String(error)
+                  };
+                }
+              }
+            }
+          };
+
+          results.ollama = await tryEndpoints();
+        }
+
+        // OpenAI health
+        if (list.includes('openai')) {
+          const OPENAI_BASE = (req.query.openaiBaseUrl || process.env.OPENAI_BASE_URL || 'https://api.openai.com').toString().replace(/\/$/, '');
+          const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+          const url = `${OPENAI_BASE}/v1/models`;
+          const started = Date.now();
+          try {
+            const headers = {};
+            if (OPENAI_API_KEY) headers['Authorization'] = `Bearer ${OPENAI_API_KEY}`;
+            const r = await axios.get(url, { headers, timeout: timeoutMs });
+            const latencyMs = Date.now() - started;
+            results.openai = {
+              healthy: true,
+              reachable: true,
+              status: 'ok',
+              statusCode: r.status,
+              baseUrl: OPENAI_BASE,
+              latencyMs,
+              authConfigured: !!OPENAI_API_KEY
+            };
+          } catch (error) {
+            const latencyMs = Date.now() - started;
+            const statusCode = error?.response?.status || null;
+            const unauthorized = statusCode === 401 || statusCode === 403;
+            results.openai = {
+              healthy: unauthorized ? false : false,
+              reachable: !['ECONNREFUSED', 'ENOTFOUND', 'EAI_AGAIN', 'ETIMEDOUT'].includes(error?.code || ''),
+              status: (error?.code === 'ECONNABORTED' || error?.message?.includes('timeout')) ? 'timeout' : (unauthorized ? 'unauthorized' : 'error'),
+              statusCode,
+              baseUrl: OPENAI_BASE,
+              latencyMs,
+              authConfigured: !!OPENAI_API_KEY,
+              error: error?.message || String(error)
+            };
+          }
+        }
+
+        const providerCount = Object.keys(results).length;
+        const healthyCount = Object.values(results).filter(v => v && v.healthy).length;
+
+        return ok(res, {
+          providers: results,
+          summary: {
+            total: providerCount,
+            healthy: healthyCount,
+            unhealthy: providerCount - healthyCount,
+            timestamp: new Date().toISOString()
+          }
+        }, { timeoutMs, requested: { providers: list } });
+      } catch (error) {
+        return fail(res, 'Providers health error', { message: error.message });
+      }
+    });
+
     // New: Standardized 200 OK AI inference endpoint
     app.post('/ai/infer', async (req, res) => {
       try {
@@ -861,15 +979,32 @@ server.run().catch(console.error);
           const OPENAI_BASE = (baseUrl || process.env.OPENAI_BASE_URL || 'https://api.openai.com').replace(/\/$/, '');
           const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
           if (!OPENAI_API_KEY) return fail(res, 'OPENAI_API_KEY is not configured');
-          const body = {
-            model: model || process.env.OPENAI_DEFAULT_MODEL || 'gpt-4o-mini',
-            messages: normMessages,
-            temperature: typeof temperature === 'number' ? temperature : undefined,
-            max_tokens: typeof max_tokens === 'number' ? max_tokens : undefined,
-            stream: false
+
+          // Build OpenAI chat.completions body with per-request options mapping
+          const buildOpenAIBody = () => {
+            const body = {
+              model: model || process.env.OPENAI_DEFAULT_MODEL || 'gpt-4o-mini',
+              messages: normMessages,
+              stream: false
+            };
+            if (typeof temperature === 'number') body.temperature = temperature;
+            if (typeof max_tokens === 'number') body.max_tokens = max_tokens;
+            const opts = options && typeof options === 'object' ? options : {};
+            if (typeof opts.top_p === 'number') body.top_p = opts.top_p;
+            if (typeof opts.frequency_penalty === 'number') body.frequency_penalty = opts.frequency_penalty;
+            if (typeof opts.presence_penalty === 'number') body.presence_penalty = opts.presence_penalty;
+            if (typeof opts.n === 'number') body.n = opts.n;
+            if (typeof opts.user === 'string') body.user = opts.user;
+            if (typeof opts.stop === 'string' || Array.isArray(opts.stop)) body.stop = opts.stop;
+            if (opts.logit_bias && typeof opts.logit_bias === 'object') body.logit_bias = opts.logit_bias;
+            if (opts.response_format && typeof opts.response_format === 'object') body.response_format = opts.response_format;
+            return body;
           };
+
+          const body = buildOpenAIBody();
           const r = await axios.post(`${OPENAI_BASE}/v1/chat/completions`, body, {
-            headers: { Authorization: `Bearer ${OPENAI_API_KEY}` }
+            headers: { Authorization: `Bearer ${OPENAI_API_KEY}` },
+            timeout: typeof req.body?.timeoutMs === 'number' ? req.body.timeoutMs : undefined
           });
           const d = r.data;
           const text = d?.choices?.[0]?.message?.content || '';
@@ -883,21 +1018,171 @@ server.run().catch(console.error);
         };
 
         const doOllama = async () => {
-          const OLLAMA_HOST = (process.env.OLLAMA_HOST || 'http://localhost:11434').replace(/\/$/, '');
-          const body = {
+          const sanitize = (v) => (v || '').toString().trim().replace(/^["']|["']$/g, '').replace(/\/$/, '');
+          const OLLAMA_BASE = sanitize(baseUrl || process.env.OLLAMA_BASE_URL || process.env.OLLAMA_HOST || 'http://localhost:11434');
+          const endpoint = new URL('/api/generate', OLLAMA_BASE).toString();
+
+          // Per-request controls
+          const { stream: streamReq, stream_mode, streamMode, timeoutMs } = req.body || {};
+          const resolvedMode = (streamMode || stream_mode || (typeof streamReq === 'string' ? streamReq : (streamReq ? 'lines' : null))) || null; // 'lines' | 'sse' | null
+
+          // Map generic options -> Ollama options
+          const mapOptions = (baseOpts) => {
+            const out = Object.assign({}, baseOpts || {});
+            if (typeof temperature === 'number') out.temperature = temperature;
+            if (typeof max_tokens === 'number') out.num_predict = max_tokens;
+            if (options && typeof options === 'object') {
+              const { top_p, stop, repeat_penalty, top_k, seed } = options;
+              if (typeof top_p === 'number') out.top_p = top_p;
+              if (typeof top_k === 'number') out.top_k = top_k;
+              if (typeof repeat_penalty === 'number') out.repeat_penalty = repeat_penalty;
+              if (typeof seed === 'number') out.seed = seed;
+              if (Array.isArray(stop) || typeof stop === 'string') out.stop = stop;
+              // pass-through other ollama-native options if provided
+              for (const k of Object.keys(options)) {
+                if (!(k in out)) out[k] = options[k];
+              }
+            }
+            return out;
+          };
+
+          // Non-streaming path (default)
+          if (!resolvedMode) {
+            const body = {
+              model: model || process.env.OLLAMA_MODEL || 'llama3.1',
+              prompt: pickFirstText(normMessages),
+              stream: false,
+              options: mapOptions({})
+            };
+            try {
+              const r = await axios.post(endpoint, body, { timeout: typeof timeoutMs === 'number' ? timeoutMs : undefined });
+              const d = r.data;
+              return ok(res, {
+                provider: 'ollama',
+                model: body.model,
+                output: d?.response || '',
+                endpoint,
+                raw: d
+              });
+            } catch (error) {
+              return fail(res, 'Inference error (ollama)', {
+                provider: 'ollama',
+                url: endpoint,
+                model: body.model,
+                message: error?.message,
+                code: error?.code || null,
+                status: error?.response?.status || null,
+                response: typeof error?.response?.data === 'string'
+                  ? error.response.data.slice(0, 500)
+                  : error?.response?.data || null
+              });
+            }
+          }
+
+          // Streaming path
+          const streamBody = {
             model: model || process.env.OLLAMA_MODEL || 'llama3.1',
             prompt: pickFirstText(normMessages),
-            stream: false,
-            options: Object.assign({}, options || {}, typeof temperature === 'number' ? { temperature } : {})
+            stream: true,
+            options: mapOptions({})
           };
-          const r = await axios.post(`${OLLAMA_HOST}/api/generate`, body, {});
-          const d = r.data;
-          return ok(res, {
-            provider: 'ollama',
-            model: body.model,
-            output: d?.response || '',
-            raw: d
+
+          const axiosOpts = { responseType: 'stream', timeout: typeof timeoutMs === 'number' ? timeoutMs : undefined };
+          let responseStream;
+          try {
+            const r = await axios.post(endpoint, streamBody, axiosOpts);
+            responseStream = r.data;
+          } catch (error) {
+            return fail(res, 'Inference error (ollama, stream setup)', {
+              provider: 'ollama',
+              url: endpoint,
+              model: streamBody.model,
+              message: error?.message,
+              code: error?.code || null,
+              status: error?.response?.status || null,
+              response: typeof error?.response?.data === 'string' ? error.response.data.slice(0, 500) : error?.response?.data || null
+            });
+          }
+
+          const mode = (resolvedMode || 'lines').toLowerCase();
+          if (mode === 'sse') {
+            // SSE headers
+            res.setHeader('Content-Type', 'text/event-stream; charset=utf-8');
+            res.setHeader('Cache-Control', 'no-cache, no-transform');
+            res.setHeader('Connection', 'keep-alive');
+            if (typeof res.flushHeaders === 'function') {
+              try { res.flushHeaders(); } catch {}
+            }
+            res.write(': ok\n\n');
+
+            let buf = '';
+            responseStream.on('data', (chunk) => {
+              buf += chunk.toString('utf8');
+              const parts = buf.split('\n');
+              buf = parts.pop();
+              for (const line of parts) {
+                const s = line.trim();
+                if (!s) continue;
+                try {
+                  const obj = JSON.parse(s);
+                  const tok = typeof obj?.response === 'string' ? obj.response : '';
+                  res.write(`event: token\n`);
+                  res.write(`data: ${JSON.stringify({ provider: 'ollama', model: streamBody.model, token: tok })}\n\n`);
+                  if (obj?.done) {
+                    res.write(`event: done\n`);
+                    res.write(`data: ${JSON.stringify({ provider: 'ollama', model: streamBody.model, done: true, raw: { stats: obj?.eval_count ? obj : undefined } })}\n\n`);
+                  }
+                } catch (e) {
+                  // ignore parse errors per-line
+                }
+              }
+            });
+            responseStream.on('end', () => {
+              try { res.end(); } catch {}
+            });
+            responseStream.on('error', (err) => {
+              try {
+                res.write(`event: error\n`);
+                res.write(`data: ${JSON.stringify({ message: err?.message || 'stream error' })}\n\n`);
+                res.end();
+              } catch {}
+            });
+            return; // handled via stream
+          }
+
+          // Default NDJSON lines mode
+          res.setHeader('Content-Type', 'application/x-ndjson; charset=utf-8');
+          let buf = '';
+          responseStream.on('data', (chunk) => {
+            buf += chunk.toString('utf8');
+            const parts = buf.split('\n');
+            buf = parts.pop();
+            for (const line of parts) {
+              const s = line.trim();
+              if (!s) continue;
+              try {
+                const obj = JSON.parse(s);
+                const tok = typeof obj?.response === 'string' ? obj.response : '';
+                const payload = { provider: 'ollama', model: streamBody.model, token: tok };
+                res.write(JSON.stringify(payload) + '\n');
+                if (obj?.done) {
+                  res.write(JSON.stringify({ provider: 'ollama', model: streamBody.model, done: true, raw: { stats: obj?.eval_count ? obj : undefined } }) + '\n');
+                }
+              } catch (e) {
+                // ignore parse errors per-line
+              }
+            }
           });
+          responseStream.on('end', () => {
+            try { res.end(); } catch {}
+          });
+          responseStream.on('error', (err) => {
+            try {
+              res.write(JSON.stringify({ error: err?.message || 'stream error' }) + '\n');
+              res.end();
+            } catch {}
+          });
+          return; // handled via stream
         };
 
         const doMock = async () => {

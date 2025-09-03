@@ -1,0 +1,61 @@
+{
+  "name": "comdee-ide",
+  "version": "1.0.0",
+  "description": "COMDEE IDE - Advanced IDE powered by Git Memory MCP Server System",
+  "main": "index.js",
+  "private": true,
+  "packageManager": "pnpm@8.15.8",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=apps/web",
+    "build": "npm run build --workspaces",
+    "test": "npm run test --workspaces",
+    "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
+    "format": "prettier --write .",
+    "clean": "npm run clean --workspaces",
+    "start:desktop": "npm run start --workspace=apps/desktop",
+    "start:web": "npm run start --workspace=apps/web",
+    "build:desktop": "npm run build --workspace=apps/desktop",
+    "build:web": "npm run build --workspace=apps/web"
+  },
+  "keywords": [
+    "ide",
+    "editor",
+    "mcp",
+    "git-memory",
+    "development",
+    "typescript",
+    "react",
+    "electron"
+  ],
+  "author": "COMDEE Team",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint": "8.57.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-react": "^7.0.0",
+    "eslint-plugin-react-hooks": "5.2.0",
+    "prettier": "^3.0.0",
+    "typescript": "^5.0.0",
+    "lerna": "^8.0.0",
+    "concurrently": "9.2.1"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/comdee/comdee-ide.git"
+  },
+  "bugs": {
+    "url": "https://github.com/comdee/comdee-ide/issues"
+  },
+  "homepage": "https://github.com/comdee/comdee-ide#readme"
+}
