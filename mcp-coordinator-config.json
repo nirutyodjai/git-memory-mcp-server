@@ -10800,6 +10800,1206 @@
         "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\gaming-4499",
         "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-gaming-4499.js"
       }
+    ],
+    [
+      "blockchain-4500",
+      {
+        "id": "blockchain-4500",
+        "category": "blockchain",
+        "port": 4500,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.913Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4500",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4500.js"
+      }
+    ],
+    [
+      "blockchain-4501",
+      {
+        "id": "blockchain-4501",
+        "category": "blockchain",
+        "port": 4501,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.914Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4501",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4501.js"
+      }
+    ],
+    [
+      "blockchain-4502",
+      {
+        "id": "blockchain-4502",
+        "category": "blockchain",
+        "port": 4502,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.915Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4502",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4502.js"
+      }
+    ],
+    [
+      "blockchain-4503",
+      {
+        "id": "blockchain-4503",
+        "category": "blockchain",
+        "port": 4503,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.916Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4503",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4503.js"
+      }
+    ],
+    [
+      "blockchain-4504",
+      {
+        "id": "blockchain-4504",
+        "category": "blockchain",
+        "port": 4504,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.917Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4504",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4504.js"
+      }
+    ],
+    [
+      "blockchain-4505",
+      {
+        "id": "blockchain-4505",
+        "category": "blockchain",
+        "port": 4505,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.918Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4505",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4505.js"
+      }
+    ],
+    [
+      "blockchain-4506",
+      {
+        "id": "blockchain-4506",
+        "category": "blockchain",
+        "port": 4506,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.919Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4506",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4506.js"
+      }
+    ],
+    [
+      "blockchain-4507",
+      {
+        "id": "blockchain-4507",
+        "category": "blockchain",
+        "port": 4507,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.920Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4507",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4507.js"
+      }
+    ],
+    [
+      "blockchain-4508",
+      {
+        "id": "blockchain-4508",
+        "category": "blockchain",
+        "port": 4508,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.921Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4508",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4508.js"
+      }
+    ],
+    [
+      "blockchain-4509",
+      {
+        "id": "blockchain-4509",
+        "category": "blockchain",
+        "port": 4509,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.922Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4509",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4509.js"
+      }
+    ],
+    [
+      "blockchain-4510",
+      {
+        "id": "blockchain-4510",
+        "category": "blockchain",
+        "port": 4510,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.923Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4510",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4510.js"
+      }
+    ],
+    [
+      "blockchain-4511",
+      {
+        "id": "blockchain-4511",
+        "category": "blockchain",
+        "port": 4511,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.924Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4511",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4511.js"
+      }
+    ],
+    [
+      "blockchain-4512",
+      {
+        "id": "blockchain-4512",
+        "category": "blockchain",
+        "port": 4512,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.925Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4512",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4512.js"
+      }
+    ],
+    [
+      "blockchain-4513",
+      {
+        "id": "blockchain-4513",
+        "category": "blockchain",
+        "port": 4513,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.926Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4513",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4513.js"
+      }
+    ],
+    [
+      "blockchain-4514",
+      {
+        "id": "blockchain-4514",
+        "category": "blockchain",
+        "port": 4514,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.927Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4514",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4514.js"
+      }
+    ],
+    [
+      "blockchain-4515",
+      {
+        "id": "blockchain-4515",
+        "category": "blockchain",
+        "port": 4515,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.928Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4515",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4515.js"
+      }
+    ],
+    [
+      "blockchain-4516",
+      {
+        "id": "blockchain-4516",
+        "category": "blockchain",
+        "port": 4516,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.929Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4516",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4516.js"
+      }
+    ],
+    [
+      "blockchain-4517",
+      {
+        "id": "blockchain-4517",
+        "category": "blockchain",
+        "port": 4517,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.930Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4517",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4517.js"
+      }
+    ],
+    [
+      "blockchain-4518",
+      {
+        "id": "blockchain-4518",
+        "category": "blockchain",
+        "port": 4518,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.931Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4518",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4518.js"
+      }
+    ],
+    [
+      "blockchain-4519",
+      {
+        "id": "blockchain-4519",
+        "category": "blockchain",
+        "port": 4519,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.932Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4519",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4519.js"
+      }
+    ],
+    [
+      "blockchain-4520",
+      {
+        "id": "blockchain-4520",
+        "category": "blockchain",
+        "port": 4520,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.933Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4520",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4520.js"
+      }
+    ],
+    [
+      "blockchain-4521",
+      {
+        "id": "blockchain-4521",
+        "category": "blockchain",
+        "port": 4521,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.934Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4521",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4521.js"
+      }
+    ],
+    [
+      "blockchain-4522",
+      {
+        "id": "blockchain-4522",
+        "category": "blockchain",
+        "port": 4522,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.935Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4522",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4522.js"
+      }
+    ],
+    [
+      "blockchain-4523",
+      {
+        "id": "blockchain-4523",
+        "category": "blockchain",
+        "port": 4523,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.936Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4523",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4523.js"
+      }
+    ],
+    [
+      "blockchain-4524",
+      {
+        "id": "blockchain-4524",
+        "category": "blockchain",
+        "port": 4524,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.937Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4524",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4524.js"
+      }
+    ],
+    [
+      "blockchain-4525",
+      {
+        "id": "blockchain-4525",
+        "category": "blockchain",
+        "port": 4525,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.939Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4525",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4525.js"
+      }
+    ],
+    [
+      "blockchain-4526",
+      {
+        "id": "blockchain-4526",
+        "category": "blockchain",
+        "port": 4526,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.940Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4526",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4526.js"
+      }
+    ],
+    [
+      "blockchain-4527",
+      {
+        "id": "blockchain-4527",
+        "category": "blockchain",
+        "port": 4527,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.941Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4527",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4527.js"
+      }
+    ],
+    [
+      "blockchain-4528",
+      {
+        "id": "blockchain-4528",
+        "category": "blockchain",
+        "port": 4528,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.942Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4528",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4528.js"
+      }
+    ],
+    [
+      "blockchain-4529",
+      {
+        "id": "blockchain-4529",
+        "category": "blockchain",
+        "port": 4529,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.943Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4529",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4529.js"
+      }
+    ],
+    [
+      "blockchain-4530",
+      {
+        "id": "blockchain-4530",
+        "category": "blockchain",
+        "port": 4530,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.944Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4530",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4530.js"
+      }
+    ],
+    [
+      "blockchain-4531",
+      {
+        "id": "blockchain-4531",
+        "category": "blockchain",
+        "port": 4531,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.945Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4531",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4531.js"
+      }
+    ],
+    [
+      "blockchain-4532",
+      {
+        "id": "blockchain-4532",
+        "category": "blockchain",
+        "port": 4532,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.945Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4532",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4532.js"
+      }
+    ],
+    [
+      "blockchain-4533",
+      {
+        "id": "blockchain-4533",
+        "category": "blockchain",
+        "port": 4533,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.946Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4533",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4533.js"
+      }
+    ],
+    [
+      "blockchain-4534",
+      {
+        "id": "blockchain-4534",
+        "category": "blockchain",
+        "port": 4534,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.947Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4534",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4534.js"
+      }
+    ],
+    [
+      "blockchain-4535",
+      {
+        "id": "blockchain-4535",
+        "category": "blockchain",
+        "port": 4535,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.948Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4535",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4535.js"
+      }
+    ],
+    [
+      "blockchain-4536",
+      {
+        "id": "blockchain-4536",
+        "category": "blockchain",
+        "port": 4536,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.949Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4536",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4536.js"
+      }
+    ],
+    [
+      "blockchain-4537",
+      {
+        "id": "blockchain-4537",
+        "category": "blockchain",
+        "port": 4537,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.950Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4537",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4537.js"
+      }
+    ],
+    [
+      "blockchain-4538",
+      {
+        "id": "blockchain-4538",
+        "category": "blockchain",
+        "port": 4538,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.951Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4538",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4538.js"
+      }
+    ],
+    [
+      "blockchain-4539",
+      {
+        "id": "blockchain-4539",
+        "category": "blockchain",
+        "port": 4539,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.952Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4539",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4539.js"
+      }
+    ],
+    [
+      "blockchain-4540",
+      {
+        "id": "blockchain-4540",
+        "category": "blockchain",
+        "port": 4540,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.953Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4540",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4540.js"
+      }
+    ],
+    [
+      "blockchain-4541",
+      {
+        "id": "blockchain-4541",
+        "category": "blockchain",
+        "port": 4541,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.954Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4541",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4541.js"
+      }
+    ],
+    [
+      "blockchain-4542",
+      {
+        "id": "blockchain-4542",
+        "category": "blockchain",
+        "port": 4542,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.955Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4542",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4542.js"
+      }
+    ],
+    [
+      "blockchain-4543",
+      {
+        "id": "blockchain-4543",
+        "category": "blockchain",
+        "port": 4543,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.956Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4543",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4543.js"
+      }
+    ],
+    [
+      "blockchain-4544",
+      {
+        "id": "blockchain-4544",
+        "category": "blockchain",
+        "port": 4544,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.957Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4544",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4544.js"
+      }
+    ],
+    [
+      "blockchain-4545",
+      {
+        "id": "blockchain-4545",
+        "category": "blockchain",
+        "port": 4545,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.958Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4545",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4545.js"
+      }
+    ],
+    [
+      "blockchain-4546",
+      {
+        "id": "blockchain-4546",
+        "category": "blockchain",
+        "port": 4546,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.959Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4546",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4546.js"
+      }
+    ],
+    [
+      "blockchain-4547",
+      {
+        "id": "blockchain-4547",
+        "category": "blockchain",
+        "port": 4547,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.960Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4547",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4547.js"
+      }
+    ],
+    [
+      "blockchain-4548",
+      {
+        "id": "blockchain-4548",
+        "category": "blockchain",
+        "port": 4548,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.961Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4548",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4548.js"
+      }
+    ],
+    [
+      "blockchain-4549",
+      {
+        "id": "blockchain-4549",
+        "category": "blockchain",
+        "port": 4549,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.962Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4549",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4549.js"
+      }
+    ],
+    [
+      "blockchain-4550",
+      {
+        "id": "blockchain-4550",
+        "category": "blockchain",
+        "port": 4550,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.963Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4550",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4550.js"
+      }
+    ],
+    [
+      "blockchain-4551",
+      {
+        "id": "blockchain-4551",
+        "category": "blockchain",
+        "port": 4551,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.964Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4551",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4551.js"
+      }
+    ],
+    [
+      "blockchain-4552",
+      {
+        "id": "blockchain-4552",
+        "category": "blockchain",
+        "port": 4552,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.965Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4552",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4552.js"
+      }
+    ],
+    [
+      "blockchain-4553",
+      {
+        "id": "blockchain-4553",
+        "category": "blockchain",
+        "port": 4553,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.966Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4553",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4553.js"
+      }
+    ],
+    [
+      "blockchain-4554",
+      {
+        "id": "blockchain-4554",
+        "category": "blockchain",
+        "port": 4554,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.967Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4554",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4554.js"
+      }
+    ],
+    [
+      "blockchain-4555",
+      {
+        "id": "blockchain-4555",
+        "category": "blockchain",
+        "port": 4555,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.968Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4555",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4555.js"
+      }
+    ],
+    [
+      "blockchain-4556",
+      {
+        "id": "blockchain-4556",
+        "category": "blockchain",
+        "port": 4556,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.969Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4556",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4556.js"
+      }
+    ],
+    [
+      "blockchain-4557",
+      {
+        "id": "blockchain-4557",
+        "category": "blockchain",
+        "port": 4557,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.970Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4557",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4557.js"
+      }
+    ],
+    [
+      "blockchain-4558",
+      {
+        "id": "blockchain-4558",
+        "category": "blockchain",
+        "port": 4558,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.971Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4558",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4558.js"
+      }
+    ],
+    [
+      "blockchain-4559",
+      {
+        "id": "blockchain-4559",
+        "category": "blockchain",
+        "port": 4559,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.972Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4559",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4559.js"
+      }
+    ],
+    [
+      "blockchain-4560",
+      {
+        "id": "blockchain-4560",
+        "category": "blockchain",
+        "port": 4560,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.973Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4560",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4560.js"
+      }
+    ],
+    [
+      "blockchain-4561",
+      {
+        "id": "blockchain-4561",
+        "category": "blockchain",
+        "port": 4561,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.974Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4561",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4561.js"
+      }
+    ],
+    [
+      "blockchain-4562",
+      {
+        "id": "blockchain-4562",
+        "category": "blockchain",
+        "port": 4562,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.975Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4562",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4562.js"
+      }
+    ],
+    [
+      "blockchain-4563",
+      {
+        "id": "blockchain-4563",
+        "category": "blockchain",
+        "port": 4563,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.976Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4563",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4563.js"
+      }
+    ],
+    [
+      "blockchain-4564",
+      {
+        "id": "blockchain-4564",
+        "category": "blockchain",
+        "port": 4564,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.977Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4564",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4564.js"
+      }
+    ],
+    [
+      "blockchain-4565",
+      {
+        "id": "blockchain-4565",
+        "category": "blockchain",
+        "port": 4565,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.978Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4565",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4565.js"
+      }
+    ],
+    [
+      "blockchain-4566",
+      {
+        "id": "blockchain-4566",
+        "category": "blockchain",
+        "port": 4566,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.979Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4566",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4566.js"
+      }
+    ],
+    [
+      "blockchain-4567",
+      {
+        "id": "blockchain-4567",
+        "category": "blockchain",
+        "port": 4567,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.979Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4567",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4567.js"
+      }
+    ],
+    [
+      "blockchain-4568",
+      {
+        "id": "blockchain-4568",
+        "category": "blockchain",
+        "port": 4568,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.981Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4568",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4568.js"
+      }
+    ],
+    [
+      "blockchain-4569",
+      {
+        "id": "blockchain-4569",
+        "category": "blockchain",
+        "port": 4569,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.981Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4569",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4569.js"
+      }
+    ],
+    [
+      "blockchain-4570",
+      {
+        "id": "blockchain-4570",
+        "category": "blockchain",
+        "port": 4570,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.982Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4570",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4570.js"
+      }
+    ],
+    [
+      "blockchain-4571",
+      {
+        "id": "blockchain-4571",
+        "category": "blockchain",
+        "port": 4571,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.983Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4571",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4571.js"
+      }
+    ],
+    [
+      "blockchain-4572",
+      {
+        "id": "blockchain-4572",
+        "category": "blockchain",
+        "port": 4572,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.984Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4572",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4572.js"
+      }
+    ],
+    [
+      "blockchain-4573",
+      {
+        "id": "blockchain-4573",
+        "category": "blockchain",
+        "port": 4573,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.985Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4573",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4573.js"
+      }
+    ],
+    [
+      "blockchain-4574",
+      {
+        "id": "blockchain-4574",
+        "category": "blockchain",
+        "port": 4574,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.986Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4574",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4574.js"
+      }
+    ],
+    [
+      "blockchain-4575",
+      {
+        "id": "blockchain-4575",
+        "category": "blockchain",
+        "port": 4575,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.987Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4575",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4575.js"
+      }
+    ],
+    [
+      "blockchain-4576",
+      {
+        "id": "blockchain-4576",
+        "category": "blockchain",
+        "port": 4576,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.988Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4576",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4576.js"
+      }
+    ],
+    [
+      "blockchain-4577",
+      {
+        "id": "blockchain-4577",
+        "category": "blockchain",
+        "port": 4577,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.989Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4577",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4577.js"
+      }
+    ],
+    [
+      "blockchain-4578",
+      {
+        "id": "blockchain-4578",
+        "category": "blockchain",
+        "port": 4578,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.990Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4578",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4578.js"
+      }
+    ],
+    [
+      "blockchain-4579",
+      {
+        "id": "blockchain-4579",
+        "category": "blockchain",
+        "port": 4579,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.991Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4579",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4579.js"
+      }
+    ],
+    [
+      "blockchain-4580",
+      {
+        "id": "blockchain-4580",
+        "category": "blockchain",
+        "port": 4580,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.992Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4580",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4580.js"
+      }
+    ],
+    [
+      "blockchain-4581",
+      {
+        "id": "blockchain-4581",
+        "category": "blockchain",
+        "port": 4581,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.992Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4581",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4581.js"
+      }
+    ],
+    [
+      "blockchain-4582",
+      {
+        "id": "blockchain-4582",
+        "category": "blockchain",
+        "port": 4582,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.993Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4582",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4582.js"
+      }
+    ],
+    [
+      "blockchain-4583",
+      {
+        "id": "blockchain-4583",
+        "category": "blockchain",
+        "port": 4583,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.994Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4583",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4583.js"
+      }
+    ],
+    [
+      "blockchain-4584",
+      {
+        "id": "blockchain-4584",
+        "category": "blockchain",
+        "port": 4584,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.995Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4584",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4584.js"
+      }
+    ],
+    [
+      "blockchain-4585",
+      {
+        "id": "blockchain-4585",
+        "category": "blockchain",
+        "port": 4585,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.996Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4585",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4585.js"
+      }
+    ],
+    [
+      "blockchain-4586",
+      {
+        "id": "blockchain-4586",
+        "category": "blockchain",
+        "port": 4586,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.997Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4586",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4586.js"
+      }
+    ],
+    [
+      "blockchain-4587",
+      {
+        "id": "blockchain-4587",
+        "category": "blockchain",
+        "port": 4587,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.998Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4587",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4587.js"
+      }
+    ],
+    [
+      "blockchain-4588",
+      {
+        "id": "blockchain-4588",
+        "category": "blockchain",
+        "port": 4588,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:24.999Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4588",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4588.js"
+      }
+    ],
+    [
+      "blockchain-4589",
+      {
+        "id": "blockchain-4589",
+        "category": "blockchain",
+        "port": 4589,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:25.000Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4589",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4589.js"
+      }
+    ],
+    [
+      "blockchain-4590",
+      {
+        "id": "blockchain-4590",
+        "category": "blockchain",
+        "port": 4590,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:25.001Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4590",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4590.js"
+      }
+    ],
+    [
+      "blockchain-4591",
+      {
+        "id": "blockchain-4591",
+        "category": "blockchain",
+        "port": 4591,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:25.002Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4591",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4591.js"
+      }
+    ],
+    [
+      "blockchain-4592",
+      {
+        "id": "blockchain-4592",
+        "category": "blockchain",
+        "port": 4592,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:25.003Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4592",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4592.js"
+      }
+    ],
+    [
+      "blockchain-4593",
+      {
+        "id": "blockchain-4593",
+        "category": "blockchain",
+        "port": 4593,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:25.004Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4593",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4593.js"
+      }
+    ],
+    [
+      "blockchain-4594",
+      {
+        "id": "blockchain-4594",
+        "category": "blockchain",
+        "port": 4594,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:25.005Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4594",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4594.js"
+      }
+    ],
+    [
+      "blockchain-4595",
+      {
+        "id": "blockchain-4595",
+        "category": "blockchain",
+        "port": 4595,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:25.006Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4595",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4595.js"
+      }
+    ],
+    [
+      "blockchain-4596",
+      {
+        "id": "blockchain-4596",
+        "category": "blockchain",
+        "port": 4596,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:25.006Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4596",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4596.js"
+      }
+    ],
+    [
+      "blockchain-4597",
+      {
+        "id": "blockchain-4597",
+        "category": "blockchain",
+        "port": 4597,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:25.007Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4597",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4597.js"
+      }
+    ],
+    [
+      "blockchain-4598",
+      {
+        "id": "blockchain-4598",
+        "category": "blockchain",
+        "port": 4598,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:25.008Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4598",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4598.js"
+      }
+    ],
+    [
+      "blockchain-4599",
+      {
+        "id": "blockchain-4599",
+        "category": "blockchain",
+        "port": 4599,
+        "status": "deploying",
+        "createdAt": "2025-09-03T03:20:25.009Z",
+        "memoryPath": "D:\\Ai Server\\git-memory-mcp-server\\.git-memory\\servers\\blockchain-4599",
+        "scriptPath": "D:\\Ai Server\\git-memory-mcp-server\\mcp-server-blockchain-4599.js"
+      }
     ]
   ],
   "categories": [
@@ -10935,9 +12135,9 @@
         "portStart": 4500,
         "portEnd": 4599,
         "maxServers": 100,
-        "count": 0
+        "count": 100
       }
     ]
   ],
-  "lastUpdated": "2025-09-03T03:20:19.649Z"
+  "lastUpdated": "2025-09-03T03:20:25.010Z"
 }
