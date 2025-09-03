@@ -32,7 +32,7 @@ class MCPCoordinator {
     this.configPath = path.join(process.cwd(), 'mcp-coordinator-config.json');
     this.batchSize = 100; // Increased batch size for faster deployment
     this.currentPhase = 0;
-    this.maxServers = 1000;
+    this.maxServers = 1500;
     this.maxServersPerCategory = 100;
     
     this.initializeDirectories();
@@ -65,6 +65,8 @@ class MCPCoordinator {
       this.currentPhase = data.currentPhase || 0;
       this.mcpServers = new Map(data.mcpServers || []);
       this.categories = new Map(data.categories || []);
+      // Ensure categories updated for 1500 capacity
+      await this.ensureCategoriesUpToDate();
     } catch (error) {
       // Create default configuration
       await this.createDefaultConfiguration();
@@ -82,8 +84,51 @@ class MCPCoordinator {
     await fs.writeFile(this.configPath, JSON.stringify(config, null, 2));
   }
 
+  // Ensure categories include new ones for 1500 capacity without destroying existing data
+  async ensureCategoriesUpToDate() {
+    const expected = {
+      'database': { portStart: 3100, portEnd: 3199, maxServers: 100 },
+      'filesystem': { portStart: 3200, portEnd: 3299, maxServers: 100 },
+      'api': { portStart: 3300, portEnd: 3399, maxServers: 100 },
+      'ai-ml': { portStart: 3400, portEnd: 3499, maxServers: 100 },
+      'version-control': { portStart: 3500, portEnd: 3599, maxServers: 100 },
+      'dev-tools': { portStart: 3600, portEnd: 3699, maxServers: 100 },
+      'system-ops': { portStart: 3700, portEnd: 3799, maxServers: 100 },
+      'communication': { portStart: 3800, portEnd: 3899, maxServers: 100 },
+      'business': { portStart: 3900, portEnd: 3999, maxServers: 100 },
+      'iot-hardware': { portStart: 4000, portEnd: 4099, maxServers: 100 },
+      'data-science': { portStart: 4100, portEnd: 4199, maxServers: 100 },
+      'security': { portStart: 4200, portEnd: 4299, maxServers: 100 },
+      'media': { portStart: 4300, portEnd: 4399, maxServers: 100 },
+      'gaming': { portStart: 4400, portEnd: 4499, maxServers: 100 },
+      'blockchain': { portStart: 4500, portEnd: 4599, maxServers: 100 }
+    };
+
+    let changed = false;
+    for (const [name, conf] of Object.entries(expected)) {
+      if (!this.categories.has(name)) {
+        this.categories.set(name, { ...conf, count: 0 });
+        const categoryDir = path.join(this.memoryPath, 'categories', name);
+        await fs.mkdir(categoryDir, { recursive: true });
+        changed = true;
+      } else {
+        // ensure maxServers exists
+        const existing = this.categories.get(name);
+        if (existing && typeof existing.maxServers === 'undefined') {
+          existing.maxServers = 100;
+          this.categories.set(name, existing);
+          changed = true;
+        }
+      }
+    }
+
+    if (changed) {
+      await this.saveConfiguration();
+    }
+  }
+
   async createDefaultConfiguration() {
-    // Define categories with expanded port ranges for 1000 servers (100 per category)
+    // Define categories with expanded port ranges for 1500 servers (100 per category)
     const defaultCategories = {
       'database': { portStart: 3100, portEnd: 3199, count: 0, maxServers: 100 },
       'filesystem': { portStart: 3200, portEnd: 3299, count: 0, maxServers: 100 },
@@ -94,7 +139,13 @@ class MCPCoordinator {
       'system-ops': { portStart: 3700, portEnd: 3799, count: 0, maxServers: 100 },
       'communication': { portStart: 3800, portEnd: 3899, count: 0, maxServers: 100 },
       'business': { portStart: 3900, portEnd: 3999, count: 0, maxServers: 100 },
-      'iot-hardware': { portStart: 4000, portEnd: 4099, count: 0, maxServers: 100 }
+      'iot-hardware': { portStart: 4000, portEnd: 4099, count: 0, maxServers: 100 },
+      // additional categories for 1500 capacity
+      'data-science': { portStart: 4100, portEnd: 4199, count: 0, maxServers: 100 },
+      'security': { portStart: 4200, portEnd: 4299, count: 0, maxServers: 100 },
+      'media': { portStart: 4300, portEnd: 4399, count: 0, maxServers: 100 },
+      'gaming': { portStart: 4400, portEnd: 4499, count: 0, maxServers: 100 },
+      'blockchain': { portStart: 4500, portEnd: 4599, count: 0, maxServers: 100 }
     };
     
     for (const [category, config] of Object.entries(defaultCategories)) {
@@ -115,7 +166,7 @@ class MCPCoordinator {
         tools: [
           {
             name: 'deploy_batch',
-            description: 'Deploy a batch of MCP servers (up to 100 servers per batch for 1000-server capacity)',
+            description: 'Deploy a batch of MCP servers (up to 100 servers per batch for 1500-server capacity)',
             inputSchema: {
               type: 'object',
               properties: {
@@ -820,7 +871,81 @@ server.run().catch(console.error);
         res.status(500).json({ success: false, error: error.message });
       }
     });
-    
+
+    // Start servers (single or batch)
+    app.post('/servers/start', async (req, res) => {
+      try {
+        const { id, ids, category, limit } = req.body || {};
+        if (id) {
+          const r = await this.startServerProcess(id);
+          return ok(res, r);
+        }
+        let targetIds = [];
+        if (Array.isArray(ids) && ids.length > 0) {
+          targetIds = ids;
+        } else if (category) {
+          targetIds = Array.from(this.mcpServers.values())
+            .filter(s => s.category === category && s.status !== 'running')
+            .map(s => s.id);
+        }
+        if (targetIds.length === 0) return fail(res, 'No target servers to start');
+        const toStart = typeof limit === 'number' ? targetIds.slice(0, Math.max(0, limit)) : targetIds;
+
+        const queue = [...toStart];
+        const started = [];
+        const failed = [];
+        const workers = Math.min(this.concurrentStarts, queue.length);
+        const runner = async () => {
+          while (queue.length) {
+            const next = queue.shift();
+            try {
+              const rr = await this.startServerProcess(next);
+              started.push(rr);
+            } catch (e) {
+              failed.push({ id: next, error: e.message });
+            }
+          }
+        };
+        await Promise.all(Array.from({ length: workers }, runner));
+        return ok(res, { started, failed, requested: toStart.length });
+      } catch (error) {
+        return fail(res, 'Start servers error', { message: error.message });
+      }
+    });
+
+    // Stop servers (single or batch)
+    app.post('/servers/stop', async (req, res) => {
+      try {
+        const { id, ids, category, limit } = req.body || {};
+        if (id) {
+          const r = await this.stopServerProcess(id);
+          return ok(res, r);
+        }
+        let targetIds = [];
+        if (Array.isArray(ids) && ids.length > 0) {
+          targetIds = ids;
+        } else if (category) {
+          targetIds = Array.from(this.mcpServers.values())
+            .filter(s => s.category === category && s.status === 'running')
+            .map(s => s.id);
+        }
+        if (targetIds.length === 0) return fail(res, 'No target servers to stop');
+        const toStop = typeof limit === 'number' ? targetIds.slice(0, Math.max(0, limit)) : targetIds;
+
+        const results = [];
+        for (const sid of toStop) {
+          try {
+            const r = await this.stopServerProcess(sid);
+            results.push(r);
+          } catch (e) {
+            results.push({ serverId: sid, status: 'error', error: e.message });
+          }
+        }
+        return ok(res, { results, requested: toStop.length });
+      } catch (error) {
+        return fail(res, 'Stop servers error', { message: error.message });
+      }
+    });
     app.get('/stats', (req, res) => {
       res.json({
         success: true,
@@ -1195,6 +1320,162 @@ server.run().catch(console.error);
           });
         };
 
+        // Reliability orchestrator: retries + fallback for non-streaming requests
+        const toInt = (v, d) => {
+          const n = parseInt(v, 10); return Number.isFinite(n) ? n : d;
+        };
+        const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
+        const isTruthy = (v) => v === true || v === 'true' || v === 1 || v === '1';
+
+        const policy = (req.body?.policy || req.body?.providerPolicy || '').toString().toLowerCase();
+        const retries = clamp(toInt(req.body?.retries, 1), 0, 5);
+        const baseDelayMs = clamp(toInt(req.body?.retryDelayMs, 250), 50, 5000);
+        const providerTimeoutMs = toInt(req.body?.providerTimeoutMs, undefined);
+        const overallTimeoutMs = toInt(req.body?.overallTimeoutMs, undefined);
+        const fallbackListInput = req.body?.fallbackProviders || req.body?.fallback || [];
+        const preferParallel = policy === 'parallel';
+
+        // If streaming requested, skip orchestrator to avoid mixing partial outputs
+        const streamingRequested = !!(req.body?.stream || req.body?.stream_mode || req.body?.streamMode);
+
+        const normalizeProviders = (p) => Array.from(new Set((Array.isArray(p) ? p : [p]).filter(Boolean).map(x => `${x}`.toLowerCase())));
+        const defaultOrder = normalizeProviders(provider || ['openai', 'ollama', 'mock']);
+        const fallbackOrder = normalizeProviders(fallbackListInput);
+        const order = fallbackOrder.length > 0 ? fallbackOrder : (defaultOrder[0] ? [defaultOrder[0], 'openai', 'ollama', 'mock'] : ['openai', 'ollama', 'mock']);
+        const providerOrder = Array.from(new Set(order));
+
+        const jitter = (n) => Math.floor(n * (0.8 + Math.random() * 0.4));
+        const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+
+        const invokeOpenAIReturn = async () => {
+          const OPENAI_BASE = (baseUrl || process.env.OPENAI_BASE_URL || 'https://api.openai.com').replace(/\/$/, '');
+          const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+          if (!OPENAI_API_KEY) return { ok: false, error: 'OPENAI_API_KEY is not configured' };
+          const body = {
+            model: model || process.env.OPENAI_DEFAULT_MODEL || 'gpt-4o-mini',
+            messages: normMessages,
+            stream: false
+          };
+          if (typeof temperature === 'number') body.temperature = temperature;
+          if (typeof max_tokens === 'number') body.max_tokens = max_tokens;
+          const opts = options && typeof options === 'object' ? options : {};
+          if (typeof opts.top_p === 'number') body.top_p = opts.top_p;
+          if (typeof opts.frequency_penalty === 'number') body.frequency_penalty = opts.frequency_penalty;
+          if (typeof opts.presence_penalty === 'number') body.presence_penalty = opts.presence_penalty;
+          if (typeof opts.n === 'number') body.n = opts.n;
+          if (typeof opts.user === 'string') body.user = opts.user;
+          if (typeof opts.stop === 'string' || Array.isArray(opts.stop)) body.stop = opts.stop;
+          if (opts.logit_bias && typeof opts.logit_bias === 'object') body.logit_bias = opts.logit_bias;
+          if (opts.response_format && typeof opts.response_format === 'object') body.response_format = opts.response_format;
+
+          try {
+            const r = await axios.post(`${OPENAI_BASE}/v1/chat/completions`, body, {
+              headers: { Authorization: `Bearer ${OPENAI_API_KEY}` },
+              timeout: providerTimeoutMs || toInt(req.body?.timeoutMs, undefined)
+            });
+            const d = r.data;
+            const text = d?.choices?.[0]?.message?.content || '';
+            return { ok: true, provider: 'openai', model: body.model, output: text, raw: d, usage: d?.usage || null };
+          } catch (error) {
+            return { ok: false, error: error?.message || 'openai error', code: error?.code || null, status: error?.response?.status || null };
+          }
+        };
+
+        const invokeOllamaReturn = async () => {
+          const sanitize = (v) => (v || '').toString().trim().replace(/^["']|["']$/g, '').replace(/\/$/, '');
+          const OLLAMA_BASE = sanitize(baseUrl || process.env.OLLAMA_BASE_URL || process.env.OLLAMA_HOST || 'http://localhost:11434');
+          const endpoint = new URL('/api/generate', OLLAMA_BASE).toString();
+          const body = {
+            model: model || process.env.OLLAMA_MODEL || 'llama3.1',
+            prompt: pickFirstText(normMessages),
+            stream: false,
+            options: (() => {
+              const out = {};
+              if (typeof temperature === 'number') out.temperature = temperature;
+              if (typeof max_tokens === 'number') out.num_predict = max_tokens;
+              if (options && typeof options === 'object') {
+                const { top_p, stop, repeat_penalty, top_k, seed } = options;
+                if (typeof top_p === 'number') out.top_p = top_p;
+                if (typeof top_k === 'number') out.top_k = top_k;
+                if (typeof repeat_penalty === 'number') out.repeat_penalty = repeat_penalty;
+                if (typeof seed === 'number') out.seed = seed;
+                if (Array.isArray(stop) || typeof stop === 'string') out.stop = stop;
+                for (const k of Object.keys(options)) if (!(k in out)) out[k] = options[k];
+              }
+              return out;
+            })()
+          };
+          try {
+            const r = await axios.post(endpoint, body, { timeout: providerTimeoutMs || toInt(req.body?.timeoutMs, undefined) });
+            const d = r.data;
+            return { ok: true, provider: 'ollama', model: body.model, output: d?.response || '', raw: d, endpoint };
+          } catch (error) {
+            return { ok: false, error: error?.message || 'ollama error', code: error?.code || null, status: error?.response?.status || null };
+          }
+        };
+
+        const invokeMockReturn = async () => {
+          const text = pickFirstText(normMessages);
+          return { ok: true, provider: 'mock', model: model || 'mock-echo', output: `[mock] ${text}`, raw: { echo: text } };
+        };
+
+        const attemptWithRetry = async (fn, label) => {
+          let lastErr = null;
+          for (let i = 0; i <= retries; i++) {
+            const started = Date.now();
+            try {
+              const r = await fn();
+              if (r && r.ok) return r;
+              lastErr = r?.error || `${label} unknown error`;
+            } catch (e) {
+              lastErr = e?.message || `${label} thrown error`;
+            }
+            // backoff except after last try
+            if (i < retries) await sleep(jitter(baseDelayMs * Math.pow(2, i)));
+            // respect overall timeout
+            if (overallTimeoutMs && Date.now() - started > overallTimeoutMs) break;
+          }
+          return { ok: false, error: lastErr || `${label} failed` };
+        };
+
+        // Orchestrator applies only when non-streaming and any reliability control is requested
+        const reliabilityRequested = streamingRequested ? false : (
+          isTruthy(req.body?.enableReliability) || typeof req.body?.retries === 'number' || Array.isArray(req.body?.fallbackProviders) || ['fallback','prefer-openai','prefer-ollama','parallel'].includes(policy)
+        );
+
+        if (reliabilityRequested) {
+          const tryProvider = async (p) => {
+            if (p === 'openai') return await attemptWithRetry(invokeOpenAIReturn, 'openai');
+            if (p === 'ollama') return await attemptWithRetry(invokeOllamaReturn, 'ollama');
+            if (p === 'mock') return await attemptWithRetry(invokeMockReturn, 'mock');
+            return { ok: false, error: `provider not supported: ${p}` };
+          };
+
+          // Parallel race policy
+          if (preferParallel) {
+            const tasks = providerOrder.map(p => tryProvider(p));
+            const settled = await Promise.allSettled(tasks);
+            const firstOk = settled.find(s => s.status === 'fulfilled' && s.value && s.value.ok);
+            if (firstOk && firstOk.value) {
+              const r = firstOk.value;
+              return ok(res, { provider: r.provider, model: r.model, output: r.output, raw: r.raw, usage: r.usage || null });
+            }
+            const errors = settled.map(s => (s.status === 'fulfilled' ? s.value?.error : s.reason?.message)).filter(Boolean);
+            return fail(res, 'All providers failed (parallel)', { errors });
+          }
+
+          // Sequential fallback policy
+          const errors = [];
+          for (const p of providerOrder) {
+            const r = await tryProvider(p);
+            if (r.ok) {
+              return ok(res, { provider: r.provider, model: r.model, output: r.output, raw: r.raw, usage: r.usage || null });
+            }
+            errors.push({ provider: p, error: r.error });
+          }
+          return fail(res, 'All providers failed (fallback)', { errors, order: providerOrder });
+        }
+
         if (provider === 'openai') return await doOpenAI();
         if (provider === 'ollama') return await doOllama();
         if (provider === 'mock') return await doMock();
@@ -1230,10 +1511,43 @@ server.run().catch(console.error);
       }
     });
     
-    const port = process.env.MCP_COORDINATOR_PORT || 3000;
-    app.listen(port, () => {
-      console.error(`MCP Coordinator HTTP server running on port ${port}`);
+    // Auto-free port selection with fallback
+    const desired = parseInt(process.env.MCP_COORDINATOR_PORT || '3000', 10);
+    const strictPort = (process.env.MCP_COORDINATOR_PORT_STRICT || '').toString() === '1';
+    const maxAttempts = 25;
+
+    const listenOnce = (port) => new Promise((resolve, reject) => {
+      const server = app.listen(port, () => resolve({ server, port }));
+      server.on('error', (err) => reject({ err, port }));
     });
+
+    let bound = null;
+    let attempt = 0;
+    let portToTry = desired;
+    while (!bound && attempt < maxAttempts) {
+      try {
+        bound = await listenOnce(portToTry);
+      } catch (e) {
+        const code = e?.err?.code || '';
+        if (code === 'EADDRINUSE' && !strictPort) {
+          attempt++;
+          portToTry++;
+          if (attempt === 1) console.error(`[coordinator] Port ${e.port} in use, trying next free port...`);
+          continue;
+        }
+        // unrecoverable
+        throw e.err || e;
+      }
+    }
+
+    if (!bound) {
+      throw new Error(`Unable to bind HTTP server after ${maxAttempts} attempts starting at ${desired}`);
+    }
+
+    this.httpServer = bound.server;
+    const finalPort = bound.port;
+    const note = finalPort === desired ? '' : ` (fallback from ${desired})`;
+    console.error(`MCP Coordinator HTTP server running on port ${finalPort}${note}`);
   }
   
   async run() {
