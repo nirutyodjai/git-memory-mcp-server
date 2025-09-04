@@ -360,4 +360,4 @@ vsce publish 1.0.1
 
 ---
 
-*© 2024 Git Memory MCP Server - IDE Integration Best Practices*
+*© 2024 Git Memory MCP Server - แนวปฏิบัติที่ดีที่สุดสำหรับการรวม IDE*

@@ -7,8 +7,9 @@ const EventEmitter = require('events');
 const crypto = require('crypto');
 const zlib = require('zlib');
 const NodeCache = require('node-cache');
-const Redis = require('redis');
-const LRU = require('lru-cache');
+// Removed top-level Redis and LRU requires to avoid ESM import issues
+// const Redis = require('redis');
+// const LRU = require('lru-cache');
 const { promisify } = require('util');
 const logger = require('../utils/logger');
 
@@ -106,30 +107,59 @@ class CacheCompressionService extends EventEmitter {
       // L2 - Redis cache (persistent)
       if (this.redisConfig.enabled !== false) {
         try {
-          this.redisCache = Redis.createClient(this.redisConfig);
-          await this.redisCache.connect();
-          
+          // Dynamically import redis to avoid ESM require issues
+          const redisModule = await import('redis');
+          const createClient = redisModule.createClient || (redisModule.default && redisModule.default.createClient);
+
+          if (!createClient) {
+            throw new Error('Redis module does not expose createClient');
+          }
+
+          // Build options compatible with redis v4/v5
+          const redisOptions = this.redisConfig.url
+            ? { url: this.redisConfig.url }
+            : {
+                socket: {
+                  host: this.redisConfig.host || 'localhost',
+                  port: this.redisConfig.port || 6379,
+                },
+                database: this.redisConfig.db ?? 0,
+              };
+
+          this.redisCache = createClient(redisOptions);
+
           this.redisCache.on('error', (error) => {
             logger.error('Redis cache error:', error);
           });
+
+          await this.redisCache.connect();
           
           logger.info('Redis cache connected successfully');
         } catch (error) {
-          logger.warn('Redis cache not available, continuing without it:', error.message);
+          logger.warn(`Redis cache not available or failed to initialize, continuing without it: ${error.message}`);
           this.redisCache = null;
         }
       }
       
       // L3 - LRU cache (memory-efficient)
-      this.lruCache = new LRU({
-        maxSize: this.lruCacheSize * 1024 * 1024, // MB to bytes
-        sizeCalculation: (value, key) => {
-          return JSON.stringify(value).length + key.length;
-        },
-        dispose: (value, key) => {
-          logger.debug(`LRU cache evicted key: ${key}`);
-        }
-      });
+      try {
+        // Dynamically import lru-cache to support both CJS/ESM
+        const lruModule = await import('lru-cache');
+        const LRUClass = lruModule.default || lruModule.LRUCache || lruModule;
+        
+        this.lruCache = new LRUClass({
+          maxSize: this.lruCacheSize * 1024 * 1024, // MB to bytes
+          sizeCalculation: (value, key) => {
+            return JSON.stringify(value).length + key.length;
+          },
+          dispose: (value, key) => {
+            logger.debug(`LRU cache evicted key: ${key}`);
+          }
+        });
+      } catch (error) {
+        logger.warn(`Failed to initialize LRU cache, continuing without it: ${error.message}`);
+        this.lruCache = null;
+      }
       
       logger.info('All cache layers initialized successfully');
       

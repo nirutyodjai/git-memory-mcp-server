@@ -498,44 +498,77 @@ class MCPMultiSystemManager extends EventEmitter {
   // Helper methods
   
   validateSystemConfig(config) {
-    if (!config.type) {
+    if (!config || !config.type) {
       throw new Error('System type is required');
     }
-    
-    if (!config.endpoint && !config.instance) {
-      throw new Error('System endpoint or instance is required');
+
+    const type = config.type;
+    const nested = config.config || {};
+    const hasEndpointOrInstance = !!(config.endpoint || config.instance || nested.endpoint || nested.instance);
+
+    // External systems must provide an endpoint or instance
+    if (type === 'external-mcp') {
+      if (!hasEndpointOrInstance) {
+        throw new Error('External MCP system requires endpoint or instance');
+      }
+      return;
     }
+
+    // Local/built-in types (git-memory, semantic-memory, mcp-protocol, distributed-memory)
+    // do not require endpoint/instance. Additional per-type validation can be added here if needed.
+    return;
   }
 
   async createSystemInstance(systemId, config) {
     try {
       const { type } = config;
-      
+
+      // Merge top-level config with nested config and normalize known fields
+      const nested = config.config || {};
+      const options = {
+        id: systemId,
+        type,
+        ...config,
+        ...nested
+      };
+      // Remove nested config object to avoid confusion in services
+      delete options.config;
+
+      // Field name normalization per type
+      if (type === 'git-memory') {
+        if (!options.repoPath && options.repositoryPath) {
+          options.repoPath = options.repositoryPath;
+        }
+        if (typeof options.compression !== 'undefined' && typeof options.compressionEnabled === 'undefined') {
+          options.compressionEnabled = options.compression;
+        }
+      }
+
       switch (type) {
-        case 'git-memory':
-          const GitMemoryService = require('./GitMemoryService');
-          return new GitMemoryService(config);
-          
-        case 'semantic-memory':
-          const SemanticMemoryService = require('./SemanticMemoryService');
-          return new SemanticMemoryService(config);
-          
-        case 'mcp-protocol':
-          const MCPProtocolService = require('./MCPProtocolService');
-          return new MCPProtocolService(config);
-          
-        case 'distributed-memory':
-          const DistributedMemoryService = require('./DistributedMemoryService');
-          return new DistributedMemoryService(config);
-          
-        case 'external-mcp':
-          const ExternalMCPService = require('./ExternalMCPService');
-          return new ExternalMCPService(config);
-          
+        case 'git-memory': {
+          const GitMemoryService = require('../../services/GitMemoryService');
+          return new GitMemoryService(options);
+        }
+        case 'semantic-memory': {
+          const SemanticMemoryService = require('../../services/SemanticMemoryService');
+          return new SemanticMemoryService(options);
+        }
+        case 'mcp-protocol': {
+          const MCPProtocolService = require('../../services/MCPProtocolService');
+          return new MCPProtocolService(options);
+        }
+        case 'distributed-memory': {
+          const DistributedMemoryService = require('../../services/DistributedMemoryService');
+          return new DistributedMemoryService(options);
+        }
+        case 'external-mcp': {
+          const ExternalMCPService = require('../../services/ExternalMCPService');
+          return new ExternalMCPService(options);
+        }
         default:
           throw new Error(`Unknown system type: ${type}`);
       }
-      
+
     } catch (error) {
       logger.error(`Error creating system instance:`, error);
       throw error;
