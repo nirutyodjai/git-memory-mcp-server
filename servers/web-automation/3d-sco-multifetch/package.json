@@ -1,0 +1,11 @@
+{
+  "name": "3d-sco-multifetch",
+  "version": "1.0.0",
+  "description": "3D SCO Multi-Fetch Server",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "ISC"
+}

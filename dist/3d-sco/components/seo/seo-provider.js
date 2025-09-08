@@ -202,9 +202,7 @@ function SEOProvider({ children, initialConfig }) {
         runAudit,
         trackPageView,
     };
-    return (<SEOContext.Provider value={contextValue}>
-      {children}
-    </SEOContext.Provider>);
+    return (react_1.default.createElement(SEOContext.Provider, { value: contextValue }, children));
 }
 function useSEO() {
     const context = (0, react_1.useContext)(SEOContext);
@@ -233,4 +231,3 @@ function useSEORouteTracking() {
         // You might need to implement route tracking differently
     }, [trackPageView, updateSEO]);
 }
-//# sourceMappingURL=seo-provider.js.map

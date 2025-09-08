@@ -87,11 +87,9 @@ const RemoteCursors = () => {
         handleMouseMove(x, y);
     }, [x, y, isMobile]);
     const users = Array.from(_users.values());
-    return (<div className="h-0 z-10 relative">
-      {users
-            .filter((user) => user.socketId !== socket?.id)
-            .map((user) => (<Cursor key={user.socketId} x={user.pos.x} y={user.pos.y} color={user.color} socketId={user.socketId} headerText={`${user.location} ${user.flag}`}/>))}
-    </div>);
+    return (react_1.default.createElement("div", { className: "h-0 z-10 relative" }, users
+        .filter((user) => user.socketId !== socket?.id)
+        .map((user) => (react_1.default.createElement(Cursor, { key: user.socketId, x: user.pos.x, y: user.pos.y, color: user.color, socketId: user.socketId, headerText: `${user.location} ${user.flag}` })))));
 };
 const Cursor = ({ color, x, y, headerText, socketId, }) => {
     const [showText, setShowText] = (0, react_1.useState)(false);
@@ -120,23 +118,18 @@ const Cursor = ({ color, x, y, headerText, socketId, }) => {
             }, timeToRead);
         }
     }, [msgs]);
-    return (<framer_motion_1.motion.div animate={{
+    return (react_1.default.createElement(framer_motion_1.motion.div, { animate: {
             x: x,
             y: y,
-        }} className="w-6 h-6" transition={{
+        }, className: "w-6 h-6", transition: {
             duration: 0.2, // Adjust duration for smoothness
             ease: "easeOut", // Choose an easing function
-        }} onMouseEnter={() => setShowText(true)} onMouseLeave={() => setShowText(false)}>
-      <lucide_react_1.MousePointer2 className="w-6 h-6 z-[9999999]" style={{ color: color }} strokeWidth={7.2}/>
-      <framer_motion_1.AnimatePresence>
-        {showText && headerText && (<framer_motion_1.motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: -7 }} exit={{ opacity: 0, y: -20 }} className="text-xs rounded-xl w-fit p-2 px-4 ml-4 cursor-can-hover cursor-can-hover cursor-can-hover cursor-can-hover" style={{
+        }, onMouseEnter: () => setShowText(true), onMouseLeave: () => setShowText(false) },
+        react_1.default.createElement(lucide_react_1.MousePointer2, { className: "w-6 h-6 z-[9999999]", style: { color: color }, strokeWidth: 7.2 }),
+        react_1.default.createElement(framer_motion_1.AnimatePresence, null, showText && headerText && (react_1.default.createElement(framer_motion_1.motion.div, { initial: { opacity: 0, y: -20 }, animate: { opacity: 1, y: -7 }, exit: { opacity: 0, y: -20 }, className: "text-xs rounded-xl w-fit p-2 px-4 ml-4 cursor-can-hover cursor-can-hover cursor-can-hover cursor-can-hover", style: {
                 backgroundColor: color + "f0",
-            }}>
-            <div className="text-nowrap">{headerText}</div>
-            {msgText && <div className="font-mono w-44">{msgText}</div>}
-          </framer_motion_1.motion.div>)}
-      </framer_motion_1.AnimatePresence>
-    </framer_motion_1.motion.div>);
+            } },
+            react_1.default.createElement("div", { className: "text-nowrap" }, headerText),
+            msgText && react_1.default.createElement("div", { className: "font-mono w-44" }, msgText))))));
 };
 exports.default = RemoteCursors;
-//# sourceMappingURL=remote-cursors.js.map

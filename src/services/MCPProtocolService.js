@@ -219,9 +219,9 @@ class MCPProtocolService extends EventEmitter {
    * @returns {number} Error code
    */
   getErrorCode(error) {
-    if (error.message.includes('Invalid request')) return -32600;
-    if (error.message.includes('Unsupported method')) return -32601;
-    if (error.message.includes('Invalid params')) return -32602;
+    if (typeof error.message === 'string' && error.message.includes('Invalid request')) return -32600;
+    if (typeof error.message === 'string' && error.message.includes('Unsupported method')) return -32601;
+    if (typeof error.message === 'string' && error.message.includes('Invalid params')) return -32602;
     return -32603; // Internal error
   }
 

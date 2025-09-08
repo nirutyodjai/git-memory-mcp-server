@@ -109,22 +109,16 @@ function OptimizedImage({ src, alt, fallbackSrc, enableLazyLoading = true, enabl
         ? { aspectRatio: aspectRatio.toString() }
         : {};
     if (!isInView) {
-        return (<div ref={imgRef} className={(0, utils_1.cn)('bg-gray-200 animate-pulse flex items-center justify-center', containerClassName)} style={containerStyle}>
-        <div className="text-gray-400 text-sm">Loading...</div>
-      </div>);
+        return (react_1.default.createElement("div", { ref: imgRef, className: (0, utils_1.cn)('bg-gray-200 animate-pulse flex items-center justify-center', containerClassName), style: containerStyle },
+            react_1.default.createElement("div", { className: "text-gray-400 text-sm" }, "Loading...")));
     }
     if (hasError && errorFallback) {
-        return (<div className={(0, utils_1.cn)('flex items-center justify-center', containerClassName)} style={containerStyle}>
-        {errorFallback}
-      </div>);
+        return (react_1.default.createElement("div", { className: (0, utils_1.cn)('flex items-center justify-center', containerClassName), style: containerStyle }, errorFallback));
     }
-    return (<div ref={imgRef} className={(0, utils_1.cn)('relative overflow-hidden', containerClassName)} style={containerStyle}>
-      {isLoading && showLoadingSpinner && (<div className="absolute inset-0 flex items-center justify-center bg-gray-100 z-10">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-        </div>)}
-      
-      <image_1.default src={currentSrc} alt={alt} className={(0, utils_1.cn)('transition-opacity duration-300', isLoading ? 'opacity-0' : 'opacity-100', className)} sizes={responsiveSizes} onLoadingComplete={handleLoadComplete} onLoad={handleLoadStart} onError={handleError} {...props}/>
-    </div>);
+    return (react_1.default.createElement("div", { ref: imgRef, className: (0, utils_1.cn)('relative overflow-hidden', containerClassName), style: containerStyle },
+        isLoading && showLoadingSpinner && (react_1.default.createElement("div", { className: "absolute inset-0 flex items-center justify-center bg-gray-100 z-10" },
+            react_1.default.createElement("div", { className: "animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600" }))),
+        react_1.default.createElement(image_1.default, { src: currentSrc, alt: alt, className: (0, utils_1.cn)('transition-opacity duration-300', isLoading ? 'opacity-0' : 'opacity-100', className), sizes: responsiveSizes, onLoadingComplete: handleLoadComplete, onLoad: handleLoadStart, onError: handleError, ...props })));
 }
 // Progressive image component with blur placeholder
 function ProgressiveImage({ src, alt, blurDataURL, ...props }) {
@@ -134,7 +128,7 @@ function ProgressiveImage({ src, alt, blurDataURL, ...props }) {
             setPlaceholder((0, image_optimization_1.generateBlurPlaceholder)());
         }
     }, [blurDataURL]);
-    return (<OptimizedImage src={src} alt={alt} placeholder="blur" blurDataURL={blurDataURL || placeholder} {...props}/>);
+    return (react_1.default.createElement(OptimizedImage, { src: src, alt: alt, placeholder: "blur", blurDataURL: blurDataURL || placeholder, ...props }));
 }
 // Gallery optimized image component
 function GalleryImage({ src, alt, thumbnail, onClick, ...props }) {
@@ -143,15 +137,10 @@ function GalleryImage({ src, alt, thumbnail, onClick, ...props }) {
         setShowFullSize(true);
         onClick?.();
     };
-    return (<>
-      <OptimizedImage src={thumbnail || src} alt={alt} className={(0, utils_1.cn)('cursor-pointer hover:opacity-90 transition-opacity', props.className)} onClick={handleClick} {...props}/>
-      
-      {showFullSize && (<div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50" onClick={() => setShowFullSize(false)}>
-          <div className="max-w-4xl max-h-4xl p-4">
-            <OptimizedImage src={src} alt={alt} fill className="object-contain" enablePreload/>
-          </div>
-        </div>)}
-    </>);
+    return (react_1.default.createElement(react_1.default.Fragment, null,
+        react_1.default.createElement(OptimizedImage, { src: thumbnail || src, alt: alt, className: (0, utils_1.cn)('cursor-pointer hover:opacity-90 transition-opacity', props.className), onClick: handleClick, ...props }),
+        showFullSize && (react_1.default.createElement("div", { className: "fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50", onClick: () => setShowFullSize(false) },
+            react_1.default.createElement("div", { className: "max-w-4xl max-h-4xl p-4" },
+                react_1.default.createElement(OptimizedImage, { src: src, alt: alt, fill: true, className: "object-contain", enablePreload: true }))))));
 }
 exports.default = OptimizedImage;
-//# sourceMappingURL=optimized-image.js.map

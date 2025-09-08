@@ -12,4 +12,3 @@ const footer = [
     },
 ];
 exports.footer = footer;
-//# sourceMappingURL=config.js.map

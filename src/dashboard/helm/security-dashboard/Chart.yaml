@@ -1,0 +1,204 @@
+# =============================================================================
+# ENTERPRISE SECURITY DASHBOARD - HELM CHART METADATA
+# Kubernetes Deployment Configuration for Security Dashboard
+# =============================================================================
+
+apiVersion: v2
+name: security-dashboard
+description: |
+  Enterprise-grade Security Dashboard for NEXUS IDE
+  
+  A comprehensive security monitoring and management dashboard that provides:
+  - Real-time threat detection and analysis
+  - Security incident management
+  - Compliance monitoring and reporting
+  - User access control and audit logging
+  - Performance monitoring and alerting
+  - Multi-tenant architecture support
+  
+  This Helm chart deploys a highly available, scalable security dashboard
+  with integrated monitoring, logging, and backup capabilities.
+
+# Chart Information
+type: application
+version: 1.0.0
+appVersion: "1.0.0"
+
+# Maintainer Information
+maintainers:
+  - name: NEXUS IDE Security Team
+    email: security@nexus-ide.com
+    url: https://nexus-ide.com
+  - name: DevOps Team
+    email: devops@nexus-ide.com
+    url: https://nexus-ide.com/devops
+
+# Repository Information
+home: https://nexus-ide.com/security-dashboard
+sources:
+  - https://github.com/nexus-ide/git-memory-mcp-server
+  - https://github.com/nexus-ide/security-dashboard
+
+# Keywords for Chart Discovery
+keywords:
+  - security
+  - dashboard
+  - monitoring
+  - compliance
+  - audit
+  - threat-detection
+  - incident-management
+  - enterprise
+  - nexus-ide
+  - mcp-server
+
+# Chart Dependencies
+dependencies:
+  # PostgreSQL Database
+  - name: postgresql
+    version: "12.12.10"
+    repository: https://charts.bitnami.com/bitnami
+    condition: postgresql.enabled
+    tags:
+      - database
+      - postgresql
+    
+  # Redis Cache
+  - name: redis
+    version: "18.1.5"
+    repository: https://charts.bitnami.com/bitnami
+    condition: redis.enabled
+    tags:
+      - cache
+      - redis
+    
+  # MongoDB Document Store
+  - name: mongodb
+    version: "13.18.5"
+    repository: https://charts.bitnami.com/bitnami
+    condition: mongodb.enabled
+    tags:
+      - database
+      - mongodb
+    
+  # Prometheus Monitoring
+  - name: kube-prometheus-stack
+    version: "51.2.0"
+    repository: https://prometheus-community.github.io/helm-charts
+    condition: monitoring.prometheus.enabled
+    tags:
+      - monitoring
+      - prometheus
+    
+  # Grafana Dashboards
+  - name: grafana
+    version: "6.60.4"
+    repository: https://grafana.github.io/helm-charts
+    condition: monitoring.grafana.enabled
+    tags:
+      - monitoring
+      - grafana
+    
+  # Elasticsearch for Logging
+  - name: elasticsearch
+    version: "19.13.0"
+    repository: https://charts.bitnami.com/bitnami
+    condition: logging.elasticsearch.enabled
+    tags:
+      - logging
+      - elasticsearch
+    
+  # Kibana for Log Visualization
+  - name: kibana
+    version: "10.4.8"
+    repository: https://charts.bitnami.com/bitnami
+    condition: logging.kibana.enabled
+    tags:
+      - logging
+      - kibana
+    
+  # NGINX Ingress Controller
+  - name: ingress-nginx
+    version: "4.8.3"
+    repository: https://kubernetes.github.io/ingress-nginx
+    condition: ingress.nginx.enabled
+    tags:
+      - ingress
+      - nginx
+    
+  # Cert-Manager for TLS
+  - name: cert-manager
+    version: "1.13.1"
+    repository: https://charts.jetstack.io
+    condition: tls.certManager.enabled
+    tags:
+      - tls
+      - certificates
+
+# Annotations for Additional Metadata
+annotations:
+  # Artifact Hub Annotations
+  artifacthub.io/category: "security"
+  artifacthub.io/license: "MIT"
+  artifacthub.io/prerelease: "false"
+  artifacthub.io/containsSecurityUpdates: "true"
+  artifacthub.io/changes: |
+    - Added comprehensive security monitoring
+    - Implemented real-time threat detection
+    - Enhanced compliance reporting
+    - Improved performance monitoring
+    - Added multi-tenant support
+  artifacthub.io/images: |
+    - name: security-dashboard
+      image: ghcr.io/nexus-ide/security-dashboard:1.0.0
+    - name: nginx
+      image: nginx:1.25-alpine
+    - name: postgresql
+      image: postgres:15-alpine
+    - name: redis
+      image: redis:7-alpine
+  artifacthub.io/links: |
+    - name: Documentation
+      url: https://docs.nexus-ide.com/security-dashboard
+    - name: Support
+      url: https://support.nexus-ide.com
+    - name: Source Code
+      url: https://github.com/nexus-ide/security-dashboard
+  
+  # Helm Annotations
+  helm.sh/hook-weight: "0"
+  helm.sh/resource-policy: "keep"
+  
+  # Kubernetes Annotations
+  kubernetes.io/managed-by: "Helm"
+  app.kubernetes.io/managed-by: "Helm"
+  app.kubernetes.io/part-of: "nexus-ide"
+  app.kubernetes.io/component: "security-dashboard"
+  
+  # Security Annotations
+  security.nexus-ide.com/scan-policy: "strict"
+  security.nexus-ide.com/compliance-level: "enterprise"
+  security.nexus-ide.com/data-classification: "confidential"
+  
+  # Monitoring Annotations
+  monitoring.nexus-ide.com/scrape: "true"
+  monitoring.nexus-ide.com/path: "/metrics"
+  monitoring.nexus-ide.com/port: "3000"
+  
+  # Backup Annotations
+  backup.nexus-ide.com/enabled: "true"
+  backup.nexus-ide.com/schedule: "0 2 * * *"
+  backup.nexus-ide.com/retention: "30d"
+
+# Minimum Kubernetes Version
+kubeVersion: ">=1.24.0"
+
+# Deprecated Flag (for future use)
+deprecated: false
+
+# Icon for Chart (Base64 encoded or URL)
+icon: https://nexus-ide.com/assets/security-dashboard-icon.png
+
+# =============================================================================
+# END OF CHART METADATA
+# =============================================================================

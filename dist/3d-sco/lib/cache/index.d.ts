@@ -15,8 +15,8 @@ export declare function getStats(): {
         calculatedSize: any;
     };
     redis: {
-        connected: any;
-        ready: any;
+        connected: boolean;
+        ready: boolean;
     };
 };
 export declare function cached<T extends (...args: any[]) => Promise<any>>(fn: T, options?: CacheOptions & {

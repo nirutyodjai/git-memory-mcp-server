@@ -1,0 +1,56 @@
+{
+  "timestamp": "2025-09-07T09:57:52.087Z",
+  "summary": {
+    "total": 0,
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "duration": 0,
+    "successRate": 0
+  },
+  "suites": [
+    {
+      "name": "Unit Tests",
+      "type": "unit",
+      "status": "failed",
+      "successRate": 0
+    },
+    {
+      "name": "API Tests",
+      "type": "api",
+      "status": "failed",
+      "successRate": 0
+    },
+    {
+      "name": "Integration Tests",
+      "type": "integration",
+      "status": "failed",
+      "successRate": 0
+    },
+    {
+      "name": "Security Tests",
+      "type": "security",
+      "status": "failed",
+      "successRate": 0
+    },
+    {
+      "name": "Performance Tests",
+      "type": "performance",
+      "status": "failed",
+      "successRate": 0
+    },
+    {
+      "name": "E2E Tests",
+      "type": "e2e",
+      "status": "failed",
+      "successRate": 0
+    },
+    {
+      "name": "Performance Benchmark",
+      "type": "benchmark",
+      "status": "failed",
+      "successRate": 0
+    }
+  ],
+  "status": "needs-improvement"
+}

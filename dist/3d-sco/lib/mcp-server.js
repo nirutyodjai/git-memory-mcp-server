@@ -484,4 +484,3 @@ function validateMCPRequest(serverName, action, params) {
     }
     return { valid: errors.length === 0, errors };
 }
-//# sourceMappingURL=mcp-server.js.map

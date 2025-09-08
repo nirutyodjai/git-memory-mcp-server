@@ -171,4 +171,3 @@ function extractImageMetadata(file) {
         img.src = URL.createObjectURL(file);
     });
 }
-//# sourceMappingURL=image-optimization.js.map

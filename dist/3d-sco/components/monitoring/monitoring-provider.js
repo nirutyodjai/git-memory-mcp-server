@@ -210,9 +210,7 @@ function MonitoringProvider({ children }) {
         errorTracker,
         logger,
     };
-    return (<MonitoringContext.Provider value={value}>
-      {children}
-    </MonitoringContext.Provider>);
+    return (react_1.default.createElement(MonitoringContext.Provider, { value: value }, children));
 }
 function useMonitoring() {
     const context = (0, react_1.useContext)(MonitoringContext);
@@ -278,4 +276,3 @@ function calculateWebVitalsScore(metrics) {
     }
     return count > 0 ? Math.round(score / count) : 0;
 }
-//# sourceMappingURL=monitoring-provider.js.map

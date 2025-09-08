@@ -328,4 +328,3 @@ function useSearchHistory(maxItems = 10) {
         clearHistory,
     };
 }
-//# sourceMappingURL=use-search.js.map

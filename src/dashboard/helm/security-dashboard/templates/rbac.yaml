@@ -1,0 +1,523 @@
+{{/*
+=============================================================================
+ENTERPRISE SECURITY DASHBOARD - RBAC TEMPLATE
+Kubernetes Role-Based Access Control Configuration
+=============================================================================
+*/}}
+
+{{- if .Values.security.rbac.create -}}
+
+# =============================================================================
+# SERVICE ACCOUNT
+# =============================================================================
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ include "security-dashboard.serviceAccountName" . }}
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    {{- include "security-dashboard.labels" . | nindent 4 }}
+    app.kubernetes.io/component: service-account
+  annotations:
+    {{- with .Values.security.serviceAccount.annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+    {{- if .Values.security.serviceAccount.awsRoleArn }}
+    eks.amazonaws.com/role-arn: {{ .Values.security.serviceAccount.awsRoleArn }}
+    {{- end }}
+    {{- if .Values.security.serviceAccount.gcpServiceAccount }}
+    iam.gke.io/gcp-service-account: {{ .Values.security.serviceAccount.gcpServiceAccount }}
+    {{- end }}
+automountServiceAccountToken: {{ .Values.security.serviceAccount.automountServiceAccountToken }}
+{{- if .Values.security.serviceAccount.imagePullSecrets }}
+imagePullSecrets:
+  {{- range .Values.security.serviceAccount.imagePullSecrets }}
+  - name: {{ . }}
+  {{- end }}
+{{- end }}
+
+---
+# =============================================================================
+# CLUSTER ROLE
+# =============================================================================
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ include "security-dashboard.fullname" . }}-cluster-role
+  labels:
+    {{- include "security-dashboard.labels" . | nindent 4 }}
+    app.kubernetes.io/component: cluster-role
+rules:
+  # =============================================================================
+  # CORE KUBERNETES RESOURCES
+  # =============================================================================
+  
+  # Pods - Read access for monitoring and debugging
+  - apiGroups: [""]
+    resources: ["pods", "pods/log", "pods/status"]
+    verbs: ["get", "list", "watch"]
+  
+  # Services - Read access for service discovery
+  - apiGroups: [""]
+    resources: ["services", "endpoints"]
+    verbs: ["get", "list", "watch"]
+  
+  # ConfigMaps and Secrets - Limited access
+  - apiGroups: [""]
+    resources: ["configmaps"]
+    verbs: ["get", "list", "watch"]
+    resourceNames: 
+      - {{ include "security-dashboard.fullname" . }}-config
+      - {{ include "security-dashboard.fullname" . }}-nginx-config
+  
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get"]
+    resourceNames:
+      - {{ include "security-dashboard.fullname" . }}-secret
+  
+  # Nodes - Read access for cluster monitoring
+  - apiGroups: [""]
+    resources: ["nodes", "nodes/metrics", "nodes/stats"]
+    verbs: ["get", "list", "watch"]
+  
+  # Events - Read access for monitoring
+  - apiGroups: [""]
+    resources: ["events"]
+    verbs: ["get", "list", "watch"]
+  
+  # =============================================================================
+  # APPS RESOURCES
+  # =============================================================================
+  
+  # Deployments - Read access for monitoring
+  - apiGroups: ["apps"]
+    resources: ["deployments", "replicasets", "daemonsets", "statefulsets"]
+    verbs: ["get", "list", "watch"]
+  
+  # =============================================================================
+  # NETWORKING RESOURCES
+  # =============================================================================
+  
+  # Ingress - Read access for traffic monitoring
+  - apiGroups: ["networking.k8s.io"]
+    resources: ["ingresses", "networkpolicies"]
+    verbs: ["get", "list", "watch"]
+  
+  # =============================================================================
+  # MONITORING RESOURCES
+  # =============================================================================
+  
+  # Custom Resources for Monitoring
+  - apiGroups: ["monitoring.coreos.com"]
+    resources: ["servicemonitors", "prometheusrules"]
+    verbs: ["get", "list", "watch", "create", "update", "patch"]
+  
+  # =============================================================================
+  # SECURITY RESOURCES
+  # =============================================================================
+  
+  # Pod Security Policies
+  - apiGroups: ["policy"]
+    resources: ["podsecuritypolicies"]
+    verbs: ["use"]
+    resourceNames:
+      - {{ include "security-dashboard.fullname" . }}-psp
+  
+  # Network Policies
+  - apiGroups: ["networking.k8s.io"]
+    resources: ["networkpolicies"]
+    verbs: ["get", "list", "watch", "create", "update", "patch"]
+  
+  # =============================================================================
+  # CUSTOM RESOURCES
+  # =============================================================================
+  
+  {{- if .Values.security.rbac.customRules }}
+  # Custom Rules
+  {{- range .Values.security.rbac.customRules }}
+  - apiGroups: {{ .apiGroups | toJson }}
+    resources: {{ .resources | toJson }}
+    verbs: {{ .verbs | toJson }}
+    {{- if .resourceNames }}
+    resourceNames: {{ .resourceNames | toJson }}
+    {{- end }}
+  {{- end }}
+  {{- end }}
+
+---
+# =============================================================================
+# NAMESPACE ROLE
+# =============================================================================
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ include "security-dashboard.fullname" . }}-role
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    {{- include "security-dashboard.labels" . | nindent 4 }}
+    app.kubernetes.io/component: role
+rules:
+  # =============================================================================
+  # FULL ACCESS TO OWN RESOURCES
+  # =============================================================================
+  
+  # ConfigMaps - Full access to own configs
+  - apiGroups: [""]
+    resources: ["configmaps"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+    resourceNames:
+      - {{ include "security-dashboard.fullname" . }}-config
+      - {{ include "security-dashboard.fullname" . }}-nginx-config
+      - {{ include "security-dashboard.fullname" . }}-prometheus-config
+  
+  # Secrets - Full access to own secrets
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+    resourceNames:
+      - {{ include "security-dashboard.fullname" . }}-secret
+      - {{ include "security-dashboard.fullname" . }}-tls
+      - {{ include "security-dashboard.fullname" . }}-registry-secret
+  
+  # Services - Full access to own services
+  - apiGroups: [""]
+    resources: ["services"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+    resourceNames:
+      - {{ include "security-dashboard.fullname" . }}
+      - {{ include "security-dashboard.fullname" . }}-websocket
+      - {{ include "security-dashboard.fullname" . }}-headless
+  
+  # Endpoints - Access to own endpoints
+  - apiGroups: [""]
+    resources: ["endpoints"]
+    verbs: ["get", "list", "watch"]
+  
+  # =============================================================================
+  # POD MANAGEMENT
+  # =============================================================================
+  
+  # Pods - Limited access for debugging
+  - apiGroups: [""]
+    resources: ["pods", "pods/log", "pods/exec", "pods/portforward"]
+    verbs: ["get", "list", "watch", "create", "delete"]
+  
+  # Pod Templates
+  - apiGroups: [""]
+    resources: ["podtemplates"]
+    verbs: ["get", "list", "watch"]
+  
+  # =============================================================================
+  # DEPLOYMENT MANAGEMENT
+  # =============================================================================
+  
+  # Deployments - Full access to own deployments
+  - apiGroups: ["apps"]
+    resources: ["deployments", "replicasets"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  
+  # StatefulSets - For database components
+  - apiGroups: ["apps"]
+    resources: ["statefulsets"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  
+  # =============================================================================
+  # STORAGE MANAGEMENT
+  # =============================================================================
+  
+  # Persistent Volumes
+  - apiGroups: [""]
+    resources: ["persistentvolumeclaims"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  
+  # =============================================================================
+  # NETWORKING
+  # =============================================================================
+  
+  # Ingress - Full access to own ingress
+  - apiGroups: ["networking.k8s.io"]
+    resources: ["ingresses"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  
+  # Network Policies
+  - apiGroups: ["networking.k8s.io"]
+    resources: ["networkpolicies"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  
+  # =============================================================================
+  # MONITORING AND OBSERVABILITY
+  # =============================================================================
+  
+  # Service Monitors
+  - apiGroups: ["monitoring.coreos.com"]
+    resources: ["servicemonitors", "prometheusrules"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  
+  # =============================================================================
+  # JOBS AND CRONJOBS
+  # =============================================================================
+  
+  # Jobs - For backup and maintenance tasks
+  - apiGroups: ["batch"]
+    resources: ["jobs", "cronjobs"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  
+  # =============================================================================
+  # HORIZONTAL POD AUTOSCALER
+  # =============================================================================
+  
+  # HPA - For auto-scaling
+  - apiGroups: ["autoscaling"]
+    resources: ["horizontalpodautoscalers"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  
+  # =============================================================================
+  # CUSTOM NAMESPACE RULES
+  # =============================================================================
+  
+  {{- if .Values.security.rbac.customNamespaceRules }}
+  # Custom Namespace Rules
+  {{- range .Values.security.rbac.customNamespaceRules }}
+  - apiGroups: {{ .apiGroups | toJson }}
+    resources: {{ .resources | toJson }}
+    verbs: {{ .verbs | toJson }}
+    {{- if .resourceNames }}
+    resourceNames: {{ .resourceNames | toJson }}
+    {{- end }}
+  {{- end }}
+  {{- end }}
+
+---
+# =============================================================================
+# CLUSTER ROLE BINDING
+# =============================================================================
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ include "security-dashboard.fullname" . }}-cluster-role-binding
+  labels:
+    {{- include "security-dashboard.labels" . | nindent 4 }}
+    app.kubernetes.io/component: cluster-role-binding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {{ include "security-dashboard.fullname" . }}-cluster-role
+subjects:
+  - kind: ServiceAccount
+    name: {{ include "security-dashboard.serviceAccountName" . }}
+    namespace: {{ .Release.Namespace | quote }}
+
+---
+# =============================================================================
+# ROLE BINDING
+# =============================================================================
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ include "security-dashboard.fullname" . }}-role-binding
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    {{- include "security-dashboard.labels" . | nindent 4 }}
+    app.kubernetes.io/component: role-binding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: {{ include "security-dashboard.fullname" . }}-role
+subjects:
+  - kind: ServiceAccount
+    name: {{ include "security-dashboard.serviceAccountName" . }}
+    namespace: {{ .Release.Namespace | quote }}
+
+---
+# =============================================================================
+# POD SECURITY POLICY
+# =============================================================================
+
+{{- if .Values.security.podSecurityPolicy.enabled }}
+apiVersion: policy/v1beta1
+kind: PodSecurityPolicy
+metadata:
+  name: {{ include "security-dashboard.fullname" . }}-psp
+  labels:
+    {{- include "security-dashboard.labels" . | nindent 4 }}
+    app.kubernetes.io/component: pod-security-policy
+spec:
+  # =============================================================================
+  # PRIVILEGE AND ACCESS CONTROLS
+  # =============================================================================
+  
+  privileged: {{ .Values.security.podSecurityPolicy.privileged }}
+  allowPrivilegeEscalation: {{ .Values.security.podSecurityPolicy.allowPrivilegeEscalation }}
+  
+  # Required to prevent escalations to root
+  requiredDropCapabilities:
+    - ALL
+  
+  # Allow specific capabilities if needed
+  {{- if .Values.security.podSecurityPolicy.allowedCapabilities }}
+  allowedCapabilities:
+    {{- range .Values.security.podSecurityPolicy.allowedCapabilities }}
+    - {{ . }}
+    {{- end }}
+  {{- end }}
+  
+  # =============================================================================
+  # HOST CONTROLS
+  # =============================================================================
+  
+  hostNetwork: {{ .Values.security.podSecurityPolicy.hostNetwork }}
+  hostIPC: {{ .Values.security.podSecurityPolicy.hostIPC }}
+  hostPID: {{ .Values.security.podSecurityPolicy.hostPID }}
+  
+  # Host Ports
+  {{- if .Values.security.podSecurityPolicy.hostPorts }}
+  hostPorts:
+    {{- range .Values.security.podSecurityPolicy.hostPorts }}
+    - min: {{ .min }}
+      max: {{ .max }}
+    {{- end }}
+  {{- end }}
+  
+  # =============================================================================
+  # VOLUME CONTROLS
+  # =============================================================================
+  
+  volumes:
+    - 'configMap'
+    - 'emptyDir'
+    - 'projected'
+    - 'secret'
+    - 'downwardAPI'
+    - 'persistentVolumeClaim'
+    {{- if .Values.security.podSecurityPolicy.allowedVolumes }}
+    {{- range .Values.security.podSecurityPolicy.allowedVolumes }}
+    - {{ . | quote }}
+    {{- end }}
+    {{- end }}
+  
+  # =============================================================================
+  # USER AND GROUP CONTROLS
+  # =============================================================================
+  
+  runAsUser:
+    rule: {{ .Values.security.podSecurityPolicy.runAsUser.rule | default "MustRunAsNonRoot" }}
+    {{- if .Values.security.podSecurityPolicy.runAsUser.ranges }}
+    ranges:
+      {{- range .Values.security.podSecurityPolicy.runAsUser.ranges }}
+      - min: {{ .min }}
+        max: {{ .max }}
+      {{- end }}
+    {{- end }}
+  
+  runAsGroup:
+    rule: {{ .Values.security.podSecurityPolicy.runAsGroup.rule | default "RunAsAny" }}
+    {{- if .Values.security.podSecurityPolicy.runAsGroup.ranges }}
+    ranges:
+      {{- range .Values.security.podSecurityPolicy.runAsGroup.ranges }}
+      - min: {{ .min }}
+        max: {{ .max }}
+      {{- end }}
+    {{- end }}
+  
+  fsGroup:
+    rule: {{ .Values.security.podSecurityPolicy.fsGroup.rule | default "RunAsAny" }}
+    {{- if .Values.security.podSecurityPolicy.fsGroup.ranges }}
+    ranges:
+      {{- range .Values.security.podSecurityPolicy.fsGroup.ranges }}
+      - min: {{ .min }}
+        max: {{ .max }}
+      {{- end }}
+    {{- end }}
+  
+  # =============================================================================
+  # SELINUX CONTROLS
+  # =============================================================================
+  
+  seLinux:
+    rule: {{ .Values.security.podSecurityPolicy.seLinux.rule | default "RunAsAny" }}
+  
+  # =============================================================================
+  # SUPPLEMENTAL GROUPS
+  # =============================================================================
+  
+  supplementalGroups:
+    rule: {{ .Values.security.podSecurityPolicy.supplementalGroups.rule | default "RunAsAny" }}
+    {{- if .Values.security.podSecurityPolicy.supplementalGroups.ranges }}
+    ranges:
+      {{- range .Values.security.podSecurityPolicy.supplementalGroups.ranges }}
+      - min: {{ .min }}
+        max: {{ .max }}
+      {{- end }}
+    {{- end }}
+  
+  # =============================================================================
+  # READ-ONLY ROOT FILESYSTEM
+  # =============================================================================
+  
+  readOnlyRootFilesystem: {{ .Values.security.podSecurityPolicy.readOnlyRootFilesystem }}
+{{- end }}
+
+---
+# =============================================================================
+# MONITORING SERVICE ACCOUNT
+# =============================================================================
+
+{{- if .Values.monitoring.serviceAccount.create }}
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ include "security-dashboard.fullname" . }}-monitoring
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    {{- include "security-dashboard.labels" . | nindent 4 }}
+    app.kubernetes.io/component: monitoring-service-account
+automountServiceAccountToken: true
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ include "security-dashboard.fullname" . }}-monitoring-role
+  labels:
+    {{- include "security-dashboard.labels" . | nindent 4 }}
+    app.kubernetes.io/component: monitoring-cluster-role
+rules:
+  # Prometheus monitoring permissions
+  - apiGroups: [""]
+    resources: ["nodes", "nodes/proxy", "services", "endpoints", "pods"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: [""]
+    resources: ["configmaps"]
+    verbs: ["get"]
+  - nonResourceURLs: ["/metrics"]
+    verbs: ["get"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ include "security-dashboard.fullname" . }}-monitoring-binding
+  labels:
+    {{- include "security-dashboard.labels" . | nindent 4 }}
+    app.kubernetes.io/component: monitoring-cluster-role-binding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {{ include "security-dashboard.fullname" . }}-monitoring-role
+subjects:
+  - kind: ServiceAccount
+    name: {{ include "security-dashboard.fullname" . }}-monitoring
+    namespace: {{ .Release.Namespace | quote }}
+{{- end }}
+
+{{- end }}
+
+# =============================================================================
+# END OF RBAC TEMPLATES
+# =============================================================================

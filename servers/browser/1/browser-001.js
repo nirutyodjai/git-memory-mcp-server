@@ -72,14 +72,19 @@ class BROWSER_001Server {
 
     startHealthServer() {
         const healthServer = http.createServer((req, res) => {
-            res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ 
-                status: 'healthy', 
-                server: 'browser-001',
-                port: 4400,
-                category: 'browser-automation',
-                timestamp: new Date().toISOString()
-            }));
+            if (req.url === '/health') {
+                res.writeHead(200, { 'Content-Type': 'text/plain' });
+                res.end('OK');
+            } else {
+                res.writeHead(200, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ 
+                    status: 'healthy', 
+                    server: 'browser-001',
+                    port: 4400,
+                    category: 'browser-automation',
+                    timestamp: new Date().toISOString()
+                }));
+            }
         });
 
         healthServer.listen(4400, () => {

@@ -138,4 +138,3 @@ async function initializeDatabase() {
     }
 }
 exports.default = pool;
-//# sourceMappingURL=connection.js.map

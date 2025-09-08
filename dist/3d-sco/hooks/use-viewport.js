@@ -17,4 +17,3 @@ const useViewport = () => {
     return { width, height };
 };
 exports.useViewport = useViewport;
-//# sourceMappingURL=use-viewport.js.map

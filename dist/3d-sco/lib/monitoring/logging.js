@@ -418,4 +418,3 @@ function useLogger(config) {
 }
 // Default logger instance
 exports.logger = Logger.getInstance();
-//# sourceMappingURL=logging.js.map

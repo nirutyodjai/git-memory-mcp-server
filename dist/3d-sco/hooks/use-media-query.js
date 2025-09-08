@@ -48,4 +48,3 @@ function useMediaQuery(query) {
     }, [query]);
     return value;
 }
-//# sourceMappingURL=use-media-query.js.map

@@ -1,0 +1,334 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  
+  /* Custom scrollbar styles */
+  ::-webkit-scrollbar {
+    @apply w-2 h-2;
+  }
+  
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    @apply bg-border rounded-full;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-muted-foreground/50;
+  }
+  
+  /* Firefox scrollbar */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--border)) transparent;
+  }
+}
+
+@layer components {
+  /* NEXUS IDE specific component styles */
+  
+  .nexus-panel {
+    @apply bg-card border border-border rounded-lg shadow-sm;
+  }
+  
+  .nexus-button {
+    @apply inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background;
+  }
+  
+  .nexus-button-primary {
+    @apply nexus-button bg-primary text-primary-foreground hover:bg-primary/90;
+  }
+  
+  .nexus-button-secondary {
+    @apply nexus-button bg-secondary text-secondary-foreground hover:bg-secondary/80;
+  }
+  
+  .nexus-button-ghost {
+    @apply nexus-button hover:bg-accent hover:text-accent-foreground;
+  }
+  
+  .nexus-input {
+    @apply flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  
+  .nexus-sidebar {
+    @apply bg-sidebar-bg text-sidebar-fg border-r border-border;
+  }
+  
+  .nexus-sidebar-item {
+    @apply flex items-center gap-2 px-3 py-2 text-sm rounded-md transition-colors hover:bg-sidebar-hover;
+  }
+  
+  .nexus-sidebar-item-active {
+    @apply nexus-sidebar-item bg-sidebar-active text-primary font-medium;
+  }
+  
+  .nexus-editor {
+    @apply bg-editor-bg text-editor-fg font-mono;
+  }
+  
+  .nexus-terminal {
+    @apply bg-terminal-bg text-terminal-fg font-mono;
+  }
+  
+  .nexus-tab {
+    @apply inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50;
+  }
+  
+  .nexus-tab-active {
+    @apply nexus-tab bg-background text-foreground shadow-sm;
+  }
+  
+  .nexus-tab-inactive {
+    @apply nexus-tab text-muted-foreground hover:text-foreground;
+  }
+  
+  /* Code syntax highlighting base styles */
+  .nexus-code {
+    @apply font-mono text-sm;
+  }
+  
+  .nexus-code .token.comment {
+    @apply text-muted-foreground italic;
+  }
+  
+  .nexus-code .token.keyword {
+    @apply text-blue-500 font-semibold;
+  }
+  
+  .nexus-code .token.string {
+    @apply text-green-500;
+  }
+  
+  .nexus-code .token.number {
+    @apply text-orange-500;
+  }
+  
+  .nexus-code .token.function {
+    @apply text-purple-500;
+  }
+  
+  .nexus-code .token.variable {
+    @apply text-red-500;
+  }
+  
+  .nexus-code .token.operator {
+    @apply text-gray-500;
+  }
+  
+  /* Animation utilities */
+  .nexus-fade-in {
+    @apply animate-fade-in;
+  }
+  
+  .nexus-slide-in-left {
+    @apply animate-slide-in-from-left;
+  }
+  
+  .nexus-slide-in-right {
+    @apply animate-slide-in-from-right;
+  }
+  
+  .nexus-slide-in-top {
+    @apply animate-slide-in-from-top;
+  }
+  
+  .nexus-slide-in-bottom {
+    @apply animate-slide-in-from-bottom;
+  }
+  
+  /* Loading states */
+  .nexus-loading {
+    @apply animate-pulse;
+  }
+  
+  .nexus-skeleton {
+    @apply bg-muted rounded animate-pulse;
+  }
+  
+  /* Focus states */
+  .nexus-focus {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ring-offset-background;
+  }
+  
+  /* Drag and drop states */
+  .nexus-drag-over {
+    @apply bg-accent/50 border-2 border-dashed border-primary;
+  }
+  
+  .nexus-dragging {
+    @apply opacity-50 cursor-grabbing;
+  }
+  
+  /* Selection states */
+  .nexus-selected {
+    @apply bg-primary/10 border border-primary/20;
+  }
+  
+  /* Status indicators */
+  .nexus-status-success {
+    @apply text-green-500 bg-green-500/10 border-green-500/20;
+  }
+  
+  .nexus-status-warning {
+    @apply text-yellow-500 bg-yellow-500/10 border-yellow-500/20;
+  }
+  
+  .nexus-status-error {
+    @apply text-red-500 bg-red-500/10 border-red-500/20;
+  }
+  
+  .nexus-status-info {
+    @apply text-blue-500 bg-blue-500/10 border-blue-500/20;
+  }
+}
+
+@layer utilities {
+  /* Custom utility classes */
+  
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .text-pretty {
+    text-wrap: pretty;
+  }
+  
+  /* Hide scrollbar but keep functionality */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Custom grid layouts */
+  .grid-ide {
+    display: grid;
+    grid-template-areas:
+      "sidebar header header"
+      "sidebar editor terminal"
+      "sidebar editor terminal";
+    grid-template-columns: 250px 1fr 300px;
+    grid-template-rows: 40px 1fr 200px;
+    height: 100vh;
+  }
+  
+  .grid-area-sidebar {
+    grid-area: sidebar;
+  }
+  
+  .grid-area-header {
+    grid-area: header;
+  }
+  
+  .grid-area-editor {
+    grid-area: editor;
+  }
+  
+  .grid-area-terminal {
+    grid-area: terminal;
+  }
+  
+  /* Responsive grid adjustments */
+  @media (max-width: 768px) {
+    .grid-ide {
+      grid-template-areas:
+        "header"
+        "editor"
+        "terminal";
+      grid-template-columns: 1fr;
+      grid-template-rows: 40px 1fr 200px;
+    }
+    
+    .grid-area-sidebar {
+      display: none;
+    }
+  }
+  
+  /* Performance optimizations */
+  .will-change-transform {
+    will-change: transform;
+  }
+  
+  .will-change-scroll {
+    will-change: scroll-position;
+  }
+  
+  .gpu-accelerated {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
+  
+  /* Accessibility improvements */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  
+  .not-sr-only {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: 0;
+    margin: 0;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+  }
+  
+  /* High contrast mode support */
+  @media (prefers-contrast: high) {
+    .nexus-button {
+      @apply border-2;
+    }
+    
+    .nexus-input {
+      @apply border-2;
+    }
+  }
+  
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+  
+  /* Print styles */
+  @media print {
+    .nexus-sidebar,
+    .nexus-terminal {
+      display: none;
+    }
+    
+    .nexus-editor {
+      background: white !important;
+      color: black !important;
+    }
+  }
+}

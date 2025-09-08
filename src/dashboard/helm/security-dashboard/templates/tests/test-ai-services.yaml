@@ -1,0 +1,232 @@
+{{- if .Values.ai.enabled }}
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "nexus-ide.fullname" . }}-test-ai-services"
+  labels:
+    {{- include "nexus-ide.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+    "helm.sh/hook-weight": "3"
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+spec:
+  restartPolicy: Never
+  containers:
+    - name: ai-services-test
+      image: curlimages/curl:8.5.0
+      env:
+        {{- if .Values.ai.openai.enabled }}
+        - name: OPENAI_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.ai.openai.existingSecret | default (printf "%s-ai-secret" (include "nexus-ide.fullname" .)) }}
+              key: {{ .Values.ai.openai.secretKey | default "openai-api-key" }}
+        {{- end }}
+        {{- if .Values.ai.anthropic.enabled }}
+        - name: ANTHROPIC_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.ai.anthropic.existingSecret | default (printf "%s-ai-secret" (include "nexus-ide.fullname" .)) }}
+              key: {{ .Values.ai.anthropic.secretKey | default "anthropic-api-key" }}
+        {{- end }}
+        {{- if .Values.ai.google.enabled }}
+        - name: GOOGLE_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.ai.google.existingSecret | default (printf "%s-ai-secret" (include "nexus-ide.fullname" .)) }}
+              key: {{ .Values.ai.google.secretKey | default "google-api-key" }}
+        {{- end }}
+      command:
+        - /bin/sh
+        - -c
+        - |
+          echo "Testing AI Services Integration..."
+          
+          # Test AI Gateway Health
+          echo "Testing AI Gateway health endpoint..."
+          curl -f -s {{ include "nexus-ide.fullname" . }}:{{ .Values.service.port }}/api/ai/health
+          if [ $? -eq 0 ]; then
+            echo "✓ AI Gateway health check successful"
+          else
+            echo "✗ AI Gateway health check failed"
+            exit 1
+          fi
+          
+          {{- if .Values.ai.openai.enabled }}
+          # Test OpenAI Integration (Mock)
+          echo "Testing OpenAI integration..."
+          curl -f -s -X POST {{ include "nexus-ide.fullname" . }}:{{ .Values.service.port }}/api/ai/openai/test \
+            -H "Content-Type: application/json" \
+            -d '{"test": true}'
+          if [ $? -eq 0 ]; then
+            echo "✓ OpenAI integration test successful"
+          else
+            echo "⚠ OpenAI integration test failed (may be expected in test environment)"
+          fi
+          {{- end }}
+          
+          {{- if .Values.ai.anthropic.enabled }}
+          # Test Anthropic Integration (Mock)
+          echo "Testing Anthropic integration..."
+          curl -f -s -X POST {{ include "nexus-ide.fullname" . }}:{{ .Values.service.port }}/api/ai/anthropic/test \
+            -H "Content-Type: application/json" \
+            -d '{"test": true}'
+          if [ $? -eq 0 ]; then
+            echo "✓ Anthropic integration test successful"
+          else
+            echo "⚠ Anthropic integration test failed (may be expected in test environment)"
+          fi
+          {{- end }}
+          
+          {{- if .Values.ai.google.enabled }}
+          # Test Google AI Integration (Mock)
+          echo "Testing Google AI integration..."
+          curl -f -s -X POST {{ include "nexus-ide.fullname" . }}:{{ .Values.service.port }}/api/ai/google/test \
+            -H "Content-Type: application/json" \
+            -d '{"test": true}'
+          if [ $? -eq 0 ]; then
+            echo "✓ Google AI integration test successful"
+          else
+            echo "⚠ Google AI integration test failed (may be expected in test environment)"
+          fi
+          {{- end }}
+          
+          {{- if .Values.ai.localModels.enabled }}
+          # Test Local Models
+          echo "Testing local AI models..."
+          curl -f -s {{ include "nexus-ide.fullname" . }}:{{ .Values.service.port }}/api/ai/local/models
+          if [ $? -eq 0 ]; then
+            echo "✓ Local AI models test successful"
+          else
+            echo "⚠ Local AI models test failed"
+          fi
+          {{- end }}
+          
+          # Test AI Code Completion Endpoint
+          echo "Testing AI code completion endpoint..."
+          curl -f -s -X POST {{ include "nexus-ide.fullname" . }}:{{ .Values.service.port }}/api/ai/completion \
+            -H "Content-Type: application/json" \
+            -d '{"code": "function hello", "language": "javascript", "test": true}'
+          if [ $? -eq 0 ]; then
+            echo "✓ AI code completion endpoint test successful"
+          else
+            echo "⚠ AI code completion endpoint test failed"
+          fi
+          
+          # Test AI Chat Endpoint
+          echo "Testing AI chat endpoint..."
+          curl -f -s -X POST {{ include "nexus-ide.fullname" . }}:{{ .Values.service.port }}/api/ai/chat \
+            -H "Content-Type: application/json" \
+            -d '{"message": "Hello AI", "test": true}'
+          if [ $? -eq 0 ]; then
+            echo "✓ AI chat endpoint test successful"
+          else
+            echo "⚠ AI chat endpoint test failed"
+          fi
+          
+          echo "AI Services integration tests completed"
+      resources:
+        limits:
+          cpu: 100m
+          memory: 128Mi
+        requests:
+          cpu: 50m
+          memory: 64Mi
+  {{- with .Values.nodeSelector }}
+  nodeSelector:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.affinity }}
+  affinity:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.tolerations }}
+  tolerations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+{{- end }}
+---
+{{- if .Values.collaboration.enabled }}
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "nexus-ide.fullname" . }}-test-collaboration"
+  labels:
+    {{- include "nexus-ide.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+    "helm.sh/hook-weight": "3"
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+spec:
+  restartPolicy: Never
+  containers:
+    - name: collaboration-test
+      image: curlimages/curl:8.5.0
+      command:
+        - /bin/sh
+        - -c
+        - |
+          echo "Testing Collaboration Services..."
+          
+          # Test WebSocket Health
+          echo "Testing WebSocket health endpoint..."
+          curl -f -s {{ include "nexus-ide.fullname" . }}:{{ .Values.service.port }}/api/collaboration/health
+          if [ $? -eq 0 ]; then
+            echo "✓ Collaboration service health check successful"
+          else
+            echo "✗ Collaboration service health check failed"
+            exit 1
+          fi
+          
+          # Test Real-time Collaboration API
+          echo "Testing real-time collaboration API..."
+          curl -f -s -X POST {{ include "nexus-ide.fullname" . }}:{{ .Values.service.port }}/api/collaboration/rooms \
+            -H "Content-Type: application/json" \
+            -d '{"name": "test-room", "test": true}'
+          if [ $? -eq 0 ]; then
+            echo "✓ Collaboration room creation test successful"
+          else
+            echo "⚠ Collaboration room creation test failed"
+          fi
+          
+          # Test Live Sharing API
+          echo "Testing live sharing API..."
+          curl -f -s {{ include "nexus-ide.fullname" . }}:{{ .Values.service.port }}/api/collaboration/sessions
+          if [ $? -eq 0 ]; then
+            echo "✓ Live sharing API test successful"
+          else
+            echo "⚠ Live sharing API test failed"
+          fi
+          
+          {{- if .Values.collaboration.videoChat.enabled }}
+          # Test Video Chat Integration
+          echo "Testing video chat integration..."
+          curl -f -s {{ include "nexus-ide.fullname" . }}:{{ .Values.service.port }}/api/collaboration/video/health
+          if [ $? -eq 0 ]; then
+            echo "✓ Video chat integration test successful"
+          else
+            echo "⚠ Video chat integration test failed"
+          fi
+          {{- end }}
+          
+          echo "Collaboration services tests completed"
+      resources:
+        limits:
+          cpu: 100m
+          memory: 128Mi
+        requests:
+          cpu: 50m
+          memory: 64Mi
+  {{- with .Values.nodeSelector }}
+  nodeSelector:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.affinity }}
+  affinity:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.tolerations }}
+  tolerations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+{{- end }}

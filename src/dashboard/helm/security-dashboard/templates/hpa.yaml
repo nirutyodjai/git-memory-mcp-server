@@ -1,0 +1,440 @@
+{{/*
+=============================================================================
+ENTERPRISE SECURITY DASHBOARD - HORIZONTAL POD AUTOSCALER TEMPLATE
+Kubernetes Auto-scaling Configuration
+=============================================================================
+*/}}
+
+{{- if .Values.autoscaling.enabled -}}
+
+# =============================================================================
+# MAIN APPLICATION HORIZONTAL POD AUTOSCALER
+# =============================================================================
+
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ include "security-dashboard.fullname" . }}
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    {{- include "security-dashboard.labels" . | nindent 4 }}
+    app.kubernetes.io/component: autoscaler
+  annotations:
+    {{- with .Values.autoscaling.annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+    autoscaling.kubernetes.io/behavior: "custom"
+    autoscaling.kubernetes.io/target-utilization: "{{ .Values.autoscaling.targetCPUUtilizationPercentage }}%"
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ include "security-dashboard.fullname" . }}
+  
+  minReplicas: {{ .Values.autoscaling.minReplicas }}
+  maxReplicas: {{ .Values.autoscaling.maxReplicas }}
+  
+  # =============================================================================
+  # SCALING METRICS
+  # =============================================================================
+  
+  metrics:
+    # CPU Utilization Metric
+    {{- if .Values.autoscaling.targetCPUUtilizationPercentage }}
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: {{ .Values.autoscaling.targetCPUUtilizationPercentage }}
+    {{- end }}
+    
+    # Memory Utilization Metric
+    {{- if .Values.autoscaling.targetMemoryUtilizationPercentage }}
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: {{ .Values.autoscaling.targetMemoryUtilizationPercentage }}
+    {{- end }}
+    
+    # Custom Metrics
+    {{- if .Values.autoscaling.customMetrics }}
+    {{- range .Values.autoscaling.customMetrics }}
+    - type: {{ .type }}
+      {{- if eq .type "Pods" }}
+      pods:
+        metric:
+          name: {{ .name }}
+          {{- if .selector }}
+          selector:
+            {{- toYaml .selector | nindent 12 }}
+          {{- end }}
+        target:
+          type: {{ .targetType }}
+          {{- if eq .targetType "AverageValue" }}
+          averageValue: {{ .targetValue }}
+          {{- else if eq .targetType "Value" }}
+          value: {{ .targetValue }}
+          {{- end }}
+      {{- else if eq .type "Object" }}
+      object:
+        metric:
+          name: {{ .name }}
+        describedObject:
+          apiVersion: {{ .object.apiVersion }}
+          kind: {{ .object.kind }}
+          name: {{ .object.name }}
+        target:
+          type: {{ .targetType }}
+          value: {{ .targetValue }}
+      {{- else if eq .type "External" }}
+      external:
+        metric:
+          name: {{ .name }}
+          {{- if .selector }}
+          selector:
+            {{- toYaml .selector | nindent 12 }}
+          {{- end }}
+        target:
+          type: {{ .targetType }}
+          {{- if eq .targetType "AverageValue" }}
+          averageValue: {{ .targetValue }}
+          {{- else if eq .targetType "Value" }}
+          value: {{ .targetValue }}
+          {{- end }}
+      {{- end }}
+    {{- end }}
+    {{- end }}
+  
+  # =============================================================================
+  # SCALING BEHAVIOR
+  # =============================================================================
+  
+  {{- if .Values.autoscaling.behavior }}
+  behavior:
+    # Scale Up Behavior
+    {{- if .Values.autoscaling.behavior.scaleUp }}
+    scaleUp:
+      stabilizationWindowSeconds: {{ .Values.autoscaling.behavior.scaleUp.stabilizationWindowSeconds | default 60 }}
+      selectPolicy: {{ .Values.autoscaling.behavior.scaleUp.selectPolicy | default "Max" }}
+      policies:
+        {{- range .Values.autoscaling.behavior.scaleUp.policies }}
+        - type: {{ .type }}
+          value: {{ .value }}
+          periodSeconds: {{ .periodSeconds }}
+        {{- end }}
+    {{- end }}
+    
+    # Scale Down Behavior
+    {{- if .Values.autoscaling.behavior.scaleDown }}
+    scaleDown:
+      stabilizationWindowSeconds: {{ .Values.autoscaling.behavior.scaleDown.stabilizationWindowSeconds | default 300 }}
+      selectPolicy: {{ .Values.autoscaling.behavior.scaleDown.selectPolicy | default "Min" }}
+      policies:
+        {{- range .Values.autoscaling.behavior.scaleDown.policies }}
+        - type: {{ .type }}
+          value: {{ .value }}
+          periodSeconds: {{ .periodSeconds }}
+        {{- end }}
+    {{- end }}
+  {{- end }}
+
+---
+# =============================================================================
+# WEBSOCKET SERVICE HORIZONTAL POD AUTOSCALER
+# =============================================================================
+
+{{- if and .Values.websocket.enabled .Values.websocket.autoscaling.enabled }}
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ include "security-dashboard.fullname" . }}-websocket
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    {{- include "security-dashboard.labels" . | nindent 4 }}
+    app.kubernetes.io/component: websocket-autoscaler
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ include "security-dashboard.fullname" . }}-websocket
+  
+  minReplicas: {{ .Values.websocket.autoscaling.minReplicas }}
+  maxReplicas: {{ .Values.websocket.autoscaling.maxReplicas }}
+  
+  metrics:
+    {{- if .Values.websocket.autoscaling.targetCPUUtilizationPercentage }}
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: {{ .Values.websocket.autoscaling.targetCPUUtilizationPercentage }}
+    {{- end }}
+    
+    {{- if .Values.websocket.autoscaling.targetMemoryUtilizationPercentage }}
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: {{ .Values.websocket.autoscaling.targetMemoryUtilizationPercentage }}
+    {{- end }}
+    
+    # WebSocket Connection Metrics
+    {{- if .Values.websocket.autoscaling.connectionMetrics }}
+    - type: Pods
+      pods:
+        metric:
+          name: websocket_connections_per_pod
+        target:
+          type: AverageValue
+          averageValue: {{ .Values.websocket.autoscaling.connectionMetrics.targetConnectionsPerPod | default "100" }}
+    {{- end }}
+
+  {{- if .Values.websocket.autoscaling.behavior }}
+  behavior:
+    {{- if .Values.websocket.autoscaling.behavior.scaleUp }}
+    scaleUp:
+      stabilizationWindowSeconds: {{ .Values.websocket.autoscaling.behavior.scaleUp.stabilizationWindowSeconds | default 30 }}
+      selectPolicy: {{ .Values.websocket.autoscaling.behavior.scaleUp.selectPolicy | default "Max" }}
+      policies:
+        {{- range .Values.websocket.autoscaling.behavior.scaleUp.policies }}
+        - type: {{ .type }}
+          value: {{ .value }}
+          periodSeconds: {{ .periodSeconds }}
+        {{- end }}
+    {{- end }}
+    
+    {{- if .Values.websocket.autoscaling.behavior.scaleDown }}
+    scaleDown:
+      stabilizationWindowSeconds: {{ .Values.websocket.autoscaling.behavior.scaleDown.stabilizationWindowSeconds | default 60 }}
+      selectPolicy: {{ .Values.websocket.autoscaling.behavior.scaleDown.selectPolicy | default "Min" }}
+      policies:
+        {{- range .Values.websocket.autoscaling.behavior.scaleDown.policies }}
+        - type: {{ .type }}
+          value: {{ .value }}
+          periodSeconds: {{ .periodSeconds }}
+        {{- end }}
+    {{- end }}
+  {{- end }}
+{{- end }}
+
+---
+# =============================================================================
+# AI PROCESSING SERVICE HORIZONTAL POD AUTOSCALER
+# =============================================================================
+
+{{- if and .Values.aiProcessing.enabled .Values.aiProcessing.autoscaling.enabled }}
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ include "security-dashboard.fullname" . }}-ai-processing
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    {{- include "security-dashboard.labels" . | nindent 4 }}
+    app.kubernetes.io/component: ai-processing-autoscaler
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ include "security-dashboard.fullname" . }}-ai-processing
+  
+  minReplicas: {{ .Values.aiProcessing.autoscaling.minReplicas }}
+  maxReplicas: {{ .Values.aiProcessing.autoscaling.maxReplicas }}
+  
+  metrics:
+    {{- if .Values.aiProcessing.autoscaling.targetCPUUtilizationPercentage }}
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: {{ .Values.aiProcessing.autoscaling.targetCPUUtilizationPercentage }}
+    {{- end }}
+    
+    {{- if .Values.aiProcessing.autoscaling.targetMemoryUtilizationPercentage }}
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: {{ .Values.aiProcessing.autoscaling.targetMemoryUtilizationPercentage }}
+    {{- end }}
+    
+    # GPU Utilization (if available)
+    {{- if .Values.aiProcessing.autoscaling.targetGPUUtilizationPercentage }}
+    - type: External
+      external:
+        metric:
+          name: nvidia_gpu_utilization
+          selector:
+            matchLabels:
+              app.kubernetes.io/name: {{ include "security-dashboard.name" . }}
+              app.kubernetes.io/component: ai-processing
+        target:
+          type: AverageValue
+          averageValue: {{ .Values.aiProcessing.autoscaling.targetGPUUtilizationPercentage }}
+    {{- end }}
+    
+    # AI Queue Length Metric
+    {{- if .Values.aiProcessing.autoscaling.queueMetrics }}
+    - type: External
+      external:
+        metric:
+          name: ai_processing_queue_length
+        target:
+          type: AverageValue
+          averageValue: {{ .Values.aiProcessing.autoscaling.queueMetrics.targetQueueLength | default "10" }}
+    {{- end }}
+
+  behavior:
+    scaleUp:
+      stabilizationWindowSeconds: {{ .Values.aiProcessing.autoscaling.behavior.scaleUp.stabilizationWindowSeconds | default 60 }}
+      selectPolicy: Max
+      policies:
+        - type: Percent
+          value: 100
+          periodSeconds: 15
+        - type: Pods
+          value: 2
+          periodSeconds: 60
+    
+    scaleDown:
+      stabilizationWindowSeconds: {{ .Values.aiProcessing.autoscaling.behavior.scaleDown.stabilizationWindowSeconds | default 300 }}
+      selectPolicy: Min
+      policies:
+        - type: Percent
+          value: 50
+          periodSeconds: 60
+        - type: Pods
+          value: 1
+          periodSeconds: 60
+{{- end }}
+
+---
+# =============================================================================
+# VERTICAL POD AUTOSCALER (VPA)
+# =============================================================================
+
+{{- if .Values.verticalPodAutoscaler.enabled }}
+apiVersion: autoscaling.k8s.io/v1
+kind: VerticalPodAutoscaler
+metadata:
+  name: {{ include "security-dashboard.fullname" . }}-vpa
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    {{- include "security-dashboard.labels" . | nindent 4 }}
+    app.kubernetes.io/component: vertical-autoscaler
+spec:
+  targetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ include "security-dashboard.fullname" . }}
+  
+  updatePolicy:
+    updateMode: {{ .Values.verticalPodAutoscaler.updateMode | default "Auto" }}
+    {{- if .Values.verticalPodAutoscaler.minAllowed }}
+    minAllowed:
+      {{- toYaml .Values.verticalPodAutoscaler.minAllowed | nindent 6 }}
+    {{- end }}
+    {{- if .Values.verticalPodAutoscaler.maxAllowed }}
+    maxAllowed:
+      {{- toYaml .Values.verticalPodAutoscaler.maxAllowed | nindent 6 }}
+    {{- end }}
+  
+  resourcePolicy:
+    containerPolicies:
+      - containerName: {{ .Chart.Name }}
+        {{- if .Values.verticalPodAutoscaler.controlledResources }}
+        controlledResources: {{ .Values.verticalPodAutoscaler.controlledResources | toJson }}
+        {{- end }}
+        {{- if .Values.verticalPodAutoscaler.controlledValues }}
+        controlledValues: {{ .Values.verticalPodAutoscaler.controlledValues }}
+        {{- end }}
+        {{- if .Values.verticalPodAutoscaler.minAllowed }}
+        minAllowed:
+          {{- toYaml .Values.verticalPodAutoscaler.minAllowed | nindent 10 }}
+        {{- end }}
+        {{- if .Values.verticalPodAutoscaler.maxAllowed }}
+        maxAllowed:
+          {{- toYaml .Values.verticalPodAutoscaler.maxAllowed | nindent 10 }}
+        {{- end }}
+{{- end }}
+
+---
+# =============================================================================
+# CUSTOM AUTOSCALERS
+# =============================================================================
+
+{{- range .Values.customAutoscalers }}
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ include "security-dashboard.fullname" $ }}-{{ .name }}
+  namespace: {{ $.Release.Namespace | quote }}
+  labels:
+    {{- include "security-dashboard.labels" $ | nindent 4 }}
+    app.kubernetes.io/component: {{ .name }}-autoscaler
+  annotations:
+    {{- with .annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+spec:
+  scaleTargetRef:
+    apiVersion: {{ .targetRef.apiVersion | default "apps/v1" }}
+    kind: {{ .targetRef.kind | default "Deployment" }}
+    name: {{ .targetRef.name }}
+  
+  minReplicas: {{ .minReplicas }}
+  maxReplicas: {{ .maxReplicas }}
+  
+  metrics:
+    {{- range .metrics }}
+    - type: {{ .type }}
+      {{- if eq .type "Resource" }}
+      resource:
+        name: {{ .name }}
+        target:
+          type: {{ .targetType }}
+          {{- if eq .targetType "Utilization" }}
+          averageUtilization: {{ .targetValue }}
+          {{- else }}
+          averageValue: {{ .targetValue }}
+          {{- end }}
+      {{- else if eq .type "Pods" }}
+      pods:
+        metric:
+          name: {{ .name }}
+        target:
+          type: {{ .targetType }}
+          averageValue: {{ .targetValue }}
+      {{- else if eq .type "External" }}
+      external:
+        metric:
+          name: {{ .name }}
+        target:
+          type: {{ .targetType }}
+          {{- if eq .targetType "AverageValue" }}
+          averageValue: {{ .targetValue }}
+          {{- else }}
+          value: {{ .targetValue }}
+          {{- end }}
+      {{- end }}
+    {{- end }}
+  
+  {{- if .behavior }}
+  behavior:
+    {{- toYaml .behavior | nindent 4 }}
+  {{- end }}
+
+---
+{{- end }}
+
+{{- end }}
+
+# =============================================================================
+# END OF HORIZONTAL POD AUTOSCALER TEMPLATE
+# =============================================================================

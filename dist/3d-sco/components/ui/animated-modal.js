@@ -43,9 +43,7 @@ const scroll_area_1 = require("./scroll-area");
 const ModalContext = (0, react_1.createContext)(undefined);
 const ModalProvider = ({ children }) => {
     const [open, setOpen] = (0, react_1.useState)(false);
-    return (<ModalContext.Provider value={{ open, setOpen }}>
-      {children}
-    </ModalContext.Provider>);
+    return (react_1.default.createElement(ModalContext.Provider, { value: { open, setOpen } }, children));
 };
 exports.ModalProvider = ModalProvider;
 const useModal = () => {
@@ -57,13 +55,11 @@ const useModal = () => {
 };
 exports.useModal = useModal;
 function Modal({ children }) {
-    return <exports.ModalProvider>{children}</exports.ModalProvider>;
+    return react_1.default.createElement(exports.ModalProvider, null, children);
 }
 const ModalTrigger = ({ children, className, }) => {
     const { setOpen } = (0, exports.useModal)();
-    return (<button className={(0, utils_1.cn)("px-4 py-2 rounded-md text-black dark:text-white text-center relative overflow-hidden", className)} onClick={() => setOpen(true)}>
-      {children}
-    </button>);
+    return (react_1.default.createElement("button", { className: (0, utils_1.cn)("px-4 py-2 rounded-md text-black dark:text-white text-center relative overflow-hidden", className), onClick: () => setOpen(true) }, children));
 };
 exports.ModalTrigger = ModalTrigger;
 const ModalBody = ({ children, className, }) => {
@@ -87,79 +83,66 @@ const ModalBody = ({ children, className, }) => {
     const modalRef = (0, react_1.useRef)(null);
     const { setOpen } = (0, exports.useModal)();
     (0, exports.useOutsideClick)(modalRef, () => setOpen(false));
-    return (<framer_motion_1.AnimatePresence>
-      {open && (<framer_motion_1.motion.div initial={{
-                opacity: 0,
-            }} animate={{
-                opacity: 1,
-                backdropFilter: "blur(10px)",
-            }} exit={{
-                opacity: 0,
-                backdropFilter: "blur(0px)",
-            }} className="modall fixed [perspective:800px] [transform-style:preserve-3d] inset-0 h-full w-full  flex items-center justify-center z-50">
-          <Overlay />
-
-          <framer_motion_1.motion.div ref={modalRef} className={(0, utils_1.cn)("min-h-[50%] max-h-[90%] md:max-w-[40%] bg-white dark:bg-neutral-950 border border-transparent dark:border-neutral-800 md:rounded-2xl relative z-50 flex flex-col flex-1 overflow-hidden", className)} initial={{
+    return (react_1.default.createElement(framer_motion_1.AnimatePresence, null, open && (react_1.default.createElement(framer_motion_1.motion.div, { initial: {
+            opacity: 0,
+        }, animate: {
+            opacity: 1,
+            backdropFilter: "blur(10px)",
+        }, exit: {
+            opacity: 0,
+            backdropFilter: "blur(0px)",
+        }, className: "modall fixed [perspective:800px] [transform-style:preserve-3d] inset-0 h-full w-full  flex items-center justify-center z-50" },
+        react_1.default.createElement(Overlay, null),
+        react_1.default.createElement(framer_motion_1.motion.div, { ref: modalRef, className: (0, utils_1.cn)("min-h-[50%] max-h-[90%] md:max-w-[40%] bg-white dark:bg-neutral-950 border border-transparent dark:border-neutral-800 md:rounded-2xl relative z-50 flex flex-col flex-1 overflow-hidden", className), initial: {
                 opacity: 0,
                 scale: 0.5,
                 rotateX: 40,
                 y: 40,
-            }} animate={{
+            }, animate: {
                 opacity: 1,
                 scale: 1,
                 rotateX: 0,
                 y: 0,
-            }} exit={{
+            }, exit: {
                 opacity: 0,
                 scale: 0.8,
                 rotateX: 10,
-            }} transition={{
+            }, transition: {
                 type: "spring",
                 stiffness: 260,
                 damping: 15,
-            }}>
-            <CloseIcon />
-            <scroll_area_1.ScrollArea className="h-[80dvh] w-full rounded-md border">
-              {children}
-            </scroll_area_1.ScrollArea>
-          </framer_motion_1.motion.div>
-        </framer_motion_1.motion.div>)}
-    </framer_motion_1.AnimatePresence>);
+            } },
+            react_1.default.createElement(CloseIcon, null),
+            react_1.default.createElement(scroll_area_1.ScrollArea, { className: "h-[80dvh] w-full rounded-md border" }, children))))));
 };
 exports.ModalBody = ModalBody;
 const ModalContent = ({ children, className, }) => {
-    return (<div className={(0, utils_1.cn)("flex flex-col flex-1 p-3 md:p-10", className)}>
-      {children}
-    </div>);
+    return (react_1.default.createElement("div", { className: (0, utils_1.cn)("flex flex-col flex-1 p-3 md:p-10", className) }, children));
 };
 exports.ModalContent = ModalContent;
 const ModalFooter = ({ children, className, }) => {
-    return (<div className={(0, utils_1.cn)("flex justify-end p-4 bg-gray-100 dark:bg-neutral-900", className)}>
-      {children}
-    </div>);
+    return (react_1.default.createElement("div", { className: (0, utils_1.cn)("flex justify-end p-4 bg-gray-100 dark:bg-neutral-900", className) }, children));
 };
 exports.ModalFooter = ModalFooter;
 const Overlay = ({ className }) => {
     const { setOpen } = (0, exports.useModal)();
-    return (<framer_motion_1.motion.div initial={{
+    return (react_1.default.createElement(framer_motion_1.motion.div, { initial: {
             opacity: 0,
-        }} animate={{
+        }, animate: {
             opacity: 1,
             backdropFilter: "blur(10px)",
-        }} exit={{
+        }, exit: {
             opacity: 0,
             backdropFilter: "blur(0px)",
-        }} className={`modal-overlay fixed inset-0 h-full w-full bg-black bg-opacity-50 z-50 ${className}`} onClick={() => setOpen(false)}></framer_motion_1.motion.div>);
+        }, className: `modal-overlay fixed inset-0 h-full w-full bg-black bg-opacity-50 z-50 ${className}`, onClick: () => setOpen(false) }));
 };
 const CloseIcon = () => {
     const { setOpen } = (0, exports.useModal)();
-    return (<button onClick={() => setOpen(false)} className="absolute top-4 right-4 group z-[9999]">
-      <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-black dark:text-white h-4 w-4 group-hover:scale-125 group-hover:rotate-3 transition duration-200">
-        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-        <path d="M18 6l-12 12"/>
-        <path d="M6 6l12 12"/>
-      </svg>
-    </button>);
+    return (react_1.default.createElement("button", { onClick: () => setOpen(false), className: "absolute top-4 right-4 group z-[9999]" },
+        react_1.default.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", width: "36", height: "36", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: "text-black dark:text-white h-4 w-4 group-hover:scale-125 group-hover:rotate-3 transition duration-200" },
+            react_1.default.createElement("path", { stroke: "none", d: "M0 0h24v24H0z", fill: "none" }),
+            react_1.default.createElement("path", { d: "M18 6l-12 12" }),
+            react_1.default.createElement("path", { d: "M6 6l12 12" }))));
 };
 // Hook to detect clicks outside of a component.
 // Add it in a separate file, I've added here for simplicity
@@ -185,4 +168,3 @@ const useOutsideClick = (ref, callback) => {
     }, [ref, callback]);
 };
 exports.useOutsideClick = useOutsideClick;
-//# sourceMappingURL=animated-modal.js.map

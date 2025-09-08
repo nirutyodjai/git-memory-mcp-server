@@ -268,7 +268,7 @@ class MemoryOperationsService {
       if (tags && tags.length > 0) {
         filteredDocuments = filteredDocuments.filter(doc => {
           const docTags = doc.metadata?.tags || [];
-          return tags.some(tag => docTags.includes(tag));
+          return tags.some(tag => Array.isArray(docTags) && docTags.includes(tag));
         });
       }
 

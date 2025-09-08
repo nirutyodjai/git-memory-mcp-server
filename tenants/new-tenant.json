@@ -1,0 +1,9 @@
+{
+    "id": "new-tenant",
+    "name": "New Tenant",
+    "plan": "premium",
+    "features": {
+        "customApiKeys": true,
+        "dedicatedInfrastructure": false
+    }
+}

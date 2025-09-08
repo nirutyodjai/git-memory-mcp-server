@@ -110,140 +110,73 @@ function UserProfile({ onEditProfile }) {
                 return 'สมาชิก';
         }
     };
-    return (<div className="relative" ref={dropdownRef}>
-      {/* Profile Button */}
-      <button onClick={() => setIsOpen(!isOpen)} className="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
-        <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-medium text-sm">
-          {user.name ? user.name.charAt(0).toUpperCase() : user.username.charAt(0).toUpperCase()}
-        </div>
-        <div className="hidden md:block text-left">
-          <div className="text-sm font-medium text-gray-900 dark:text-white">
-            {user.name || user.username}
-          </div>
-          <div className="text-xs text-gray-500 dark:text-gray-400">
-            @{user.username}
-          </div>
-        </div>
-      </button>
-
-      {/* Dropdown Menu */}
-      {isOpen && (<div className="absolute right-0 mt-2 w-80 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 z-50">
-          {!showEditForm ? (<>
-              {/* User Info */}
-              <div className="p-4 border-b border-gray-200 dark:border-gray-700">
-                <div className="flex items-start gap-3">
-                  <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-medium text-lg">
-                    {user.name ? user.name.charAt(0).toUpperCase() : user.username.charAt(0).toUpperCase()}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2">
-                      <h3 className="font-medium text-gray-900 dark:text-white truncate">
-                        {user.name || user.username}
-                      </h3>
-                      <span className={`px-2 py-1 text-xs font-medium rounded-full ${getRoleColor(user.role)}`}>
-                        {getRoleText(user.role)}
-                      </span>
-                    </div>
-                    <p className="text-sm text-gray-500 dark:text-gray-400 truncate">
-                      @{user.username}
-                    </p>
-                    {user.bio && (<p className="text-sm text-gray-600 dark:text-gray-300 mt-1 line-clamp-2">
-                        {user.bio}
-                      </p>)}
-                  </div>
-                </div>
-                
-                {/* User Stats */}
-                <div className="mt-3 flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400">
-                  <div className="flex items-center gap-1">
-                    <lucide_react_1.Mail size={12}/>
-                    <span className="truncate">{user.email}</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <lucide_react_1.Calendar size={12}/>
-                    <span>
-                      เข้าร่วมเมื่อ {(0, date_fns_1.formatDistanceToNow)(new Date(user.createdAt), {
-                    addSuffix: true,
-                    locale: locale_1.th
-                })}
-                    </span>
-                  </div>
-                </div>
-                
-                {!user.emailVerified && (<div className="mt-2 p-2 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg">
-                    <p className="text-xs text-yellow-600 dark:text-yellow-400">
-                      อีเมลยังไม่ได้รับการยืนยัน
-                    </p>
-                  </div>)}
-              </div>
-
-              {/* Menu Items */}
-              <div className="p-2">
-                <button onClick={() => setShowEditForm(true)} className="w-full flex items-center gap-3 px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">
-                  <lucide_react_1.Edit3 size={16}/>
-                  แก้ไขโปรไฟล์
-                </button>
-                
-                <button onClick={() => { }} className="w-full flex items-center gap-3 px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">
-                  <lucide_react_1.Settings size={16}/>
-                  การตั้งค่า
-                </button>
-                
-                <hr className="my-2 border-gray-200 dark:border-gray-700"/>
-                
-                <button onClick={handleLogout} className="w-full flex items-center gap-3 px-3 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors">
-                  <lucide_react_1.LogOut size={16}/>
-                  ออกจากระบบ
-                </button>
-              </div>
-            </>) : (<>
-              {/* Edit Profile Form */}
-              <div className="p-4 border-b border-gray-200 dark:border-gray-700">
-                <h3 className="font-medium text-gray-900 dark:text-white">แก้ไขโปรไฟล์</h3>
-              </div>
-              
-              <form onSubmit={handleEditSubmit} className="p-4">
-                {error && (<div className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg text-red-600 dark:text-red-400 text-sm">
-                    {error}
-                  </div>)}
-                
-                <div className="space-y-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                      ชื่อ
-                    </label>
-                    <input type="text" value={editData.name} onChange={(e) => setEditData({ ...editData, name: e.target.value })} className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-sm" placeholder="กรอกชื่อ" maxLength={100}/>
-                  </div>
-                  
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                      ประวัติส่วนตัว
-                    </label>
-                    <textarea value={editData.bio} onChange={(e) => setEditData({ ...editData, bio: e.target.value })} className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-sm resize-none" placeholder="เขียนเกี่ยวกับตัวคุณ" rows={3} maxLength={500}/>
-                    <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                      {editData.bio.length}/500 ตัวอักษร
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="flex gap-2 mt-4">
-                  <button type="submit" disabled={loading} className="flex-1 py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm">
-                    {loading ? 'กำลังบันทึก...' : 'บันทึก'}
-                  </button>
-                  <button type="button" onClick={() => {
-                    setShowEditForm(false);
-                    setError('');
-                    setEditData({
-                        name: user.name || '',
-                        bio: user.bio || ''
-                    });
-                }} className="px-4 py-2 text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 transition-colors text-sm">
-                    ยกเลิก
-                  </button>
-                </div>
-              </form>
-            </>)}
-        </div>)}
-    </div>);
+    return (react_1.default.createElement("div", { className: "relative", ref: dropdownRef },
+        react_1.default.createElement("button", { onClick: () => setIsOpen(!isOpen), className: "flex items-center gap-2 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors" },
+            react_1.default.createElement("div", { className: "w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-medium text-sm" }, user.name ? user.name.charAt(0).toUpperCase() : user.username.charAt(0).toUpperCase()),
+            react_1.default.createElement("div", { className: "hidden md:block text-left" },
+                react_1.default.createElement("div", { className: "text-sm font-medium text-gray-900 dark:text-white" }, user.name || user.username),
+                react_1.default.createElement("div", { className: "text-xs text-gray-500 dark:text-gray-400" },
+                    "@",
+                    user.username))),
+        isOpen && (react_1.default.createElement("div", { className: "absolute right-0 mt-2 w-80 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 z-50" }, !showEditForm ? (react_1.default.createElement(react_1.default.Fragment, null,
+            react_1.default.createElement("div", { className: "p-4 border-b border-gray-200 dark:border-gray-700" },
+                react_1.default.createElement("div", { className: "flex items-start gap-3" },
+                    react_1.default.createElement("div", { className: "w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-medium text-lg" }, user.name ? user.name.charAt(0).toUpperCase() : user.username.charAt(0).toUpperCase()),
+                    react_1.default.createElement("div", { className: "flex-1 min-w-0" },
+                        react_1.default.createElement("div", { className: "flex items-center gap-2" },
+                            react_1.default.createElement("h3", { className: "font-medium text-gray-900 dark:text-white truncate" }, user.name || user.username),
+                            react_1.default.createElement("span", { className: `px-2 py-1 text-xs font-medium rounded-full ${getRoleColor(user.role)}` }, getRoleText(user.role))),
+                        react_1.default.createElement("p", { className: "text-sm text-gray-500 dark:text-gray-400 truncate" },
+                            "@",
+                            user.username),
+                        user.bio && (react_1.default.createElement("p", { className: "text-sm text-gray-600 dark:text-gray-300 mt-1 line-clamp-2" }, user.bio)))),
+                react_1.default.createElement("div", { className: "mt-3 flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400" },
+                    react_1.default.createElement("div", { className: "flex items-center gap-1" },
+                        react_1.default.createElement(lucide_react_1.Mail, { size: 12 }),
+                        react_1.default.createElement("span", { className: "truncate" }, user.email)),
+                    react_1.default.createElement("div", { className: "flex items-center gap-1" },
+                        react_1.default.createElement(lucide_react_1.Calendar, { size: 12 }),
+                        react_1.default.createElement("span", null,
+                            "\u0E40\u0E02\u0E49\u0E32\u0E23\u0E48\u0E27\u0E21\u0E40\u0E21\u0E37\u0E48\u0E2D ",
+                            (0, date_fns_1.formatDistanceToNow)(new Date(user.createdAt), {
+                                addSuffix: true,
+                                locale: locale_1.th
+                            })))),
+                !user.emailVerified && (react_1.default.createElement("div", { className: "mt-2 p-2 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg" },
+                    react_1.default.createElement("p", { className: "text-xs text-yellow-600 dark:text-yellow-400" }, "\u0E2D\u0E35\u0E40\u0E21\u0E25\u0E22\u0E31\u0E07\u0E44\u0E21\u0E48\u0E44\u0E14\u0E49\u0E23\u0E31\u0E1A\u0E01\u0E32\u0E23\u0E22\u0E37\u0E19\u0E22\u0E31\u0E19")))),
+            react_1.default.createElement("div", { className: "p-2" },
+                react_1.default.createElement("button", { onClick: () => setShowEditForm(true), className: "w-full flex items-center gap-3 px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors" },
+                    react_1.default.createElement(lucide_react_1.Edit3, { size: 16 }),
+                    "\u0E41\u0E01\u0E49\u0E44\u0E02\u0E42\u0E1B\u0E23\u0E44\u0E1F\u0E25\u0E4C"),
+                react_1.default.createElement("button", { onClick: () => { }, className: "w-full flex items-center gap-3 px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors" },
+                    react_1.default.createElement(lucide_react_1.Settings, { size: 16 }),
+                    "\u0E01\u0E32\u0E23\u0E15\u0E31\u0E49\u0E07\u0E04\u0E48\u0E32"),
+                react_1.default.createElement("hr", { className: "my-2 border-gray-200 dark:border-gray-700" }),
+                react_1.default.createElement("button", { onClick: handleLogout, className: "w-full flex items-center gap-3 px-3 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors" },
+                    react_1.default.createElement(lucide_react_1.LogOut, { size: 16 }),
+                    "\u0E2D\u0E2D\u0E01\u0E08\u0E32\u0E01\u0E23\u0E30\u0E1A\u0E1A")))) : (react_1.default.createElement(react_1.default.Fragment, null,
+            react_1.default.createElement("div", { className: "p-4 border-b border-gray-200 dark:border-gray-700" },
+                react_1.default.createElement("h3", { className: "font-medium text-gray-900 dark:text-white" }, "\u0E41\u0E01\u0E49\u0E44\u0E02\u0E42\u0E1B\u0E23\u0E44\u0E1F\u0E25\u0E4C")),
+            react_1.default.createElement("form", { onSubmit: handleEditSubmit, className: "p-4" },
+                error && (react_1.default.createElement("div", { className: "mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg text-red-600 dark:text-red-400 text-sm" }, error)),
+                react_1.default.createElement("div", { className: "space-y-4" },
+                    react_1.default.createElement("div", null,
+                        react_1.default.createElement("label", { className: "block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" }, "\u0E0A\u0E37\u0E48\u0E2D"),
+                        react_1.default.createElement("input", { type: "text", value: editData.name, onChange: (e) => setEditData({ ...editData, name: e.target.value }), className: "w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-sm", placeholder: "\u0E01\u0E23\u0E2D\u0E01\u0E0A\u0E37\u0E48\u0E2D", maxLength: 100 })),
+                    react_1.default.createElement("div", null,
+                        react_1.default.createElement("label", { className: "block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" }, "\u0E1B\u0E23\u0E30\u0E27\u0E31\u0E15\u0E34\u0E2A\u0E48\u0E27\u0E19\u0E15\u0E31\u0E27"),
+                        react_1.default.createElement("textarea", { value: editData.bio, onChange: (e) => setEditData({ ...editData, bio: e.target.value }), className: "w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-sm resize-none", placeholder: "\u0E40\u0E02\u0E35\u0E22\u0E19\u0E40\u0E01\u0E35\u0E48\u0E22\u0E27\u0E01\u0E31\u0E1A\u0E15\u0E31\u0E27\u0E04\u0E38\u0E13", rows: 3, maxLength: 500 }),
+                        react_1.default.createElement("div", { className: "text-xs text-gray-500 dark:text-gray-400 mt-1" },
+                            editData.bio.length,
+                            "/500 \u0E15\u0E31\u0E27\u0E2D\u0E31\u0E01\u0E29\u0E23"))),
+                react_1.default.createElement("div", { className: "flex gap-2 mt-4" },
+                    react_1.default.createElement("button", { type: "submit", disabled: loading, className: "flex-1 py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm" }, loading ? 'กำลังบันทึก...' : 'บันทึก'),
+                    react_1.default.createElement("button", { type: "button", onClick: () => {
+                            setShowEditForm(false);
+                            setError('');
+                            setEditData({
+                                name: user.name || '',
+                                bio: user.bio || ''
+                            });
+                        }, className: "px-4 py-2 text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 transition-colors text-sm" }, "\u0E22\u0E01\u0E40\u0E25\u0E34\u0E01")))))))));
 }
-//# sourceMappingURL=UserProfile.js.map

@@ -1,0 +1,15 @@
+{
+  "name": "@git-memory-mcp/sdk",
+  "version": "1.0.0",
+  "description": "JavaScript SDK for the Git Memory MCP Server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "mcp",
+    "sdk"
+  ],
+  "author": "Git Memory MCP Server",
+  "license": "MIT"
+}

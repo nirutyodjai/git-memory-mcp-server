@@ -1,0 +1,466 @@
+{{/*
+=============================================================================
+ENTERPRISE SECURITY DASHBOARD - CONFIGMAP TEMPLATE
+Kubernetes ConfigMap for Application Configuration
+=============================================================================
+*/}}
+
+{{- include "security-dashboard.validateRequired" . }}
+{{- include "security-dashboard.validateConfig" . }}
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "security-dashboard.fullname" . }}-config
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    {{- include "security-dashboard.labels" . | nindent 4 }}
+    app.kubernetes.io/component: config
+  annotations:
+    helm.sh/hook: pre-install,pre-upgrade
+    helm.sh/hook-weight: "-5"
+    helm.sh/hook-delete-policy: before-hook-creation
+data:
+  # =============================================================================
+  # APPLICATION CONFIGURATION
+  # =============================================================================
+  
+  # Server Configuration
+  SERVER_HOST: {{ .Values.app.server.host | quote }}
+  SERVER_PORT: {{ .Values.app.server.port | quote }}
+  SERVER_TIMEOUT: {{ .Values.app.server.timeout | quote }}
+  
+  # Environment Settings
+  NODE_ENV: {{ .Values.app.env.NODE_ENV | quote }}
+  LOG_LEVEL: {{ .Values.app.env.LOG_LEVEL | quote }}
+  LOG_FORMAT: {{ .Values.app.env.LOG_FORMAT | quote }}
+  
+  # Feature Flags
+  METRICS_ENABLED: {{ .Values.app.env.METRICS_ENABLED | quote }}
+  SECURITY_SCAN_ENABLED: {{ .Values.app.env.SECURITY_SCAN_ENABLED | quote }}
+  WEBSOCKET_ENABLED: {{ .Values.app.env.WEBSOCKET_ENABLED | quote }}
+  COLLABORATION_ENABLED: {{ .Values.app.env.COLLABORATION_ENABLED | quote }}
+  
+  # Performance Settings
+  MAX_CONNECTIONS: {{ .Values.performance.maxConnections | quote }}
+  CONNECTION_TIMEOUT: {{ .Values.performance.connectionTimeout | quote }}
+  REQUEST_TIMEOUT: {{ .Values.performance.requestTimeout | quote }}
+  MEMORY_LIMIT: {{ .Values.performance.memoryLimit | quote }}
+  CPU_LIMIT: {{ .Values.performance.cpuLimit | quote }}
+  
+  # =============================================================================
+  # SECURITY CONFIGURATION
+  # =============================================================================
+  
+  # Authentication Settings
+  AUTH_PROVIDER: {{ .Values.security.auth.provider | quote }}
+  JWT_ALGORITHM: {{ .Values.security.auth.jwt.algorithm | quote }}
+  JWT_EXPIRES_IN: {{ .Values.security.auth.jwt.expiresIn | quote }}
+  SESSION_TIMEOUT: {{ .Values.security.auth.sessionTimeout | quote }}
+  
+  # OAuth Configuration
+  {{- if .Values.security.auth.oauth.enabled }}
+  OAUTH_ENABLED: "true"
+  OAUTH_PROVIDER: {{ .Values.security.auth.oauth.provider | quote }}
+  OAUTH_SCOPE: {{ .Values.security.auth.oauth.scope | quote }}
+  {{- else }}
+  OAUTH_ENABLED: "false"
+  {{- end }}
+  
+  # LDAP Configuration
+  {{- if .Values.security.auth.ldap.enabled }}
+  LDAP_ENABLED: "true"
+  LDAP_URL: {{ .Values.security.auth.ldap.url | quote }}
+  LDAP_BASE_DN: {{ .Values.security.auth.ldap.baseDN | quote }}
+  LDAP_USER_SEARCH_BASE: {{ .Values.security.auth.ldap.userSearchBase | quote }}
+  LDAP_GROUP_SEARCH_BASE: {{ .Values.security.auth.ldap.groupSearchBase | quote }}
+  {{- else }}
+  LDAP_ENABLED: "false"
+  {{- end }}
+  
+  # Rate Limiting
+  RATE_LIMIT_ENABLED: {{ .Values.security.rateLimit.enabled | quote }}
+  RATE_LIMIT_WINDOW: {{ .Values.security.rateLimit.windowMs | quote }}
+  RATE_LIMIT_MAX_REQUESTS: {{ .Values.security.rateLimit.maxRequests | quote }}
+  
+  # CORS Configuration
+  CORS_ENABLED: {{ .Values.security.cors.enabled | quote }}
+  CORS_ORIGIN: {{ .Values.security.cors.origin | quote }}
+  CORS_METHODS: {{ .Values.security.cors.methods | quote }}
+  CORS_HEADERS: {{ .Values.security.cors.allowedHeaders | quote }}
+  CORS_CREDENTIALS: {{ .Values.security.cors.credentials | quote }}
+  
+  # Security Headers
+  SECURITY_HEADERS_ENABLED: {{ .Values.security.headers.enabled | quote }}
+  HSTS_ENABLED: {{ .Values.security.headers.hsts.enabled | quote }}
+  HSTS_MAX_AGE: {{ .Values.security.headers.hsts.maxAge | quote }}
+  CSP_ENABLED: {{ .Values.security.headers.csp.enabled | quote }}
+  
+  # =============================================================================
+  # DATABASE CONFIGURATION
+  # =============================================================================
+  
+  # PostgreSQL Settings
+  {{- if .Values.postgresql.enabled }}
+  POSTGRES_ENABLED: "true"
+  POSTGRES_HOST: {{ include "security-dashboard.postgresql.fullname" . | quote }}
+  POSTGRES_PORT: "5432"
+  POSTGRES_DATABASE: {{ .Values.postgresql.auth.database | quote }}
+  POSTGRES_USERNAME: {{ .Values.postgresql.auth.username | quote }}
+  POSTGRES_SSL_MODE: {{ .Values.postgresql.sslMode | default "prefer" | quote }}
+  POSTGRES_POOL_MIN: {{ .Values.postgresql.poolConfig.min | quote }}
+  POSTGRES_POOL_MAX: {{ .Values.postgresql.poolConfig.max | quote }}
+  {{- else }}
+  POSTGRES_ENABLED: "false"
+  {{- end }}
+  
+  # Redis Settings
+  {{- if .Values.redis.enabled }}
+  REDIS_ENABLED: "true"
+  REDIS_HOST: {{ include "security-dashboard.redis.fullname" . }}-master
+  REDIS_PORT: "6379"
+  REDIS_DB: {{ .Values.redis.database | default "0" | quote }}
+  REDIS_KEY_PREFIX: {{ .Values.redis.keyPrefix | default "security-dashboard:" | quote }}
+  REDIS_CLUSTER_ENABLED: {{ .Values.redis.cluster.enabled | quote }}
+  {{- else }}
+  REDIS_ENABLED: "false"
+  {{- end }}
+  
+  # MongoDB Settings
+  {{- if .Values.mongodb.enabled }}
+  MONGODB_ENABLED: "true"
+  MONGODB_HOST: {{ include "security-dashboard.mongodb.fullname" . | quote }}
+  MONGODB_PORT: "27017"
+  MONGODB_DATABASE: {{ .Values.mongodb.auth.database | quote }}
+  MONGODB_USERNAME: {{ .Values.mongodb.auth.username | quote }}
+  {{- else }}
+  MONGODB_ENABLED: "false"
+  {{- end }}
+  
+  # =============================================================================
+  # MONITORING & OBSERVABILITY
+  # =============================================================================
+  
+  # Prometheus Configuration
+  {{- if .Values.monitoring.prometheus.enabled }}
+  PROMETHEUS_ENABLED: "true"
+  PROMETHEUS_PORT: {{ .Values.monitoring.prometheus.port | quote }}
+  PROMETHEUS_PATH: {{ .Values.monitoring.prometheus.path | quote }}
+  PROMETHEUS_NAMESPACE: {{ .Values.monitoring.prometheus.namespace | quote }}
+  {{- else }}
+  PROMETHEUS_ENABLED: "false"
+  {{- end }}
+  
+  # Grafana Configuration
+  {{- if .Values.monitoring.grafana.enabled }}
+  GRAFANA_ENABLED: "true"
+  GRAFANA_URL: {{ .Values.monitoring.grafana.url | quote }}
+  GRAFANA_DASHBOARD_ID: {{ .Values.monitoring.grafana.dashboardId | quote }}
+  {{- else }}
+  GRAFANA_ENABLED: "false"
+  {{- end }}
+  
+  # Jaeger Tracing
+  {{- if .Values.monitoring.jaeger.enabled }}
+  JAEGER_ENABLED: "true"
+  JAEGER_ENDPOINT: {{ .Values.monitoring.jaeger.endpoint | quote }}
+  JAEGER_SERVICE_NAME: {{ .Values.monitoring.jaeger.serviceName | quote }}
+  JAEGER_SAMPLER_TYPE: {{ .Values.monitoring.jaeger.samplerType | quote }}
+  JAEGER_SAMPLER_PARAM: {{ .Values.monitoring.jaeger.samplerParam | quote }}
+  {{- else }}
+  JAEGER_ENABLED: "false"
+  {{- end }}
+  
+  # =============================================================================
+  # LOGGING CONFIGURATION
+  # =============================================================================
+  
+  # ElasticSearch Logging
+  {{- if .Values.logging.elasticsearch.enabled }}
+  ELASTICSEARCH_ENABLED: "true"
+  ELASTICSEARCH_HOST: {{ .Values.logging.elasticsearch.host | quote }}
+  ELASTICSEARCH_PORT: {{ .Values.logging.elasticsearch.port | quote }}
+  ELASTICSEARCH_INDEX: {{ .Values.logging.elasticsearch.index | quote }}
+  ELASTICSEARCH_TYPE: {{ .Values.logging.elasticsearch.type | quote }}
+  {{- else }}
+  ELASTICSEARCH_ENABLED: "false"
+  {{- end }}
+  
+  # Fluentd Configuration
+  {{- if .Values.logging.fluentd.enabled }}
+  FLUENTD_ENABLED: "true"
+  FLUENTD_HOST: {{ .Values.logging.fluentd.host | quote }}
+  FLUENTD_PORT: {{ .Values.logging.fluentd.port | quote }}
+  FLUENTD_TAG: {{ .Values.logging.fluentd.tag | quote }}
+  {{- else }}
+  FLUENTD_ENABLED: "false"
+  {{- end }}
+  
+  # =============================================================================
+  # WEBSOCKET & COLLABORATION
+  # =============================================================================
+  
+  # WebSocket Configuration
+  {{- if .Values.websocket.enabled }}
+  WEBSOCKET_ENABLED: "true"
+  WEBSOCKET_PORT: {{ .Values.websocket.port | quote }}
+  WEBSOCKET_PATH: {{ .Values.websocket.path | quote }}
+  WEBSOCKET_CORS_ORIGIN: {{ .Values.websocket.cors.origin | quote }}
+  WEBSOCKET_HEARTBEAT_INTERVAL: {{ .Values.websocket.heartbeatInterval | quote }}
+  WEBSOCKET_HEARTBEAT_TIMEOUT: {{ .Values.websocket.heartbeatTimeout | quote }}
+  {{- else }}
+  WEBSOCKET_ENABLED: "false"
+  {{- end }}
+  
+  # Collaboration Features
+  COLLABORATION_ENABLED: {{ .Values.collaboration.enabled | quote }}
+  COLLABORATION_MAX_USERS: {{ .Values.collaboration.maxUsers | quote }}
+  COLLABORATION_SESSION_TIMEOUT: {{ .Values.collaboration.sessionTimeout | quote }}
+  
+  # =============================================================================
+  # EXTERNAL SERVICES
+  # =============================================================================
+  
+  # Email Service
+  {{- if .Values.externalServices.email.enabled }}
+  EMAIL_ENABLED: "true"
+  EMAIL_PROVIDER: {{ .Values.externalServices.email.provider | quote }}
+  EMAIL_FROM: {{ .Values.externalServices.email.from | quote }}
+  {{- else }}
+  EMAIL_ENABLED: "false"
+  {{- end }}
+  
+  # SMS Service
+  {{- if .Values.externalServices.sms.enabled }}
+  SMS_ENABLED: "true"
+  SMS_PROVIDER: {{ .Values.externalServices.sms.provider | quote }}
+  {{- else }}
+  SMS_ENABLED: "false"
+  {{- end }}
+  
+  # Slack Integration
+  {{- if .Values.externalServices.slack.enabled }}
+  SLACK_ENABLED: "true"
+  SLACK_WEBHOOK_URL: {{ .Values.externalServices.slack.webhookUrl | quote }}
+  SLACK_CHANNEL: {{ .Values.externalServices.slack.channel | quote }}
+  {{- else }}
+  SLACK_ENABLED: "false"
+  {{- end }}
+  
+  # =============================================================================
+  # BACKUP & RECOVERY
+  # =============================================================================
+  
+  # Backup Configuration
+  BACKUP_ENABLED: {{ .Values.backup.enabled | quote }}
+  BACKUP_SCHEDULE: {{ .Values.backup.schedule | quote }}
+  BACKUP_RETENTION_DAYS: {{ .Values.backup.retentionDays | quote }}
+  BACKUP_STORAGE_TYPE: {{ .Values.backup.storage.type | quote }}
+  
+  # =============================================================================
+  # DEVELOPMENT & DEBUGGING
+  # =============================================================================
+  
+  # Development Mode
+  {{- if .Values.development.enabled }}
+  DEVELOPMENT_MODE: "true"
+  DEBUG_ENABLED: {{ .Values.development.debug.enabled | quote }}
+  DEBUG_LEVEL: {{ .Values.development.debug.level | quote }}
+  HOT_RELOAD_ENABLED: {{ .Values.development.hotReload.enabled | quote }}
+  MOCK_DATA_ENABLED: {{ .Values.development.mockData.enabled | quote }}
+  {{- else }}
+  DEVELOPMENT_MODE: "false"
+  DEBUG_ENABLED: "false"
+  HOT_RELOAD_ENABLED: "false"
+  MOCK_DATA_ENABLED: "false"
+  {{- end }}
+  
+  # =============================================================================
+  # FEATURE FLAGS
+  # =============================================================================
+  
+  {{- range $key, $value := .Values.featureFlags }}
+  {{ printf "FEATURE_%s" ($key | upper | replace "-" "_") }}: {{ $value | quote }}
+  {{- end }}
+  
+  # =============================================================================
+  # CUSTOM CONFIGURATION
+  # =============================================================================
+  
+  {{- with .Values.customConfig }}
+  {{- range $key, $value := . }}
+  {{ $key }}: {{ $value | quote }}
+  {{- end }}
+  {{- end }}
+
+---
+# =============================================================================
+# NGINX CONFIGURATION CONFIGMAP
+# =============================================================================
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "security-dashboard.fullname" . }}-nginx-config
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    {{- include "security-dashboard.labels" . | nindent 4 }}
+    app.kubernetes.io/component: nginx-config
+data:
+  nginx.conf: |
+    user nginx;
+    worker_processes auto;
+    error_log /var/log/nginx/error.log warn;
+    pid /var/run/nginx.pid;
+    
+    events {
+        worker_connections 1024;
+        use epoll;
+        multi_accept on;
+    }
+    
+    http {
+        include /etc/nginx/mime.types;
+        default_type application/octet-stream;
+        
+        # Logging
+        log_format main '$remote_addr - $remote_user [$time_local] "$request" '
+                        '$status $body_bytes_sent "$http_referer" '
+                        '"$http_user_agent" "$http_x_forwarded_for"';
+        access_log /var/log/nginx/access.log main;
+        
+        # Performance
+        sendfile on;
+        tcp_nopush on;
+        tcp_nodelay on;
+        keepalive_timeout 65;
+        types_hash_max_size 2048;
+        
+        # Gzip
+        gzip on;
+        gzip_vary on;
+        gzip_min_length 1024;
+        gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
+        
+        # Security Headers
+        add_header X-Frame-Options DENY;
+        add_header X-Content-Type-Options nosniff;
+        add_header X-XSS-Protection "1; mode=block";
+        add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+        
+        # Rate Limiting
+        limit_req_zone $binary_remote_addr zone=api:10m rate=10r/s;
+        limit_req_zone $binary_remote_addr zone=login:10m rate=1r/s;
+        
+        # Upstream
+        upstream security_dashboard {
+            least_conn;
+            server {{ include "security-dashboard.fullname" . }}:{{ .Values.service.port }};
+            keepalive 32;
+        }
+        
+        # Main Server
+        server {
+            listen 80;
+            server_name {{ .Values.ingress.hosts | first | default "_" }};
+            
+            # Security
+            server_tokens off;
+            
+            # Rate Limiting
+            limit_req zone=api burst=20 nodelay;
+            
+            # Health Check
+            location /health {
+                access_log off;
+                return 200 "healthy\n";
+                add_header Content-Type text/plain;
+            }
+            
+            # API Proxy
+            location /api/ {
+                proxy_pass http://security_dashboard;
+                proxy_http_version 1.1;
+                proxy_set_header Upgrade $http_upgrade;
+                proxy_set_header Connection 'upgrade';
+                proxy_set_header Host $host;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header X-Forwarded-Proto $scheme;
+                proxy_cache_bypass $http_upgrade;
+                
+                # Timeouts
+                proxy_connect_timeout 60s;
+                proxy_send_timeout 60s;
+                proxy_read_timeout 60s;
+            }
+            
+            # WebSocket Proxy
+            location /socket.io/ {
+                proxy_pass http://security_dashboard;
+                proxy_http_version 1.1;
+                proxy_set_header Upgrade $http_upgrade;
+                proxy_set_header Connection "upgrade";
+                proxy_set_header Host $host;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header X-Forwarded-Proto $scheme;
+            }
+            
+            # Static Files
+            location / {
+                proxy_pass http://security_dashboard;
+                proxy_set_header Host $host;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header X-Forwarded-Proto $scheme;
+            }
+        }
+    }
+
+---
+# =============================================================================
+# PROMETHEUS CONFIGURATION CONFIGMAP
+# =============================================================================
+
+{{- if .Values.monitoring.prometheus.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "security-dashboard.fullname" . }}-prometheus-config
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    {{- include "security-dashboard.labels" . | nindent 4 }}
+    app.kubernetes.io/component: prometheus-config
+data:
+  prometheus.yml: |
+    global:
+      scrape_interval: 15s
+      evaluation_interval: 15s
+    
+    rule_files:
+      - "/etc/prometheus/rules/*.yml"
+    
+    scrape_configs:
+      - job_name: 'security-dashboard'
+        static_configs:
+          - targets: ['{{ include "security-dashboard.fullname" . }}:{{ .Values.monitoring.prometheus.port }}']
+        metrics_path: {{ .Values.monitoring.prometheus.path }}
+        scrape_interval: 30s
+        
+      - job_name: 'kubernetes-pods'
+        kubernetes_sd_configs:
+          - role: pod
+        relabel_configs:
+          - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
+            action: keep
+            regex: true
+          - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_path]
+            action: replace
+            target_label: __metrics_path__
+            regex: (.+)
+{{- end }}
+
+# =============================================================================
+# END OF CONFIGMAP TEMPLATES
+# =============================================================================

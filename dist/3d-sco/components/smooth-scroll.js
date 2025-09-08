@@ -46,7 +46,7 @@ function SmoothScroll({ children, isInsideModal = false }) {
             lenis?.start();
         });
     }, []);
-    return (<lenis_1.ReactLenis root options={{
+    return (react_1.default.createElement(lenis_1.ReactLenis, { root: true, options: {
             duration: 2,
             prevent: (node) => {
                 if (isInsideModal)
@@ -54,9 +54,6 @@ function SmoothScroll({ children, isInsideModal = false }) {
                 const modalOpen = node.classList.contains("modall");
                 return modalOpen;
             },
-        }}>
-      {children}
-    </lenis_1.ReactLenis>);
+        } }, children));
 }
 exports.default = SmoothScroll;
-//# sourceMappingURL=smooth-scroll.js.map

@@ -276,4 +276,3 @@ function urlBase64ToUint8Array(base64String) {
     }
     return outputArray;
 }
-//# sourceMappingURL=use-push-notifications.js.map

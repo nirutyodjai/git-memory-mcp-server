@@ -1,0 +1,390 @@
+{
+  "name": "nexus-ide-ai-debugging-assistant",
+  "version": "1.0.0",
+  "description": "NEXUS IDE - Advanced AI-Powered Debugging Assistant with Visual Debugging, Time-Travel, and Collaborative Features",
+  "main": "start-debug-assistant.js",
+  "scripts": {
+    "start": "node start-debug-assistant.js",
+    "dev": "nodemon start-debug-assistant.js",
+    "debug": "node --inspect start-debug-assistant.js",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "build": "echo 'No build step required'",
+    "health": "curl -f http://localhost:3010/health || exit 1",
+    "logs": "tail -f logs/debug-assistant.log",
+    "clean": "rm -rf logs/* temp/* data/debug-logs/*",
+    "benchmark": "node benchmark/debug-performance.js",
+    "docs": "jsdoc -c jsdoc.conf.json",
+    "docker:build": "docker build -t nexus-debug-assistant .",
+    "docker:run": "docker run -p 3010:3010 nexus-debug-assistant"
+  },
+  "keywords": [
+    "debugging",
+    "ai",
+    "ide",
+    "nexus",
+    "visual-debugging",
+    "time-travel",
+    "collaboration",
+    "code-analysis",
+    "breakpoints",
+    "performance",
+    "testing",
+    "development-tools"
+  ],
+  "author": {
+    "name": "NEXUS IDE Team",
+    "email": "team@nexus-ide.com",
+    "url": "https://nexus-ide.com"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nexus-ide/ai-debugging-assistant.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nexus-ide/ai-debugging-assistant/issues"
+  },
+  "homepage": "https://nexus-ide.com/debugging-assistant",
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "helmet": "^7.1.0",
+    "compression": "^1.7.4",
+    "ws": "^8.14.2",
+    "uuid": "^9.0.1",
+    "lodash": "^4.17.21",
+    "moment": "^2.29.4",
+    "chalk": "^4.1.2",
+    "winston": "^3.11.0",
+    "winston-daily-rotate-file": "^4.7.1",
+    "node-cache": "^5.1.2",
+    "redis": "^4.6.10",
+    "mongodb": "^6.3.0",
+    "sqlite3": "^5.1.6",
+    "axios": "^1.6.2",
+    "openai": "^4.20.1",
+    "@anthropic-ai/sdk": "^0.9.1",
+    "@google/generative-ai": "^0.2.1",
+    "ollama": "^0.4.1",
+    "jsonwebtoken": "^9.0.2",
+    "bcryptjs": "^2.4.3",
+    "rate-limiter-flexible": "^3.0.8",
+    "multer": "^1.4.5-lts.1",
+    "sharp": "^0.32.6",
+    "pdf-parse": "^1.1.1",
+    "mammoth": "^1.6.0",
+    "csv-parser": "^3.0.0",
+    "xml2js": "^0.6.2",
+    "yaml": "^2.3.4",
+    "dotenv": "^16.3.1",
+    "config": "^3.3.9",
+    "joi": "^17.11.0",
+    "express-validator": "^7.0.1",
+    "express-rate-limit": "^7.1.5",
+    "socket.io": "^4.7.4",
+    "socket.io-client": "^4.7.4",
+    "chokidar": "^3.5.3",
+    "tree-kill": "^1.2.2",
+    "ps-tree": "^1.2.0",
+    "systeminformation": "^5.21.20",
+    "node-machine-id": "^1.1.12",
+    "semver": "^7.5.4",
+    "glob": "^10.3.10",
+    "minimatch": "^9.0.3",
+    "fast-glob": "^3.3.2",
+    "ignore": "^5.3.0",
+    "mime-types": "^2.1.35",
+    "file-type": "^18.7.0",
+    "archiver": "^6.0.1",
+    "extract-zip": "^2.0.1",
+    "tar": "^6.2.0",
+    "graceful-fs": "^4.2.11",
+    "lockfile": "^1.0.4",
+    "pidusage": "^3.0.2",
+    "cpu-stat": "^2.0.1",
+    "memory-usage": "^0.2.0",
+    "disk-usage": "^1.1.3",
+    "network-speed": "^2.1.1",
+    "node-schedule": "^2.1.1",
+    "cron": "^3.1.6",
+    "bull": "^4.12.2",
+    "agenda": "^5.0.0",
+    "ioredis": "^5.3.2",
+    "amqplib": "^0.10.3",
+    "kafka-node": "^5.0.0",
+    "elasticsearch": "^16.7.3",
+    "prometheus-client": "^15.1.0",
+    "jaeger-client": "^3.19.0",
+    "opentelemetry-api": "^1.7.0",
+    "@opentelemetry/auto-instrumentations-node": "^0.40.3",
+    "newrelic": "^11.7.0",
+    "datadog-metrics": "^0.9.3",
+    "pino": "^8.16.2",
+    "pino-pretty": "^10.2.3",
+    "bunyan": "^1.8.15",
+    "debug": "^4.3.4",
+    "morgan": "^1.10.0",
+    "express-winston": "^4.2.0",
+    "rotating-file-stream": "^3.1.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2",
+    "jest": "^29.7.0",
+    "supertest": "^6.3.3",
+    "eslint": "^8.54.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.29.0",
+    "eslint-plugin-jest": "^27.6.0",
+    "prettier": "^3.1.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.1.0",
+    "commitizen": "^4.3.0",
+    "cz-conventional-changelog": "^3.3.0",
+    "semantic-release": "^22.0.8",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "jsdoc": "^4.0.2",
+    "typedoc": "^0.25.4",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.0",
+    "redoc-express": "^2.1.0",
+    "nyc": "^15.1.0",
+    "codecov": "^3.8.3",
+    "cross-env": "^7.0.3",
+    "concurrently": "^8.2.2",
+    "wait-on": "^7.2.0",
+    "kill-port": "^2.0.1",
+    "pm2": "^5.3.0",
+    "forever": "^4.0.3",
+    "docker-compose": "^0.24.6",
+    "kubernetes-client": "^12.0.0",
+    "terraform": "^1.6.6",
+    "ansible": "^2.16.1",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4",
+    "babel-core": "^6.26.3",
+    "babel-preset-env": "^1.7.0",
+    "@babel/core": "^7.23.5",
+    "@babel/preset-env": "^7.23.5",
+    "typescript": "^5.3.2",
+    "@types/node": "^20.10.0",
+    "@types/express": "^4.17.21",
+    "@types/jest": "^29.5.8",
+    "ts-node": "^10.9.1",
+    "ts-jest": "^29.1.1",
+    "tslint": "^6.1.3",
+    "benchmark": "^2.1.4",
+    "clinic": "^13.0.0",
+    "0x": "^5.5.0",
+    "autocannon": "^7.12.0",
+    "loadtest": "^8.0.2",
+    "artillery": "^2.0.3",
+    "k6": "^0.47.0",
+    "lighthouse": "^11.4.0",
+    "puppeteer": "^21.6.0",
+    "playwright": "^1.40.1",
+    "cypress": "^13.6.1",
+    "selenium-webdriver": "^4.15.0",
+    "webdriverio": "^8.24.12",
+    "testcafe": "^3.4.0",
+    "mocha": "^10.2.0",
+    "chai": "^4.3.10",
+    "sinon": "^17.0.1",
+    "nock": "^13.4.0",
+    "mock-fs": "^5.2.0",
+    "proxyquire": "^2.1.3",
+    "rewire": "^7.0.0",
+    "istanbul": "^0.4.5",
+    "c8": "^8.0.1",
+    "tap": "^18.6.1",
+    "ava": "^6.0.1",
+    "vitest": "^1.0.4",
+    "@vitest/ui": "^1.0.4"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "vue": ">=3.0.0",
+    "angular": ">=12.0.0",
+    "svelte": ">=3.0.0"
+  },
+  "optionalDependencies": {
+    "fsevents": "^2.3.3",
+    "bufferutil": "^4.0.8",
+    "utf-8-validate": "^6.0.3",
+    "kerberos": "^2.0.1",
+    "mongodb-client-encryption": "^6.0.0",
+    "saslprep": "^1.0.3",
+    "snappy": "^7.2.2",
+    "bson-ext": "^4.0.3",
+    "hiredis": "^2.0.0",
+    "ioredis-mock": "^8.9.0",
+    "canvas": "^2.11.2",
+    "sharp": "^0.32.6",
+    "imagemin": "^8.0.1",
+    "ffmpeg-static": "^5.2.0",
+    "node-gyp": "^10.0.1",
+    "python-shell": "^5.0.0",
+    "edge-js": "^20.3.1",
+    "ffi-napi": "^4.0.3",
+    "ref-napi": "^3.0.3",
+    "weak-napi": "^2.0.2",
+    "node-addon-api": "^7.0.0"
+  },
+  "bundledDependencies": [],
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-push": "npm test"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write",
+      "git add"
+    ],
+    "*.{json,md,yml,yaml}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "collectCoverageFrom": [
+      "**/*.{js,jsx,ts,tsx}",
+      "!**/node_modules/**",
+      "!**/coverage/**",
+      "!**/dist/**",
+      "!**/build/**"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 80,
+        "functions": 80,
+        "lines": 80,
+        "statements": 80
+      }
+    },
+    "testMatch": [
+      "**/__tests__/**/*.(js|jsx|ts|tsx)",
+      "**/*.(test|spec).(js|jsx|ts|tsx)"
+    ],
+    "setupFilesAfterEnv": [
+      "<rootDir>/tests/setup.js"
+    ]
+  },
+  "eslintConfig": {
+    "extends": [
+      "airbnb-base",
+      "plugin:jest/recommended"
+    ],
+    "env": {
+      "node": true,
+      "jest": true,
+      "es6": true
+    },
+    "rules": {
+      "no-console": "warn",
+      "no-unused-vars": "error",
+      "prefer-const": "error",
+      "no-var": "error"
+    }
+  },
+  "prettier": {
+    "semi": true,
+    "trailingComma": "es5",
+    "singleQuote": true,
+    "printWidth": 100,
+    "tabWidth": 2,
+    "useTabs": false
+  },
+  "nodemonConfig": {
+    "watch": [
+      "."
+    ],
+    "ext": "js,json",
+    "ignore": [
+      "node_modules/",
+      "logs/",
+      "temp/",
+      "data/",
+      "coverage/",
+      "dist/",
+      "build/"
+    ],
+    "delay": 1000,
+    "env": {
+      "NODE_ENV": "development"
+    }
+  },
+  "nyc": {
+    "include": [
+      "**/*.js"
+    ],
+    "exclude": [
+      "node_modules/",
+      "coverage/",
+      "tests/",
+      "**/*.test.js",
+      "**/*.spec.js"
+    ],
+    "reporter": [
+      "text",
+      "lcov",
+      "html"
+    ],
+    "check-coverage": true,
+    "lines": 80,
+    "statements": 80,
+    "functions": 80,
+    "branches": 80
+  },
+  "release": {
+    "branches": [
+      "main",
+      "master"
+    ],
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/changelog",
+      "@semantic-release/npm",
+      "@semantic-release/git",
+      "@semantic-release/github"
+    ]
+  },
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/nexus-ide"
+  },
+  "cpu": [
+    "x64",
+    "arm64"
+  ],
+  "os": [
+    "linux",
+    "darwin",
+    "win32"
+  ],
+  "preferGlobal": false,
+  "private": false,
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
+}

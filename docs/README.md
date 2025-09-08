@@ -73,6 +73,12 @@ git-memory-mcp-server
 
 3. Restart Claude Desktop and start using Git and Memory tools!
 
+## Reports
+
+- [JavaScript Categorization (Markdown)](./js-categorization.md)
+- [JavaScript Categorization (Text)](./js-categorization.txt)
+- [Roadmap](./ROADMAP.md)
+
 ## Examples
 
 ### Git Operations
@@ -269,6 +275,32 @@ Run with debug output:
 ```bash
 DEBUG=git-memory-mcp-server git-memory-mcp-server
 ```
+
+## Upgrade Plan
+
+ดูรายละเอียด Roadmap เชิงปฏิบัติ: [docs/ROADMAP.md](./ROADMAP.md)
+
+This section summarizes the planned upgrades and links to detailed documents. Targets are aligned with the current 1,000-server architecture and Git-based persistent memory.
+
+- Phase 1: Monetization Foundation (1–3 months)
+  - Premium Analytics Dashboard, Enterprise Security Suite (SSO/RBAC/Audit), SaaS Platform (multi-tenant) MVP, MCP Marketplace Alpha
+  - Pricing tiers rollout (Community, Professional, Enterprise)
+  - KPIs: $10K MRR, 100 paying customers, 99.9% uptime maintained
+  - References: [PHASE2-MONETIZATION-PLAN.md](PHASE2-MONETIZATION-PLAN.md), [implementation-action-plan.md](implementation-action-plan.md)
+
+- Phase 2: Ecosystem Expansion (3–12 months)
+  - SDKs (TypeScript, Python, Go, Java), API Gateway as a Service, AI-powered features (intelligent load balancing, predictive scaling), multi-cloud deployment
+  - KPIs: $100K–$500K MRR, 1K–5K customers, global deployment readiness
+  - References: [advanced-development-roadmap.md](advanced-development-roadmap.md), [development-phases-plan.md](development-phases-plan.md), [mcp-coordinator-architecture.md](mcp-coordinator-architecture.md)
+
+- Phase 3: Global Enterprise (12–36 months)
+  - Compliance (SOC2/ISO), 99.99% SLA, marketplace scale-up, edge/PoP deployments, cost optimization
+  - KPIs: $1M+ MRR, enterprise certifications, worldwide coverage
+  - References: [scaling-plan-1000.md](scaling-plan-1000.md), [deployment-guide-1000.md](deployment-guide-1000.md)
+
+Related docs: [MCP_TOOLS.md](MCP_TOOLS.md), [SOLO-LLM-SETUP.md](SOLO-LLM-SETUP.md), [TRAE_INTEGRATION.md](TRAE_INTEGRATION.md)
+
+Status tracking: Update this section as milestones are delivered and link to CHANGELOG for shipped releases.
 
 ## Contributing
 

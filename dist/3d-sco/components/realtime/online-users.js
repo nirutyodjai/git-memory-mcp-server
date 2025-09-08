@@ -85,87 +85,56 @@ const OnlineUsers = () => {
         });
         localStorage.setItem("username", newName);
     };
-    return (<popover_1.Popover>
-      <popover_1.PopoverTrigger asChild>
-        <button_1.Button variant="ghost" className={(0, utils_1.cn)("p-0 m-0 mr-4 h-fit w-fit transition-opacity duration-150", users.length <= 1 ? "opacity-0" : "opacity-100")}>
-          <div className="relative flex flex-col gap-2">
-            <div className="flex items-center gap-2 h-fit">
-              <div className="w-2 h-2 animate-pulse rounded-full bg-green-400"></div>
-              {users.length} online
-            </div>
-            <div className="absolute bottom-0 right-0 h-2 text-[.13rem]">
-              {/* <pre>/CHAT</pre> */}
-            </div>
-          </div>
-        </button_1.Button>
-      </popover_1.PopoverTrigger>
-      <popover_1.PopoverContent className="w-80">
-        <tabs_1.Tabs defaultValue="account" className="w-full h-[30rem] flex flex-col items-center no-hover-zone" onValueChange={(activeTab) => {
-            if (activeTab === "chat")
-                containerScrollBottom();
-        }}>
-          <tabs_1.TabsList className="w-full h-8">
-            <tabs_1.TabsTrigger className="w-1/2 h-full" value="users">
-              Users
-            </tabs_1.TabsTrigger>
-            <tabs_1.TabsTrigger className="w-1/2 h-full" value="chat">
-              Chat
-            </tabs_1.TabsTrigger>
-          </tabs_1.TabsList>
-          <tabs_1.TabsContent value="users" className="w-full h-full overflow-auto">
-            <scroll_area_1.ScrollArea className="w-full h-full modall">
-              <framer_motion_1.motion.div>
-                <div className="space-y-2 mb-8">
-                  <p className="text-sm text-muted-foreground text-center">
-                    There {users.length === 1 ? "is" : "are"} {users.length}{" "}
-                    user
-                    {users.length === 1 ? "" : "s"} online here!
-                  </p>
-                  {users.length <= 1 && (<p className="text-xs font-mono text-muted-foreground text-center text-yellow-600">
-                      (This is a feature not a bug
-                      <br /> invite some friends!)
-                    </p>)}
-                </div>
-                <framer_motion_1.motion.ul className="grid gap-4" variants={container} initial="hidden" animate="show">
-                  {users.map((user, i) => (<UserItem key={i} user={user} socket={socket} updateUsername={updateUsername}/>))}
-                </framer_motion_1.motion.ul>
-              </framer_motion_1.motion.div>
-            </scroll_area_1.ScrollArea>
-          </tabs_1.TabsContent>
-          <tabs_1.TabsContent value="chat" className="w-full flex-1 overflow-auto flex flex-col">
-            <div className="w-full h-full modall overflow-auto" ref={chatContainer}>
-              {/* own, other and sys */}
-              {msgs.map((msg, i) => (<div key={i}>
-                  <span>
-                    <span style={{
-                color: users.find((u) => u.socketId === msg.socketId)
-                    ?.color || "#777",
-            }} className="mr-2">
-                      {msg.username} {msg.socketId === socket?.id && "(you)"}:
-                    </span>
-                    <span className="font-mono">{msg.content}</span>
-                  </span>
-                </div>))}
-            </div>
-            <div className="w-full h-20 flex items-center gap-2">
-              <input_1.Input className="flex-1" ref={inputRef} placeholder="พิมพ์ข้อความ" onKeyDown={(e) => e.key === "Enter" && sendMessage()}/>
-              <button_1.Button onClick={sendMessage}>ส่ง</button_1.Button>
-            </div>
-          </tabs_1.TabsContent>
-        </tabs_1.Tabs>
-        {/* <div className="flex flex-col items-center justify-between"> */}
-        {/*   <div className="w-full h-10 border-2 border-gray-600 flex rounded-lg"> */}
-        {/*     <motion.div className="w-1/3 h-7 bg-slate-500 absolute"></motion.div> */}
-        {/*     <div className="flex justify-center items-center z-3 flex-1"> */}
-        {/*       users */}
-        {/*     </div> */}
-        {/*     <div className="flex justify-center items-center z-3 flex-1"> */}
-        {/*       chats */}
-        {/*     </div> */}
-        {/*   </div> */}
-        {/* </div> */}
-      </popover_1.PopoverContent>
-    </popover_1.Popover>);
+    return (react_1.default.createElement(popover_1.Popover, null,
+        react_1.default.createElement(popover_1.PopoverTrigger, { asChild: true },
+            react_1.default.createElement(button_1.Button, { variant: "ghost", className: (0, utils_1.cn)("p-0 m-0 mr-4 h-fit w-fit transition-opacity duration-150", users.length <= 1 ? "opacity-0" : "opacity-100") },
+                react_1.default.createElement("div", { className: "relative flex flex-col gap-2" },
+                    react_1.default.createElement("div", { className: "flex items-center gap-2 h-fit" },
+                        react_1.default.createElement("div", { className: "w-2 h-2 animate-pulse rounded-full bg-green-400" }),
+                        users.length,
+                        " online"),
+                    react_1.default.createElement("div", { className: "absolute bottom-0 right-0 h-2 text-[.13rem]" })))),
+        react_1.default.createElement(popover_1.PopoverContent, { className: "w-80" },
+            react_1.default.createElement(tabs_1.Tabs, { defaultValue: "account", className: "w-full h-[30rem] flex flex-col items-center no-hover-zone", onValueChange: (activeTab) => {
+                    if (activeTab === "chat")
+                        containerScrollBottom();
+                } },
+                react_1.default.createElement(tabs_1.TabsList, { className: "w-full h-8" },
+                    react_1.default.createElement(tabs_1.TabsTrigger, { className: "w-1/2 h-full", value: "users" }, "Users"),
+                    react_1.default.createElement(tabs_1.TabsTrigger, { className: "w-1/2 h-full", value: "chat" }, "Chat")),
+                react_1.default.createElement(tabs_1.TabsContent, { value: "users", className: "w-full h-full overflow-auto" },
+                    react_1.default.createElement(scroll_area_1.ScrollArea, { className: "w-full h-full modall" },
+                        react_1.default.createElement(framer_motion_1.motion.div, null,
+                            react_1.default.createElement("div", { className: "space-y-2 mb-8" },
+                                react_1.default.createElement("p", { className: "text-sm text-muted-foreground text-center" },
+                                    "There ",
+                                    users.length === 1 ? "is" : "are",
+                                    " ",
+                                    users.length,
+                                    " ",
+                                    "user",
+                                    users.length === 1 ? "" : "s",
+                                    " online here!"),
+                                users.length <= 1 && (react_1.default.createElement("p", { className: "text-xs font-mono text-muted-foreground text-center text-yellow-600" },
+                                    "(This is a feature not a bug",
+                                    react_1.default.createElement("br", null),
+                                    " invite some friends!)"))),
+                            react_1.default.createElement(framer_motion_1.motion.ul, { className: "grid gap-4", variants: container, initial: "hidden", animate: "show" }, users.map((user, i) => (react_1.default.createElement(UserItem, { key: i, user: user, socket: socket, updateUsername: updateUsername }))))))),
+                react_1.default.createElement(tabs_1.TabsContent, { value: "chat", className: "w-full flex-1 overflow-auto flex flex-col" },
+                    react_1.default.createElement("div", { className: "w-full h-full modall overflow-auto", ref: chatContainer }, msgs.map((msg, i) => (react_1.default.createElement("div", { key: i },
+                        react_1.default.createElement("span", null,
+                            react_1.default.createElement("span", { style: {
+                                    color: users.find((u) => u.socketId === msg.socketId)
+                                        ?.color || "#777",
+                                }, className: "mr-2" },
+                                msg.username,
+                                " ",
+                                msg.socketId === socket?.id && "(you)",
+                                ":"),
+                            react_1.default.createElement("span", { className: "font-mono" }, msg.content)))))),
+                    react_1.default.createElement("div", { className: "w-full h-20 flex items-center gap-2" },
+                        react_1.default.createElement(input_1.Input, { className: "flex-1", ref: inputRef, placeholder: "\u0E1E\u0E34\u0E21\u0E1E\u0E4C\u0E02\u0E49\u0E2D\u0E04\u0E27\u0E32\u0E21", onKeyDown: (e) => e.key === "Enter" && sendMessage() }),
+                        react_1.default.createElement(button_1.Button, { onClick: sendMessage }, "\u0E2A\u0E48\u0E07")))))));
 };
 exports.default = OnlineUsers;
 const UserItem = ({ user, socket, updateUsername, }) => {
@@ -188,26 +157,19 @@ const UserItem = ({ user, socket, updateUsername, }) => {
         updateUsername(newUsername);
         setIsEditingName(false);
     };
-    return (<framer_motion_1.motion.li key={user.socketId} className="flex items-center justify-between" variants={item}>
-      <div className="flex items-center gap-2">
-        <div className="w-4 h-4 rounded-full" style={{ backgroundColor: user.color }}></div>
-        {isEditingName ? (<>
-            <input_1.Input value={newUsername} ref={inputRef} onChange={(e) => setNewUsername(e.target.value)} className="w-40" onKeyDown={(e) => e.key === "Enter" && saveEdit()}/>
-            <button_1.Button variant={"ghost"} onClick={cancelEditing}>
-              <lucide_react_1.X className="w-4 h-4"/>
-            </button_1.Button>
-            <button_1.Button variant={"ghost"} onClick={saveEdit}>
-              <lucide_react_1.Check className="w-4 h-4"/>
-            </button_1.Button>
-          </>) : (<>
-            <span className="text-sm">
-              {user.name} {user.socketId === socket?.id && "(you)"}
-            </span>
-            {user.socketId === socket?.id && (<button_1.Button className="py-0 my-0" variant={"ghost"} onClick={() => setIsEditingName(true)}>
-                <lucide_react_1.Edit className="w-4 h-4"/>
-              </button_1.Button>)}
-          </>)}
-      </div>
-    </framer_motion_1.motion.li>);
+    return (react_1.default.createElement(framer_motion_1.motion.li, { key: user.socketId, className: "flex items-center justify-between", variants: item },
+        react_1.default.createElement("div", { className: "flex items-center gap-2" },
+            react_1.default.createElement("div", { className: "w-4 h-4 rounded-full", style: { backgroundColor: user.color } }),
+            isEditingName ? (react_1.default.createElement(react_1.default.Fragment, null,
+                react_1.default.createElement(input_1.Input, { value: newUsername, ref: inputRef, onChange: (e) => setNewUsername(e.target.value), className: "w-40", onKeyDown: (e) => e.key === "Enter" && saveEdit() }),
+                react_1.default.createElement(button_1.Button, { variant: "ghost", onClick: cancelEditing },
+                    react_1.default.createElement(lucide_react_1.X, { className: "w-4 h-4" })),
+                react_1.default.createElement(button_1.Button, { variant: "ghost", onClick: saveEdit },
+                    react_1.default.createElement(lucide_react_1.Check, { className: "w-4 h-4" })))) : (react_1.default.createElement(react_1.default.Fragment, null,
+                react_1.default.createElement("span", { className: "text-sm" },
+                    user.name,
+                    " ",
+                    user.socketId === socket?.id && "(you)"),
+                user.socketId === socket?.id && (react_1.default.createElement(button_1.Button, { className: "py-0 my-0", variant: "ghost", onClick: () => setIsEditingName(true) },
+                    react_1.default.createElement(lucide_react_1.Edit, { className: "w-4 h-4" }))))))));
 };
-//# sourceMappingURL=online-users.js.map

@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 export declare class GitMemoryServer {
     private server;
     private git;
@@ -10,10 +9,14 @@ export declare class GitMemoryServer {
     private compressionEnabled;
     private lastSaveTime;
     private readonly SAVE_DEBOUNCE_MS;
+    private llmService?;
+    private aiOrchestrator?;
+    private app;
+    private port;
     private isInitialized;
     constructor();
     initialize(): Promise<void>;
-    private initializeAsync;
+    private initializeLLMServices;
     private loadMemory;
     private saveMemory;
     private validateGitRepository;
@@ -25,22 +28,5 @@ export declare class GitMemoryServer {
     private decompressData;
     private debouncedSave;
     private setupToolHandlers;
-    private handleGitStatus;
-    private handleGitLog;
-    private handleGitDiff;
-    private handleMemoryStore;
-    private handleMemoryRetrieve;
-    private handleMemoryList;
-    private handleMemoryDelete;
-    private handleMemorySearch;
-    private handleMemoryFilter;
-    private handleGitAdd;
-    private handleGitCommit;
-    private handleGitPush;
-    private handleGitPull;
-    private handleGitBranch;
-    private handleGitMerge;
-    run(): Promise<void>;
+    private debounce;
 }
-export default GitMemoryServer;
-//# sourceMappingURL=index.d.ts.map

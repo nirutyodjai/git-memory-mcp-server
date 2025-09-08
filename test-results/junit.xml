@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="jest tests" tests="25" failures="6" errors="0" time="1.1">
+  <testsuite name="AI Integration System Tests" errors="0" failures="6" skipped="0" timestamp="2025-09-06T06:55:48" time="0.63" tests="14">
+    <testcase classname="AI Integration System Tests Context Synchronization should maintain data consistency across AI systems" name="AI Integration System Tests Context Synchronization should maintain data consistency across AI systems" time="0.009">
+    </testcase>
+    <testcase classname="AI Integration System Tests Context Synchronization should handle concurrent context updates without data corruption" name="AI Integration System Tests Context Synchronization should handle concurrent context updates without data corruption" time="0.003">
+      <failure>Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: 2
+Received: 1
+    at Object.toBe (D:\Ai Server\git-memory-mcp-server\src\tests\ai-integration.test.ts:265:42)</failure>
+    </testcase>
+    <testcase classname="AI Integration System Tests Context Synchronization should detect and resolve conflicts appropriately" name="AI Integration System Tests Context Synchronization should detect and resolve conflicts appropriately" time="0.089">
+    </testcase>
+    <testcase classname="AI Integration System Tests Memory Integration should persist contexts in Git Memory" name="AI Integration System Tests Memory Integration should persist contexts in Git Memory" time="0.107">
+      <failure>TypeError: gitMemory.getMemory is not a function
+    at Object.getMemory (D:\Ai Server\git-memory-mcp-server\src\tests\ai-integration.test.ts:317:42)</failure>
+    </testcase>
+    <testcase classname="AI Integration System Tests Memory Integration should integrate with Semantic Memory for insights" name="AI Integration System Tests Memory Integration should integrate with Semantic Memory for insights" time="0.001">
+      <failure>TypeError: semanticMemory.store is not a function
+    at Object.store (D:\Ai Server\git-memory-mcp-server\src\tests\ai-integration.test.ts:328:28)
+    at Promise.then.completed (D:\Ai Server\git-memory-mcp-server\node_modules\jest-circus\build\utils.js:298:28)
+    at new Promise (&lt;anonymous&gt;)
+    at callAsyncCircusFn (D:\Ai Server\git-memory-mcp-server\node_modules\jest-circus\build\utils.js:231:10)
+    at _callCircusTest (D:\Ai Server\git-memory-mcp-server\node_modules\jest-circus\build\run.js:316:40)
+    at _runTest (D:\Ai Server\git-memory-mcp-server\node_modules\jest-circus\build\run.js:252:3)
+    at _runTestsForDescribeBlock (D:\Ai Server\git-memory-mcp-server\node_modules\jest-circus\build\run.js:126:9)
+    at _runTestsForDescribeBlock (D:\Ai Server\git-memory-mcp-server\node_modules\jest-circus\build\run.js:121:9)
+    at _runTestsForDescribeBlock (D:\Ai Server\git-memory-mcp-server\node_modules\jest-circus\build\run.js:121:9)
+    at run (D:\Ai Server\git-memory-mcp-server\node_modules\jest-circus\build\run.js:71:3)
+    at runAndTransformResultsToJestFormat (D:\Ai Server\git-memory-mcp-server\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapterInit.js:122:21)
+    at jestAdapter (D:\Ai Server\git-memory-mcp-server\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapter.js:79:19)
+    at runTestInternal (D:\Ai Server\git-memory-mcp-server\node_modules\jest-runner\build\runTest.js:367:16)
+    at runTest (D:\Ai Server\git-memory-mcp-server\node_modules\jest-runner\build\runTest.js:444:34)</failure>
+    </testcase>
+    <testcase classname="AI Integration System Tests Code Intelligence Integration should provide code insights through context system" name="AI Integration System Tests Code Intelligence Integration should provide code insights through context system" time="0.001">
+    </testcase>
+    <testcase classname="AI Integration System Tests Code Intelligence Integration should maintain code context across AI interactions" name="AI Integration System Tests Code Intelligence Integration should maintain code context across AI interactions" time="0.002">
+      <failure>Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: true
+Received: false
+    at Object.toBe (D:\Ai Server\git-memory-mcp-server\src\tests\ai-integration.test.ts:410:69)</failure>
+    </testcase>
+    <testcase classname="AI Integration System Tests Performance and Scalability should handle multiple AI connections efficiently" name="AI Integration System Tests Performance and Scalability should handle multiple AI connections efficiently" time="0.001">
+    </testcase>
+    <testcase classname="AI Integration System Tests Performance and Scalability should maintain performance with large context history" name="AI Integration System Tests Performance and Scalability should maintain performance with large context history" time="0.003">
+      <failure>Error: expect(received).toHaveLength(expected)
+
+Expected length: 100
+Received length: 2
+Received array:  [{&quot;id&quot;: &quot;mock-search-1&quot;, &quot;source&quot;: &quot;performance-test&quot;, &quot;type&quot;: &quot;system&quot;}, {&quot;id&quot;: &quot;mock-search-2&quot;, &quot;source&quot;: &quot;performance-test&quot;, &quot;type&quot;: &quot;system&quot;}]
+    at Object.toHaveLength (D:\Ai Server\git-memory-mcp-server\src\tests\ai-integration.test.ts:458:23)</failure>
+    </testcase>
+    <testcase classname="AI Integration System Tests Performance and Scalability should cleanup old contexts properly" name="AI Integration System Tests Performance and Scalability should cleanup old contexts properly" time="0.003">
+    </testcase>
+    <testcase classname="AI Integration System Tests Error Handling and Recovery should handle service failures gracefully" name="AI Integration System Tests Error Handling and Recovery should handle service failures gracefully" time="0.001">
+      <failure>ReferenceError: AIContextAwarenessSystem is not defined
+    at Object.&lt;anonymous&gt; (D:\Ai Server\git-memory-mcp-server\src\tests\ai-integration.test.ts:491:35)
+    at Promise.then.completed (D:\Ai Server\git-memory-mcp-server\node_modules\jest-circus\build\utils.js:298:28)
+    at new Promise (&lt;anonymous&gt;)
+    at callAsyncCircusFn (D:\Ai Server\git-memory-mcp-server\node_modules\jest-circus\build\utils.js:231:10)
+    at _callCircusTest (D:\Ai Server\git-memory-mcp-server\node_modules\jest-circus\build\run.js:316:40)
+    at _runTest (D:\Ai Server\git-memory-mcp-server\node_modules\jest-circus\build\run.js:252:3)
+    at _runTestsForDescribeBlock (D:\Ai Server\git-memory-mcp-server\node_modules\jest-circus\build\run.js:126:9)
+    at _runTestsForDescribeBlock (D:\Ai Server\git-memory-mcp-server\node_modules\jest-circus\build\run.js:121:9)
+    at _runTestsForDescribeBlock (D:\Ai Server\git-memory-mcp-server\node_modules\jest-circus\build\run.js:121:9)
+    at run (D:\Ai Server\git-memory-mcp-server\node_modules\jest-circus\build\run.js:71:3)
+    at runAndTransformResultsToJestFormat (D:\Ai Server\git-memory-mcp-server\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapterInit.js:122:21)
+    at jestAdapter (D:\Ai Server\git-memory-mcp-server\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapter.js:79:19)
+    at runTestInternal (D:\Ai Server\git-memory-mcp-server\node_modules\jest-runner\build\runTest.js:367:16)
+    at runTest (D:\Ai Server\git-memory-mcp-server\node_modules\jest-runner\build\runTest.js:444:34)</failure>
+    </testcase>
+    <testcase classname="AI Integration System Tests Error Handling and Recovery should recover from sync errors" name="AI Integration System Tests Error Handling and Recovery should recover from sync errors" time="0.061">
+    </testcase>
+    <testcase classname="AI Integration System Tests Data Integrity should maintain referential integrity in relationships" name="AI Integration System Tests Data Integrity should maintain referential integrity in relationships" time="0.003">
+    </testcase>
+    <testcase classname="AI Integration System Tests Data Integrity should prevent data corruption during concurrent access" name="AI Integration System Tests Data Integrity should prevent data corruption during concurrent access" time="0.002">
+    </testcase>
+  </testsuite>
+  <testsuite name="Performance Tests" errors="0" failures="0" skipped="0" timestamp="2025-09-06T06:55:48" time="0.287" tests="11">
+    <testcase classname="Performance Tests Context Management Performance should handle 1000 context additions within acceptable time" name="Performance Tests Context Management Performance should handle 1000 context additions within acceptable time" time="0.039">
+    </testcase>
+    <testcase classname="Performance Tests Context Management Performance should perform fast context searches" name="Performance Tests Context Management Performance should perform fast context searches" time="0.013">
+    </testcase>
+    <testcase classname="Performance Tests Context Management Performance should handle concurrent context operations efficiently" name="Performance Tests Context Management Performance should handle concurrent context operations efficiently" time="0.015">
+    </testcase>
+    <testcase classname="Performance Tests Memory Performance should efficiently store and retrieve from Git Memory" name="Performance Tests Memory Performance should efficiently store and retrieve from Git Memory" time="0.006">
+    </testcase>
+    <testcase classname="Performance Tests Memory Performance should handle semantic memory operations efficiently" name="Performance Tests Memory Performance should handle semantic memory operations efficiently" time="0.011">
+    </testcase>
+    <testcase classname="Performance Tests LLM Provider Performance should handle multiple LLM requests efficiently" name="Performance Tests LLM Provider Performance should handle multiple LLM requests efficiently" time="0.033">
+    </testcase>
+    <testcase classname="Performance Tests LLM Provider Performance should utilize caching effectively" name="Performance Tests LLM Provider Performance should utilize caching effectively" time="0.029">
+    </testcase>
+    <testcase classname="Performance Tests System Integration Performance should maintain performance under full system load" name="Performance Tests System Integration Performance should maintain performance under full system load" time="0.005">
+    </testcase>
+    <testcase classname="Performance Tests System Integration Performance should handle memory cleanup efficiently" name="Performance Tests System Integration Performance should handle memory cleanup efficiently" time="0.01">
+    </testcase>
+    <testcase classname="Performance Tests Scalability Tests should scale linearly with context count" name="Performance Tests Scalability Tests should scale linearly with context count" time="0.017">
+    </testcase>
+    <testcase classname="Performance Tests Scalability Tests should maintain performance with many AI connections" name="Performance Tests Scalability Tests should maintain performance with many AI connections" time="0.006">
+    </testcase>
+  </testsuite>
+</testsuites>

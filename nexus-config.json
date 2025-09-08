@@ -1,0 +1,316 @@
+{
+  "nexus": {
+    "ide": {
+      "name": "NEXUS IDE",
+      "version": "1.0.0",
+      "mode": "development",
+      "description": "Next-Generation Integrated Development Environment",
+      "features": {
+        "aiCompletion": {
+          "enabled": true,
+          "models": ["gpt-4", "claude-3", "llama-2"],
+          "fallback": true,
+          "cacheResults": true,
+          "maxTokens": 2048
+        },
+        "smartSearch": {
+          "enabled": true,
+          "semantic": true,
+          "fuzzy": true,
+          "indexing": "real-time",
+          "maxResults": 50
+        },
+        "debugAssist": {
+          "enabled": true,
+          "autoBreakpoints": true,
+          "aiSuggestions": true,
+          "performanceAnalysis": true,
+          "memoryProfiling": true
+        },
+        "codeSharing": {
+          "enabled": true,
+          "realTime": true,
+          "permissions": ["read", "write", "comment"],
+          "maxUsers": 10,
+          "sessionTimeout": 3600000
+        },
+        "memoryStorage": {
+          "enabled": true,
+          "persistent": true,
+          "compression": true,
+          "encryption": true,
+          "maxSize": "1GB"
+        },
+        "visualProgramming": {
+          "enabled": true,
+          "flowCharts": true,
+          "mindMaps": true,
+          "umlDiagrams": true,
+          "codeGeneration": true
+        },
+        "collaboration": {
+          "enabled": true,
+          "voiceChat": true,
+          "videoChat": true,
+          "screenSharing": true,
+          "whiteboard": true
+        }
+      },
+      "ui": {
+        "theme": "dark",
+        "customThemes": true,
+        "layout": "flexible",
+        "panels": {
+          "explorer": { "position": "left", "width": 300 },
+          "editor": { "position": "center", "tabs": true },
+          "terminal": { "position": "bottom", "height": 200 },
+          "debug": { "position": "right", "width": 350 },
+          "ai": { "position": "right", "width": 400 }
+        }
+      }
+    },
+    "api": {
+      "host": "localhost",
+      "port": 3000,
+      "protocol": "http",
+      "cors": {
+        "enabled": true,
+        "origins": ["*"],
+        "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+        "headers": ["Content-Type", "Authorization", "X-Requested-With"]
+      },
+      "rateLimit": {
+        "enabled": true,
+        "windowMs": 60000,
+        "max": 1000,
+        "message": "Too many requests from this IP"
+      },
+      "compression": {
+        "enabled": true,
+        "level": 6,
+        "threshold": 1024
+      },
+      "security": {
+        "helmet": true,
+        "csrf": false,
+        "xss": true,
+        "noSniff": true
+      }
+    },
+    "websocket": {
+      "host": "localhost",
+      "port": 3001,
+      "path": "/socket.io",
+      "compression": true,
+      "heartbeat": 30000,
+      "maxConnections": 1000,
+      "pingTimeout": 60000,
+      "pingInterval": 25000,
+      "upgradeTimeout": 10000,
+      "maxHttpBufferSize": 1048576
+    },
+    "ai": {
+      "providers": {
+        "openai": {
+          "enabled": true,
+          "apiKey": "${OPENAI_API_KEY}",
+          "models": ["gpt-4", "gpt-3.5-turbo"],
+          "maxTokens": 4096,
+          "temperature": 0.7
+        },
+        "anthropic": {
+          "enabled": true,
+          "apiKey": "${ANTHROPIC_API_KEY}",
+          "models": ["claude-3-opus", "claude-3-sonnet"],
+          "maxTokens": 4096,
+          "temperature": 0.7
+        },
+        "local": {
+          "enabled": false,
+          "endpoint": "http://localhost:11434",
+          "models": ["llama2", "codellama"],
+          "timeout": 30000
+        }
+      },
+      "features": {
+        "codeCompletion": {
+          "enabled": true,
+          "triggerCharacters": [".", "(", "[", "{"],
+          "debounceMs": 300,
+          "maxSuggestions": 10
+        },
+        "codeExplanation": {
+          "enabled": true,
+          "languages": ["javascript", "python", "java", "cpp", "go"],
+          "includeExamples": true
+        },
+        "bugDetection": {
+          "enabled": true,
+          "realTime": true,
+          "severity": ["error", "warning", "info"],
+          "autoFix": false
+        },
+        "codeGeneration": {
+          "enabled": true,
+          "fromComments": true,
+          "fromSpecs": true,
+          "templates": true
+        }
+      }
+    },
+    "git": {
+      "integration": {
+        "enabled": true,
+        "autoCommit": false,
+        "smartCommitMessages": true,
+        "branchProtection": true,
+        "conflictResolution": "ai-assisted"
+      },
+      "memory": {
+        "enabled": true,
+        "cacheSize": 1000,
+        "persistentStorage": true,
+        "compression": true,
+        "encryption": false
+      },
+      "sharing": {
+        "enabled": true,
+        "maxShares": 100,
+        "defaultPermissions": ["read"],
+        "expirationTime": 86400000,
+        "notifications": true
+      }
+    },
+    "performance": {
+      "monitoring": {
+        "enabled": true,
+        "metrics": ["cpu", "memory", "disk", "network"],
+        "interval": 5000,
+        "retention": 86400000
+      },
+      "optimization": {
+        "caching": {
+          "enabled": true,
+          "strategy": "lru",
+          "maxSize": "500MB",
+          "ttl": 3600000
+        },
+        "compression": {
+          "enabled": true,
+          "algorithm": "gzip",
+          "level": 6
+        },
+        "bundling": {
+          "enabled": true,
+          "minification": true,
+          "treeshaking": true,
+          "codesplitting": true
+        }
+      },
+      "scaling": {
+        "enabled": false,
+        "minInstances": 1,
+        "maxInstances": 5,
+        "targetCPU": 70,
+        "targetMemory": 80
+      }
+    },
+    "security": {
+      "authentication": {
+        "enabled": false,
+        "type": "jwt",
+        "secret": "${JWT_SECRET}",
+        "expiresIn": "24h",
+        "refreshToken": true
+      },
+      "authorization": {
+        "enabled": false,
+        "roles": ["admin", "developer", "viewer"],
+        "permissions": {
+          "admin": ["*"],
+          "developer": ["read", "write", "share", "debug"],
+          "viewer": ["read"]
+        }
+      },
+      "encryption": {
+        "enabled": false,
+        "algorithm": "aes-256-gcm",
+        "keyRotation": true,
+        "keyRotationInterval": 86400000
+      }
+    },
+    "logging": {
+      "level": "info",
+      "format": "json",
+      "outputs": ["console", "file"],
+      "file": {
+        "path": "./logs/nexus-ide.log",
+        "maxSize": "10MB",
+        "maxFiles": 5,
+        "rotation": "daily"
+      },
+      "categories": {
+        "api": "info",
+        "websocket": "info",
+        "ai": "debug",
+        "git": "info",
+        "performance": "warn",
+        "security": "error"
+      }
+    },
+    "development": {
+      "hotReload": {
+        "enabled": true,
+        "watchPaths": ["./src", "./public"],
+        "ignorePaths": ["node_modules", ".git", "dist"]
+      },
+      "debugging": {
+        "enabled": true,
+        "sourceMap": true,
+        "breakOnError": false,
+        "verboseLogging": false
+      },
+      "testing": {
+        "autoRun": false,
+        "coverage": true,
+        "frameworks": ["jest", "mocha", "cypress"],
+        "parallel": true
+      }
+    },
+    "plugins": {
+      "enabled": true,
+      "autoLoad": true,
+      "directory": "./plugins",
+      "marketplace": {
+        "enabled": true,
+        "url": "https://marketplace.nexus-ide.com",
+        "autoUpdate": false
+      },
+      "security": {
+        "sandboxed": true,
+        "permissions": ["filesystem", "network", "ui"],
+        "verification": true
+      }
+    }
+  },
+  "environment": {
+    "NODE_ENV": "development",
+    "DEBUG": "nexus:*",
+    "LOG_LEVEL": "info",
+    "MEMORY_LIMIT": "2GB",
+    "CPU_LIMIT": "2",
+    "TEMP_DIR": "./temp",
+    "CACHE_DIR": "./cache",
+    "DATA_DIR": "./data"
+  },
+  "metadata": {
+    "version": "1.0.0",
+    "created": "2024-01-07T00:00:00.000Z",
+    "updated": "2024-01-07T00:00:00.000Z",
+    "author": "NEXUS IDE Team",
+    "license": "MIT",
+    "repository": "https://github.com/nexus-ide/git-memory-mcp-server",
+    "documentation": "https://docs.nexus-ide.com",
+    "support": "https://support.nexus-ide.com"
+  }
+}

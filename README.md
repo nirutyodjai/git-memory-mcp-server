@@ -1,19 +1,40 @@
-# 🚀 Git Memory MCP Server
+# 🚀 NEXUS IDE - Git Memory MCP Server
 
-<div align="center">
+**The Ultimate AI-Powered Development Environment**
 
-![Git Memory MCP Server](https://img.shields.io/badge/MCP-Server-blue?style=for-the-badge&logo=git&logoColor=white)
-![Node.js](https://img.shields.io/badge/Node.js-18+-green?style=for-the-badge&logo=node.js&logoColor=white)
-![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue?style=for-the-badge&logo=typescript&logoColor=white)
-![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)
+NEXUS IDE เป็น Next-Generation Integrated Development Environment ที่ขับเคลื่อนด้วย AI และใช้ Git Memory MCP Server เป็นแกนหลัก ออกแบบมาเพื่อเป็น "Ultimate IDE" ที่รวมจุดแข็งของ IDE ชั้นนำทั้งหมดไว้ในที่เดียว
 
-**The World's Most Advanced MCP Server with Git-Based Persistent Memory**
+## ✨ Key Features
 
-*Scale to 1,000 concurrent MCP servers with enterprise-grade reliability*
+### 🤖 AI-Native Development
+- **Multi-Model AI Integration**: รองรับ GPT-4, Claude, Llama และ AI models อื่นๆ
+- **Intelligent Code Completion**: code completion ที่ฉลาดกว่า GitHub Copilot
+- **Context-Aware Assistance**: AI ที่เข้าใจ context ของโปรเจคทั้งหมด
+- **Natural Language Programming**: เขียนโค้ดด้วยภาษาธรรมชาติ
 
-[🚀 Quick Start](#-quick-start) • [📖 Documentation](#-documentation) • [🏗️ Architecture](#️-architecture) • [🤝 Contributing](#-contributing)
+### 🧠 Advanced Memory System
+- **Intelligent Memory Management**: จัดการความจำแบบอัจฉริยะ
+- **Cross-Session Context**: เก็บ context ข้ามการทำงาน
+- **Smart Caching**: ระบบ cache ที่เรียนรู้ได้
+- **Real-time Synchronization**: ซิงค์ข้อมูลแบบ real-time
 
-</div>
+### 🔄 Git Integration
+- **Advanced Git Operations**: การทำงานกับ Git ขั้นสูง
+- **Intelligent Conflict Resolution**: แก้ไข conflicts อัตโนมัติ
+- **Visual Git History**: แสดงประวัติ Git แบบ visual
+- **Collaborative Git Workflows**: ทำงานร่วมกันผ่าน Git
+
+### 🤝 Real-time Collaboration
+- **Live Code Sharing**: แบ่งปันโค้ดแบบ real-time
+- **Multi-User Editing**: แก้ไขร่วมกันหลายคน
+- **Voice/Video Integration**: พูดคุยขณะเขียนโค้ด
+- **Smart Conflict Resolution**: แก้ไข conflicts อัตโนมัติ
+
+### 🔧 Universal Tool Integration
+- **1000+ MCP Tools**: เครื่องมือมากมายผ่าน MCP protocol
+- **Plugin Ecosystem**: ระบบ plugin ที่ยืดหยุ่น
+- **API Gateway**: เชื่อมต่อกับ services ภายนอก
+- **WebSocket Support**: การสื่อสารแบบ real-time
 
 ---
 
@@ -348,6 +369,12 @@ API_KEY_HEADER=X-API-Key
 
 ## 📖 Documentation
 
+### 🚀 Getting Started
+- **[Quick Start Guide](QUICK-START.md)** - Get up and running in 5 minutes
+- **[System Update Guide](SYSTEM-UPDATE-GUIDE.md)** - Update to NEXUS IDE 2.0
+- **[Migration Checklist](MIGRATION-CHECKLIST.md)** - Complete migration checklist
+
+### 📖 Complete Guides
 - **[📋 API Documentation](./docs/API.md)** - Complete API reference
 - **[🛠️ Development Guide](./docs/DEVELOPMENT.md)** - Setup and development workflow
 - **[🚀 Deployment Guide](./docs/DEPLOYMENT.md)** - Production deployment strategies

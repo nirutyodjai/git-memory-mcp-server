@@ -1,0 +1,67 @@
+# Enterprise Security System Dockerfile
+# Multi-stage build for optimized production image
+
+# Build stage
+FROM node:18-alpine AS builder
+
+# Set working directory
+WORKDIR /app
+
+# Copy package files
+COPY package*.json ./
+COPY package-security.json ./
+
+# Install dependencies
+RUN npm ci --only=production && npm cache clean --force
+
+# Copy source code
+COPY src/ ./src/
+COPY config/ ./config/
+
+# Create non-root user
+RUN addgroup -g 1001 -S nodejs && \
+    adduser -S security -u 1001
+
+# Production stage
+FROM node:18-alpine AS production
+
+# Install security updates
+RUN apk update && apk upgrade && \
+    apk add --no-cache dumb-init && \
+    rm -rf /var/cache/apk/*
+
+# Set working directory
+WORKDIR /app
+
+# Copy from builder stage
+COPY --from=builder --chown=security:nodejs /app/node_modules ./node_modules
+COPY --from=builder --chown=security:nodejs /app/src ./src
+COPY --from=builder --chown=security:nodejs /app/config ./config
+COPY --from=builder --chown=security:nodejs /app/package*.json ./
+
+# Copy additional files
+COPY --chown=security:nodejs SECURITY-README.md ./
+COPY --chown=security:nodejs .env.security.example ./
+
+# Create necessary directories
+RUN mkdir -p /app/logs /app/data /app/temp && \
+    chown -R security:nodejs /app/logs /app/data /app/temp
+
+# Set user
+USER security
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+    CMD node -e "require('http').get('http://localhost:3333/api/security/health', (res) => { process.exit(res.statusCode === 200 ? 0 : 1) }).on('error', () => process.exit(1))"
+
+# Expose port
+EXPOSE 3333
+
+# Set environment variables
+ENV NODE_ENV=production
+ENV SECURITY_PORT=3333
+ENV SECURITY_HOST=0.0.0.0
+
+# Start application with dumb-init
+ENTRYPOINT ["dumb-init", "--"]
+CMD ["node", "src/security/securityIntegration.js"]

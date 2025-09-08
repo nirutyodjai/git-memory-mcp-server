@@ -1,0 +1,17 @@
+{
+  "id": "790439b554e95f40",
+  "key": "user_preferences",
+  "data": {
+    "theme": "dark",
+    "language": "thai",
+    "editor": "monaco"
+  },
+  "timestamp": "2025-09-06T09:50:59.996Z",
+  "type": "user_data",
+  "priority": "high",
+  "tags": [
+    "preferences",
+    "ui"
+  ],
+  "metadata": {}
+}

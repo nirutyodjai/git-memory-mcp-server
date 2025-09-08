@@ -392,44 +392,16 @@ class ErrorBoundary extends React.Component {
         if (this.state.hasError) {
             const FallbackComponent = this.props.fallback;
             if (FallbackComponent && this.state.error) {
-                return error;
-                {
-                    this.state.error;
-                }
-                />;
+                return React.createElement(FallbackComponent, { error: this.state.error });
             }
-            return className = "error-boundary p-4 border border-red-300 rounded-lg bg-red-50" >
-                className;
-            "text-lg font-semibold text-red-800 mb-2" > Something;
-            went;
-            wrong < /h2>
-                < p;
-            className = "text-red-600" > An;
-            error;
-            occurred in this;
-            component.Please;
-            try { }
-            finally { }
-            refreshing;
-            the;
-            page. < /p>;
-            {
-                this.state.error && className;
-                "mt-2" >
-                    className;
-                "cursor-pointer text-sm text-red-700" > Error;
-                details < /summary>
-                    < pre;
-                className = "mt-2 text-xs text-red-600 whitespace-pre-wrap" >
-                    { this: .state.error.message }
-                    < /pre>
-                    < /details>;
-            }
-            /div>;
-            ;
+            return (React.createElement("div", { className: "error-boundary p-4 border border-red-300 rounded-lg bg-red-50" },
+                React.createElement("h2", { className: "text-lg font-semibold text-red-800 mb-2" }, "Something went wrong"),
+                React.createElement("p", { className: "text-red-600" }, "An error occurred in this component. Please try refreshing the page."),
+                this.state.error && (React.createElement("details", { className: "mt-2" },
+                    React.createElement("summary", { className: "cursor-pointer text-sm text-red-700" }, "Error details"),
+                    React.createElement("pre", { className: "mt-2 text-xs text-red-600 whitespace-pre-wrap" }, this.state.error.message)))));
         }
         return this.props.children;
     }
 }
 exports.ErrorBoundary = ErrorBoundary;
-//# sourceMappingURL=error-tracking.js.map

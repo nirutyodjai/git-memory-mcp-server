@@ -398,4 +398,3 @@ function getWebVitalsScore(metrics) {
         details
     };
 }
-//# sourceMappingURL=performance.js.map

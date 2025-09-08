@@ -1,0 +1,152 @@
+{
+  "server": {
+    "port": 8080,
+    "httpsPort": 8443,
+    "host": "0.0.0.0",
+    "ssl": {
+      "enabled": false,
+      "cert": null,
+      "key": null
+    }
+  },
+  "upstream": {
+    "servers": [
+      {
+        "name": "Figma-Developer-MCP-Server",
+        "url": "http://localhost:4001",
+        "healthCheck": "/health"
+      },
+      {
+        "name": "Playwright-MCP-Server",
+        "url": "http://localhost:4002",
+        "healthCheck": "/health"
+      },
+      {
+        "name": "GitHub-MCP-Server",
+        "url": "http://localhost:4003",
+        "healthCheck": "/health"
+      },
+      {
+        "name": "Codex-Keeper-MCP-Server",
+        "url": "http://localhost:4004",
+        "healthCheck": "/health"
+      },
+      {
+        "name": "git-memory-server",
+        "url": "http://localhost:4005",
+        "healthCheck": "/health"
+      },
+      {
+        "name": "3d-sco-memory",
+        "url": "http://localhost:4006",
+        "healthCheck": "/health"
+      },
+      {
+        "name": "3d-sco-thinking",
+        "url": "http://localhost:4007",
+        "healthCheck": "/health"
+      },
+      {
+        "name": "3d-sco-blender",
+        "url": "http://localhost:4008",
+        "healthCheck": "/health"
+      },
+      {
+        "name": "3d-sco-multifetch",
+        "url": "http://localhost:4009",
+        "healthCheck": "/health"
+      }
+    ],
+    "healthCheck": {
+      "enabled": true,
+      "interval": 30000,
+      "timeout": 5000,
+      "path": "/health"
+    }
+  },
+  "loadBalancer": {
+    "algorithm": "round-robin",
+    "healthCheck": true,
+    "failover": true,
+    "sticky": false
+  },
+  "cache": {
+    "enabled": true,
+    "layers": {
+      "memory": {
+        "enabled": true,
+        "maxSize": 104857600
+      },
+      "redis": {
+        "enabled": false
+      },
+      "file": {
+        "enabled": true,
+        "directory": "./cache"
+      }
+    }
+  },
+  "security": {
+    "authentication": {
+      "enabled": true,
+      "methods": [
+        "jwt",
+        "apikey"
+      ]
+    },
+    "rateLimit": {
+      "enabled": true,
+      "windowMs": 60000,
+      "max": 1000
+    },
+    "cors": {
+      "enabled": true,
+      "origin": "*"
+    }
+  },
+  "monitoring": {
+    "enabled": true,
+    "metrics": {
+      "enabled": true,
+      "retention": 86400000,
+      "interval": 5000
+    },
+    "dashboard": {
+      "enabled": true,
+      "port": 8081
+    },
+    "alerts": {
+      "enabled": true,
+      "thresholds": {
+        "responseTime": 2000,
+        "errorRate": 3,
+        "memoryUsage": 90,
+        "cpuUsage": 85,
+        "diskUsage": 90
+      },
+      "notifications": {
+        "email": false,
+        "webhook": false,
+        "console": true
+      }
+    },
+    "healthCheck": {
+      "enabled": true,
+      "interval": 30000,
+      "timeout": 5000,
+      "endpoints": [
+        "/health",
+        "/status"
+      ]
+    }
+  },
+  "websocket": {
+    "enabled": true,
+    "port": 8082
+  },
+  "proxy": {
+    "timeout": 30000,
+    "retries": 3,
+    "keepAlive": true
+  }
+}

@@ -1,0 +1,476 @@
+{{/*
+=============================================================================
+ENTERPRISE SECURITY DASHBOARD - INGRESS TEMPLATE
+Kubernetes Ingress for Traffic Routing and Load Balancing
+=============================================================================
+*/}}
+
+{{- if .Values.ingress.enabled -}}
+{{- $fullName := include "security-dashboard.fullname" . -}}
+{{- $svcPort := .Values.service.port -}}
+{{- $wsPort := .Values.websocket.service.port -}}
+{{- if and .Values.ingress.className (not (hasKey .Values.ingress.annotations "kubernetes.io/ingress.class")) }}
+  {{- $_ := set .Values.ingress.annotations "kubernetes.io/ingress.class" .Values.ingress.className}}
+{{- end }}
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ $fullName }}
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    {{- include "security-dashboard.labels" . | nindent 4 }}
+    app.kubernetes.io/component: ingress
+  annotations:
+    # =============================================================================
+    # BASIC INGRESS CONFIGURATION
+    # =============================================================================
+    
+    {{- if .Values.ingress.className }}
+    kubernetes.io/ingress.class: {{ .Values.ingress.className | quote }}
+    {{- end }}
+    
+    # SSL Redirect
+    {{- if .Values.ingress.tls }}
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    {{- end }}
+    
+    # =============================================================================
+    # SECURITY HEADERS
+    # =============================================================================
+    
+    # Security Headers
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      more_set_headers "X-Frame-Options: DENY";
+      more_set_headers "X-Content-Type-Options: nosniff";
+      more_set_headers "X-XSS-Protection: 1; mode=block";
+      more_set_headers "Referrer-Policy: strict-origin-when-cross-origin";
+      more_set_headers "Permissions-Policy: geolocation=(), microphone=(), camera=()";
+      more_set_headers "Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' wss: ws:; frame-ancestors 'none';";
+    
+    # HSTS Header
+    {{- if .Values.ingress.tls }}
+    nginx.ingress.kubernetes.io/server-snippet: |
+      add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" always;
+    {{- end }}
+    
+    # =============================================================================
+    # RATE LIMITING
+    # =============================================================================
+    
+    {{- if .Values.ingress.rateLimiting.enabled }}
+    # Rate Limiting
+    nginx.ingress.kubernetes.io/rate-limit-connections: {{ .Values.ingress.rateLimiting.connections | quote }}
+    nginx.ingress.kubernetes.io/rate-limit-requests-per-minute: {{ .Values.ingress.rateLimiting.requestsPerMinute | quote }}
+    nginx.ingress.kubernetes.io/rate-limit-requests-per-second: {{ .Values.ingress.rateLimiting.requestsPerSecond | quote }}
+    
+    # Rate Limit Whitelist
+    {{- if .Values.ingress.rateLimiting.whitelist }}
+    nginx.ingress.kubernetes.io/whitelist-source-range: {{ .Values.ingress.rateLimiting.whitelist | join "," | quote }}
+    {{- end }}
+    {{- end }}
+    
+    # =============================================================================
+    # CORS CONFIGURATION
+    # =============================================================================
+    
+    {{- if .Values.ingress.cors.enabled }}
+    # CORS Configuration
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    nginx.ingress.kubernetes.io/cors-allow-origin: {{ .Values.ingress.cors.allowOrigin | quote }}
+    nginx.ingress.kubernetes.io/cors-allow-methods: {{ .Values.ingress.cors.allowMethods | quote }}
+    nginx.ingress.kubernetes.io/cors-allow-headers: {{ .Values.ingress.cors.allowHeaders | quote }}
+    nginx.ingress.kubernetes.io/cors-allow-credentials: {{ .Values.ingress.cors.allowCredentials | quote }}
+    nginx.ingress.kubernetes.io/cors-max-age: {{ .Values.ingress.cors.maxAge | quote }}
+    {{- end }}
+    
+    # =============================================================================
+    # PERFORMANCE OPTIMIZATION
+    # =============================================================================
+    
+    # Compression
+    nginx.ingress.kubernetes.io/enable-brotli: "true"
+    nginx.ingress.kubernetes.io/brotli-level: "6"
+    nginx.ingress.kubernetes.io/brotli-types: "text/xml image/svg+xml application/x-font-ttf image/vnd.microsoft.icon application/x-font-opentype application/json font/eot application/vnd.ms-fontobject application/javascript font/otf application/xml application/xhtml+xml text/javascript application/x-javascript text/plain application/x-font-truetype application/xml+rss image/x-icon font/opentype text/css image/x-win-bitmap"
+    
+    # Gzip Compression
+    nginx.ingress.kubernetes.io/enable-gzip: "true"
+    nginx.ingress.kubernetes.io/gzip-level: "6"
+    
+    # Client Body Size
+    nginx.ingress.kubernetes.io/proxy-body-size: {{ .Values.ingress.maxBodySize | default "100m" | quote }}
+    
+    # Timeouts
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: {{ .Values.ingress.timeouts.connect | default "60" | quote }}
+    nginx.ingress.kubernetes.io/proxy-send-timeout: {{ .Values.ingress.timeouts.send | default "60" | quote }}
+    nginx.ingress.kubernetes.io/proxy-read-timeout: {{ .Values.ingress.timeouts.read | default "60" | quote }}
+    
+    # Buffer Sizes
+    nginx.ingress.kubernetes.io/proxy-buffer-size: "16k"
+    nginx.ingress.kubernetes.io/proxy-buffers-number: "8"
+    
+    # =============================================================================
+    # WEBSOCKET SUPPORT
+    # =============================================================================
+    
+    {{- if .Values.websocket.enabled }}
+    # WebSocket Support
+    nginx.ingress.kubernetes.io/proxy-set-headers: |
+      Host $host;
+      X-Real-IP $remote_addr;
+      X-Forwarded-For $proxy_add_x_forwarded_for;
+      X-Forwarded-Proto $scheme;
+      Upgrade $http_upgrade;
+      Connection "upgrade";
+    {{- end }}
+    
+    # =============================================================================
+    # AUTHENTICATION
+    # =============================================================================
+    
+    {{- if .Values.ingress.auth.enabled }}
+    # Basic Authentication
+    {{- if eq .Values.ingress.auth.type "basic" }}
+    nginx.ingress.kubernetes.io/auth-type: basic
+    nginx.ingress.kubernetes.io/auth-secret: {{ .Values.ingress.auth.secret | quote }}
+    nginx.ingress.kubernetes.io/auth-realm: {{ .Values.ingress.auth.realm | default "Authentication Required" | quote }}
+    {{- end }}
+    
+    # OAuth Authentication
+    {{- if eq .Values.ingress.auth.type "oauth" }}
+    nginx.ingress.kubernetes.io/auth-url: {{ .Values.ingress.auth.oauth.url | quote }}
+    nginx.ingress.kubernetes.io/auth-signin: {{ .Values.ingress.auth.oauth.signin | quote }}
+    nginx.ingress.kubernetes.io/auth-response-headers: {{ .Values.ingress.auth.oauth.responseHeaders | quote }}
+    {{- end }}
+    {{- end }}
+    
+    # =============================================================================
+    # CUSTOM ANNOTATIONS
+    # =============================================================================
+    
+    {{- with .Values.ingress.annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+    
+spec:
+  {{- if and .Values.ingress.className (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion) }}
+  ingressClassName: {{ .Values.ingress.className }}
+  {{- end }}
+  
+  # =============================================================================
+  # TLS CONFIGURATION
+  # =============================================================================
+  
+  {{- if .Values.ingress.tls }}
+  tls:
+    {{- range .Values.ingress.tls }}
+    - hosts:
+        {{- range .hosts }}
+        - {{ . | quote }}
+        {{- end }}
+      secretName: {{ .secretName }}
+    {{- end }}
+  {{- end }}
+  
+  # =============================================================================
+  # ROUTING RULES
+  # =============================================================================
+  
+  rules:
+    {{- range .Values.ingress.hosts }}
+    - host: {{ .host | quote }}
+      http:
+        paths:
+          # =============================================================================
+          # API ROUTES
+          # =============================================================================
+          
+          # Main API Routes
+          - path: {{ .paths.api | default "/api" }}
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ $fullName }}
+                port:
+                  number: {{ $svcPort }}
+          
+          # Health Check Endpoint
+          - path: {{ .paths.health | default "/health" }}
+            pathType: Exact
+            backend:
+              service:
+                name: {{ $fullName }}
+                port:
+                  number: {{ $svcPort }}
+          
+          # Metrics Endpoint
+          {{- if $.Values.monitoring.prometheus.enabled }}
+          - path: {{ .paths.metrics | default "/metrics" }}
+            pathType: Exact
+            backend:
+              service:
+                name: {{ $fullName }}
+                port:
+                  number: {{ $svcPort }}
+          {{- end }}
+          
+          # =============================================================================
+          # WEBSOCKET ROUTES
+          # =============================================================================
+          
+          {{- if $.Values.websocket.enabled }}
+          # WebSocket Connection
+          - path: {{ .paths.websocket | default "/ws" }}
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ $fullName }}-websocket
+                port:
+                  number: {{ $wsPort }}
+          
+          # Socket.IO Connection
+          - path: {{ .paths.socketio | default "/socket.io" }}
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ $fullName }}-websocket
+                port:
+                  number: {{ $wsPort }}
+          {{- end }}
+          
+          # =============================================================================
+          # STATIC CONTENT ROUTES
+          # =============================================================================
+          
+          # Static Assets
+          - path: {{ .paths.static | default "/static" }}
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ $fullName }}
+                port:
+                  number: {{ $svcPort }}
+          
+          # Public Assets
+          - path: {{ .paths.public | default "/public" }}
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ $fullName }}
+                port:
+                  number: {{ $svcPort }}
+          
+          # =============================================================================
+          # AUTHENTICATION ROUTES
+          # =============================================================================
+          
+          # Authentication Endpoints
+          - path: {{ .paths.auth | default "/auth" }}
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ $fullName }}
+                port:
+                  number: {{ $svcPort }}
+          
+          # OAuth Callback
+          - path: {{ .paths.oauth | default "/oauth" }}
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ $fullName }}
+                port:
+                  number: {{ $svcPort }}
+          
+          # =============================================================================
+          # ADMIN ROUTES
+          # =============================================================================
+          
+          {{- if $.Values.admin.enabled }}
+          # Admin Panel
+          - path: {{ .paths.admin | default "/admin" }}
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ $fullName }}
+                port:
+                  number: {{ $svcPort }}
+          {{- end }}
+          
+          # =============================================================================
+          # DEFAULT ROUTE (FRONTEND)
+          # =============================================================================
+          
+          # Frontend Application (catch-all)
+          - path: {{ .paths.root | default "/" }}
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ $fullName }}
+                port:
+                  number: {{ $svcPort }}
+    {{- end }}
+
+---
+# =============================================================================
+# MONITORING INGRESS
+# =============================================================================
+
+{{- if and .Values.monitoring.ingress.enabled .Values.monitoring.prometheus.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ $fullName }}-monitoring
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    {{- include "security-dashboard.labels" . | nindent 4 }}
+    app.kubernetes.io/component: monitoring-ingress
+  annotations:
+    {{- if .Values.ingress.className }}
+    kubernetes.io/ingress.class: {{ .Values.ingress.className | quote }}
+    {{- end }}
+    
+    # Basic Authentication for Monitoring
+    nginx.ingress.kubernetes.io/auth-type: basic
+    nginx.ingress.kubernetes.io/auth-secret: {{ $fullName }}-monitoring-auth
+    nginx.ingress.kubernetes.io/auth-realm: "Monitoring Access Required"
+    
+    # Security Headers
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      more_set_headers "X-Frame-Options: DENY";
+      more_set_headers "X-Content-Type-Options: nosniff";
+    
+    {{- with .Values.monitoring.ingress.annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+    
+spec:
+  {{- if and .Values.ingress.className (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion) }}
+  ingressClassName: {{ .Values.ingress.className }}
+  {{- end }}
+  
+  {{- if .Values.monitoring.ingress.tls }}
+  tls:
+    {{- range .Values.monitoring.ingress.tls }}
+    - hosts:
+        {{- range .hosts }}
+        - {{ . | quote }}
+        {{- end }}
+      secretName: {{ .secretName }}
+    {{- end }}
+  {{- end }}
+  
+  rules:
+    {{- range .Values.monitoring.ingress.hosts }}
+    - host: {{ .host | quote }}
+      http:
+        paths:
+          # Prometheus
+          - path: {{ .paths.prometheus | default "/prometheus" }}
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ $fullName }}-prometheus
+                port:
+                  number: 9090
+          
+          # Grafana
+          {{- if $.Values.monitoring.grafana.enabled }}
+          - path: {{ .paths.grafana | default "/grafana" }}
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ $fullName }}-grafana
+                port:
+                  number: 3000
+          {{- end }}
+          
+          # Jaeger
+          {{- if $.Values.monitoring.jaeger.enabled }}
+          - path: {{ .paths.jaeger | default "/jaeger" }}
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ $fullName }}-jaeger
+                port:
+                  number: 16686
+          {{- end }}
+    {{- end }}
+{{- end }}
+
+---
+# =============================================================================
+# ADMIN INGRESS
+# =============================================================================
+
+{{- if and .Values.admin.ingress.enabled .Values.admin.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ $fullName }}-admin
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    {{- include "security-dashboard.labels" . | nindent 4 }}
+    app.kubernetes.io/component: admin-ingress
+  annotations:
+    {{- if .Values.ingress.className }}
+    kubernetes.io/ingress.class: {{ .Values.ingress.className | quote }}
+    {{- end }}
+    
+    # Enhanced Security for Admin
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      more_set_headers "X-Frame-Options: DENY";
+      more_set_headers "X-Content-Type-Options: nosniff";
+      more_set_headers "X-XSS-Protection: 1; mode=block";
+      more_set_headers "Referrer-Policy: no-referrer";
+    
+    # IP Whitelist for Admin Access
+    {{- if .Values.admin.ingress.whitelist }}
+    nginx.ingress.kubernetes.io/whitelist-source-range: {{ .Values.admin.ingress.whitelist | join "," | quote }}
+    {{- end }}
+    
+    # Rate Limiting for Admin
+    nginx.ingress.kubernetes.io/rate-limit-connections: "10"
+    nginx.ingress.kubernetes.io/rate-limit-requests-per-minute: "100"
+    
+    {{- with .Values.admin.ingress.annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+    
+spec:
+  {{- if and .Values.ingress.className (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion) }}
+  ingressClassName: {{ .Values.ingress.className }}
+  {{- end }}
+  
+  {{- if .Values.admin.ingress.tls }}
+  tls:
+    {{- range .Values.admin.ingress.tls }}
+    - hosts:
+        {{- range .hosts }}
+        - {{ . | quote }}
+        {{- end }}
+      secretName: {{ .secretName }}
+    {{- end }}
+  {{- end }}
+  
+  rules:
+    {{- range .Values.admin.ingress.hosts }}
+    - host: {{ .host | quote }}
+      http:
+        paths:
+          - path: {{ .path | default "/" }}
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ $fullName }}
+                port:
+                  number: {{ $svcPort }}
+    {{- end }}
+{{- end }}
+
+{{- end }}
+
+# =============================================================================
+# END OF INGRESS TEMPLATES
+# =============================================================================

@@ -73,4 +73,3 @@ exports.translate = {
         transition: { duration: 0.7, ease: [0.76, 0, 0.24, 1], delay: i[1] }
     })
 };
-//# sourceMappingURL=anim.js.map

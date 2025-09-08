@@ -58,15 +58,12 @@ const NyanCat = () => {
             window.removeEventListener("keydown", handleKeyDown);
         };
     });
-    return (<div className="fixed left-0 top-0 w-screen h-screen overflow-hidden z-[-1]">
-      <framer_motion_1.AnimatePresence>
-        {divs.length > 0 && (<div className="fixed w-screen flex left-0 top-16">{divs.length}</div>)}
-      </framer_motion_1.AnimatePresence>
-      {divs &&
-            divs.map((div) => (<AnimatedDiv key={div.id} id={div.id} onClick={() => console.log("clicked")} onCompleted={() => {
+    return (react_1.default.createElement("div", { className: "fixed left-0 top-0 w-screen h-screen overflow-hidden z-[-1]" },
+        react_1.default.createElement(framer_motion_1.AnimatePresence, null, divs.length > 0 && (react_1.default.createElement("div", { className: "fixed w-screen flex left-0 top-16" }, divs.length))),
+        divs &&
+            divs.map((div) => (react_1.default.createElement(AnimatedDiv, { key: div.id, id: div.id, onClick: () => console.log("clicked"), onCompleted: () => {
                     setDivs(divs.filter((d) => d.id !== div.id));
-                }}/>))}
-    </div>);
+                } })))));
 };
 const AnimatedDiv = ({ id, onClick, onCompleted, }) => {
     const randY = getRandomHeight();
@@ -81,9 +78,7 @@ const AnimatedDiv = ({ id, onClick, onCompleted, }) => {
     const handlePause = () => {
         onClick();
     };
-    return (<framer_motion_1.motion.div key={id} initial={{ x: "-20vw", y: randY }} animate={controls} onAnimationComplete={onCompleted} onClick={handlePause}>
-      <img src="/assets/nyan-cat.gif" className={(0, utils_1.cn)("fixed z-10 h-40 w-auto")} alt="Nyan Cat"/>
-    </framer_motion_1.motion.div>);
+    return (react_1.default.createElement(framer_motion_1.motion.div, { key: id, initial: { x: "-20vw", y: randY }, animate: controls, onAnimationComplete: onCompleted, onClick: handlePause },
+        react_1.default.createElement("img", { src: "/assets/nyan-cat.gif", className: (0, utils_1.cn)("fixed z-10 h-40 w-auto"), alt: "Nyan Cat" })));
 };
 exports.default = NyanCat;
-//# sourceMappingURL=nyan-cat.js.map

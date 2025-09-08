@@ -10,6 +10,8 @@ class AuthMiddleware {
   constructor() {
     this.prisma = new PrismaClient();
     this.jwtSecret = process.env.JWT_SECRET || 'dev_jwt_secret_key_for_development_only_change_in_production';
+    this.requireAdmin = this.requireRole(['ADMIN']);
+    this.requireModerator = this.requireRole(['ADMIN', 'MODERATOR']);
   }
 
   /**
@@ -162,7 +164,7 @@ class AuthMiddleware {
 
       const userRoles = Array.isArray(roles) ? roles : [roles];
       
-      if (!userRoles.includes(req.user.role)) {
+      if (!Array.isArray(userRoles) || !userRoles.includes(req.user.role)) {
         return res.status(403).json({
           success: false,
           error: 'Insufficient permissions'
@@ -173,15 +175,7 @@ class AuthMiddleware {
     };
   };
 
-  /**
-   * Require admin role
-   */
-  requireAdmin = this.requireRole(['ADMIN']);
 
-  /**
-   * Require moderator or admin role
-   */
-  requireModerator = this.requireRole(['ADMIN', 'MODERATOR']);
 
   /**
    * Check if user owns resource or is admin

@@ -231,4 +231,3 @@ function broadcastToUser(io, userId, event, data) {
         io.to(targetUser[0]).emit(event, data);
     }
 }
-//# sourceMappingURL=socket.js.map

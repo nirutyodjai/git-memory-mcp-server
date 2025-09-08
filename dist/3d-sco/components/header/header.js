@@ -23,63 +23,33 @@ const Header = ({ loader }) => {
     const [isActive, setIsActive] = (0, react_1.useState)(false);
     const [showAuthModal, setShowAuthModal] = (0, react_1.useState)(false);
     const { user, loading } = (0, user_auth_1.useUserAuth)();
-    return (<framer_motion_1.motion.header className={(0, utils_1.cn)(style_module_scss_1.default.header, "transition-colors delay-100 duration-500 ease-in")} style={{
+    return (React.createElement(framer_motion_1.motion.header, { className: (0, utils_1.cn)(style_module_scss_1.default.header, "transition-colors delay-100 duration-500 ease-in"), style: {
             background: isActive ? "hsl(var(--background) / .8)" : "transparent",
             // backgroundImage:
             //   "linear-gradient(0deg, rgba(0, 0, 0, 0), rgb(0, 0, 0))",
-        }} initial={{
+        }, initial: {
             y: -80,
-        }} animate={{
+        }, animate: {
             y: 0,
-        }} transition={{
+        }, transition: {
             delay: loader ? 3.5 : 0, // 3.5 for loading, .5 can be added for delay
             duration: 0.8,
-        }}>
-      {/* <div
-          className="absolute inset-0 "
-          style={{
-            mask: "linear-gradient(rgb(0, 0, 0) 0%, rgba(0, 0, 0, 0) 12.5%)",
-          }}
-        >
-        </div> */}
-      <div className={(0, utils_1.cn)(style_module_scss_1.default.bar, "flex items-center justify-between")}>
-        <link_1.default href="/" className="flex items-center justify-center">
-          <button_1.Button variant={"link"} className="text-md">
-            {config_1.config.author}
-          </button_1.Button>
-        </link_1.default>
-
-        <online_users_1.default />
-        
-        {/* Authentication Section */}
-        {!loading && (<div className="flex items-center gap-2 mr-2">
-            {user ? (<UserProfile_1.default />) : (<button_1.Button variant="outline" size="sm" onClick={() => setShowAuthModal(true)} className="flex items-center gap-2">
-                <lucide_react_1.LogIn size={16}/>
-                เข้าสู่ระบบ
-              </button_1.Button>)}
-          </div>)}
-        
-        <funny_theme_toggle_1.default className="w-6 h-6 mr-4"/>
-        <button_1.Button variant={"ghost"} onClick={() => setIsActive(!isActive)} className={(0, utils_1.cn)(style_module_scss_1.default.el, "m-0 p-0 h-6 bg-transparent flex items-center justify-center")}>
-          <div className="relative flex items-center">
-            <framer_motion_1.motion.p variants={anim_1.opacity} animate={!isActive ? "open" : "closed"}>
-              Menu
-            </framer_motion_1.motion.p>
-            <framer_motion_1.motion.p variants={anim_1.opacity} animate={isActive ? "open" : "closed"}>
-              Close
-            </framer_motion_1.motion.p>
-          </div>
-          <div className={`${style_module_scss_1.default.burger} ${isActive ? style_module_scss_1.default.burgerActive : ""}`}></div>
-        </button_1.Button>
-      </div>
-      <framer_motion_1.motion.div variants={anim_1.background} initial="initial" animate={isActive ? "open" : "closed"} className={style_module_scss_1.default.background}></framer_motion_1.motion.div>
-      <framer_motion_1.AnimatePresence mode="wait">
-        {isActive && <nav_1.default setIsActive={setIsActive}/>}
-      </framer_motion_1.AnimatePresence>
-      
-      {/* Auth Modal */}
-      <AuthModal_1.default isOpen={showAuthModal} onClose={() => setShowAuthModal(false)}/>
-    </framer_motion_1.motion.header>);
+        } },
+        React.createElement("div", { className: (0, utils_1.cn)(style_module_scss_1.default.bar, "flex items-center justify-between") },
+            React.createElement(link_1.default, { href: "/", className: "flex items-center justify-center" },
+                React.createElement(button_1.Button, { variant: "link", className: "text-md" }, config_1.config.author)),
+            React.createElement(online_users_1.default, null),
+            !loading && (React.createElement("div", { className: "flex items-center gap-2 mr-2" }, user ? (React.createElement(UserProfile_1.default, null)) : (React.createElement(button_1.Button, { variant: "outline", size: "sm", onClick: () => setShowAuthModal(true), className: "flex items-center gap-2" },
+                React.createElement(lucide_react_1.LogIn, { size: 16 }),
+                "\u0E40\u0E02\u0E49\u0E32\u0E2A\u0E39\u0E48\u0E23\u0E30\u0E1A\u0E1A")))),
+            React.createElement(funny_theme_toggle_1.default, { className: "w-6 h-6 mr-4" }),
+            React.createElement(button_1.Button, { variant: "ghost", onClick: () => setIsActive(!isActive), className: (0, utils_1.cn)(style_module_scss_1.default.el, "m-0 p-0 h-6 bg-transparent flex items-center justify-center") },
+                React.createElement("div", { className: "relative flex items-center" },
+                    React.createElement(framer_motion_1.motion.p, { variants: anim_1.opacity, animate: !isActive ? "open" : "closed" }, "Menu"),
+                    React.createElement(framer_motion_1.motion.p, { variants: anim_1.opacity, animate: isActive ? "open" : "closed" }, "Close")),
+                React.createElement("div", { className: `${style_module_scss_1.default.burger} ${isActive ? style_module_scss_1.default.burgerActive : ""}` }))),
+        React.createElement(framer_motion_1.motion.div, { variants: anim_1.background, initial: "initial", animate: isActive ? "open" : "closed", className: style_module_scss_1.default.background }),
+        React.createElement(framer_motion_1.AnimatePresence, { mode: "wait" }, isActive && React.createElement(nav_1.default, { setIsActive: setIsActive })),
+        React.createElement(AuthModal_1.default, { isOpen: showAuthModal, onClose: () => setShowAuthModal(false) })));
 };
 exports.default = Header;
-//# sourceMappingURL=header.js.map

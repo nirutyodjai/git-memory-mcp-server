@@ -38,9 +38,7 @@ exports.Progress = void 0;
 const React = __importStar(require("react"));
 const ProgressPrimitive = __importStar(require("@radix-ui/react-progress"));
 const utils_1 = require("@/lib/utils");
-const Progress = React.forwardRef(({ className, value, ...props }, ref) => (<ProgressPrimitive.Root ref={ref} className={(0, utils_1.cn)("relative h-4 w-full overflow-hidden rounded-full bg-secondary", className)} {...props}>
-    <ProgressPrimitive.Indicator className="h-full w-full flex-1 bg-primary transition-all" style={{ transform: `translateX(-${100 - (value || 0)}%)` }}/>
-  </ProgressPrimitive.Root>));
+const Progress = React.forwardRef(({ className, value, ...props }, ref) => (React.createElement(ProgressPrimitive.Root, { ref: ref, className: (0, utils_1.cn)("relative h-4 w-full overflow-hidden rounded-full bg-secondary", className), ...props },
+    React.createElement(ProgressPrimitive.Indicator, { className: "h-full w-full flex-1 bg-primary transition-all", style: { transform: `translateX(-${100 - (value || 0)}%)` } }))));
 exports.Progress = Progress;
 Progress.displayName = ProgressPrimitive.Root.displayName;
-//# sourceMappingURL=progress.js.map

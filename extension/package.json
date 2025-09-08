@@ -1,0 +1,273 @@
+{
+  "name": "git-memory-mcp-ide",
+  "displayName": "Git Memory MCP IDE",
+  "description": "IDE ที่เชื่อมต่อ GitMemory และรองรับ MCP จำนวนมาก (เป้าหมาย 1500 ตัว)",
+  "version": "0.1.0",
+  "publisher": "git-memory",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Other",
+    "Machine Learning",
+    "Snippets",
+    "Debuggers"
+  ],
+  "keywords": [
+    "mcp",
+    "git-memory",
+    "ai",
+    "code-intelligence",
+    "auto-fix",
+    "snippets",
+    "orchestrator"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "gitMemoryMCP.openAgentDashboard",
+        "title": "เปิด Agent Dashboard",
+        "category": "Git Memory MCP"
+      },
+      {
+        "command": "gitMemoryMCP.openSnippetBar",
+        "title": "เปิด Snippet Bar",
+        "category": "Git Memory MCP"
+      },
+      {
+        "command": "gitMemoryMCP.openFunctionNotebook",
+        "title": "เปิด Function Notebook",
+        "category": "Git Memory MCP"
+      },
+      {
+        "command": "gitMemoryMCP.openFixCenter",
+        "title": "เปิด Fix Center",
+        "category": "Git Memory MCP"
+      },
+      {
+        "command": "gitMemoryMCP.openLogsTrace",
+        "title": "เปิด Logs & Trace",
+        "category": "Git Memory MCP"
+      },
+      {
+        "command": "gitMemoryMCP.refreshAgents",
+        "title": "รีเฟรช Agents",
+        "category": "Git Memory MCP"
+      },
+      {
+        "command": "gitMemoryMCP.mineSnippets",
+        "title": "ค้นหา Snippets ใหม่",
+        "category": "Git Memory MCP"
+      },
+      {
+        "command": "gitMemoryMCP.applySnippet",
+        "title": "ใช้ Snippet",
+        "category": "Git Memory MCP"
+      },
+      {
+        "command": "gitMemoryMCP.applyPattern",
+        "title": "ใช้ Pattern",
+        "category": "Git Memory MCP"
+      },
+      {
+        "command": "gitMemoryMCP.startAutoFix",
+        "title": "เริ่ม Auto-Fix",
+        "category": "Git Memory MCP"
+      },
+      {
+        "command": "gitMemoryMCP.stopAutoFix",
+        "title": "หยุด Auto-Fix",
+        "category": "Git Memory MCP"
+      },
+      {
+        "command": "gitMemoryMCP.processIssue",
+        "title": "ประมวลผล Issue",
+        "category": "Git Memory MCP"
+      }
+    ],
+    "views": {
+      "explorer": [
+        {
+          "id": "gitMemoryMCP.agentDashboard",
+          "name": "Agent Dashboard",
+          "when": "gitMemoryMCP.enabled"
+        },
+        {
+          "id": "gitMemoryMCP.snippetBar",
+          "name": "Snippet Bar",
+          "when": "gitMemoryMCP.enabled"
+        },
+        {
+          "id": "gitMemoryMCP.functionNotebook",
+          "name": "Function Notebook",
+          "when": "gitMemoryMCP.enabled"
+        },
+        {
+          "id": "gitMemoryMCP.fixCenter",
+          "name": "Fix Center",
+          "when": "gitMemoryMCP.enabled"
+        }
+      ]
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "gitMemoryMCP",
+          "title": "Git Memory MCP",
+          "icon": "$(robot)"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Git Memory MCP",
+      "properties": {
+        "gitMemoryMCP.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "เปิดใช้งาน Git Memory MCP Extension"
+        },
+        "gitMemoryMCP.orchestrator.maxAgents": {
+          "type": "number",
+          "default": 1500,
+          "description": "จำนวน Agent สูงสุดที่รองรับ"
+        },
+        "gitMemoryMCP.orchestrator.maxConcurrentTasks": {
+          "type": "number",
+          "default": 100,
+          "description": "จำนวน Task พร้อมกันสูงสุด"
+        },
+        "gitMemoryMCP.orchestrator.connectionTimeout": {
+          "type": "number",
+          "default": 30000,
+          "description": "Timeout สำหรับการเชื่อมต่อ (มิลลิวินาที)"
+        },
+        "gitMemoryMCP.snippetMiner.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "เปิดใช้งาน Snippet Miner"
+        },
+        "gitMemoryMCP.snippetMiner.minFrequency": {
+          "type": "number",
+          "default": 3,
+          "description": "ความถี่ขั้นต่ำสำหรับ Snippet"
+        },
+        "gitMemoryMCP.snippetMiner.maxSnippets": {
+          "type": "number",
+          "default": 100,
+          "description": "จำนวน Snippet สูงสุด"
+        },
+        "gitMemoryMCP.autoFix.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "เปิดใช้งาน Auto-Fix"
+        },
+        "gitMemoryMCP.autoFix.autoApproval": {
+          "type": "boolean",
+          "default": false,
+          "description": "อนุมัติ Fix อัตโนมัติ"
+        },
+        "gitMemoryMCP.autoFix.dryRun": {
+          "type": "boolean",
+          "default": true,
+          "description": "โหมดทดสอบ (ไม่แก้ไขจริง)"
+        },
+        "gitMemoryMCP.telemetry.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "เปิดใช้งาน Telemetry"
+        },
+        "gitMemoryMCP.ui.showNotifications": {
+          "type": "boolean",
+          "default": true,
+          "description": "แสดงการแจ้งเตือน"
+        },
+        "gitMemoryMCP.ui.showProgress": {
+          "type": "boolean",
+          "default": true,
+          "description": "แสดง Progress Bar"
+        },
+        "gitMemoryMCP.ui.autoOpenDiff": {
+          "type": "boolean",
+          "default": false,
+          "description": "เปิด Diff อัตโนมัติ"
+        }
+      }
+    },
+    "keybindings": [
+      {
+        "command": "gitMemoryMCP.openSnippetBar",
+        "key": "ctrl+shift+s",
+        "mac": "cmd+shift+s",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "gitMemoryMCP.openFunctionNotebook",
+        "key": "ctrl+shift+f",
+        "mac": "cmd+shift+f",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "gitMemoryMCP.mineSnippets",
+        "key": "ctrl+shift+m",
+        "mac": "cmd+shift+m"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "gitMemoryMCP.applySnippet",
+          "group": "gitMemoryMCP@1",
+          "when": "editorHasSelection"
+        },
+        {
+          "command": "gitMemoryMCP.applyPattern",
+          "group": "gitMemoryMCP@2",
+          "when": "editorHasSelection"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "gitMemoryMCP.refreshAgents",
+          "when": "view == gitMemoryMCP.agentDashboard",
+          "group": "navigation"
+        },
+        {
+          "command": "gitMemoryMCP.mineSnippets",
+          "when": "view == gitMemoryMCP.snippetBar",
+          "group": "navigation"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js",
+    "package": "vsce package",
+    "publish": "vsce publish"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.74.0",
+    "@types/node": "16.x",
+    "@typescript-eslint/eslint-plugin": "^5.45.0",
+    "@typescript-eslint/parser": "^5.45.0",
+    "eslint": "^8.28.0",
+    "typescript": "^4.9.4",
+    "@vscode/test-electron": "^2.2.0",
+    "@vscode/vsce": "^2.15.0"
+  },
+  "dependencies": {
+    "ws": "^8.14.0",
+    "axios": "^1.6.0",
+    "chokidar": "^3.5.3",
+    "glob": "^10.3.0",
+    "minimatch": "^9.0.3"
+  }
+}

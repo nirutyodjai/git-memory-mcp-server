@@ -45,4 +45,3 @@ async function checkDBHealth() {
     }
 }
 exports.default = exports.db;
-//# sourceMappingURL=db.js.map

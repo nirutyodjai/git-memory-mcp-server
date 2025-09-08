@@ -1,0 +1,20 @@
+{
+  "id": "8928b9bd0a341936",
+  "key": "project_config",
+  "data": {
+    "name": "NEXUS IDE",
+    "version": "1.0.0",
+    "dependencies": [
+      "react",
+      "monaco-editor"
+    ]
+  },
+  "timestamp": "2025-09-06T09:50:59.998Z",
+  "type": "project_data",
+  "priority": "high",
+  "tags": [
+    "config",
+    "project"
+  ],
+  "metadata": {}
+}

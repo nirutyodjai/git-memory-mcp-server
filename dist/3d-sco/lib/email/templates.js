@@ -397,4 +397,3 @@ function getTemplatesByCategory(category) {
 function getAllTemplates() {
     return exports.EMAIL_TEMPLATES;
 }
-//# sourceMappingURL=templates.js.map

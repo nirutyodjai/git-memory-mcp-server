@@ -1,0 +1,362 @@
+# 🏢 Production Installation Example
+# This example shows enterprise-grade configuration for production deployment
+
+# Global production settings
+global:
+  environment: production
+  domain: nexus-ide.company.com
+  timezone: UTC
+  
+# Application configuration
+app:
+  name: nexus-ide-prod
+  version: "1.0.0"
+  
+# High availability setup
+replicaCount: 3
+
+# Production resource allocation
+resources:
+  requests:
+    cpu: 1000m
+    memory: 2Gi
+  limits:
+    cpu: 2000m
+    memory: 4Gi
+
+# Production service configuration
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 3000
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-type: nlb
+    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http
+
+# Production ingress with TLS
+ingress:
+  enabled: true
+  className: nginx
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: "100m"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+  hosts:
+    - host: nexus-ide.company.com
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - secretName: nexus-ide-tls
+      hosts:
+        - nexus-ide.company.com
+
+# Auto-scaling configuration
+autoscaling:
+  enabled: true
+  minReplicas: 3
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 70
+  targetMemoryUtilizationPercentage: 80
+
+# Production monitoring
+monitoring:
+  enabled: true
+  prometheus:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+      interval: 30s
+  grafana:
+    enabled: true
+    dashboards:
+      enabled: true
+  alerting:
+    enabled: true
+    rules:
+      - name: high-cpu-usage
+        threshold: 80
+      - name: high-memory-usage
+        threshold: 85
+      - name: pod-restart-rate
+        threshold: 5
+
+# Enterprise security
+security:
+  networkPolicy:
+    enabled: true
+    ingress:
+      - from:
+          - namespaceSelector:
+              matchLabels:
+                name: ingress-nginx
+        ports:
+          - protocol: TCP
+            port: 3000
+      - from:
+          - namespaceSelector:
+              matchLabels:
+                name: monitoring
+        ports:
+          - protocol: TCP
+            port: 9090
+  
+  podSecurityPolicy:
+    enabled: true
+  
+  rbac:
+    enabled: true
+    serviceAccount:
+      create: true
+      name: nexus-ide-prod
+      annotations:
+        eks.amazonaws.com/role-arn: arn:aws:iam::123456789012:role/nexus-ide-prod-role
+
+# Production database configuration
+database:
+  postgresql:
+    enabled: true
+    architecture: replication
+    auth:
+      database: nexus_ide_prod
+      username: nexus_user
+      existingSecret: nexus-ide-db-secret
+      secretKeys:
+        adminPasswordKey: postgres-password
+        userPasswordKey: user-password
+    primary:
+      resources:
+        requests:
+          cpu: 500m
+          memory: 1Gi
+        limits:
+          cpu: 1000m
+          memory: 2Gi
+      persistence:
+        enabled: true
+        size: 100Gi
+        storageClass: gp3
+    readReplicas:
+      replicaCount: 2
+      resources:
+        requests:
+          cpu: 250m
+          memory: 512Mi
+        limits:
+          cpu: 500m
+          memory: 1Gi
+  
+  redis:
+    enabled: true
+    architecture: replication
+    auth:
+      enabled: true
+      existingSecret: nexus-ide-redis-secret
+      existingSecretPasswordKey: redis-password
+    master:
+      resources:
+        requests:
+          cpu: 250m
+          memory: 512Mi
+        limits:
+          cpu: 500m
+          memory: 1Gi
+      persistence:
+        enabled: true
+        size: 50Gi
+        storageClass: gp3
+    replica:
+      replicaCount: 2
+      resources:
+        requests:
+          cpu: 100m
+          memory: 256Mi
+        limits:
+          cpu: 250m
+          memory: 512Mi
+  
+  mongodb:
+    enabled: true
+    architecture: replicaset
+    auth:
+      enabled: true
+      existingSecret: nexus-ide-mongo-secret
+    replicaCount: 3
+    resources:
+      requests:
+        cpu: 500m
+        memory: 1Gi
+      limits:
+        cpu: 1000m
+        memory: 2Gi
+    persistence:
+      enabled: true
+      size: 200Gi
+      storageClass: gp3
+
+# Production AI configuration
+ai:
+  enabled: true
+  models:
+    openai:
+      enabled: true
+      apiKeySecret: nexus-ide-openai-secret
+      model: "gpt-4"
+      maxTokens: 4096
+    anthropic:
+      enabled: true
+      apiKeySecret: nexus-ide-anthropic-secret
+      model: "claude-3-opus"
+    local:
+      enabled: true
+      model: "llama2-70b"
+      resources:
+        requests:
+          cpu: 2000m
+          memory: 8Gi
+          nvidia.com/gpu: 1
+        limits:
+          cpu: 4000m
+          memory: 16Gi
+          nvidia.com/gpu: 1
+
+# Real-time collaboration
+collaboration:
+  enabled: true
+  websocket:
+    enabled: true
+    replicas: 3
+    resources:
+      requests:
+        cpu: 500m
+        memory: 1Gi
+      limits:
+        cpu: 1000m
+        memory: 2Gi
+  videoCall:
+    enabled: true
+    provider: "webrtc"
+  
+# Production logging
+logging:
+  enabled: true
+  level: info
+  format: json
+  elasticsearch:
+    enabled: true
+    host: elasticsearch.logging.svc.cluster.local
+    port: 9200
+    index: nexus-ide-prod
+  fluentd:
+    enabled: true
+    configMap: nexus-ide-fluentd-config
+
+# Backup configuration
+backup:
+  enabled: true
+  schedule: "0 2 * * *"  # Daily at 2 AM
+  retention: 30  # Keep 30 days
+  storage:
+    type: s3
+    bucket: nexus-ide-backups-prod
+    region: us-west-2
+    secretName: nexus-ide-backup-secret
+
+# Node placement
+nodeSelector:
+  node-type: compute-optimized
+  environment: production
+
+tolerations:
+  - key: "production"
+    operator: "Equal"
+    value: "true"
+    effect: "NoSchedule"
+
+affinity:
+  podAntiAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchExpressions:
+            - key: app.kubernetes.io/name
+              operator: In
+              values:
+                - nexus-ide
+        topologyKey: kubernetes.io/hostname
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: node-type
+              operator: In
+              values:
+                - compute-optimized
+
+# Pod disruption budget
+podDisruptionBudget:
+  enabled: true
+  minAvailable: 2
+
+---
+
+# Production Installation Guide:
+
+# 1. Create namespace
+# kubectl create namespace nexus-ide-prod
+
+# 2. Create secrets (replace with actual values)
+# kubectl create secret generic nexus-ide-db-secret \
+#   --from-literal=postgres-password=<strong-password> \
+#   --from-literal=user-password=<strong-password> \
+#   -n nexus-ide-prod
+
+# kubectl create secret generic nexus-ide-redis-secret \
+#   --from-literal=redis-password=<strong-password> \
+#   -n nexus-ide-prod
+
+# kubectl create secret generic nexus-ide-mongo-secret \
+#   --from-literal=mongodb-password=<strong-password> \
+#   --from-literal=mongodb-root-password=<strong-password> \
+#   -n nexus-ide-prod
+
+# kubectl create secret generic nexus-ide-openai-secret \
+#   --from-literal=api-key=<openai-api-key> \
+#   -n nexus-ide-prod
+
+# kubectl create secret generic nexus-ide-anthropic-secret \
+#   --from-literal=api-key=<anthropic-api-key> \
+#   -n nexus-ide-prod
+
+# 3. Install cert-manager (if not already installed)
+# kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.13.0/cert-manager.yaml
+
+# 4. Create cluster issuer for Let's Encrypt
+# kubectl apply -f - <<EOF
+# apiVersion: cert-manager.io/v1
+# kind: ClusterIssuer
+# metadata:
+#   name: letsencrypt-prod
+# spec:
+#   acme:
+#     server: https://acme-v02.api.letsencrypt.org/directory
+#     email: admin@company.com
+#     privateKeySecretRef:
+#       name: letsencrypt-prod
+#     solvers:
+#     - http01:
+#         ingress:
+#           class: nginx
+# EOF
+
+# 5. Install NEXUS IDE
+# helm install nexus-ide-prod . \
+#   -f examples/production-install.yaml \
+#   -n nexus-ide-prod
+
+# 6. Verify deployment
+# kubectl get pods -n nexus-ide-prod
+# kubectl get ingress -n nexus-ide-prod
+
+# 7. Monitor deployment
+# kubectl logs -f deployment/nexus-ide-prod -n nexus-ide-prod

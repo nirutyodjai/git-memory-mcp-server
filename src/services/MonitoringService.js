@@ -1,5 +1,11 @@
 const EventEmitter = require('events');
-const logger = require('../utils/logger');
+// Use global logger if available, otherwise create a simple one
+const logger = global.logger || {
+  info: (message, data) => console.log(`[INFO] ${message}`, data || ''),
+  error: (message, data) => console.error(`[ERROR] ${message}`, data || ''),
+  warn: (message, data) => console.warn(`[WARN] ${message}`, data || ''),
+  debug: (message, data) => console.log(`[DEBUG] ${message}`, data || '')
+};
 
 /**
  * MonitoringService - Advanced monitoring and health checking for MCP servers
@@ -870,6 +876,41 @@ class MonitoringService extends EventEmitter {
     }
     
     return output;
+  }
+
+  /**
+   * Get real-time metrics for all servers
+   */
+  getRealTimeMetrics() {
+    const allMetrics = [];
+    for (const [serverId, serverState] of this.servers.entries()) {
+      allMetrics.push({
+        serverId,
+        status: serverState.status,
+        metrics: serverState.metrics,
+      });
+    }
+    return allMetrics;
+  }
+
+  /**
+   * Check health of a git-memory server
+   */
+  async checkGitMemoryHealth(serverState) {
+    try {
+      // Check if Git repository is accessible and writable
+      const testResult = await this.testGitMemoryOperations(serverState);
+      return {
+        healthy: testResult.success,
+        details: testResult.details,
+        error: testResult.error
+      };
+    } catch (error) {
+      return {
+        healthy: false,
+        error: error.message
+      };
+    }
   }
 }
 

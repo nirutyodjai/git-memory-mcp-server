@@ -1,0 +1,12 @@
+{
+    "free": {
+        "name": "Free",
+        "requests_per_minute": 10,
+        "concurrent_requests": 1
+    },
+    "premium": {
+        "name": "Premium",
+        "requests_per_minute": 100,
+        "concurrent_requests": 10
+    }
+}

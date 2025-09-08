@@ -1,0 +1,102 @@
+{
+  "timestamp": "2025-09-06T09:18:14.228Z",
+  "project": {
+    "name": "git-memory-mcp-server",
+    "structure": {
+      "files": [],
+      "directories": [],
+      "complexity": "medium"
+    },
+    "complexity": {
+      "cyclomatic": 5,
+      "cognitive": 8,
+      "maintainability": 75
+    },
+    "dependencies": {
+      "direct": [],
+      "indirect": [],
+      "vulnerabilities": []
+    }
+  },
+  "testStrategy": {
+    "unitTests": {
+      "priority": "high",
+      "coverage": 90,
+      "frameworks": [
+        "jest",
+        "mocha",
+        "vitest",
+        "cypress"
+      ],
+      "testTypes": [
+        "unit",
+        "component"
+      ],
+      "estimatedTests": 50
+    },
+    "integrationTests": {
+      "priority": "medium",
+      "coverage": 80,
+      "testTypes": [
+        "integration",
+        "api"
+      ],
+      "estimatedTests": 20
+    },
+    "e2eTests": {
+      "priority": "medium",
+      "coverage": 70,
+      "frameworks": [
+        "cypress",
+        "playwright"
+      ],
+      "estimatedTests": 10
+    },
+    "performanceTests": {
+      "priority": "low",
+      "testTypes": [
+        "load",
+        "stress",
+        "spike"
+      ],
+      "tools": [
+        "k6",
+        "artillery"
+      ],
+      "estimatedTests": 5
+    },
+    "securityTests": {
+      "priority": "high",
+      "testTypes": [
+        "vulnerability",
+        "penetration"
+      ],
+      "tools": [
+        "owasp-zap",
+        "snyk"
+      ],
+      "estimatedTests": 15
+    }
+  },
+  "coverage": {
+    "target": 90,
+    "critical": 95,
+    "minimum": 80
+  },
+  "timeline": {
+    "planning": "1 week",
+    "implementation": "3 weeks",
+    "execution": "1 week",
+    "total": "5 weeks"
+  },
+  "resources": {
+    "developers": 2,
+    "testers": 1,
+    "tools": [
+      "jest",
+      "cypress",
+      "k6"
+    ],
+    "budget": "$10,000"
+  }
+}

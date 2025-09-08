@@ -1,0 +1,508 @@
+# 🌍 Multi-Region Deployment Example
+# This example shows how to deploy NEXUS IDE across multiple regions for global availability
+
+# Global multi-region settings
+global:
+  environment: production
+  region: us-west-2  # Primary region
+  multiRegion:
+    enabled: true
+    regions:
+      - name: us-west-2
+        primary: true
+        endpoint: nexus-ide-us-west.company.com
+      - name: us-east-1
+        primary: false
+        endpoint: nexus-ide-us-east.company.com
+      - name: eu-west-1
+        primary: false
+        endpoint: nexus-ide-eu-west.company.com
+      - name: ap-southeast-1
+        primary: false
+        endpoint: nexus-ide-ap-southeast.company.com
+  
+  # Global load balancer configuration
+  globalLoadBalancer:
+    enabled: true
+    provider: cloudflare  # or aws-global-accelerator, gcp-global-lb
+    healthCheck:
+      enabled: true
+      path: /health
+      interval: 30s
+    
+# Application configuration
+app:
+  name: nexus-ide-global
+  version: "1.0.0"
+  
+# Regional replica configuration
+replicaCount: 5  # Per region
+
+# High-performance resource allocation
+resources:
+  requests:
+    cpu: 2000m
+    memory: 4Gi
+  limits:
+    cpu: 4000m
+    memory: 8Gi
+
+# Multi-region service configuration
+service:
+  type: LoadBalancer
+  port: 80
+  targetPort: 3000
+  annotations:
+    # AWS specific
+    service.beta.kubernetes.io/aws-load-balancer-type: nlb
+    service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
+    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http
+    # Regional health checks
+    service.beta.kubernetes.io/aws-load-balancer-healthcheck-path: /health
+    service.beta.kubernetes.io/aws-load-balancer-healthcheck-interval: "10"
+
+# Regional ingress configuration
+ingress:
+  enabled: true
+  className: nginx
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: "500m"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "300"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    # Regional routing
+    nginx.ingress.kubernetes.io/server-snippet: |
+      set $region "${REGION}";
+      add_header X-Region $region;
+  hosts:
+    - host: "${REGIONAL_ENDPOINT}"
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - secretName: nexus-ide-regional-tls
+      hosts:
+        - "${REGIONAL_ENDPOINT}"
+
+# Advanced auto-scaling for global load
+autoscaling:
+  enabled: true
+  minReplicas: 5
+  maxReplicas: 50
+  targetCPUUtilizationPercentage: 60
+  targetMemoryUtilizationPercentage: 70
+  # Custom metrics for global scaling
+  customMetrics:
+    - type: External
+      external:
+        metric:
+          name: global_user_sessions
+        target:
+          type: AverageValue
+          averageValue: "100"
+
+# Comprehensive monitoring for multi-region
+monitoring:
+  enabled: true
+  prometheus:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+      interval: 15s
+    # Multi-region federation
+    federation:
+      enabled: true
+      remoteRegions:
+        - us-east-1
+        - eu-west-1
+        - ap-southeast-1
+  
+  grafana:
+    enabled: true
+    dashboards:
+      enabled: true
+      multiRegion: true
+    # Global dashboard configuration
+    globalDashboard:
+      enabled: true
+      panels:
+        - regionalLatency
+        - globalUserDistribution
+        - crossRegionTraffic
+        - regionalHealthStatus
+  
+  alerting:
+    enabled: true
+    globalRules:
+      - name: region-down
+        condition: up{job="nexus-ide"} == 0
+        duration: 2m
+        severity: critical
+      - name: high-cross-region-latency
+        condition: histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m])) > 2
+        duration: 5m
+        severity: warning
+      - name: regional-capacity-exceeded
+        condition: (rate(http_requests_total[5m]) / on(region) group_left() kube_deployment_status_replicas) > 100
+        duration: 3m
+        severity: warning
+
+# Enterprise security with regional considerations
+security:
+  networkPolicy:
+    enabled: true
+    # Allow cross-region communication
+    crossRegion:
+      enabled: true
+      allowedRegions:
+        - us-west-2
+        - us-east-1
+        - eu-west-1
+        - ap-southeast-1
+    
+    ingress:
+      - from:
+          - namespaceSelector:
+              matchLabels:
+                name: ingress-nginx
+        ports:
+          - protocol: TCP
+            port: 3000
+      # Cross-region sync ports
+      - from:
+          - podSelector:
+              matchLabels:
+                app.kubernetes.io/name: nexus-ide
+        ports:
+          - protocol: TCP
+            port: 8080  # Sync port
+  
+  # Regional compliance
+  compliance:
+    gdpr:
+      enabled: true
+      regions: ["eu-west-1"]
+    ccpa:
+      enabled: true
+      regions: ["us-west-2", "us-east-1"]
+    dataResidency:
+      enabled: true
+      rules:
+        - region: eu-west-1
+          dataTypes: ["personal", "sensitive"]
+          storage: local
+        - region: us-west-2
+          dataTypes: ["business", "analytics"]
+          storage: cross-region
+
+# Multi-region database configuration
+database:
+  postgresql:
+    enabled: true
+    # Global primary in us-west-2, read replicas in other regions
+    multiRegion:
+      enabled: true
+      primaryRegion: us-west-2
+      readReplicas:
+        - region: us-east-1
+          replicas: 2
+        - region: eu-west-1
+          replicas: 2
+        - region: ap-southeast-1
+          replicas: 1
+    
+    auth:
+      database: nexus_ide_global
+      username: nexus_user
+      existingSecret: nexus-ide-db-secret
+    
+    primary:
+      resources:
+        requests:
+          cpu: 2000m
+          memory: 4Gi
+        limits:
+          cpu: 4000m
+          memory: 8Gi
+      persistence:
+        enabled: true
+        size: 500Gi
+        storageClass: gp3-encrypted
+    
+    # Cross-region backup
+    backup:
+      enabled: true
+      crossRegion: true
+      schedule: "0 */6 * * *"  # Every 6 hours
+      retention: 7  # 7 days
+  
+  redis:
+    enabled: true
+    # Redis cluster across regions
+    cluster:
+      enabled: true
+      nodes: 6  # 2 per region for primary regions
+    
+    multiRegion:
+      enabled: true
+      replication:
+        crossRegion: true
+        regions:
+          - us-west-2
+          - us-east-1
+          - eu-west-1
+    
+    auth:
+      enabled: true
+      existingSecret: nexus-ide-redis-secret
+    
+    resources:
+      requests:
+        cpu: 1000m
+        memory: 2Gi
+      limits:
+        cpu: 2000m
+        memory: 4Gi
+
+# Global AI configuration
+ai:
+  enabled: true
+  # Distribute AI models across regions
+  multiRegion:
+    enabled: true
+    loadBalancing: true
+    
+  models:
+    openai:
+      enabled: true
+      apiKeySecret: nexus-ide-openai-secret
+      # Regional endpoints for lower latency
+      regionalEndpoints:
+        us-west-2: api.openai.com
+        us-east-1: api.openai.com
+        eu-west-1: api.openai.com
+        ap-southeast-1: api.openai.com
+    
+    local:
+      enabled: true
+      # Deploy different models in different regions
+      regionalModels:
+        us-west-2:
+          model: "llama2-70b"
+          replicas: 3
+        us-east-1:
+          model: "llama2-13b"
+          replicas: 2
+        eu-west-1:
+          model: "llama2-13b"
+          replicas: 2
+        ap-southeast-1:
+          model: "llama2-7b"
+          replicas: 1
+      
+      resources:
+        requests:
+          cpu: 4000m
+          memory: 16Gi
+          nvidia.com/gpu: 2
+        limits:
+          cpu: 8000m
+          memory: 32Gi
+          nvidia.com/gpu: 2
+
+# Global collaboration features
+collaboration:
+  enabled: true
+  multiRegion:
+    enabled: true
+    # WebSocket clustering across regions
+    websocket:
+      clustering: true
+      regions:
+        - us-west-2
+        - us-east-1
+        - eu-west-1
+        - ap-southeast-1
+    
+    # Cross-region session synchronization
+    sessionSync:
+      enabled: true
+      protocol: redis-cluster
+      latencyOptimization: true
+  
+  websocket:
+    enabled: true
+    replicas: 5  # Per region
+    resources:
+      requests:
+        cpu: 1000m
+        memory: 2Gi
+      limits:
+        cpu: 2000m
+        memory: 4Gi
+
+# Global logging and observability
+logging:
+  enabled: true
+  level: info
+  format: json
+  
+  # Centralized logging with regional collection
+  centralized:
+    enabled: true
+    collector: fluentd
+    
+  # Regional log aggregation
+  regional:
+    enabled: true
+    retention: 30  # days
+    
+  # Global log search
+  elasticsearch:
+    enabled: true
+    cluster:
+      multiRegion: true
+      regions:
+        - name: us-west-2
+          primary: true
+          nodes: 3
+        - name: us-east-1
+          primary: false
+          nodes: 2
+        - name: eu-west-1
+          primary: false
+          nodes: 2
+
+# Global backup strategy
+backup:
+  enabled: true
+  multiRegion:
+    enabled: true
+    strategy: "3-2-1"  # 3 copies, 2 different media, 1 offsite
+    
+  schedule: "0 1 * * *"  # Daily at 1 AM local time
+  retention: 90  # 90 days
+  
+  storage:
+    primary:
+      type: s3
+      bucket: nexus-ide-backups-primary
+      region: us-west-2
+    
+    replicas:
+      - type: s3
+        bucket: nexus-ide-backups-east
+        region: us-east-1
+      - type: gcs
+        bucket: nexus-ide-backups-eu
+        region: eu-west-1
+
+# Regional node placement
+nodeSelector:
+  node-type: compute-optimized
+  environment: production
+  region: "${REGION}"
+
+tolerations:
+  - key: "production"
+    operator: "Equal"
+    value: "true"
+    effect: "NoSchedule"
+  - key: "region"
+    operator: "Equal"
+    value: "${REGION}"
+    effect: "NoSchedule"
+
+# Anti-affinity for high availability
+affinity:
+  podAntiAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchExpressions:
+            - key: app.kubernetes.io/name
+              operator: In
+              values:
+                - nexus-ide
+        topologyKey: kubernetes.io/hostname
+    preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values:
+                  - nexus-ide
+          topologyKey: topology.kubernetes.io/zone
+
+# Global pod disruption budget
+podDisruptionBudget:
+  enabled: true
+  minAvailable: 3  # Ensure at least 3 pods per region
+
+---
+
+# Multi-Region Deployment Guide:
+
+# Prerequisites:
+# 1. Kubernetes clusters in each target region
+# 2. Cross-region networking (VPC peering, Transit Gateway, etc.)
+# 3. Global DNS management (Route 53, CloudFlare, etc.)
+# 4. Cross-region secrets management
+# 5. Monitoring federation setup
+
+# Deployment Steps:
+
+# 1. Deploy to primary region (us-west-2)
+# helm install nexus-ide-us-west . \
+#   -f examples/multi-region-install.yaml \
+#   --set global.region=us-west-2 \
+#   --set ingress.hosts[0].host=nexus-ide-us-west.company.com \
+#   -n nexus-ide-prod
+
+# 2. Deploy to secondary regions
+# helm install nexus-ide-us-east . \
+#   -f examples/multi-region-install.yaml \
+#   --set global.region=us-east-1 \
+#   --set ingress.hosts[0].host=nexus-ide-us-east.company.com \
+#   --set database.postgresql.multiRegion.primaryRegion=us-west-2 \
+#   -n nexus-ide-prod
+
+# helm install nexus-ide-eu-west . \
+#   -f examples/multi-region-install.yaml \
+#   --set global.region=eu-west-1 \
+#   --set ingress.hosts[0].host=nexus-ide-eu-west.company.com \
+#   --set database.postgresql.multiRegion.primaryRegion=us-west-2 \
+#   -n nexus-ide-prod
+
+# helm install nexus-ide-ap-southeast . \
+#   -f examples/multi-region-install.yaml \
+#   --set global.region=ap-southeast-1 \
+#   --set ingress.hosts[0].host=nexus-ide-ap-southeast.company.com \
+#   --set database.postgresql.multiRegion.primaryRegion=us-west-2 \
+#   -n nexus-ide-prod
+
+# 3. Configure global load balancer
+# - Set up health checks for each regional endpoint
+# - Configure geographic routing rules
+# - Set up failover policies
+
+# 4. Verify multi-region deployment
+# kubectl get pods -n nexus-ide-prod --context=us-west-2
+# kubectl get pods -n nexus-ide-prod --context=us-east-1
+# kubectl get pods -n nexus-ide-prod --context=eu-west-1
+# kubectl get pods -n nexus-ide-prod --context=ap-southeast-1
+
+# 5. Test cross-region functionality
+# - User session synchronization
+# - Real-time collaboration across regions
+# - Database replication lag
+# - AI model load balancing
+
+# 6. Monitor global metrics
+# - Regional latency
+# - Cross-region traffic
+# - Failover scenarios
+# - Data consistency

@@ -1,0 +1,179 @@
+{
+  "version": "1.0.0",
+  "description": "การตั้งค่า MCP Servers สำหรับ NEXUS IDE",
+  "servers": [
+    {
+      "name": "git-memory",
+      "description": "Git Memory MCP Server - จัดการความจำและ Git operations",
+      "type": "stdio",
+      "command": "node",
+      "args": ["src/index.js"],
+      "cwd": ".",
+      "capabilities": ["memory", "git", "search", "analysis"],
+      "enabled": true,
+      "priority": 1,
+      "config": {
+        "maxMemorySize": "1GB",
+        "cacheTimeout": 3600000,
+        "enableGitHooks": true
+      }
+    },
+    {
+      "name": "ai-central",
+      "description": "AI Central Server - ระบบ AI หลักสำหรับการประมวลผล",
+      "type": "stdio",
+      "command": "node",
+      "args": ["servers/ai-central/server.js"],
+      "cwd": ".",
+      "capabilities": ["ai", "nlp", "code-generation", "analysis"],
+      "enabled": true,
+      "priority": 1,
+      "config": {
+        "model": "gpt-4",
+        "maxTokens": 4096,
+        "temperature": 0.7
+      }
+    },
+    {
+      "name": "file-system",
+      "description": "File System MCP Server - จัดการไฟล์และโฟลเดอร์",
+      "type": "stdio",
+      "command": "node",
+      "args": ["servers/file-system/server.js"],
+      "cwd": ".",
+      "capabilities": ["files", "directories", "search", "watch"],
+      "enabled": true,
+      "priority": 2,
+      "config": {
+        "watchEnabled": true,
+        "maxFileSize": "100MB",
+        "allowedExtensions": ["*"]
+      }
+    },
+    {
+      "name": "web-search",
+      "description": "Web Search MCP Server - ค้นหาข้อมูลจากอินเทอร์เน็ต",
+      "type": "stdio",
+      "command": "node",
+      "args": ["servers/web-search/server.js"],
+      "cwd": ".",
+      "capabilities": ["search", "web", "scraping", "api"],
+      "enabled": false,
+      "priority": 3,
+      "config": {
+        "searchEngine": "google",
+        "maxResults": 10,
+        "timeout": 30000
+      }
+    },
+    {
+      "name": "database",
+      "description": "Database MCP Server - จัดการฐานข้อมูล",
+      "type": "stdio",
+      "command": "node",
+      "args": ["servers/database/server.js"],
+      "cwd": ".",
+      "capabilities": ["database", "sql", "nosql", "cache"],
+      "enabled": false,
+      "priority": 2,
+      "config": {
+        "type": "sqlite",
+        "connectionString": "./data/nexus.db",
+        "poolSize": 10
+      }
+    },
+    {
+      "name": "code-analysis",
+      "description": "Code Analysis MCP Server - วิเคราะห์โค้ด",
+      "type": "stdio",
+      "command": "node",
+      "args": ["servers/code-analysis/server.js"],
+      "cwd": ".",
+      "capabilities": ["analysis", "linting", "formatting", "refactoring"],
+      "enabled": false,
+      "priority": 2,
+      "config": {
+        "languages": ["javascript", "typescript", "python", "java", "go"],
+        "enableLinting": true,
+        "enableFormatting": true
+      }
+    },
+    {
+      "name": "testing",
+      "description": "Testing MCP Server - ระบบทดสอบอัตโนมัติ",
+      "type": "stdio",
+      "command": "node",
+      "args": ["servers/testing/server.js"],
+      "cwd": ".",
+      "capabilities": ["testing", "unit-test", "integration-test", "coverage"],
+      "enabled": false,
+      "priority": 3,
+      "config": {
+        "framework": "jest",
+        "coverage": true,
+        "parallel": true
+      }
+    },
+    {
+      "name": "deployment",
+      "description": "Deployment MCP Server - ระบบ deploy อัตโนมัติ",
+      "type": "stdio",
+      "command": "node",
+      "args": ["servers/deployment/server.js"],
+      "cwd": ".",
+      "capabilities": ["deployment", "docker", "kubernetes", "ci-cd"],
+      "enabled": false,
+      "priority": 4,
+      "config": {
+        "platform": "docker",
+        "registry": "docker.io",
+        "autoRollback": true
+      }
+    },
+    {
+      "name": "monitoring",
+      "description": "Monitoring MCP Server - ติดตามและวิเคราะห์ระบบ",
+      "type": "stdio",
+      "command": "node",
+      "args": ["servers/monitoring/server.js"],
+      "cwd": ".",
+      "capabilities": ["monitoring", "metrics", "logging", "alerting"],
+      "enabled": false,
+      "priority": 4,
+      "config": {
+        "metricsInterval": 60000,
+        "logLevel": "info",
+        "alertThreshold": 0.8
+      }
+    },
+    {
+      "name": "security",
+      "description": "Security MCP Server - ระบบความปลอดภัย",
+      "type": "stdio",
+      "command": "node",
+      "args": ["servers/security/server.js"],
+      "cwd": ".",
+      "capabilities": ["security", "vulnerability", "audit", "compliance"],
+      "enabled": false,
+      "priority": 1,
+      "config": {
+        "scanInterval": 86400000,
+        "enableRealTimeScanning": true,
+        "complianceStandards": ["OWASP", "CIS"]
+      }
+    }
+  ],
+  "global": {
+    "timeout": 30000,
+    "retryAttempts": 3,
+    "retryDelay": 1000,
+    "healthCheckInterval": 30000,
+    "autoReconnect": true,
+    "logging": {
+      "level": "info",
+      "file": "logs/mcp-servers.log",
+      "maxSize": "10MB",
+      "maxFiles": 5
+    }
+  }
+}

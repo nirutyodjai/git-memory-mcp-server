@@ -1,0 +1,492 @@
+{
+  "summary": {
+    "totalSuites": 7,
+    "totalTests": 17,
+    "passed": 14,
+    "failed": 3,
+    "skipped": 0,
+    "duration": 36259,
+    "startTime": "2025-09-07T10:29:08.246Z",
+    "endTime": "2025-09-07T10:29:44.505Z",
+    "successRate": "82.4%"
+  },
+  "suites": {
+    "unit": {
+      "name": "unit",
+      "totalTests": 4,
+      "passed": 4,
+      "failed": 0,
+      "skipped": 0,
+      "duration": 5,
+      "tests": [
+        {
+          "name": "AIMCPIntegration Creation",
+          "description": "Test AIMCPIntegration class instantiation",
+          "status": "passed",
+          "duration": 4,
+          "error": null,
+          "output": {
+            "success": true,
+            "instance": "created"
+          },
+          "metadata": {}
+        },
+        {
+          "name": "MultiModelAISystem Creation",
+          "description": "Test MultiModelAISystem class instantiation",
+          "status": "passed",
+          "duration": 3,
+          "error": null,
+          "output": {
+            "success": true,
+            "instance": "created"
+          },
+          "metadata": {}
+        },
+        {
+          "name": "AICodeAssistant Creation",
+          "description": "Test AICodeAssistant class instantiation",
+          "status": "passed",
+          "duration": 2,
+          "error": null,
+          "output": {
+            "success": true,
+            "instance": "created"
+          },
+          "metadata": {}
+        },
+        {
+          "name": "IntelligentMCPRouter Creation",
+          "description": "Test IntelligentMCPRouter class instantiation",
+          "status": "passed",
+          "duration": 1,
+          "error": null,
+          "output": {
+            "success": true,
+            "instance": "created"
+          },
+          "metadata": {}
+        }
+      ]
+    },
+    "integration": {
+      "name": "integration",
+      "totalTests": 3,
+      "passed": 2,
+      "failed": 1,
+      "skipped": 0,
+      "duration": 3012,
+      "tests": [
+        {
+          "name": "AI-MCP Basic Integration",
+          "description": "Test basic AI-MCP integration workflow",
+          "status": "passed",
+          "duration": 2,
+          "error": null,
+          "output": {
+            "success": true,
+            "result": {
+              "id": "ai-req-1757240948252-1ikuos40d",
+              "success": false,
+              "error": "Cannot read properties of undefined (reading 'includes')",
+              "responseTime": 2
+            }
+          },
+          "metadata": {}
+        },
+        {
+          "name": "Multi-Model AI Processing",
+          "description": "Test multi-model AI request processing",
+          "status": "failed",
+          "duration": 3012,
+          "error": "Multi-model AI processing failed",
+          "output": null,
+          "metadata": {}
+        },
+        {
+          "name": "MCP Router Request Routing",
+          "description": "Test MCP router request routing functionality",
+          "status": "passed",
+          "duration": 14,
+          "error": null,
+          "output": {
+            "success": true,
+            "routingResult": false
+          },
+          "metadata": {}
+        }
+      ]
+    },
+    "performance": {
+      "name": "performance",
+      "totalTests": 2,
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0,
+      "duration": 16,
+      "tests": [
+        {
+          "name": "AI Response Time",
+          "description": "Test AI model response time performance",
+          "status": "passed",
+          "duration": 11,
+          "error": null,
+          "output": {
+            "success": true,
+            "responseTime": 8
+          },
+          "metadata": {}
+        },
+        {
+          "name": "MCP Router Performance",
+          "description": "Test MCP router performance under load",
+          "status": "passed",
+          "duration": 15,
+          "error": null,
+          "output": {
+            "success": true,
+            "duration": 15,
+            "successful": 10,
+            "total": 10,
+            "throughput": 667
+          },
+          "metadata": {}
+        }
+      ]
+    },
+    "ai-models": {
+      "name": "ai-models",
+      "totalTests": 2,
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0,
+      "duration": 2,
+      "tests": [
+        {
+          "name": "Model Selection Logic",
+          "description": "Test AI model selection based on task type",
+          "status": "passed",
+          "duration": 2,
+          "error": null,
+          "output": {
+            "success": true
+          },
+          "metadata": {}
+        },
+        {
+          "name": "Model Fallback Mechanism",
+          "description": "Test AI model fallback when primary model fails",
+          "status": "passed",
+          "duration": 1,
+          "error": null,
+          "output": {
+            "success": true,
+            "fallbackUsed": false
+          },
+          "metadata": {}
+        }
+      ]
+    },
+    "mcp-router": {
+      "name": "mcp-router",
+      "totalTests": 2,
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0,
+      "duration": 21,
+      "tests": [
+        {
+          "name": "Server Discovery",
+          "description": "Test MCP server discovery and registration",
+          "status": "passed",
+          "duration": 21,
+          "error": null,
+          "output": {
+            "success": true,
+            "serverCount": 10
+          },
+          "metadata": {}
+        },
+        {
+          "name": "Routing Strategy Selection",
+          "description": "Test routing strategy selection based on request type",
+          "status": "passed",
+          "duration": 3,
+          "error": null,
+          "output": {
+            "success": true,
+            "strategyResults": {
+              "performance": false,
+              "capability": false,
+              "load": false,
+              "hybrid": false
+            }
+          },
+          "metadata": {}
+        }
+      ]
+    },
+    "e2e": {
+      "name": "e2e",
+      "totalTests": 2,
+      "passed": 0,
+      "failed": 2,
+      "skipped": 0,
+      "duration": 3017,
+      "tests": [
+        {
+          "name": "Complete AI-MCP Workflow",
+          "description": "Test complete workflow from AI request to MCP response",
+          "status": "failed",
+          "duration": 3016,
+          "error": "Code completion failed",
+          "output": null,
+          "metadata": {}
+        },
+        {
+          "name": "Multi-Step AI Processing",
+          "description": "Test multi-step AI processing with context preservation",
+          "status": "failed",
+          "duration": 3016,
+          "error": "Cannot destructure property 'code' of 'request' as it is undefined.",
+          "output": null,
+          "metadata": {}
+        }
+      ]
+    },
+    "security": {
+      "name": "security",
+      "totalTests": 2,
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0,
+      "duration": 1,
+      "tests": [
+        {
+          "name": "Input Sanitization",
+          "description": "Test input sanitization and validation",
+          "status": "passed",
+          "duration": 1,
+          "error": null,
+          "output": {
+            "success": true,
+            "securityTests": [
+              {
+                "input": "xss-test",
+                "handled": true,
+                "result": true
+              },
+              {
+                "input": "injection-test",
+                "handled": true,
+                "result": true
+              },
+              {
+                "input": "overflow-test",
+                "handled": true,
+                "result": true
+              }
+            ]
+          },
+          "metadata": {}
+        },
+        {
+          "name": "Authentication Validation",
+          "description": "Test authentication and authorization mechanisms",
+          "status": "passed",
+          "duration": 0,
+          "error": null,
+          "output": {
+            "success": true,
+            "authHandling": "graceful"
+          },
+          "metadata": {}
+        }
+      ]
+    }
+  },
+  "benchmarks": {
+    "aiModelPerformance": {
+      "code-completion": {
+        "totalRuns": 10,
+        "successRate": "0.0%",
+        "averageDuration": 0,
+        "minDuration": 0,
+        "maxDuration": 1,
+        "modelDistribution": {}
+      },
+      "code-analysis": {
+        "totalRuns": 10,
+        "successRate": "0.0%",
+        "averageDuration": 3,
+        "minDuration": 0,
+        "maxDuration": 10,
+        "modelDistribution": {}
+      },
+      "code-explanation": {
+        "totalRuns": 10,
+        "successRate": "0.0%",
+        "averageDuration": 0,
+        "minDuration": 0,
+        "maxDuration": 1,
+        "modelDistribution": {}
+      }
+    },
+    "mcpRouterPerformance": {
+      "git-operation": {
+        "totalRuns": 20,
+        "successRate": "0.0%",
+        "averageDuration": 2,
+        "serverDistribution": {},
+        "strategyDistribution": {}
+      },
+      "file-operation": {
+        "totalRuns": 20,
+        "successRate": "0.0%",
+        "averageDuration": 1,
+        "serverDistribution": {},
+        "strategyDistribution": {}
+      },
+      "ai-request": {
+        "totalRuns": 20,
+        "successRate": "0.0%",
+        "averageDuration": 1,
+        "serverDistribution": {},
+        "strategyDistribution": {}
+      }
+    },
+    "integrationLatency": {
+      "simple-request": {
+        "samples": 50,
+        "averageLatency": 0,
+        "minLatency": 0,
+        "maxLatency": 1,
+        "p50": 0,
+        "p95": 1,
+        "p99": 1
+      },
+      "complex-request": {
+        "samples": 50,
+        "averageLatency": 0,
+        "minLatency": 0,
+        "maxLatency": 1,
+        "p50": 0,
+        "p95": 1,
+        "p99": 1
+      },
+      "multi-step-request": {
+        "samples": 50,
+        "averageLatency": 0,
+        "minLatency": 0,
+        "maxLatency": 1,
+        "p50": 0,
+        "p95": 1,
+        "p99": 1
+      }
+    },
+    "throughputTest": {
+      "concurrency-1": {
+        "totalRequests": 1,
+        "successfulRequests": 1,
+        "duration": 0,
+        "throughput": null,
+        "successRate": "100.0%"
+      },
+      "concurrency-5": {
+        "totalRequests": 5,
+        "successfulRequests": 5,
+        "duration": 1,
+        "throughput": 5000,
+        "successRate": "100.0%"
+      },
+      "concurrency-10": {
+        "totalRequests": 10,
+        "successfulRequests": 10,
+        "duration": 8,
+        "throughput": 1250,
+        "successRate": "100.0%"
+      },
+      "concurrency-20": {
+        "totalRequests": 20,
+        "successfulRequests": 20,
+        "duration": 6,
+        "throughput": 3333,
+        "successRate": "100.0%"
+      },
+      "concurrency-50": {
+        "totalRequests": 50,
+        "successfulRequests": 50,
+        "duration": 5,
+        "throughput": 10000,
+        "successRate": "100.0%"
+      }
+    },
+    "memoryUsage": {
+      "baseline": {
+        "rss": 62,
+        "heapTotal": 13,
+        "heapUsed": 11,
+        "external": 3
+      },
+      "afterCreation": {
+        "rss": 62,
+        "heapTotal": 13,
+        "heapUsed": 10,
+        "external": 3
+      },
+      "afterProcessing": {
+        "rss": 62,
+        "heapTotal": 13,
+        "heapUsed": 10,
+        "external": 3
+      },
+      "afterGC": {
+        "rss": 62,
+        "heapTotal": 13,
+        "heapUsed": 10,
+        "external": 3
+      },
+      "memoryIncrease": {
+        "creation": -1,
+        "processing": 0,
+        "retained": -1
+      }
+    },
+    "concurrencyTest": {
+      "low-concurrency": {
+        "concurrentWorkers": 5,
+        "plannedDuration": 5000,
+        "actualDuration": 5005,
+        "totalRequests": 1527,
+        "successfulRequests": 1527,
+        "failedRequests": 0,
+        "averageRequestsPerSecond": 305,
+        "successRate": "100.0%",
+        "averageResponseTime": 0
+      },
+      "medium-concurrency": {
+        "concurrentWorkers": 20,
+        "plannedDuration": 10000,
+        "actualDuration": 10012,
+        "totalRequests": 11557,
+        "successfulRequests": 11557,
+        "failedRequests": 0,
+        "averageRequestsPerSecond": 1154,
+        "successRate": "100.0%",
+        "averageResponseTime": 0
+      },
+      "high-concurrency": {
+        "concurrentWorkers": 50,
+        "plannedDuration": 15000,
+        "actualDuration": 15018,
+        "totalRequests": 33165,
+        "successfulRequests": 33165,
+        "failedRequests": 0,
+        "averageRequestsPerSecond": 2208,
+        "successRate": "100.0%",
+        "averageResponseTime": 0
+      }
+    }
+  },
+  "errors": []
+}

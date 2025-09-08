@@ -197,198 +197,126 @@ function NotificationManager() {
     const getPermissionBadge = () => {
         switch (permission) {
             case 'granted':
-                return <badge_1.Badge variant="default" className="bg-green-500"><lucide_react_1.CheckCircle className="h-3 w-3 mr-1"/>อนุญาต</badge_1.Badge>;
+                return React.createElement(badge_1.Badge, { variant: "default", className: "bg-green-500" },
+                    React.createElement(lucide_react_1.CheckCircle, { className: "h-3 w-3 mr-1" }),
+                    "\u0E2D\u0E19\u0E38\u0E0D\u0E32\u0E15");
             case 'denied':
-                return <badge_1.Badge variant="destructive"><lucide_react_1.BellOff className="h-3 w-3 mr-1"/>ปฏิเสธ</badge_1.Badge>;
+                return React.createElement(badge_1.Badge, { variant: "destructive" },
+                    React.createElement(lucide_react_1.BellOff, { className: "h-3 w-3 mr-1" }),
+                    "\u0E1B\u0E0F\u0E34\u0E40\u0E2A\u0E18");
             default:
-                return <badge_1.Badge variant="secondary"><lucide_react_1.AlertCircle className="h-3 w-3 mr-1"/>รอการตัดสินใจ</badge_1.Badge>;
+                return React.createElement(badge_1.Badge, { variant: "secondary" },
+                    React.createElement(lucide_react_1.AlertCircle, { className: "h-3 w-3 mr-1" }),
+                    "\u0E23\u0E2D\u0E01\u0E32\u0E23\u0E15\u0E31\u0E14\u0E2A\u0E34\u0E19\u0E43\u0E08");
         }
     };
     if (!isSupported) {
-        return (<card_1.Card>
-        <card_1.CardHeader>
-          <card_1.CardTitle className="flex items-center gap-2">
-            <lucide_react_1.BellOff className="h-5 w-5"/>
-            การแจ้งเตือนไม่รองรับ
-          </card_1.CardTitle>
-        </card_1.CardHeader>
-        <card_1.CardContent>
-          <alert_1.Alert>
-            <lucide_react_1.AlertCircle className="h-4 w-4"/>
-            <alert_1.AlertDescription>
-              เบราว์เซอร์ของคุณไม่รองรับการแจ้งเตือนแบบ Push Notifications
-            </alert_1.AlertDescription>
-          </alert_1.Alert>
-        </card_1.CardContent>
-      </card_1.Card>);
+        return (React.createElement(card_1.Card, null,
+            React.createElement(card_1.CardHeader, null,
+                React.createElement(card_1.CardTitle, { className: "flex items-center gap-2" },
+                    React.createElement(lucide_react_1.BellOff, { className: "h-5 w-5" }),
+                    "\u0E01\u0E32\u0E23\u0E41\u0E08\u0E49\u0E07\u0E40\u0E15\u0E37\u0E2D\u0E19\u0E44\u0E21\u0E48\u0E23\u0E2D\u0E07\u0E23\u0E31\u0E1A")),
+            React.createElement(card_1.CardContent, null,
+                React.createElement(alert_1.Alert, null,
+                    React.createElement(lucide_react_1.AlertCircle, { className: "h-4 w-4" }),
+                    React.createElement(alert_1.AlertDescription, null, "\u0E40\u0E1A\u0E23\u0E32\u0E27\u0E4C\u0E40\u0E0B\u0E2D\u0E23\u0E4C\u0E02\u0E2D\u0E07\u0E04\u0E38\u0E13\u0E44\u0E21\u0E48\u0E23\u0E2D\u0E07\u0E23\u0E31\u0E1A\u0E01\u0E32\u0E23\u0E41\u0E08\u0E49\u0E07\u0E40\u0E15\u0E37\u0E2D\u0E19\u0E41\u0E1A\u0E1A Push Notifications")))));
     }
-    return (<div className="space-y-6">
-      {/* Status Card */}
-      <card_1.Card>
-        <card_1.CardHeader>
-          <card_1.CardTitle className="flex items-center gap-2">
-            <lucide_react_1.Bell className="h-5 w-5"/>
-            สถานะการแจ้งเตือน
-          </card_1.CardTitle>
-          <card_1.CardDescription>
-            จัดการการแจ้งเตือนแบบ Push Notifications
-          </card_1.CardDescription>
-        </card_1.CardHeader>
-        <card_1.CardContent className="space-y-4">
-          {error && (<alert_1.Alert variant="destructive">
-              <lucide_react_1.AlertCircle className="h-4 w-4"/>
-              <alert_1.AlertDescription>{error}</alert_1.AlertDescription>
-              <button_1.Button variant="outline" size="sm" onClick={clearError} className="mt-2">
-                ปิดข้อความ
-              </button_1.Button>
-            </alert_1.Alert>)}
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="flex items-center justify-between p-3 border rounded-lg">
-              <div>
-                <p className="text-sm font-medium">สิทธิ์การแจ้งเตือน</p>
-                <p className="text-xs text-muted-foreground">สถานะการอนุญาต</p>
-              </div>
-              {getPermissionBadge()}
-            </div>
-            
-            <div className="flex items-center justify-between p-3 border rounded-lg">
-              <div>
-                <p className="text-sm font-medium">การติดตาม</p>
-                <p className="text-xs text-muted-foreground">สถานะการสมัครรับ</p>
-              </div>
-              <badge_1.Badge variant={isSubscribed ? "default" : "secondary"}>
-                {isSubscribed ? (<><lucide_react_1.BellRing className="h-3 w-3 mr-1"/>เปิดใช้งาน</>) : (<><lucide_react_1.BellOff className="h-3 w-3 mr-1"/>ปิดใช้งาน</>)}
-              </badge_1.Badge>
-            </div>
-            
-            <div className="flex items-center justify-between p-3 border rounded-lg">
-              <div>
-                <p className="text-sm font-medium">ผู้ติดตาม</p>
-                <p className="text-xs text-muted-foreground">จำนวนผู้สมัครรับ</p>
-              </div>
-              <badge_1.Badge variant="outline">
-                <lucide_react_1.Users className="h-3 w-3 mr-1"/>
-                {stats.totalSubscriptions}
-              </badge_1.Badge>
-            </div>
-          </div>
-          
-          <div className="flex gap-2">
-            <button_1.Button onClick={handleSubscriptionToggle} disabled={isLoading} variant={isSubscribed ? "destructive" : "default"}>
-              {isLoading && <lucide_react_1.Loader2 className="h-4 w-4 mr-2 animate-spin"/>}
-              {isSubscribed ? 'ยกเลิกการแจ้งเตือน' : 'เปิดการแจ้งเตือน'}
-            </button_1.Button>
-            
-            {isSubscribed && (<button_1.Button onClick={handleTestNotification} variant="outline">
-                <lucide_react_1.TestTube className="h-4 w-4 mr-2"/>
-                ทดสอบการแจ้งเตือน
-              </button_1.Button>)}
-            
-            <button_1.Button onClick={loadStats} variant="outline">
-              <lucide_react_1.Settings className="h-4 w-4 mr-2"/>
-              รีเฟรชสถิติ
-            </button_1.Button>
-          </div>
-        </card_1.CardContent>
-      </card_1.Card>
-
-      {/* Template Notifications */}
-      <card_1.Card>
-        <card_1.CardHeader>
-          <card_1.CardTitle>ส่งการแจ้งเตือนจากเทมเพลต</card_1.CardTitle>
-          <card_1.CardDescription>
-            เลือกเทมเพลตการแจ้งเตือนที่กำหนดไว้แล้ว
-          </card_1.CardDescription>
-        </card_1.CardHeader>
-        <card_1.CardContent className="space-y-4">
-          <div className="space-y-2">
-            <label_1.Label htmlFor="template">เลือกเทมเพลต</label_1.Label>
-            <select_1.Select value={selectedTemplate} onValueChange={setSelectedTemplate}>
-              <select_1.SelectTrigger>
-                <select_1.SelectValue placeholder="เลือกเทมเพลตการแจ้งเตือน"/>
-              </select_1.SelectTrigger>
-              <select_1.SelectContent>
-                {NOTIFICATION_TEMPLATES.map((template) => (<select_1.SelectItem key={template.id} value={template.id}>
-                    {template.name}
-                  </select_1.SelectItem>))}
-              </select_1.SelectContent>
-            </select_1.Select>
-          </div>
-          
-          {selectedTemplate && (<div className="p-4 border rounded-lg bg-muted/50">
-              <h4 className="font-medium mb-2">ตัวอย่างการแจ้งเตือน</h4>
-              {(() => {
-                const template = NOTIFICATION_TEMPLATES.find(t => t.id === selectedTemplate);
-                return template ? (<div className="space-y-2">
-                    <p className="font-medium">{template.title}</p>
-                    <p className="text-sm text-muted-foreground">{template.body}</p>
-                    {template.actions && (<div className="flex gap-2">
-                        {template.actions.map((action, index) => (<badge_1.Badge key={index} variant="outline">{action.title}</badge_1.Badge>))}
-                      </div>)}
-                  </div>) : null;
-            })()}
-            </div>)}
-          
-          <button_1.Button onClick={handleSendTemplate} disabled={!selectedTemplate || isSending} className="w-full">
-            {isSending && <lucide_react_1.Loader2 className="h-4 w-4 mr-2 animate-spin"/>}
-            <lucide_react_1.Send className="h-4 w-4 mr-2"/>
-            ส่งการแจ้งเตือน
-          </button_1.Button>
-        </card_1.CardContent>
-      </card_1.Card>
-
-      {/* Custom Notification */}
-      <card_1.Card>
-        <card_1.CardHeader>
-          <card_1.CardTitle>สร้างการแจ้งเตือนที่กำหนดเอง</card_1.CardTitle>
-          <card_1.CardDescription>
-            สร้างและส่งการแจ้งเตือนที่กำหนดเองให้ผู้ติดตามทั้งหมด
-          </card_1.CardDescription>
-        </card_1.CardHeader>
-        <card_1.CardContent className="space-y-4">
-          <div className="space-y-2">
-            <label_1.Label htmlFor="title">หัวข้อการแจ้งเตือน</label_1.Label>
-            <input_1.Input id="title" placeholder="หัวข้อการแจ้งเตือน" value={customNotification.title} onChange={(e) => setCustomNotification(prev => ({ ...prev, title: e.target.value }))} maxLength={100}/>
-          </div>
-          
-          <div className="space-y-2">
-            <label_1.Label htmlFor="body">เนื้อหาการแจ้งเตือน</label_1.Label>
-            <textarea_1.Textarea id="body" placeholder="เนื้อหาการแจ้งเตือน" value={customNotification.body} onChange={(e) => setCustomNotification(prev => ({ ...prev, body: e.target.value }))} maxLength={300} rows={3}/>
-          </div>
-          
-          <div className="space-y-2">
-            <label_1.Label htmlFor="icon">ไอคอน URL</label_1.Label>
-            <input_1.Input id="icon" placeholder="URL ของไอคอน" value={customNotification.icon} onChange={(e) => setCustomNotification(prev => ({ ...prev, icon: e.target.value }))}/>
-          </div>
-          
-          <separator_1.Separator />
-          
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <label_1.Label htmlFor="require-interaction">ต้องการการตอบสนอง</label_1.Label>
-                <p className="text-xs text-muted-foreground">การแจ้งเตือนจะไม่หายไปจนกว่าผู้ใช้จะตอบสนอง</p>
-              </div>
-              <switch_1.Switch id="require-interaction" checked={customNotification.requireInteraction} onCheckedChange={(checked) => setCustomNotification(prev => ({ ...prev, requireInteraction: checked }))}/>
-            </div>
-            
-            <div className="flex items-center justify-between">
-              <div>
-                <label_1.Label htmlFor="vibrate">การสั่น</label_1.Label>
-                <p className="text-xs text-muted-foreground">เปิดการสั่นเมื่อได้รับการแจ้งเตือน</p>
-              </div>
-              <switch_1.Switch id="vibrate" checked={customNotification.vibrate} onCheckedChange={(checked) => setCustomNotification(prev => ({ ...prev, vibrate: checked }))}/>
-            </div>
-          </div>
-          
-          <button_1.Button onClick={handleSendCustom} disabled={!customNotification.title || !customNotification.body || isSending} className="w-full">
-            {isSending && <lucide_react_1.Loader2 className="h-4 w-4 mr-2 animate-spin"/>}
-            <lucide_react_1.Send className="h-4 w-4 mr-2"/>
-            ส่งการแจ้งเตือนที่กำหนดเอง
-          </button_1.Button>
-        </card_1.CardContent>
-      </card_1.Card>
-    </div>);
+    return (React.createElement("div", { className: "space-y-6" },
+        React.createElement(card_1.Card, null,
+            React.createElement(card_1.CardHeader, null,
+                React.createElement(card_1.CardTitle, { className: "flex items-center gap-2" },
+                    React.createElement(lucide_react_1.Bell, { className: "h-5 w-5" }),
+                    "\u0E2A\u0E16\u0E32\u0E19\u0E30\u0E01\u0E32\u0E23\u0E41\u0E08\u0E49\u0E07\u0E40\u0E15\u0E37\u0E2D\u0E19"),
+                React.createElement(card_1.CardDescription, null, "\u0E08\u0E31\u0E14\u0E01\u0E32\u0E23\u0E01\u0E32\u0E23\u0E41\u0E08\u0E49\u0E07\u0E40\u0E15\u0E37\u0E2D\u0E19\u0E41\u0E1A\u0E1A Push Notifications")),
+            React.createElement(card_1.CardContent, { className: "space-y-4" },
+                error && (React.createElement(alert_1.Alert, { variant: "destructive" },
+                    React.createElement(lucide_react_1.AlertCircle, { className: "h-4 w-4" }),
+                    React.createElement(alert_1.AlertDescription, null, error),
+                    React.createElement(button_1.Button, { variant: "outline", size: "sm", onClick: clearError, className: "mt-2" }, "\u0E1B\u0E34\u0E14\u0E02\u0E49\u0E2D\u0E04\u0E27\u0E32\u0E21"))),
+                React.createElement("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-4" },
+                    React.createElement("div", { className: "flex items-center justify-between p-3 border rounded-lg" },
+                        React.createElement("div", null,
+                            React.createElement("p", { className: "text-sm font-medium" }, "\u0E2A\u0E34\u0E17\u0E18\u0E34\u0E4C\u0E01\u0E32\u0E23\u0E41\u0E08\u0E49\u0E07\u0E40\u0E15\u0E37\u0E2D\u0E19"),
+                            React.createElement("p", { className: "text-xs text-muted-foreground" }, "\u0E2A\u0E16\u0E32\u0E19\u0E30\u0E01\u0E32\u0E23\u0E2D\u0E19\u0E38\u0E0D\u0E32\u0E15")),
+                        getPermissionBadge()),
+                    React.createElement("div", { className: "flex items-center justify-between p-3 border rounded-lg" },
+                        React.createElement("div", null,
+                            React.createElement("p", { className: "text-sm font-medium" }, "\u0E01\u0E32\u0E23\u0E15\u0E34\u0E14\u0E15\u0E32\u0E21"),
+                            React.createElement("p", { className: "text-xs text-muted-foreground" }, "\u0E2A\u0E16\u0E32\u0E19\u0E30\u0E01\u0E32\u0E23\u0E2A\u0E21\u0E31\u0E04\u0E23\u0E23\u0E31\u0E1A")),
+                        React.createElement(badge_1.Badge, { variant: isSubscribed ? "default" : "secondary" }, isSubscribed ? (React.createElement(React.Fragment, null,
+                            React.createElement(lucide_react_1.BellRing, { className: "h-3 w-3 mr-1" }),
+                            "\u0E40\u0E1B\u0E34\u0E14\u0E43\u0E0A\u0E49\u0E07\u0E32\u0E19")) : (React.createElement(React.Fragment, null,
+                            React.createElement(lucide_react_1.BellOff, { className: "h-3 w-3 mr-1" }),
+                            "\u0E1B\u0E34\u0E14\u0E43\u0E0A\u0E49\u0E07\u0E32\u0E19")))),
+                    React.createElement("div", { className: "flex items-center justify-between p-3 border rounded-lg" },
+                        React.createElement("div", null,
+                            React.createElement("p", { className: "text-sm font-medium" }, "\u0E1C\u0E39\u0E49\u0E15\u0E34\u0E14\u0E15\u0E32\u0E21"),
+                            React.createElement("p", { className: "text-xs text-muted-foreground" }, "\u0E08\u0E33\u0E19\u0E27\u0E19\u0E1C\u0E39\u0E49\u0E2A\u0E21\u0E31\u0E04\u0E23\u0E23\u0E31\u0E1A")),
+                        React.createElement(badge_1.Badge, { variant: "outline" },
+                            React.createElement(lucide_react_1.Users, { className: "h-3 w-3 mr-1" }),
+                            stats.totalSubscriptions))),
+                React.createElement("div", { className: "flex gap-2" },
+                    React.createElement(button_1.Button, { onClick: handleSubscriptionToggle, disabled: isLoading, variant: isSubscribed ? "destructive" : "default" },
+                        isLoading && React.createElement(lucide_react_1.Loader2, { className: "h-4 w-4 mr-2 animate-spin" }),
+                        isSubscribed ? 'ยกเลิกการแจ้งเตือน' : 'เปิดการแจ้งเตือน'),
+                    isSubscribed && (React.createElement(button_1.Button, { onClick: handleTestNotification, variant: "outline" },
+                        React.createElement(lucide_react_1.TestTube, { className: "h-4 w-4 mr-2" }),
+                        "\u0E17\u0E14\u0E2A\u0E2D\u0E1A\u0E01\u0E32\u0E23\u0E41\u0E08\u0E49\u0E07\u0E40\u0E15\u0E37\u0E2D\u0E19")),
+                    React.createElement(button_1.Button, { onClick: loadStats, variant: "outline" },
+                        React.createElement(lucide_react_1.Settings, { className: "h-4 w-4 mr-2" }),
+                        "\u0E23\u0E35\u0E40\u0E1F\u0E23\u0E0A\u0E2A\u0E16\u0E34\u0E15\u0E34")))),
+        React.createElement(card_1.Card, null,
+            React.createElement(card_1.CardHeader, null,
+                React.createElement(card_1.CardTitle, null, "\u0E2A\u0E48\u0E07\u0E01\u0E32\u0E23\u0E41\u0E08\u0E49\u0E07\u0E40\u0E15\u0E37\u0E2D\u0E19\u0E08\u0E32\u0E01\u0E40\u0E17\u0E21\u0E40\u0E1E\u0E25\u0E15"),
+                React.createElement(card_1.CardDescription, null, "\u0E40\u0E25\u0E37\u0E2D\u0E01\u0E40\u0E17\u0E21\u0E40\u0E1E\u0E25\u0E15\u0E01\u0E32\u0E23\u0E41\u0E08\u0E49\u0E07\u0E40\u0E15\u0E37\u0E2D\u0E19\u0E17\u0E35\u0E48\u0E01\u0E33\u0E2B\u0E19\u0E14\u0E44\u0E27\u0E49\u0E41\u0E25\u0E49\u0E27")),
+            React.createElement(card_1.CardContent, { className: "space-y-4" },
+                React.createElement("div", { className: "space-y-2" },
+                    React.createElement(label_1.Label, { htmlFor: "template" }, "\u0E40\u0E25\u0E37\u0E2D\u0E01\u0E40\u0E17\u0E21\u0E40\u0E1E\u0E25\u0E15"),
+                    React.createElement(select_1.Select, { value: selectedTemplate, onValueChange: setSelectedTemplate },
+                        React.createElement(select_1.SelectTrigger, null,
+                            React.createElement(select_1.SelectValue, { placeholder: "\u0E40\u0E25\u0E37\u0E2D\u0E01\u0E40\u0E17\u0E21\u0E40\u0E1E\u0E25\u0E15\u0E01\u0E32\u0E23\u0E41\u0E08\u0E49\u0E07\u0E40\u0E15\u0E37\u0E2D\u0E19" })),
+                        React.createElement(select_1.SelectContent, null, NOTIFICATION_TEMPLATES.map((template) => (React.createElement(select_1.SelectItem, { key: template.id, value: template.id }, template.name)))))),
+                selectedTemplate && (React.createElement("div", { className: "p-4 border rounded-lg bg-muted/50" },
+                    React.createElement("h4", { className: "font-medium mb-2" }, "\u0E15\u0E31\u0E27\u0E2D\u0E22\u0E48\u0E32\u0E07\u0E01\u0E32\u0E23\u0E41\u0E08\u0E49\u0E07\u0E40\u0E15\u0E37\u0E2D\u0E19"),
+                    (() => {
+                        const template = NOTIFICATION_TEMPLATES.find(t => t.id === selectedTemplate);
+                        return template ? (React.createElement("div", { className: "space-y-2" },
+                            React.createElement("p", { className: "font-medium" }, template.title),
+                            React.createElement("p", { className: "text-sm text-muted-foreground" }, template.body),
+                            template.actions && (React.createElement("div", { className: "flex gap-2" }, template.actions.map((action, index) => (React.createElement(badge_1.Badge, { key: index, variant: "outline" }, action.title))))))) : null;
+                    })())),
+                React.createElement(button_1.Button, { onClick: handleSendTemplate, disabled: !selectedTemplate || isSending, className: "w-full" },
+                    isSending && React.createElement(lucide_react_1.Loader2, { className: "h-4 w-4 mr-2 animate-spin" }),
+                    React.createElement(lucide_react_1.Send, { className: "h-4 w-4 mr-2" }),
+                    "\u0E2A\u0E48\u0E07\u0E01\u0E32\u0E23\u0E41\u0E08\u0E49\u0E07\u0E40\u0E15\u0E37\u0E2D\u0E19"))),
+        React.createElement(card_1.Card, null,
+            React.createElement(card_1.CardHeader, null,
+                React.createElement(card_1.CardTitle, null, "\u0E2A\u0E23\u0E49\u0E32\u0E07\u0E01\u0E32\u0E23\u0E41\u0E08\u0E49\u0E07\u0E40\u0E15\u0E37\u0E2D\u0E19\u0E17\u0E35\u0E48\u0E01\u0E33\u0E2B\u0E19\u0E14\u0E40\u0E2D\u0E07"),
+                React.createElement(card_1.CardDescription, null, "\u0E2A\u0E23\u0E49\u0E32\u0E07\u0E41\u0E25\u0E30\u0E2A\u0E48\u0E07\u0E01\u0E32\u0E23\u0E41\u0E08\u0E49\u0E07\u0E40\u0E15\u0E37\u0E2D\u0E19\u0E17\u0E35\u0E48\u0E01\u0E33\u0E2B\u0E19\u0E14\u0E40\u0E2D\u0E07\u0E43\u0E2B\u0E49\u0E1C\u0E39\u0E49\u0E15\u0E34\u0E14\u0E15\u0E32\u0E21\u0E17\u0E31\u0E49\u0E07\u0E2B\u0E21\u0E14")),
+            React.createElement(card_1.CardContent, { className: "space-y-4" },
+                React.createElement("div", { className: "space-y-2" },
+                    React.createElement(label_1.Label, { htmlFor: "title" }, "\u0E2B\u0E31\u0E27\u0E02\u0E49\u0E2D\u0E01\u0E32\u0E23\u0E41\u0E08\u0E49\u0E07\u0E40\u0E15\u0E37\u0E2D\u0E19"),
+                    React.createElement(input_1.Input, { id: "title", placeholder: "\u0E2B\u0E31\u0E27\u0E02\u0E49\u0E2D\u0E01\u0E32\u0E23\u0E41\u0E08\u0E49\u0E07\u0E40\u0E15\u0E37\u0E2D\u0E19", value: customNotification.title, onChange: (e) => setCustomNotification(prev => ({ ...prev, title: e.target.value })), maxLength: 100 })),
+                React.createElement("div", { className: "space-y-2" },
+                    React.createElement(label_1.Label, { htmlFor: "body" }, "\u0E40\u0E19\u0E37\u0E49\u0E2D\u0E2B\u0E32\u0E01\u0E32\u0E23\u0E41\u0E08\u0E49\u0E07\u0E40\u0E15\u0E37\u0E2D\u0E19"),
+                    React.createElement(textarea_1.Textarea, { id: "body", placeholder: "\u0E40\u0E19\u0E37\u0E49\u0E2D\u0E2B\u0E32\u0E01\u0E32\u0E23\u0E41\u0E08\u0E49\u0E07\u0E40\u0E15\u0E37\u0E2D\u0E19", value: customNotification.body, onChange: (e) => setCustomNotification(prev => ({ ...prev, body: e.target.value })), maxLength: 300, rows: 3 })),
+                React.createElement("div", { className: "space-y-2" },
+                    React.createElement(label_1.Label, { htmlFor: "icon" }, "\u0E44\u0E2D\u0E04\u0E2D\u0E19 URL"),
+                    React.createElement(input_1.Input, { id: "icon", placeholder: "URL \u0E02\u0E2D\u0E07\u0E44\u0E2D\u0E04\u0E2D\u0E19", value: customNotification.icon, onChange: (e) => setCustomNotification(prev => ({ ...prev, icon: e.target.value })) })),
+                React.createElement(separator_1.Separator, null),
+                React.createElement("div", { className: "space-y-4" },
+                    React.createElement("div", { className: "flex items-center justify-between" },
+                        React.createElement("div", null,
+                            React.createElement(label_1.Label, { htmlFor: "require-interaction" }, "\u0E15\u0E49\u0E2D\u0E07\u0E01\u0E32\u0E23\u0E01\u0E32\u0E23\u0E15\u0E2D\u0E1A\u0E2A\u0E19\u0E2D\u0E07"),
+                            React.createElement("p", { className: "text-xs text-muted-foreground" }, "\u0E01\u0E32\u0E23\u0E41\u0E08\u0E49\u0E07\u0E40\u0E15\u0E37\u0E2D\u0E19\u0E08\u0E30\u0E44\u0E21\u0E48\u0E2B\u0E32\u0E22\u0E44\u0E1B\u0E08\u0E19\u0E01\u0E27\u0E48\u0E32\u0E1C\u0E39\u0E49\u0E43\u0E0A\u0E49\u0E08\u0E30\u0E15\u0E2D\u0E1A\u0E2A\u0E19\u0E2D\u0E07")),
+                        React.createElement(switch_1.Switch, { id: "require-interaction", checked: customNotification.requireInteraction, onCheckedChange: (checked) => setCustomNotification(prev => ({ ...prev, requireInteraction: checked })) })),
+                    React.createElement("div", { className: "flex items-center justify-between" },
+                        React.createElement("div", null,
+                            React.createElement(label_1.Label, { htmlFor: "vibrate" }, "\u0E01\u0E32\u0E23\u0E2A\u0E31\u0E48\u0E19"),
+                            React.createElement("p", { className: "text-xs text-muted-foreground" }, "\u0E40\u0E1B\u0E34\u0E14\u0E01\u0E32\u0E23\u0E2A\u0E31\u0E48\u0E19\u0E40\u0E21\u0E37\u0E48\u0E2D\u0E44\u0E14\u0E49\u0E23\u0E31\u0E1A\u0E01\u0E32\u0E23\u0E41\u0E08\u0E49\u0E07\u0E40\u0E15\u0E37\u0E2D\u0E19")),
+                        React.createElement(switch_1.Switch, { id: "vibrate", checked: customNotification.vibrate, onCheckedChange: (checked) => setCustomNotification(prev => ({ ...prev, vibrate: checked })) }))),
+                React.createElement(button_1.Button, { onClick: handleSendCustom, disabled: !customNotification.title || !customNotification.body || isSending, className: "w-full" },
+                    isSending && React.createElement(lucide_react_1.Loader2, { className: "h-4 w-4 mr-2 animate-spin" }),
+                    React.createElement(lucide_react_1.Send, { className: "h-4 w-4 mr-2" }),
+                    "\u0E2A\u0E48\u0E07\u0E01\u0E32\u0E23\u0E41\u0E08\u0E49\u0E07\u0E40\u0E15\u0E37\u0E2D\u0E19\u0E17\u0E35\u0E48\u0E01\u0E33\u0E2B\u0E19\u0E14\u0E40\u0E2D\u0E07")))));
 }
-//# sourceMappingURL=notification-manager.js.map

@@ -1,9 +1,0 @@
-{
-  "name": "filesystem-server",
-  "version": "1.0.0",
-  "description": "File system operations and management",
-  "main": "server.js",
-  "scripts": {
-    "start": "node server.js"
-  }
-}

@@ -202,4 +202,3 @@ const formatCurrency = (amount, currency = 'THB', lng) => {
 };
 exports.formatCurrency = formatCurrency;
 exports.default = exports.i18n;
-//# sourceMappingURL=i18n.js.map

@@ -1,0 +1,64 @@
+{
+  "mcpServers": {
+    "mcp-server-git": {
+      "command": "node",
+      "args": [
+        "./community-servers/mcp-server-git/index.js"
+      ],
+      "env": {
+        "PORT": "9001",
+        "NODE_ENV": "production",
+        "MCP_SERVER_NAME": "mcp-server-git",
+        "MCP_SERVER_CATEGORY": "version-control"
+      }
+    },
+    "mcp-server-filesystem": {
+      "command": "node",
+      "args": [
+        "./community-servers/mcp-server-filesystem/index.js"
+      ],
+      "env": {
+        "PORT": "9002",
+        "NODE_ENV": "production",
+        "MCP_SERVER_NAME": "mcp-server-filesystem",
+        "MCP_SERVER_CATEGORY": "file-system"
+      }
+    },
+    "mcp-server-github": {
+      "command": "node",
+      "args": [
+        "./community-servers/mcp-server-github/index.js"
+      ],
+      "env": {
+        "PORT": "9003",
+        "NODE_ENV": "production",
+        "MCP_SERVER_NAME": "mcp-server-github",
+        "MCP_SERVER_CATEGORY": "version-control"
+      }
+    },
+    "mcp-server-sqlite": {
+      "command": "node",
+      "args": [
+        "./community-servers/mcp-server-sqlite/index.js"
+      ],
+      "env": {
+        "PORT": "9004",
+        "NODE_ENV": "production",
+        "MCP_SERVER_NAME": "mcp-server-sqlite",
+        "MCP_SERVER_CATEGORY": "database"
+      }
+    },
+    "mcp-server-web-search": {
+      "command": "node",
+      "args": [
+        "./community-servers/mcp-server-web-search/index.js"
+      ],
+      "env": {
+        "PORT": "9005",
+        "NODE_ENV": "production",
+        "MCP_SERVER_NAME": "mcp-server-web-search",
+        "MCP_SERVER_CATEGORY": "web-tools"
+      }
+    }
+  }
+}

@@ -1,0 +1,426 @@
+=== Summary by Category ===
+
+Count Name            Group                                          
+----- ----            -----                                          
+   72 API Gateway     {@{Category=API Gateway; Rel=api-gateway.js;...
+ 1097 Core MCP        {@{Category=Core MCP; Rel=mcp-coordinator.js...
+    2 Examples        {@{Category=Examples; Rel=examples\git-opera...
+   21 Git Memory Core {@{Category=Git Memory Core; Rel=git-memory-...
+84288 Others          {@{Category=Others; Rel=Central MCP Server\e...
+   47 Root Level      {@{Category=Root Level; Rel=add-github-data-...
+   36 Scripts         {@{Category=Scripts; Rel=scripts\backup-clou...
+ 2425 Servers         {@{Category=Servers; Rel=servers\ai-ml\3280....
+
+
+
+
+=== Servers Breakdown (by subfolder under servers) ===
+
+Count Name            Group                                          
+----- ----            -----                                          
+  245 ai-ml           {@{Subfolder=ai-ml; Rel=servers\ai-ml\3280.j...
+   25 analytics       {@{Subfolder=analytics; Rel=servers\analytic...
+   60 api             {@{Subfolder=api; Rel=servers\api\3215.js}, ...
+   25 auth            {@{Subfolder=auth; Rel=servers\auth\3511.js}...
+   25 backup          {@{Subfolder=backup; Rel=servers\backup\3514...
+  100 blockchain      {@{Subfolder=blockchain; Rel=servers\blockch...
+   50 browser         {@{Subfolder=browser; Rel=servers\browser\1\...
+   50 business        {@{Subfolder=business; Rel=servers\business\...
+   25 cache           {@{Subfolder=cache; Rel=servers\cache\3508.j...
+   25 chat            {@{Subfolder=chat; Rel=servers\chat\3518.js}...
+   50 code            {@{Subfolder=code; Rel=servers\code\1\code-0...
+   50 communication   {@{Subfolder=communication; Rel=servers\comm...
+   25 config          {@{Subfolder=config; Rel=servers\config\3513...
+  200 data            {@{Subfolder=data; Rel=servers\data\1\data-0...
+   65 database        {@{Subfolder=database; Rel=servers\database\...
+  100 data-science    {@{Subfolder=data-science; Rel=servers\data-...
+   50 design          {@{Subfolder=design; Rel=servers\design\1\de...
+   50 dev-tools       {@{Subfolder=dev-tools; Rel=servers\dev-tool...
+   25 email           {@{Subfolder=email; Rel=servers\email\3517.j...
+   55 filesystem      {@{Subfolder=filesystem; Rel=servers\filesys...
+  100 gaming          {@{Subfolder=gaming; Rel=servers\gaming\4400...
+  200 gen             {@{Subfolder=gen; Rel=servers\gen\001\gen-00...
+   50 git             {@{Subfolder=git; Rel=servers\git\1\git-001....
+   50 iot-hardware    {@{Subfolder=iot-hardware; Rel=servers\iot-h...
+   25 logging         {@{Subfolder=logging; Rel=servers\logging\35...
+  125 media           {@{Subfolder=media; Rel=servers\media\3516.j...
+   25 monitoring      {@{Subfolder=monitoring; Rel=servers\monitor...
+   25 notification    {@{Subfolder=notification; Rel=servers\notif...
+   25 payment         {@{Subfolder=payment; Rel=servers\payment\35...
+   25 queue           {@{Subfolder=queue; Rel=servers\queue\3509.j...
+   25 search          {@{Subfolder=search; Rel=servers\search\3515...
+  125 security        {@{Subfolder=security; Rel=servers\security\...
+   50 system-ops      {@{Subfolder=system-ops; Rel=servers\system-...
+   50 version-control {@{Subfolder=version-control; Rel=servers\ve...
+  225 web             {@{Subfolder=web; Rel=servers\web\3500.js}, ...
+
+
+
+
+--- Core MCP (sample up to 20 files) ---
+mcp-coordinator.js
+mcp-proxy-server.js
+mcp-server-shared-integration.js
+Central MCP Server\mcp-registry.js
+Central MCP Server\client\node\mcp-client.js
+Central MCP Server\tests\mcp-registry.test.js
+comdee-ide\mcp-coordinator.js
+comdee-ide\mcp-proxy-server.js
+dev-starter\mcp-coordinator.js
+dev-starter\mcp-proxy-server.js
+dev-starter\backup\mcp-coordinator.js
+dev-starter\backup\mcp-proxy-server.js
+dev-starter\backup\mcp-server-shared-integration.js
+dev-starter\backup\Central MCP Server\mcp-registry.js
+dev-starter\backup\Central MCP Server\client\node\mcp-client.js
+dev-starter\backup\Central MCP Server\tests\mcp-registry.test.js
+dev-starter\backup\comdee-ide\mcp-coordinator.js
+dev-starter\backup\comdee-ide\mcp-proxy-server.js
+dev-starter\backup\dist\3d-sco\lib\mcp-client.js
+dev-starter\backup\dist\3d-sco\lib\mcp-server.js
+
+--- Git Memory Core (sample up to 20 files) ---
+git-memory-bridge.js
+git-memory-client.js
+git-memory-coordinator.js
+comdee-ide\git-memory-bridge.js
+comdee-ide\git-memory-client.js
+comdee-ide\git-memory-coordinator.js
+dev-starter\git-memory-bridge.js
+dev-starter\git-memory-client.js
+dev-starter\git-memory-coordinator.js
+dev-starter\backup\git-memory-bridge.js
+dev-starter\backup\git-memory-client.js
+dev-starter\backup\git-memory-coordinator.js
+dev-starter\backup\comdee-ide\git-memory-bridge.js
+dev-starter\backup\comdee-ide\git-memory-client.js
+dev-starter\backup\comdee-ide\git-memory-coordinator.js
+dev-starter\backup\Edit App\git-memory-mcp-server\git-memory-bridge.js
+dev-starter\backup\Edit App\git-memory-mcp-server\git-memory-client.js
+dev-starter\backup\Edit App\git-memory-mcp-server\git-memory-coordinator.js
+Edit App\git-memory-mcp-server\git-memory-bridge.js
+Edit App\git-memory-mcp-server\git-memory-client.js
+
+--- API Gateway (sample up to 20 files) ---
+api-gateway.js
+comdee-ide\api-gateway-load-balancer.js
+comdee-ide\api-gateway-middleware.js
+comdee-ide\api-gateway-monitoring.js
+comdee-ide\api-gateway-proxy.js
+comdee-ide\api-gateway-routes.js
+comdee-ide\api-gateway-security.js
+comdee-ide\api-gateway-websocket.js
+comdee-ide\api-gateway.js
+dev-starter\api-gateway-load-balancer.js
+dev-starter\api-gateway-middleware.js
+dev-starter\api-gateway-monitoring.js
+dev-starter\api-gateway-proxy.js
+dev-starter\api-gateway-routes.js
+dev-starter\api-gateway-security.js
+dev-starter\api-gateway-websocket.js
+dev-starter\api-gateway.js
+dev-starter\backup\api-gateway.js
+dev-starter\backup\comdee-ide\api-gateway-load-balancer.js
+dev-starter\backup\comdee-ide\api-gateway-middleware.js
+
+--- Scripts (sample up to 20 files) ---
+scripts\backup-cloud-sync.js
+scripts\backup-manager.js
+scripts\backup-restore.js
+scripts\backup-scheduler.js
+scripts\deploy-batch.js
+scripts\deploy-community-servers.js
+scripts\deploy-mock-community-servers.js
+scripts\deploy-real-community-servers.js
+scripts\generate-servers.js
+scripts\health-check.js
+scripts\increase-memory.js
+scripts\publish.js
+scripts\quick-community-validation.js
+scripts\quick-file-analysis.js
+scripts\quick-security-test.js
+scripts\quick-system-summary.js
+scripts\quick-system-validation.js
+scripts\restart-failed-servers.js
+scripts\restart-security-servers.js
+scripts\restart-servers-with-memory.js
+
+--- Examples (sample up to 10 files) ---
+examples\git-operations.js
+examples\memory-management.js
+
+--- Root Level (sample up to 30 files) ---
+add-github-data-servers.js
+add-github-servers.js
+analyze-project-files.js
+auto-scaling-manager.js
+babel.config.js
+community-mcp-servers.js
+comprehensive-500-test.js
+comprehensive-test-suite.js
+create-1000-servers-no-debug.js
+create-500-servers.js
+create-additional-servers.js
+create-efficient-500-servers.js
+create-express-500-servers.js
+create-simple-500-servers.js
+create-working-500-servers.js
+debug-server.js
+detailed-server-status.js
+distributed-load-balancer.js
+email-distribution.js
+enhanced-monitoring-dashboard.js
+enhanced-monitoring.js
+expand-to-500-security-servers.js
+full-system-validation.js
+github-fetch-server.js
+github-git-server.js
+install-useful-github-servers.js
+load-balancer-1000.js
+load-balancer-server.js
+load-test-100.js
+memory-manager-1000.js
+
+--- Servers (sample up to 5 files per subfolder) ---
+[ai-ml]
+servers\ai-ml\3280.js
+servers\ai-ml\3281.js
+servers\ai-ml\3282.js
+servers\ai-ml\3283.js
+servers\ai-ml\3284.js
+[analytics]
+servers\analytics\3506.js
+servers\analytics\3526.js
+servers\analytics\3546.js
+servers\analytics\3566.js
+servers\analytics\3586.js
+[api]
+servers\api\3215.js
+servers\api\3216.js
+servers\api\3217.js
+servers\api\3218.js
+servers\api\3219.js
+[auth]
+servers\auth\3511.js
+servers\auth\3531.js
+servers\auth\3551.js
+servers\auth\3571.js
+servers\auth\3591.js
+[backup]
+servers\backup\3514.js
+servers\backup\3534.js
+servers\backup\3554.js
+servers\backup\3574.js
+servers\backup\3594.js
+[blockchain]
+servers\blockchain\4500.js
+servers\blockchain\4501.js
+servers\blockchain\4502.js
+servers\blockchain\4503.js
+servers\blockchain\4504.js
+[browser]
+servers\browser\1\browser-001.js
+servers\browser\10\browser-010.js
+servers\browser\11\browser-011.js
+servers\browser\12\browser-012.js
+servers\browser\13\browser-013.js
+[business]
+servers\business\3500.js
+servers\business\3501.js
+servers\business\3502.js
+servers\business\3503.js
+servers\business\3504.js
+[cache]
+servers\cache\3508.js
+servers\cache\3528.js
+servers\cache\3548.js
+servers\cache\3568.js
+servers\cache\3588.js
+[chat]
+servers\chat\3518.js
+servers\chat\3538.js
+servers\chat\3558.js
+servers\chat\3578.js
+servers\chat\3598.js
+[code]
+servers\code\1\code-001.js
+servers\code\10\code-010.js
+servers\code\11\code-011.js
+servers\code\12\code-012.js
+servers\code\13\code-013.js
+[communication]
+servers\communication\3450.js
+servers\communication\3451.js
+servers\communication\3452.js
+servers\communication\3453.js
+servers\communication\3454.js
+[config]
+servers\config\3513.js
+servers\config\3533.js
+servers\config\3553.js
+servers\config\3573.js
+servers\config\3593.js
+[data]
+servers\data\1\data-001.js
+servers\data\10\data-010.js
+servers\data\100\data-100.js
+servers\data\101\data-101.js
+servers\data\102\data-102.js
+[data-science]
+servers\data-science\4100.js
+servers\data-science\4101.js
+servers\data-science\4102.js
+servers\data-science\4103.js
+servers\data-science\4104.js
+[database]
+servers\database\3110.js
+servers\database\3111.js
+servers\database\3112.js
+servers\database\3113.js
+servers\database\3114.js
+[design]
+servers\design\1\design-001.js
+servers\design\10\design-010.js
+servers\design\11\design-011.js
+servers\design\12\design-012.js
+servers\design\13\design-013.js
+[dev-tools]
+servers\dev-tools\3350.js
+servers\dev-tools\3351.js
+servers\dev-tools\3352.js
+servers\dev-tools\3353.js
+servers\dev-tools\3354.js
+[email]
+servers\email\3517.js
+servers\email\3537.js
+servers\email\3557.js
+servers\email\3577.js
+servers\email\3597.js
+[filesystem]
+servers\filesystem\3170.js
+servers\filesystem\3171.js
+servers\filesystem\3172.js
+servers\filesystem\3173.js
+servers\filesystem\3174.js
+[gaming]
+servers\gaming\4400.js
+servers\gaming\4401.js
+servers\gaming\4402.js
+servers\gaming\4403.js
+servers\gaming\4404.js
+[gen]
+servers\gen\001\gen-001.js
+servers\gen\002\gen-002.js
+servers\gen\003\gen-003.js
+servers\gen\004\gen-004.js
+servers\gen\005\gen-005.js
+[git]
+servers\git\1\git-001.js
+servers\git\10\git-010.js
+servers\git\11\git-011.js
+servers\git\12\git-012.js
+servers\git\13\git-013.js
+[iot-hardware]
+servers\iot-hardware\3550.js
+servers\iot-hardware\3551.js
+servers\iot-hardware\3552.js
+servers\iot-hardware\3553.js
+servers\iot-hardware\3554.js
+[logging]
+servers\logging\3512.js
+servers\logging\3532.js
+servers\logging\3552.js
+servers\logging\3572.js
+servers\logging\3592.js
+[media]
+servers\media\3516.js
+servers\media\3536.js
+servers\media\3556.js
+servers\media\3576.js
+servers\media\3596.js
+[monitoring]
+servers\monitoring\3505.js
+servers\monitoring\3525.js
+servers\monitoring\3545.js
+servers\monitoring\3565.js
+servers\monitoring\3585.js
+[notification]
+servers\notification\3510.js
+servers\notification\3530.js
+servers\notification\3550.js
+servers\notification\3570.js
+servers\notification\3590.js
+[payment]
+servers\payment\3519.js
+servers\payment\3539.js
+servers\payment\3559.js
+servers\payment\3579.js
+servers\payment\3599.js
+[queue]
+servers\queue\3509.js
+servers\queue\3529.js
+servers\queue\3549.js
+servers\queue\3569.js
+servers\queue\3589.js
+[search]
+servers\search\3515.js
+servers\search\3535.js
+servers\search\3555.js
+servers\search\3575.js
+servers\search\3595.js
+[security]
+servers\security\3504.js
+servers\security\3524.js
+servers\security\3544.js
+servers\security\3564.js
+servers\security\3584.js
+[system-ops]
+servers\system-ops\3400.js
+servers\system-ops\3401.js
+servers\system-ops\3402.js
+servers\system-ops\3403.js
+servers\system-ops\3404.js
+[version-control]
+servers\version-control\3300.js
+servers\version-control\3301.js
+servers\version-control\3302.js
+servers\version-control\3303.js
+servers\version-control\3304.js
+[web]
+servers\web\3500.js
+servers\web\3520.js
+servers\web\3540.js
+servers\web\3560.js
+servers\web\3580.js
+
+--- Others (sample 30 files) ---
+Central MCP Server\eslint.config.js
+Central MCP Server\jest.config.js
+Central MCP Server\load-balancer.js
+Central MCP Server\logger.js
+Central MCP Server\monitoring.js
+Central MCP Server\performance-test.js
+Central MCP Server\read-config.js
+Central MCP Server\run-all-tests.js
+Central MCP Server\security-test.js
+Central MCP Server\server.js
+Central MCP Server\service-discovery.js
+Central MCP Server\test-example.js
+Central MCP Server\ui-test.js
+Central MCP Server\client\node\dynamic_client.js
+Central MCP Server\client\node\fetch_secret.js
+Central MCP Server\client\node\test_client.js
+Central MCP Server\client\node\node_modules\asynckit\bench.js
+Central MCP Server\client\node\node_modules\asynckit\index.js
+Central MCP Server\client\node\node_modules\asynckit\parallel.js
+Central MCP Server\client\node\node_modules\asynckit\serial.js
+Central MCP Server\client\node\node_modules\asynckit\serialOrdered.js
+Central MCP Server\client\node\node_modules\asynckit\stream.js
+Central MCP Server\client\node\node_modules\asynckit\lib\abort.js
+Central MCP Server\client\node\node_modules\asynckit\lib\async.js
+Central MCP Server\client\node\node_modules\asynckit\lib\defer.js
+Central MCP Server\client\node\node_modules\asynckit\lib\iterate.js
+Central MCP Server\client\node\node_modules\asynckit\lib\readable_asynckit.js
+Central MCP Server\client\node\node_modules\asynckit\lib\readable_parallel.js
+Central MCP Server\client\node\node_modules\asynckit\lib\readable_serial.js
+Central MCP Server\client\node\node_modules\asynckit\lib\readable_serial_ordered.js

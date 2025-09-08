@@ -1,0 +1,453 @@
+{{/*
+=============================================================================
+ENTERPRISE SECURITY DASHBOARD - PERSISTENT VOLUME CLAIMS TEMPLATE
+Kubernetes Storage Management Configuration
+=============================================================================
+*/}}
+
+{{- if .Values.persistence.enabled -}}
+
+# =============================================================================
+# APPLICATION DATA PERSISTENT VOLUME CLAIM
+# =============================================================================
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "security-dashboard.fullname" . }}-data
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    {{- include "security-dashboard.labels" . | nindent 4 }}
+    app.kubernetes.io/component: data-storage
+    storage.kubernetes.io/type: application-data
+  annotations:
+    {{- with .Values.persistence.annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+    volume.beta.kubernetes.io/storage-class: {{ .Values.persistence.storageClass | quote }}
+    {{- if .Values.persistence.backup.enabled }}
+    backup.kubernetes.io/enabled: "true"
+    backup.kubernetes.io/schedule: {{ .Values.persistence.backup.schedule | quote }}
+    backup.kubernetes.io/retention: {{ .Values.persistence.backup.retention | quote }}
+    {{- end }}
+spec:
+  accessModes:
+    {{- range .Values.persistence.accessModes }}
+    - {{ . }}
+    {{- end }}
+  resources:
+    requests:
+      storage: {{ .Values.persistence.size }}
+  {{- if .Values.persistence.storageClass }}
+  storageClassName: {{ .Values.persistence.storageClass }}
+  {{- end }}
+  {{- if .Values.persistence.selector }}
+  selector:
+    {{- toYaml .Values.persistence.selector | nindent 4 }}
+  {{- end }}
+  {{- if .Values.persistence.volumeName }}
+  volumeName: {{ .Values.persistence.volumeName }}
+  {{- end }}
+
+---
+# =============================================================================
+# DATABASE PERSISTENT VOLUME CLAIM
+# =============================================================================
+
+{{- if .Values.database.persistence.enabled }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "security-dashboard.fullname" . }}-database
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    {{- include "security-dashboard.labels" . | nindent 4 }}
+    app.kubernetes.io/component: database-storage
+    storage.kubernetes.io/type: database
+  annotations:
+    {{- with .Values.database.persistence.annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+    volume.beta.kubernetes.io/storage-class: {{ .Values.database.persistence.storageClass | quote }}
+    {{- if .Values.database.backup.enabled }}
+    backup.kubernetes.io/enabled: "true"
+    backup.kubernetes.io/schedule: {{ .Values.database.backup.schedule | quote }}
+    backup.kubernetes.io/retention: {{ .Values.database.backup.retention | quote }}
+    backup.kubernetes.io/type: "database"
+    {{- end }}
+spec:
+  accessModes:
+    {{- range .Values.database.persistence.accessModes }}
+    - {{ . }}
+    {{- end }}
+  resources:
+    requests:
+      storage: {{ .Values.database.persistence.size }}
+  {{- if .Values.database.persistence.storageClass }}
+  storageClassName: {{ .Values.database.persistence.storageClass }}
+  {{- end }}
+  {{- if .Values.database.persistence.selector }}
+  selector:
+    {{- toYaml .Values.database.persistence.selector | nindent 4 }}
+  {{- end }}
+{{- end }}
+
+---
+# =============================================================================
+# REDIS PERSISTENT VOLUME CLAIM
+# =============================================================================
+
+{{- if and .Values.redis.enabled .Values.redis.persistence.enabled }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "security-dashboard.fullname" . }}-redis
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    {{- include "security-dashboard.labels" . | nindent 4 }}
+    app.kubernetes.io/component: redis-storage
+    storage.kubernetes.io/type: cache
+  annotations:
+    {{- with .Values.redis.persistence.annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+    volume.beta.kubernetes.io/storage-class: {{ .Values.redis.persistence.storageClass | quote }}
+spec:
+  accessModes:
+    {{- range .Values.redis.persistence.accessModes }}
+    - {{ . }}
+    {{- end }}
+  resources:
+    requests:
+      storage: {{ .Values.redis.persistence.size }}
+  {{- if .Values.redis.persistence.storageClass }}
+  storageClassName: {{ .Values.redis.persistence.storageClass }}
+  {{- end }}
+{{- end }}
+
+---
+# =============================================================================
+# MONGODB PERSISTENT VOLUME CLAIM
+# =============================================================================
+
+{{- if and .Values.mongodb.enabled .Values.mongodb.persistence.enabled }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "security-dashboard.fullname" . }}-mongodb
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    {{- include "security-dashboard.labels" . | nindent 4 }}
+    app.kubernetes.io/component: mongodb-storage
+    storage.kubernetes.io/type: document-database
+  annotations:
+    {{- with .Values.mongodb.persistence.annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+    volume.beta.kubernetes.io/storage-class: {{ .Values.mongodb.persistence.storageClass | quote }}
+spec:
+  accessModes:
+    {{- range .Values.mongodb.persistence.accessModes }}
+    - {{ . }}
+    {{- end }}
+  resources:
+    requests:
+      storage: {{ .Values.mongodb.persistence.size }}
+  {{- if .Values.mongodb.persistence.storageClass }}
+  storageClassName: {{ .Values.mongodb.persistence.storageClass }}
+  {{- end }}
+{{- end }}
+
+---
+# =============================================================================
+# LOGS PERSISTENT VOLUME CLAIM
+# =============================================================================
+
+{{- if .Values.logging.persistence.enabled }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "security-dashboard.fullname" . }}-logs
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    {{- include "security-dashboard.labels" . | nindent 4 }}
+    app.kubernetes.io/component: logs-storage
+    storage.kubernetes.io/type: logs
+  annotations:
+    {{- with .Values.logging.persistence.annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+    volume.beta.kubernetes.io/storage-class: {{ .Values.logging.persistence.storageClass | quote }}
+spec:
+  accessModes:
+    {{- range .Values.logging.persistence.accessModes }}
+    - {{ . }}
+    {{- end }}
+  resources:
+    requests:
+      storage: {{ .Values.logging.persistence.size }}
+  {{- if .Values.logging.persistence.storageClass }}
+  storageClassName: {{ .Values.logging.persistence.storageClass }}
+  {{- end }}
+{{- end }}
+
+---
+# =============================================================================
+# MONITORING DATA PERSISTENT VOLUME CLAIM
+# =============================================================================
+
+{{- if and .Values.monitoring.enabled .Values.monitoring.persistence.enabled }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "security-dashboard.fullname" . }}-monitoring
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    {{- include "security-dashboard.labels" . | nindent 4 }}
+    app.kubernetes.io/component: monitoring-storage
+    storage.kubernetes.io/type: metrics
+  annotations:
+    {{- with .Values.monitoring.persistence.annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+    volume.beta.kubernetes.io/storage-class: {{ .Values.monitoring.persistence.storageClass | quote }}
+spec:
+  accessModes:
+    {{- range .Values.monitoring.persistence.accessModes }}
+    - {{ . }}
+    {{- end }}
+  resources:
+    requests:
+      storage: {{ .Values.monitoring.persistence.size }}
+  {{- if .Values.monitoring.persistence.storageClass }}
+  storageClassName: {{ .Values.monitoring.persistence.storageClass }}
+  {{- end }}
+{{- end }}
+
+---
+# =============================================================================
+# BACKUP PERSISTENT VOLUME CLAIM
+# =============================================================================
+
+{{- if .Values.backup.persistence.enabled }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "security-dashboard.fullname" . }}-backup
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    {{- include "security-dashboard.labels" . | nindent 4 }}
+    app.kubernetes.io/component: backup-storage
+    storage.kubernetes.io/type: backup
+  annotations:
+    {{- with .Values.backup.persistence.annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+    volume.beta.kubernetes.io/storage-class: {{ .Values.backup.persistence.storageClass | quote }}
+    backup.kubernetes.io/exclude: "true"
+spec:
+  accessModes:
+    {{- range .Values.backup.persistence.accessModes }}
+    - {{ . }}
+    {{- end }}
+  resources:
+    requests:
+      storage: {{ .Values.backup.persistence.size }}
+  {{- if .Values.backup.persistence.storageClass }}
+  storageClassName: {{ .Values.backup.persistence.storageClass }}
+  {{- end }}
+{{- end }}
+
+---
+# =============================================================================
+# SHARED STORAGE PERSISTENT VOLUME CLAIM
+# =============================================================================
+
+{{- if .Values.sharedStorage.enabled }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "security-dashboard.fullname" . }}-shared
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    {{- include "security-dashboard.labels" . | nindent 4 }}
+    app.kubernetes.io/component: shared-storage
+    storage.kubernetes.io/type: shared
+  annotations:
+    {{- with .Values.sharedStorage.annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+    volume.beta.kubernetes.io/storage-class: {{ .Values.sharedStorage.storageClass | quote }}
+spec:
+  accessModes:
+    {{- range .Values.sharedStorage.accessModes }}
+    - {{ . }}
+    {{- end }}
+  resources:
+    requests:
+      storage: {{ .Values.sharedStorage.size }}
+  {{- if .Values.sharedStorage.storageClass }}
+  storageClassName: {{ .Values.sharedStorage.storageClass }}
+  {{- end }}
+{{- end }}
+
+---
+# =============================================================================
+# TEMPORARY STORAGE PERSISTENT VOLUME CLAIM
+# =============================================================================
+
+{{- if .Values.tempStorage.enabled }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "security-dashboard.fullname" . }}-temp
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    {{- include "security-dashboard.labels" . | nindent 4 }}
+    app.kubernetes.io/component: temp-storage
+    storage.kubernetes.io/type: temporary
+  annotations:
+    {{- with .Values.tempStorage.annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+    volume.beta.kubernetes.io/storage-class: {{ .Values.tempStorage.storageClass | quote }}
+    storage.kubernetes.io/cleanup-policy: "delete"
+spec:
+  accessModes:
+    {{- range .Values.tempStorage.accessModes }}
+    - {{ . }}
+    {{- end }}
+  resources:
+    requests:
+      storage: {{ .Values.tempStorage.size }}
+  {{- if .Values.tempStorage.storageClass }}
+  storageClassName: {{ .Values.tempStorage.storageClass }}
+  {{- end }}
+{{- end }}
+
+---
+# =============================================================================
+# CUSTOM PERSISTENT VOLUME CLAIMS
+# =============================================================================
+
+{{- range .Values.customPVC }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "security-dashboard.fullname" $ }}-{{ .name }}
+  namespace: {{ $.Release.Namespace | quote }}
+  labels:
+    {{- include "security-dashboard.labels" $ | nindent 4 }}
+    app.kubernetes.io/component: {{ .name }}-storage
+    storage.kubernetes.io/type: {{ .type | default "custom" }}
+  annotations:
+    {{- with .annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+    {{- if .storageClass }}
+    volume.beta.kubernetes.io/storage-class: {{ .storageClass | quote }}
+    {{- end }}
+spec:
+  accessModes:
+    {{- range .accessModes }}
+    - {{ . }}
+    {{- end }}
+  resources:
+    requests:
+      storage: {{ .size }}
+  {{- if .storageClass }}
+  storageClassName: {{ .storageClass }}
+  {{- end }}
+  {{- if .selector }}
+  selector:
+    {{- toYaml .selector | nindent 4 }}
+  {{- end }}
+  {{- if .volumeName }}
+  volumeName: {{ .volumeName }}
+  {{- end }}
+
+---
+{{- end }}
+
+{{- end }}
+
+# =============================================================================
+# STORAGE CLASS DEFINITIONS
+# =============================================================================
+
+{{- if .Values.storageClass.create }}
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: {{ include "security-dashboard.fullname" . }}-ssd
+  labels:
+    {{- include "security-dashboard.labels" . | nindent 4 }}
+    app.kubernetes.io/component: storage-class
+  annotations:
+    {{- with .Values.storageClass.annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+    storageclass.kubernetes.io/is-default-class: {{ .Values.storageClass.isDefault | quote }}
+provisioner: {{ .Values.storageClass.provisioner }}
+parameters:
+  {{- range $key, $value := .Values.storageClass.parameters }}
+  {{ $key }}: {{ $value | quote }}
+  {{- end }}
+reclaimPolicy: {{ .Values.storageClass.reclaimPolicy }}
+volumeBindingMode: {{ .Values.storageClass.volumeBindingMode }}
+{{- if .Values.storageClass.allowVolumeExpansion }}
+allowVolumeExpansion: true
+{{- end }}
+{{- if .Values.storageClass.mountOptions }}
+mountOptions:
+  {{- range .Values.storageClass.mountOptions }}
+  - {{ . }}
+  {{- end }}
+{{- end }}
+
+---
+# High-Performance Storage Class for Databases
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: {{ include "security-dashboard.fullname" . }}-high-performance
+  labels:
+    {{- include "security-dashboard.labels" . | nindent 4 }}
+    app.kubernetes.io/component: storage-class
+    storage.kubernetes.io/performance-tier: high
+provisioner: {{ .Values.storageClass.provisioner }}
+parameters:
+  type: {{ .Values.storageClass.highPerformance.type | default "gp3" }}
+  iops: {{ .Values.storageClass.highPerformance.iops | default "3000" | quote }}
+  throughput: {{ .Values.storageClass.highPerformance.throughput | default "125" | quote }}
+  {{- range $key, $value := .Values.storageClass.highPerformance.parameters }}
+  {{ $key }}: {{ $value | quote }}
+  {{- end }}
+reclaimPolicy: Retain
+volumeBindingMode: WaitForFirstConsumer
+allowVolumeExpansion: true
+
+---
+# Archive Storage Class for Backups
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: {{ include "security-dashboard.fullname" . }}-archive
+  labels:
+    {{- include "security-dashboard.labels" . | nindent 4 }}
+    app.kubernetes.io/component: storage-class
+    storage.kubernetes.io/performance-tier: archive
+provisioner: {{ .Values.storageClass.provisioner }}
+parameters:
+  type: {{ .Values.storageClass.archive.type | default "sc1" }}
+  {{- range $key, $value := .Values.storageClass.archive.parameters }}
+  {{ $key }}: {{ $value | quote }}
+  {{- end }}
+reclaimPolicy: Retain
+volumeBindingMode: WaitForFirstConsumer
+allowVolumeExpansion: true
+{{- end }}
+
+# =============================================================================
+# END OF PERSISTENT VOLUME CLAIMS TEMPLATE
+# =============================================================================

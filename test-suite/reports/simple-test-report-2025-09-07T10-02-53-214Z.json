@@ -1,0 +1,18 @@
+{
+  "timestamp": "2025-09-07T10:02:53.214Z",
+  "config": {
+    "baseUrl": "http://localhost:8081",
+    "timeout": 10000,
+    "retries": 3
+  },
+  "results": {
+    "total": 6,
+    "passed": 6,
+    "failed": 0,
+    "errors": []
+  },
+  "summary": {
+    "successRate": 100,
+    "duration": 1757239373214
+  }
+}

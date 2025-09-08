@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI-MCP Integration Test Report</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .summary { background: #f5f5f5; padding: 20px; border-radius: 5px; margin-bottom: 20px; }
+        .suite { margin-bottom: 30px; }
+        .test { margin-left: 20px; padding: 10px; border-left: 3px solid #ddd; }
+        .passed { border-left-color: #4CAF50; }
+        .failed { border-left-color: #f44336; }
+        .skipped { border-left-color: #ff9800; }
+        .benchmark { background: #e3f2fd; padding: 15px; margin: 10px 0; border-radius: 5px; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <h1>🧪 AI-MCP Integration Test Report</h1>
+    
+    <div class="summary">
+        <h2>📊 Test Summary</h2>
+        <p><strong>Total Tests:</strong> 17</p>
+        <p><strong>Passed:</strong> 14</p>
+        <p><strong>Failed:</strong> 3</p>
+        <p><strong>Skipped:</strong> 0</p>
+        <p><strong>Success Rate:</strong> 82.4%</p>
+        <p><strong>Duration:</strong> 36s</p>
+        <p><strong>Started:</strong> 2025-09-07T10:29:08.246Z</p>
+    </div>
+    
+    <h2>🧪 Test Suites</h2>
+    
+        <div class="suite">
+            <h3>unit (4/4 passed)</h3>
+            
+                <div class="test passed">
+                    <strong>AIMCPIntegration Creation</strong> - passed (4ms)
+                    
+                </div>
+            
+                <div class="test passed">
+                    <strong>MultiModelAISystem Creation</strong> - passed (3ms)
+                    
+                </div>
+            
+                <div class="test passed">
+                    <strong>AICodeAssistant Creation</strong> - passed (2ms)
+                    
+                </div>
+            
+                <div class="test passed">
+                    <strong>IntelligentMCPRouter Creation</strong> - passed (1ms)
+                    
+                </div>
+            
+        </div>
+    
+        <div class="suite">
+            <h3>integration (2/3 passed)</h3>
+            
+                <div class="test passed">
+                    <strong>AI-MCP Basic Integration</strong> - passed (2ms)
+                    
+                </div>
+            
+                <div class="test failed">
+                    <strong>Multi-Model AI Processing</strong> - failed (3012ms)
+                    <br><span style="color: red;">Error: Multi-model AI processing failed</span>
+                </div>
+            
+                <div class="test passed">
+                    <strong>MCP Router Request Routing</strong> - passed (14ms)
+                    
+                </div>
+            
+        </div>
+    
+        <div class="suite">
+            <h3>performance (2/2 passed)</h3>
+            
+                <div class="test passed">
+                    <strong>AI Response Time</strong> - passed (11ms)
+                    
+                </div>
+            
+                <div class="test passed">
+                    <strong>MCP Router Performance</strong> - passed (15ms)
+                    
+                </div>
+            
+        </div>
+    
+        <div class="suite">
+            <h3>ai-models (2/2 passed)</h3>
+            
+                <div class="test passed">
+                    <strong>Model Selection Logic</strong> - passed (2ms)
+                    
+                </div>
+            
+                <div class="test passed">
+                    <strong>Model Fallback Mechanism</strong> - passed (1ms)
+                    
+                </div>
+            
+        </div>
+    
+        <div class="suite">
+            <h3>mcp-router (2/2 passed)</h3>
+            
+                <div class="test passed">
+                    <strong>Server Discovery</strong> - passed (21ms)
+                    
+                </div>
+            
+                <div class="test passed">
+                    <strong>Routing Strategy Selection</strong> - passed (3ms)
+                    
+                </div>
+            
+        </div>
+    
+        <div class="suite">
+            <h3>e2e (0/2 passed)</h3>
+            
+                <div class="test failed">
+                    <strong>Complete AI-MCP Workflow</strong> - failed (3016ms)
+                    <br><span style="color: red;">Error: Code completion failed</span>
+                </div>
+            
+                <div class="test failed">
+                    <strong>Multi-Step AI Processing</strong> - failed (3016ms)
+                    <br><span style="color: red;">Error: Cannot destructure property 'code' of 'request' as it is undefined.</span>
+                </div>
+            
+        </div>
+    
+        <div class="suite">
+            <h3>security (2/2 passed)</h3>
+            
+                <div class="test passed">
+                    <strong>Input Sanitization</strong> - passed (1ms)
+                    
+                </div>
+            
+                <div class="test passed">
+                    <strong>Authentication Validation</strong> - passed (0ms)
+                    
+                </div>
+            
+        </div>
+    
+    
+    <h2>🏃 Performance Benchmarks</h2>
+    
+        <div class="benchmark">
+            <h3>aiModelPerformance</h3>
+            <pre>{
+  "code-completion": {
+    "totalRuns": 10,
+    "successRate": "0.0%",
+    "averageDuration": 0,
+    "minDuration": 0,
+    "maxDuration": 1,
+    "modelDistribution": {}
+  },
+  "code-analysis": {
+    "totalRuns": 10,
+    "successRate": "0.0%",
+    "averageDuration": 3,
+    "minDuration": 0,
+    "maxDuration": 10,
+    "modelDistribution": {}
+  },
+  "code-explanation": {
+    "totalRuns": 10,
+    "successRate": "0.0%",
+    "averageDuration": 0,
+    "minDuration": 0,
+    "maxDuration": 1,
+    "modelDistribution": {}
+  }
+}</pre>
+        </div>
+    
+        <div class="benchmark">
+            <h3>mcpRouterPerformance</h3>
+            <pre>{
+  "git-operation": {
+    "totalRuns": 20,
+    "successRate": "0.0%",
+    "averageDuration": 2,
+    "serverDistribution": {},
+    "strategyDistribution": {}
+  },
+  "file-operation": {
+    "totalRuns": 20,
+    "successRate": "0.0%",
+    "averageDuration": 1,
+    "serverDistribution": {},
+    "strategyDistribution": {}
+  },
+  "ai-request": {
+    "totalRuns": 20,
+    "successRate": "0.0%",
+    "averageDuration": 1,
+    "serverDistribution": {},
+    "strategyDistribution": {}
+  }
+}</pre>
+        </div>
+    
+        <div class="benchmark">
+            <h3>integrationLatency</h3>
+            <pre>{
+  "simple-request": {
+    "samples": 50,
+    "averageLatency": 0,
+    "minLatency": 0,
+    "maxLatency": 1,
+    "p50": 0,
+    "p95": 1,
+    "p99": 1
+  },
+  "complex-request": {
+    "samples": 50,
+    "averageLatency": 0,
+    "minLatency": 0,
+    "maxLatency": 1,
+    "p50": 0,
+    "p95": 1,
+    "p99": 1
+  },
+  "multi-step-request": {
+    "samples": 50,
+    "averageLatency": 0,
+    "minLatency": 0,
+    "maxLatency": 1,
+    "p50": 0,
+    "p95": 1,
+    "p99": 1
+  }
+}</pre>
+        </div>
+    
+        <div class="benchmark">
+            <h3>throughputTest</h3>
+            <pre>{
+  "concurrency-1": {
+    "totalRequests": 1,
+    "successfulRequests": 1,
+    "duration": 0,
+    "throughput": null,
+    "successRate": "100.0%"
+  },
+  "concurrency-5": {
+    "totalRequests": 5,
+    "successfulRequests": 5,
+    "duration": 1,
+    "throughput": 5000,
+    "successRate": "100.0%"
+  },
+  "concurrency-10": {
+    "totalRequests": 10,
+    "successfulRequests": 10,
+    "duration": 8,
+    "throughput": 1250,
+    "successRate": "100.0%"
+  },
+  "concurrency-20": {
+    "totalRequests": 20,
+    "successfulRequests": 20,
+    "duration": 6,
+    "throughput": 3333,
+    "successRate": "100.0%"
+  },
+  "concurrency-50": {
+    "totalRequests": 50,
+    "successfulRequests": 50,
+    "duration": 5,
+    "throughput": 10000,
+    "successRate": "100.0%"
+  }
+}</pre>
+        </div>
+    
+        <div class="benchmark">
+            <h3>memoryUsage</h3>
+            <pre>{
+  "baseline": {
+    "rss": 62,
+    "heapTotal": 13,
+    "heapUsed": 11,
+    "external": 3
+  },
+  "afterCreation": {
+    "rss": 62,
+    "heapTotal": 13,
+    "heapUsed": 10,
+    "external": 3
+  },
+  "afterProcessing": {
+    "rss": 62,
+    "heapTotal": 13,
+    "heapUsed": 10,
+    "external": 3
+  },
+  "afterGC": {
+    "rss": 62,
+    "heapTotal": 13,
+    "heapUsed": 10,
+    "external": 3
+  },
+  "memoryIncrease": {
+    "creation": -1,
+    "processing": 0,
+    "retained": -1
+  }
+}</pre>
+        </div>
+    
+        <div class="benchmark">
+            <h3>concurrencyTest</h3>
+            <pre>{
+  "low-concurrency": {
+    "concurrentWorkers": 5,
+    "plannedDuration": 5000,
+    "actualDuration": 5005,
+    "totalRequests": 1527,
+    "successfulRequests": 1527,
+    "failedRequests": 0,
+    "averageRequestsPerSecond": 305,
+    "successRate": "100.0%",
+    "averageResponseTime": 0
+  },
+  "medium-concurrency": {
+    "concurrentWorkers": 20,
+    "plannedDuration": 10000,
+    "actualDuration": 10012,
+    "totalRequests": 11557,
+    "successfulRequests": 11557,
+    "failedRequests": 0,
+    "averageRequestsPerSecond": 1154,
+    "successRate": "100.0%",
+    "averageResponseTime": 0
+  },
+  "high-concurrency": {
+    "concurrentWorkers": 50,
+    "plannedDuration": 15000,
+    "actualDuration": 15018,
+    "totalRequests": 33165,
+    "successfulRequests": 33165,
+    "failedRequests": 0,
+    "averageRequestsPerSecond": 2208,
+    "successRate": "100.0%",
+    "averageResponseTime": 0
+  }
+}</pre>
+        </div>
+    
+    
+    
+    
+    <footer style="margin-top: 50px; text-align: center; color: #666;">
+        Generated by NEXUS IDE AI-MCP Testing Framework
+    </footer>
+</body>
+</html>

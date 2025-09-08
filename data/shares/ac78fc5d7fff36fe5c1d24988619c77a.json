@@ -1,0 +1,16 @@
+{
+  "id": "ac78fc5d7fff36fe5c1d24988619c77a",
+  "dataId": "e5edf4b0f9c26a7e",
+  "recipients": [
+    "user123",
+    "admin"
+  ],
+  "permissions": {
+    "read": true,
+    "write": false,
+    "delete": false,
+    "share": true
+  },
+  "timestamp": "2025-09-06T10:13:56.081Z",
+  "expiresAt": null
+}

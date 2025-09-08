@@ -126,123 +126,75 @@ function SocialPlatforms() {
         setCredentials({ username: '', accessToken: '' });
     };
     if (loading) {
-        return (<div className="flex items-center justify-center p-8">
-        <lucide_react_1.Loader2 className="w-8 h-8 animate-spin"/>
-      </div>);
+        return (react_1.default.createElement("div", { className: "flex items-center justify-center p-8" },
+            react_1.default.createElement(lucide_react_1.Loader2, { className: "w-8 h-8 animate-spin" })));
     }
-    return (<div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-2xl font-bold">{t('social.platforms.title')}</h2>
-          <p className="text-muted-foreground">
-            {t('social.platforms.description')}
-          </p>
-        </div>
-        <button_1.Button onClick={loadPlatforms} variant="outline" size="sm">
-          <lucide_react_1.RefreshCw className="w-4 h-4 mr-2"/>
-          {t('common.refresh')}
-        </button_1.Button>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {platforms.map((platform) => {
+    return (react_1.default.createElement("div", { className: "space-y-6" },
+        react_1.default.createElement("div", { className: "flex items-center justify-between" },
+            react_1.default.createElement("div", null,
+                react_1.default.createElement("h2", { className: "text-2xl font-bold" }, t('social.platforms.title')),
+                react_1.default.createElement("p", { className: "text-muted-foreground" }, t('social.platforms.description'))),
+            react_1.default.createElement(button_1.Button, { onClick: loadPlatforms, variant: "outline", size: "sm" },
+                react_1.default.createElement(lucide_react_1.RefreshCw, { className: "w-4 h-4 mr-2" }),
+                t('common.refresh'))),
+        react_1.default.createElement("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" }, platforms.map((platform) => {
             const IconComponent = platformIcons[platform.icon] || lucide_react_1.Link;
-            return (<card_1.Card key={platform.id} className="relative">
-              <card_1.CardHeader className="pb-3">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-3">
-                    <div className="p-2 rounded-lg" style={{ backgroundColor: `${platform.color}20` }}>
-                      <IconComponent className="w-6 h-6" style={{ color: platform.color }}/>
-                    </div>
-                    <div>
-                      <card_1.CardTitle className="text-lg">{platform.name}</card_1.CardTitle>
-                      {platform.isConnected && platform.username && (<p className="text-sm text-muted-foreground">
-                          @{platform.username}
-                        </p>)}
-                    </div>
-                  </div>
-                  <badge_1.Badge variant={platform.isConnected ? 'default' : 'secondary'} className={platform.isConnected ? 'bg-green-100 text-green-800' : ''}>
-                    {platform.isConnected ? (<lucide_react_1.CheckCircle className="w-3 h-3 mr-1"/>) : (<lucide_react_1.XCircle className="w-3 h-3 mr-1"/>)}
-                    {platform.isConnected ? t('social.connected') : t('social.disconnected')}
-                  </badge_1.Badge>
-                </div>
-              </card_1.CardHeader>
-
-              <card_1.CardContent className="space-y-4">
-                {platform.isConnected ? (<>
-                    <div className="grid grid-cols-2 gap-4 text-sm">
-                      {platform.followers && (<div className="flex items-center space-x-2">
-                          <lucide_react_1.Users className="w-4 h-4 text-muted-foreground"/>
-                          <span>{platform.followers.toLocaleString()} {t('social.followers')}</span>
-                        </div>)}
-                      {platform.lastSync && (<div className="flex items-center space-x-2">
-                          <lucide_react_1.Calendar className="w-4 h-4 text-muted-foreground"/>
-                          <span>{new Date(platform.lastSync).toLocaleDateString()}</span>
-                        </div>)}
-                    </div>
-
-                    <separator_1.Separator />
-
-                    <div className="flex space-x-2">
-                      <button_1.Button onClick={() => handleSync(platform.id)} disabled={syncing === platform.id} variant="outline" size="sm" className="flex-1">
-                        {syncing === platform.id ? (<lucide_react_1.Loader2 className="w-4 h-4 mr-2 animate-spin"/>) : (<lucide_react_1.RefreshCw className="w-4 h-4 mr-2"/>)}
-                        {t('social.sync')}
-                      </button_1.Button>
-                      <button_1.Button onClick={() => handleDisconnect(platform.id)} variant="outline" size="sm" className="flex-1">
-                        <lucide_react_1.Unlink className="w-4 h-4 mr-2"/>
-                        {t('social.disconnect')}
-                      </button_1.Button>
-                    </div>
-                  </>) : (<button_1.Button onClick={() => openConnectDialog(platform)} className="w-full" style={{ backgroundColor: platform.color }}>
-                    <lucide_react_1.Link className="w-4 h-4 mr-2"/>
-                    {t('social.connect')}
-                  </button_1.Button>)}
-              </card_1.CardContent>
-            </card_1.Card>);
-        })}
-      </div>
-
-      {/* Connect Dialog */}
-      <dialog_1.Dialog open={connectDialog.open} onOpenChange={(open) => setConnectDialog({ open })}>
-        <dialog_1.DialogContent>
-          <dialog_1.DialogHeader>
-            <dialog_1.DialogTitle>
-              {t('social.connect')} {connectDialog.platform?.name}
-            </dialog_1.DialogTitle>
-            <dialog_1.DialogDescription>
-              {t('social.connectDescription')}
-            </dialog_1.DialogDescription>
-          </dialog_1.DialogHeader>
-
-          <div className="space-y-4">
-            <alert_1.Alert>
-              <alert_1.AlertDescription>
-                {t('social.connectNote')}
-              </alert_1.AlertDescription>
-            </alert_1.Alert>
-
-            <div className="space-y-2">
-              <label_1.Label htmlFor="username">{t('social.username')}</label_1.Label>
-              <input_1.Input id="username" value={credentials.username} onChange={(e) => setCredentials(prev => ({ ...prev, username: e.target.value }))} placeholder={t('social.usernamePlaceholder')}/>
-            </div>
-
-            <div className="space-y-2">
-              <label_1.Label htmlFor="accessToken">{t('social.accessToken')}</label_1.Label>
-              <input_1.Input id="accessToken" type="password" value={credentials.accessToken} onChange={(e) => setCredentials(prev => ({ ...prev, accessToken: e.target.value }))} placeholder={t('social.accessTokenPlaceholder')}/>
-            </div>
-          </div>
-
-          <dialog_1.DialogFooter>
-            <button_1.Button variant="outline" onClick={() => setConnectDialog({ open: false })}>
-              {t('common.cancel')}
-            </button_1.Button>
-            <button_1.Button onClick={handleConnect} disabled={connecting || !credentials.username || !credentials.accessToken}>
-              {connecting ? (<lucide_react_1.Loader2 className="w-4 h-4 mr-2 animate-spin"/>) : (<lucide_react_1.Link className="w-4 h-4 mr-2"/>)}
-              {t('social.connect')}
-            </button_1.Button>
-          </dialog_1.DialogFooter>
-        </dialog_1.DialogContent>
-      </dialog_1.Dialog>
-    </div>);
+            return (react_1.default.createElement(card_1.Card, { key: platform.id, className: "relative" },
+                react_1.default.createElement(card_1.CardHeader, { className: "pb-3" },
+                    react_1.default.createElement("div", { className: "flex items-center justify-between" },
+                        react_1.default.createElement("div", { className: "flex items-center space-x-3" },
+                            react_1.default.createElement("div", { className: "p-2 rounded-lg", style: { backgroundColor: `${platform.color}20` } },
+                                react_1.default.createElement(IconComponent, { className: "w-6 h-6", style: { color: platform.color } })),
+                            react_1.default.createElement("div", null,
+                                react_1.default.createElement(card_1.CardTitle, { className: "text-lg" }, platform.name),
+                                platform.isConnected && platform.username && (react_1.default.createElement("p", { className: "text-sm text-muted-foreground" },
+                                    "@",
+                                    platform.username)))),
+                        react_1.default.createElement(badge_1.Badge, { variant: platform.isConnected ? 'default' : 'secondary', className: platform.isConnected ? 'bg-green-100 text-green-800' : '' },
+                            platform.isConnected ? (react_1.default.createElement(lucide_react_1.CheckCircle, { className: "w-3 h-3 mr-1" })) : (react_1.default.createElement(lucide_react_1.XCircle, { className: "w-3 h-3 mr-1" })),
+                            platform.isConnected ? t('social.connected') : t('social.disconnected')))),
+                react_1.default.createElement(card_1.CardContent, { className: "space-y-4" }, platform.isConnected ? (react_1.default.createElement(react_1.default.Fragment, null,
+                    react_1.default.createElement("div", { className: "grid grid-cols-2 gap-4 text-sm" },
+                        platform.followers && (react_1.default.createElement("div", { className: "flex items-center space-x-2" },
+                            react_1.default.createElement(lucide_react_1.Users, { className: "w-4 h-4 text-muted-foreground" }),
+                            react_1.default.createElement("span", null,
+                                platform.followers.toLocaleString(),
+                                " ",
+                                t('social.followers')))),
+                        platform.lastSync && (react_1.default.createElement("div", { className: "flex items-center space-x-2" },
+                            react_1.default.createElement(lucide_react_1.Calendar, { className: "w-4 h-4 text-muted-foreground" }),
+                            react_1.default.createElement("span", null, new Date(platform.lastSync).toLocaleDateString())))),
+                    react_1.default.createElement(separator_1.Separator, null),
+                    react_1.default.createElement("div", { className: "flex space-x-2" },
+                        react_1.default.createElement(button_1.Button, { onClick: () => handleSync(platform.id), disabled: syncing === platform.id, variant: "outline", size: "sm", className: "flex-1" },
+                            syncing === platform.id ? (react_1.default.createElement(lucide_react_1.Loader2, { className: "w-4 h-4 mr-2 animate-spin" })) : (react_1.default.createElement(lucide_react_1.RefreshCw, { className: "w-4 h-4 mr-2" })),
+                            t('social.sync')),
+                        react_1.default.createElement(button_1.Button, { onClick: () => handleDisconnect(platform.id), variant: "outline", size: "sm", className: "flex-1" },
+                            react_1.default.createElement(lucide_react_1.Unlink, { className: "w-4 h-4 mr-2" }),
+                            t('social.disconnect'))))) : (react_1.default.createElement(button_1.Button, { onClick: () => openConnectDialog(platform), className: "w-full", style: { backgroundColor: platform.color } },
+                    react_1.default.createElement(lucide_react_1.Link, { className: "w-4 h-4 mr-2" }),
+                    t('social.connect'))))));
+        })),
+        react_1.default.createElement(dialog_1.Dialog, { open: connectDialog.open, onOpenChange: (open) => setConnectDialog({ open }) },
+            react_1.default.createElement(dialog_1.DialogContent, null,
+                react_1.default.createElement(dialog_1.DialogHeader, null,
+                    react_1.default.createElement(dialog_1.DialogTitle, null,
+                        t('social.connect'),
+                        " ",
+                        connectDialog.platform?.name),
+                    react_1.default.createElement(dialog_1.DialogDescription, null, t('social.connectDescription'))),
+                react_1.default.createElement("div", { className: "space-y-4" },
+                    react_1.default.createElement(alert_1.Alert, null,
+                        react_1.default.createElement(alert_1.AlertDescription, null, t('social.connectNote'))),
+                    react_1.default.createElement("div", { className: "space-y-2" },
+                        react_1.default.createElement(label_1.Label, { htmlFor: "username" }, t('social.username')),
+                        react_1.default.createElement(input_1.Input, { id: "username", value: credentials.username, onChange: (e) => setCredentials(prev => ({ ...prev, username: e.target.value })), placeholder: t('social.usernamePlaceholder') })),
+                    react_1.default.createElement("div", { className: "space-y-2" },
+                        react_1.default.createElement(label_1.Label, { htmlFor: "accessToken" }, t('social.accessToken')),
+                        react_1.default.createElement(input_1.Input, { id: "accessToken", type: "password", value: credentials.accessToken, onChange: (e) => setCredentials(prev => ({ ...prev, accessToken: e.target.value })), placeholder: t('social.accessTokenPlaceholder') }))),
+                react_1.default.createElement(dialog_1.DialogFooter, null,
+                    react_1.default.createElement(button_1.Button, { variant: "outline", onClick: () => setConnectDialog({ open: false }) }, t('common.cancel')),
+                    react_1.default.createElement(button_1.Button, { onClick: handleConnect, disabled: connecting || !credentials.username || !credentials.accessToken },
+                        connecting ? (react_1.default.createElement(lucide_react_1.Loader2, { className: "w-4 h-4 mr-2 animate-spin" })) : (react_1.default.createElement(lucide_react_1.Link, { className: "w-4 h-4 mr-2" })),
+                        t('social.connect')))))));
 }
-//# sourceMappingURL=social-platforms.js.map

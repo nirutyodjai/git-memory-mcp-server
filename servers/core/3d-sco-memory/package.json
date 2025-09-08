@@ -1,0 +1,11 @@
+{
+  "name": "3d-sco-memory",
+  "version": "1.0.0",
+  "description": "3D SCO Memory Server",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "ISC"
+}

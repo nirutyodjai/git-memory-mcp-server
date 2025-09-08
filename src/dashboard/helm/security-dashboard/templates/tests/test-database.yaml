@@ -1,0 +1,200 @@
+{{- if .Values.postgresql.enabled }}
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "nexus-ide.fullname" . }}-test-database"
+  labels:
+    {{- include "nexus-ide.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+    "helm.sh/hook-weight": "2"
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+spec:
+  restartPolicy: Never
+  containers:
+    - name: postgres-test
+      image: postgres:15-alpine
+      env:
+        - name: PGPASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.postgresql.auth.existingSecret | default (printf "%s-postgresql" (include "nexus-ide.fullname" .)) }}
+              key: {{ .Values.postgresql.auth.secretKeys.adminPasswordKey | default "postgres-password" }}
+        - name: PGHOST
+          value: {{ include "nexus-ide.postgresql.fullname" . }}
+        - name: PGPORT
+          value: "{{ .Values.postgresql.primary.service.ports.postgresql }}"
+        - name: PGUSER
+          value: {{ .Values.postgresql.auth.username | default "postgres" }}
+        - name: PGDATABASE
+          value: {{ .Values.postgresql.auth.database | default "nexus_ide" }}
+      command:
+        - /bin/bash
+        - -c
+        - |
+          echo "Testing PostgreSQL connection..."
+          pg_isready -h $PGHOST -p $PGPORT -U $PGUSER
+          if [ $? -eq 0 ]; then
+            echo "✓ PostgreSQL connection successful"
+            psql -h $PGHOST -p $PGPORT -U $PGUSER -d $PGDATABASE -c "SELECT version();"
+            echo "✓ PostgreSQL query test successful"
+          else
+            echo "✗ PostgreSQL connection failed"
+            exit 1
+          fi
+      resources:
+        limits:
+          cpu: 100m
+          memory: 128Mi
+        requests:
+          cpu: 50m
+          memory: 64Mi
+  {{- with .Values.nodeSelector }}
+  nodeSelector:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.affinity }}
+  affinity:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.tolerations }}
+  tolerations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+{{- end }}
+---
+{{- if .Values.redis.enabled }}
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "nexus-ide.fullname" . }}-test-redis"
+  labels:
+    {{- include "nexus-ide.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+    "helm.sh/hook-weight": "2"
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+spec:
+  restartPolicy: Never
+  containers:
+    - name: redis-test
+      image: redis:7-alpine
+      env:
+        {{- if .Values.redis.auth.enabled }}
+        - name: REDISCLI_AUTH
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.redis.auth.existingSecret | default (printf "%s-redis" (include "nexus-ide.fullname" .)) }}
+              key: {{ .Values.redis.auth.existingSecretPasswordKey | default "redis-password" }}
+        {{- end }}
+      command:
+        - /bin/sh
+        - -c
+        - |
+          echo "Testing Redis connection..."
+          {{- if .Values.redis.auth.enabled }}
+          redis-cli -h {{ include "nexus-ide.redis.fullname" . }}-master -p {{ .Values.redis.master.service.ports.redis }} ping
+          {{- else }}
+          redis-cli -h {{ include "nexus-ide.redis.fullname" . }}-master -p {{ .Values.redis.master.service.ports.redis }} ping
+          {{- end }}
+          if [ $? -eq 0 ]; then
+            echo "✓ Redis connection successful"
+            {{- if .Values.redis.auth.enabled }}
+            redis-cli -h {{ include "nexus-ide.redis.fullname" . }}-master -p {{ .Values.redis.master.service.ports.redis }} set test-key "test-value"
+            redis-cli -h {{ include "nexus-ide.redis.fullname" . }}-master -p {{ .Values.redis.master.service.ports.redis }} get test-key
+            redis-cli -h {{ include "nexus-ide.redis.fullname" . }}-master -p {{ .Values.redis.master.service.ports.redis }} del test-key
+            {{- else }}
+            redis-cli -h {{ include "nexus-ide.redis.fullname" . }}-master -p {{ .Values.redis.master.service.ports.redis }} set test-key "test-value"
+            redis-cli -h {{ include "nexus-ide.redis.fullname" . }}-master -p {{ .Values.redis.master.service.ports.redis }} get test-key
+            redis-cli -h {{ include "nexus-ide.redis.fullname" . }}-master -p {{ .Values.redis.master.service.ports.redis }} del test-key
+            {{- end }}
+            echo "✓ Redis read/write test successful"
+          else
+            echo "✗ Redis connection failed"
+            exit 1
+          fi
+      resources:
+        limits:
+          cpu: 100m
+          memory: 128Mi
+        requests:
+          cpu: 50m
+          memory: 64Mi
+  {{- with .Values.nodeSelector }}
+  nodeSelector:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.affinity }}
+  affinity:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.tolerations }}
+  tolerations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+{{- end }}
+---
+{{- if .Values.mongodb.enabled }}
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "nexus-ide.fullname" . }}-test-mongodb"
+  labels:
+    {{- include "nexus-ide.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+    "helm.sh/hook-weight": "2"
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+spec:
+  restartPolicy: Never
+  containers:
+    - name: mongodb-test
+      image: mongo:7
+      env:
+        - name: MONGODB_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.mongodb.auth.existingSecret | default (printf "%s-mongodb" (include "nexus-ide.fullname" .)) }}
+              key: {{ .Values.mongodb.auth.rootPasswordKey | default "mongodb-root-password" }}
+      command:
+        - /bin/bash
+        - -c
+        - |
+          echo "Testing MongoDB connection..."
+          mongosh --host {{ include "nexus-ide.mongodb.fullname" . }}:{{ .Values.mongodb.service.ports.mongodb }} \
+                  --username {{ .Values.mongodb.auth.rootUser | default "root" }} \
+                  --password $MONGODB_ROOT_PASSWORD \
+                  --authenticationDatabase admin \
+                  --eval "db.adminCommand('ping')"
+          if [ $? -eq 0 ]; then
+            echo "✓ MongoDB connection successful"
+            mongosh --host {{ include "nexus-ide.mongodb.fullname" . }}:{{ .Values.mongodb.service.ports.mongodb }} \
+                    --username {{ .Values.mongodb.auth.rootUser | default "root" }} \
+                    --password $MONGODB_ROOT_PASSWORD \
+                    --authenticationDatabase admin \
+                    --eval "db.test.insertOne({test: 'value', timestamp: new Date()}); db.test.findOne(); db.test.deleteMany({});"
+            echo "✓ MongoDB read/write test successful"
+          else
+            echo "✗ MongoDB connection failed"
+            exit 1
+          fi
+      resources:
+        limits:
+          cpu: 200m
+          memory: 256Mi
+        requests:
+          cpu: 100m
+          memory: 128Mi
+  {{- with .Values.nodeSelector }}
+  nodeSelector:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.affinity }}
+  affinity:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.tolerations }}
+  tolerations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+{{- end }}

@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXUS IDE - Security Dashboard</title>
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    
+    <!-- External CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/chart.js/3.9.1/chart.min.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link href="/static/css/dashboard.css" rel="stylesheet">
+    <link href="/static/css/components.css" rel="stylesheet">
+    <link href="/static/css/themes.css" rel="stylesheet">
+</head>
+<body class="theme-dark">
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+            <div class="loading-text">Loading Security Dashboard...</div>
+        </div>
+    </div>
+    
+    <!-- Login Modal -->
+    <div id="login-modal" class="modal active">
+        <div class="modal-content login-form">
+            <div class="login-header">
+                <div class="logo">
+                    <i class="fas fa-shield-alt"></i>
+                    <h1>NEXUS IDE</h1>
+                    <p>Security Dashboard</p>
+                </div>
+            </div>
+            
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="username">
+                        <i class="fas fa-user"></i>
+                        Username
+                    </label>
+                    <input type="text" id="username" name="username" required autocomplete="username">
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">
+                        <i class="fas fa-lock"></i>
+                        Password
+                    </label>
+                    <input type="password" id="password" name="password" required autocomplete="current-password">
+                </div>
+                
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block">
+                        <i class="fas fa-sign-in-alt"></i>
+                        Sign In
+                    </button>
+                </div>
+                
+                <div id="login-error" class="error-message" style="display: none;"></div>
+                
+                <div class="login-info">
+                    <p><strong>Demo Credentials:</strong></p>
+                    <p>Admin: admin / password</p>
+                    <p>Security: security / password</p>
+                    <p>Viewer: viewer / password</p>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Main Dashboard -->
+    <div id="dashboard" class="dashboard" style="display: none;">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <div class="header-left">
+                <div class="logo">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>NEXUS Security</span>
+                </div>
+                
+                <nav class="main-nav">
+                    <a href="#overview" class="nav-item active" data-section="overview">
+                        <i class="fas fa-tachometer-alt"></i>
+                        Overview
+                    </a>
+                    <a href="#monitoring" class="nav-item" data-section="monitoring">
+                        <i class="fas fa-chart-line"></i>
+                        Monitoring
+                    </a>
+                    <a href="#audit" class="nav-item" data-section="audit">
+                        <i class="fas fa-clipboard-check"></i>
+                        Audit
+                    </a>
+                    <a href="#compliance" class="nav-item" data-section="compliance">
+                        <i class="fas fa-certificate"></i>
+                        Compliance
+                    </a>
+                    <a href="#threats" class="nav-item" data-section="threats">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        Threats
+                    </a>
+                    <a href="#config" class="nav-item" data-section="config">
+                        <i class="fas fa-cog"></i>
+                        Config
+                    </a>
+                </nav>
+            </div>
+            
+            <div class="header-right">
+                <div class="header-actions">
+                    <button class="btn btn-icon" id="notifications-btn" title="Notifications">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge" id="notification-count">0</span>
+                    </button>
+                    
+                    <button class="btn btn-icon" id="theme-toggle" title="Toggle Theme">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    
+                    <button class="btn btn-icon" id="fullscreen-btn" title="Fullscreen">
+                        <i class="fas fa-expand"></i>
+                    </button>
+                </div>
+                
+                <div class="user-menu">
+                    <button class="user-avatar" id="user-menu-btn">
+                        <i class="fas fa-user-circle"></i>
+                        <span id="username-display">User</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    
+                    <div class="dropdown-menu" id="user-dropdown">
+                        <a href="#profile" class="dropdown-item">
+                            <i class="fas fa-user"></i>
+                            Profile
+                        </a>
+                        <a href="#settings" class="dropdown-item">
+                            <i class="fas fa-cog"></i>
+                            Settings
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#logout" class="dropdown-item" id="logout-btn">
+                            <i class="fas fa-sign-out-alt"></i>
+                            Logout
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </header>
+        
+        <!-- Main Content -->
+        <main class="dashboard-main">
+            <!-- Overview Section -->
+            <section id="overview-section" class="dashboard-section active">
+                <div class="section-header">
+                    <h2><i class="fas fa-tachometer-alt"></i> Security Overview</h2>
+                    <div class="section-actions">
+                        <button class="btn btn-secondary" id="refresh-overview">
+                            <i class="fas fa-sync-alt"></i>
+                            Refresh
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Status Cards -->
+                <div class="stats-grid">
+                    <div class="stat-card status-card">
+                        <div class="stat-icon status-operational">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>System Status</h3>
+                            <div class="stat-value" id="system-status">Operational</div>
+                            <div class="stat-meta">Uptime: <span id="system-uptime">--</span></div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card threat-card">
+                        <div class="stat-icon threat-low">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>Threat Level</h3>
+                            <div class="stat-value" id="threat-level">Low</div>
+                            <div class="stat-meta">Active: <span id="active-threats">0</span></div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card compliance-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-certificate"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>Compliance Score</h3>
+                            <div class="stat-value" id="compliance-score">85%</div>
+                            <div class="stat-meta">Last audit: <span id="last-audit">--</span></div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card monitoring-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>Active Monitoring</h3>
+                            <div class="stat-value" id="active-alerts">0</div>
+                            <div class="stat-meta">Connected: <span id="connected-clients">0</span></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Charts Row -->
+                <div class="charts-row">
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h3>Security Metrics</h3>
+                            <div class="chart-controls">
+                                <select id="metrics-timeframe">
+                                    <option value="1h">Last Hour</option>
+                                    <option value="24h" selected>Last 24 Hours</option>
+                                    <option value="7d">Last 7 Days</option>
+                                    <option value="30d">Last 30 Days</option>
+                                </select>
+                            </div>
+                        </div>
+                        <canvas id="security-metrics-chart"></canvas>
+                    </div>
+                    
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h3>Threat Distribution</h3>
+                        </div>
+                        <canvas id="threat-distribution-chart"></canvas>
+                    </div>
+                </div>
+                
+                <!-- Recent Activity -->
+                <div class="activity-section">
+                    <div class="activity-header">
+                        <h3>Recent Security Events</h3>
+                        <div class="activity-filters">
+                            <button class="filter-btn active" data-filter="all">All</button>
+                            <button class="filter-btn" data-filter="critical">Critical</button>
+                            <button class="filter-btn" data-filter="high">High</button>
+                            <button class="filter-btn" data-filter="medium">Medium</button>
+                        </div>
+                    </div>
+                    
+                    <div class="activity-list" id="recent-events">
+                        <!-- Events will be populated by JavaScript -->
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Monitoring Section -->
+            <section id="monitoring-section" class="dashboard-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-chart-line"></i> Real-time Monitoring</h2>
+                    <div class="section-actions">
+                        <button class="btn btn-secondary" id="export-metrics">
+                            <i class="fas fa-download"></i>
+                            Export
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Real-time Metrics -->
+                <div class="monitoring-grid">
+                    <div class="metric-panel">
+                        <h3>System Performance</h3>
+                        <div class="metric-item">
+                            <span class="metric-label">CPU Usage</span>
+                            <div class="metric-bar">
+                                <div class="metric-fill" id="cpu-usage" style="width: 0%"></div>
+                            </div>
+                            <span class="metric-value" id="cpu-value">0%</span>
+                        </div>
+                        
+                        <div class="metric-item">
+                            <span class="metric-label">Memory Usage</span>
+                            <div class="metric-bar">
+                                <div class="metric-fill" id="memory-usage" style="width: 0%"></div>
+                            </div>
+                            <span class="metric-value" id="memory-value">0%</span>
+                        </div>
+                        
+                        <div class="metric-item">
+                            <span class="metric-label">Disk Usage</span>
+                            <div class="metric-bar">
+                                <div class="metric-fill" id="disk-usage" style="width: 0%"></div>
+                            </div>
+                            <span class="metric-value" id="disk-value">0%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="metric-panel">
+                        <h3>Network Activity</h3>
+                        <canvas id="network-chart"></canvas>
+                    </div>
+                    
+                    <div class="metric-panel">
+                        <h3>Security Events</h3>
+                        <canvas id="events-chart"></canvas>
+                    </div>
+                </div>
+                
+                <!-- Live Logs -->
+                <div class="logs-section">
+                    <div class="logs-header">
+                        <h3>Live Security Logs</h3>
+                        <div class="logs-controls">
+                            <select id="log-level-filter">
+                                <option value="all">All Levels</option>
+                                <option value="error">Error</option>
+                                <option value="warn">Warning</option>
+                                <option value="info">Info</option>
+                            </select>
+                            <button class="btn btn-sm" id="clear-logs">
+                                <i class="fas fa-trash"></i>
+                                Clear
+                            </button>
+                            <button class="btn btn-sm" id="pause-logs">
+                                <i class="fas fa-pause"></i>
+                                Pause
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="logs-container" id="logs-container">
+                        <!-- Logs will be populated by JavaScript -->
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Audit Section -->
+            <section id="audit-section" class="dashboard-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-clipboard-check"></i> Security Audit</h2>
+                    <div class="section-actions">
+                        <button class="btn btn-primary" id="run-audit-btn">
+                            <i class="fas fa-play"></i>
+                            Run Audit
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Audit Controls -->
+                <div class="audit-controls">
+                    <div class="control-group">
+                        <label>Audit Type:</label>
+                        <select id="audit-type">
+                            <option value="full">Full Security Audit</option>
+                            <option value="quick">Quick Scan</option>
+                            <option value="compliance">Compliance Check</option>
+                            <option value="vulnerability">Vulnerability Scan</option>
+                        </select>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label>Frameworks:</label>
+                        <div class="checkbox-group">
+                            <label><input type="checkbox" value="soc2" checked> SOC 2</label>
+                            <label><input type="checkbox" value="iso27001" checked> ISO 27001</label>
+                            <label><input type="checkbox" value="gdpr"> GDPR</label>
+                            <label><input type="checkbox" value="hipaa"> HIPAA</label>
+                            <label><input type="checkbox" value="pci"> PCI DSS</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Audit Progress -->
+                <div class="audit-progress" id="audit-progress" style="display: none;">
+                    <div class="progress-header">
+                        <h3>Audit in Progress</h3>
+                        <div class="progress-time" id="audit-time">00:00</div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="audit-progress-fill"></div>
+                    </div>
+                    <div class="progress-status" id="audit-status">Initializing...</div>
+                </div>
+                
+                <!-- Audit Results -->
+                <div class="audit-results" id="audit-results">
+                    <div class="results-header">
+                        <h3>Latest Audit Results</h3>
+                        <div class="results-meta">
+                            <span id="audit-date">No recent audits</span>
+                        </div>
+                    </div>
+                    
+                    <div class="results-summary">
+                        <div class="summary-item">
+                            <div class="summary-icon critical">
+                                <i class="fas fa-exclamation-circle"></i>
+                            </div>
+                            <div class="summary-content">
+                                <div class="summary-value" id="critical-findings">0</div>
+                                <div class="summary-label">Critical</div>
+                            </div>
+                        </div>
+                        
+                        <div class="summary-item">
+                            <div class="summary-icon high">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                            <div class="summary-content">
+                                <div class="summary-value" id="high-findings">0</div>
+                                <div class="summary-label">High</div>
+                            </div>
+                        </div>
+                        
+                        <div class="summary-item">
+                            <div class="summary-icon medium">
+                                <i class="fas fa-exclamation"></i>
+                            </div>
+                            <div class="summary-content">
+                                <div class="summary-value" id="medium-findings">0</div>
+                                <div class="summary-label">Medium</div>
+                            </div>
+                        </div>
+                        
+                        <div class="summary-item">
+                            <div class="summary-icon low">
+                                <i class="fas fa-info-circle"></i>
+                            </div>
+                            <div class="summary-content">
+                                <div class="summary-value" id="low-findings">0</div>
+                                <div class="summary-label">Low</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="results-details" id="audit-details">
+                        <!-- Detailed results will be populated by JavaScript -->
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Compliance Section -->
+            <section id="compliance-section" class="dashboard-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-certificate"></i> Compliance Status</h2>
+                    <div class="section-actions">
+                        <button class="btn btn-secondary" id="generate-compliance-report">
+                            <i class="fas fa-file-alt"></i>
+                            Generate Report
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Compliance Overview -->
+                <div class="compliance-overview">
+                    <div class="compliance-score">
+                        <div class="score-circle">
+                            <canvas id="compliance-score-chart"></canvas>
+                            <div class="score-text">
+                                <span class="score-value" id="overall-compliance-score">85</span>
+                                <span class="score-label">%</span>
+                            </div>
+                        </div>
+                        <h3>Overall Compliance Score</h3>
+                    </div>
+                </div>
+                
+                <!-- Framework Status -->
+                <div class="frameworks-grid">
+                    <div class="framework-card" data-framework="soc2">
+                        <div class="framework-header">
+                            <h4>SOC 2</h4>
+                            <div class="framework-status compliant">
+                                <i class="fas fa-check-circle"></i>
+                                Compliant
+                            </div>
+                        </div>
+                        <div class="framework-score">90%</div>
+                        <div class="framework-meta">Last assessment: Jan 15, 2024</div>
+                    </div>
+                    
+                    <div class="framework-card" data-framework="iso27001">
+                        <div class="framework-header">
+                            <h4>ISO 27001</h4>
+                            <div class="framework-status compliant">
+                                <i class="fas fa-check-circle"></i>
+                                Compliant
+                            </div>
+                        </div>
+                        <div class="framework-score">88%</div>
+                        <div class="framework-meta">Last assessment: Jan 10, 2024</div>
+                    </div>
+                    
+                    <div class="framework-card" data-framework="gdpr">
+                        <div class="framework-header">
+                            <h4>GDPR</h4>
+                            <div class="framework-status partial">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                Partial
+                            </div>
+                        </div>
+                        <div class="framework-score">82%</div>
+                        <div class="framework-meta">Last assessment: Jan 12, 2024</div>
+                    </div>
+                    
+                    <div class="framework-card" data-framework="hipaa">
+                        <div class="framework-header">
+                            <h4>HIPAA</h4>
+                            <div class="framework-status non-compliant">
+                                <i class="fas fa-times-circle"></i>
+                                Non-Compliant
+                            </div>
+                        </div>
+                        <div class="framework-score">75%</div>
+                        <div class="framework-meta">Last assessment: Jan 8, 2024</div>
+                    </div>
+                    
+                    <div class="framework-card" data-framework="pci">
+                        <div class="framework-header">
+                            <h4>PCI DSS</h4>
+                            <div class="framework-status compliant">
+                                <i class="fas fa-check-circle"></i>
+                                Compliant
+                            </div>
+                        </div>
+                        <div class="framework-score">95%</div>
+                        <div class="framework-meta">Last assessment: Jan 18, 2024</div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Threats Section -->
+            <section id="threats-section" class="dashboard-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-exclamation-triangle"></i> Threat Intelligence</h2>
+                    <div class="section-actions">
+                        <button class="btn btn-secondary" id="refresh-threats">
+                            <i class="fas fa-sync-alt"></i>
+                            Refresh
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Threat Overview -->
+                <div class="threats-overview">
+                    <div class="threat-summary">
+                        <div class="threat-level-indicator low">
+                            <div class="threat-level-text">LOW</div>
+                            <div class="threat-level-desc">Current Threat Level</div>
+                        </div>
+                    </div>
+                    
+                    <div class="threat-stats">
+                        <div class="threat-stat">
+                            <div class="stat-value" id="blocked-ips">0</div>
+                            <div class="stat-label">Blocked IPs</div>
+                        </div>
+                        <div class="threat-stat">
+                            <div class="stat-value" id="failed-logins">0</div>
+                            <div class="stat-label">Failed Logins</div>
+                        </div>
+                        <div class="threat-stat">
+                            <div class="stat-value" id="malware-detected">0</div>
+                            <div class="stat-label">Malware Detected</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Active Threats -->
+                <div class="threats-list">
+                    <div class="threats-header">
+                        <h3>Active Threats</h3>
+                        <div class="threats-filters">
+                            <select id="threat-severity-filter">
+                                <option value="all">All Severities</option>
+                                <option value="critical">Critical</option>
+                                <option value="high">High</option>
+                                <option value="medium">Medium</option>
+                                <option value="low">Low</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="threats-container" id="threats-container">
+                        <div class="no-threats">
+                            <i class="fas fa-shield-alt"></i>
+                            <p>No active threats detected</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Config Section -->
+            <section id="config-section" class="dashboard-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-cog"></i> Security Configuration</h2>
+                    <div class="section-actions">
+                        <button class="btn btn-primary" id="save-config">
+                            <i class="fas fa-save"></i>
+                            Save Changes
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Configuration Tabs -->
+                <div class="config-tabs">
+                    <button class="tab-btn active" data-tab="general">General</button>
+                    <button class="tab-btn" data-tab="authentication">Authentication</button>
+                    <button class="tab-btn" data-tab="monitoring">Monitoring</button>
+                    <button class="tab-btn" data-tab="alerts">Alerts</button>
+                </div>
+                
+                <!-- Configuration Content -->
+                <div class="config-content">
+                    <div class="config-tab active" id="general-tab">
+                        <div class="config-section">
+                            <h4>General Settings</h4>
+                            <div class="form-group">
+                                <label>Security Level</label>
+                                <select id="security-level">
+                                    <option value="low">Low</option>
+                                    <option value="medium" selected>Medium</option>
+                                    <option value="high">High</option>
+                                    <option value="maximum">Maximum</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" id="auto-block-threats" checked>
+                                    Auto-block detected threats
+                                </label>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" id="real-time-scanning" checked>
+                                    Enable real-time scanning
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="config-tab" id="authentication-tab">
+                        <div class="config-section">
+                            <h4>Authentication Settings</h4>
+                            <div class="form-group">
+                                <label>Session Timeout (minutes)</label>
+                                <input type="number" id="session-timeout" value="1440" min="5" max="10080">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Max Login Attempts</label>
+                                <input type="number" id="max-login-attempts" value="5" min="1" max="10">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Lockout Duration (minutes)</label>
+                                <input type="number" id="lockout-duration" value="15" min="1" max="1440">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="config-tab" id="monitoring-tab">
+                        <div class="config-section">
+                            <h4>Monitoring Settings</h4>
+                            <div class="form-group">
+                                <label>Log Level</label>
+                                <select id="log-level">
+                                    <option value="error">Error</option>
+                                    <option value="warn">Warning</option>
+                                    <option value="info" selected>Info</option>
+                                    <option value="debug">Debug</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Metrics Retention (days)</label>
+                                <input type="number" id="metrics-retention" value="30" min="1" max="365">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="config-tab" id="alerts-tab">
+                        <div class="config-section">
+                            <h4>Alert Settings</h4>
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" id="email-alerts" checked>
+                                    Enable email alerts
+                                </label>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Alert Email</label>
+                                <input type="email" id="alert-email" placeholder="admin@example.com">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Minimum Alert Severity</label>
+                                <select id="min-alert-severity">
+                                    <option value="low">Low</option>
+                                    <option value="medium" selected>Medium</option>
+                                    <option value="high">High</option>
+                                    <option value="critical">Critical</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    
+    <!-- Notification Toast -->
+    <div id="toast-container" class="toast-container"></div>
+    
+    <!-- External JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chart.js/3.9.1/chart.min.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script src="/static/js/dashboard.js"></script>
+    <script src="/static/js/charts.js"></script>
+    <script src="/static/js/websocket.js"></script>
+    <script src="/static/js/auth.js"></script>
+</body>
+</html>

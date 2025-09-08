@@ -1,0 +1,574 @@
+# =============================================================================
+# ENTERPRISE SECURITY DASHBOARD - HELM VALUES
+# Default Configuration Values for Kubernetes Deployment
+# =============================================================================
+
+# Global Configuration
+global:
+  # Image Registry
+  imageRegistry: "ghcr.io"
+  imagePullSecrets:
+    - name: nexus-ide-registry
+  
+  # Storage Class
+  storageClass: "fast-ssd"
+  
+  # Security Context
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 1001
+    runAsGroup: 1001
+    fsGroup: 1001
+  
+  # Network Policies
+  networkPolicy:
+    enabled: true
+    ingress:
+      enabled: true
+    egress:
+      enabled: true
+
+# =============================================================================
+# APPLICATION CONFIGURATION
+# =============================================================================
+
+# Main Application
+app:
+  name: security-dashboard
+  version: "1.0.0"
+  
+  # Image Configuration
+  image:
+    registry: ghcr.io
+    repository: nexus-ide/security-dashboard
+    tag: "1.0.0"
+    pullPolicy: IfNotPresent
+    pullSecrets:
+      - nexus-ide-registry
+  
+  # Replica Configuration
+  replicaCount: 3
+  
+  # Auto Scaling
+  autoscaling:
+    enabled: true
+    minReplicas: 3
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 70
+    targetMemoryUtilizationPercentage: 80
+  
+  # Resource Limits
+  resources:
+    limits:
+      cpu: "2000m"
+      memory: "4Gi"
+    requests:
+      cpu: "500m"
+      memory: "1Gi"
+  
+  # Health Checks
+  livenessProbe:
+    httpGet:
+      path: /health
+      port: 3000
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 3
+  
+  readinessProbe:
+    httpGet:
+      path: /ready
+      port: 3000
+    initialDelaySeconds: 5
+    periodSeconds: 5
+    timeoutSeconds: 3
+    failureThreshold: 3
+  
+  # Environment Variables
+  env:
+    NODE_ENV: production
+    LOG_LEVEL: info
+    METRICS_ENABLED: "true"
+    SECURITY_SCAN_ENABLED: "true"
+  
+  # Security Context
+  securityContext:
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop:
+        - ALL
+    readOnlyRootFilesystem: true
+    runAsNonRoot: true
+    runAsUser: 1001
+
+# =============================================================================
+# SERVICE CONFIGURATION
+# =============================================================================
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 3000
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
+    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: "http"
+  
+  # WebSocket Service
+  websocket:
+    enabled: true
+    port: 8080
+    targetPort: 8080
+
+# =============================================================================
+# INGRESS CONFIGURATION
+# =============================================================================
+
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: "100m"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "300"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+  
+  hosts:
+    - host: security-dashboard.nexus-ide.com
+      paths:
+        - path: /
+          pathType: Prefix
+  
+  tls:
+    - secretName: security-dashboard-tls
+      hosts:
+        - security-dashboard.nexus-ide.com
+  
+  # WebSocket Ingress
+  websocket:
+    enabled: true
+    annotations:
+      nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+      nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+      nginx.ingress.kubernetes.io/websocket-services: "security-dashboard-ws"
+    hosts:
+      - host: ws.security-dashboard.nexus-ide.com
+        paths:
+          - path: /
+            pathType: Prefix
+
+# =============================================================================
+# DATABASE CONFIGURATION
+# =============================================================================
+
+# PostgreSQL Configuration
+postgresql:
+  enabled: true
+  auth:
+    postgresPassword: "secure-postgres-password"
+    username: "security_dashboard"
+    password: "secure-dashboard-password"
+    database: "security_dashboard"
+  
+  primary:
+    persistence:
+      enabled: true
+      size: 100Gi
+      storageClass: "fast-ssd"
+    
+    resources:
+      limits:
+        cpu: "2000m"
+        memory: "4Gi"
+      requests:
+        cpu: "500m"
+        memory: "1Gi"
+  
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+
+# Redis Configuration
+redis:
+  enabled: true
+  auth:
+    enabled: true
+    password: "secure-redis-password"
+  
+  master:
+    persistence:
+      enabled: true
+      size: 20Gi
+      storageClass: "fast-ssd"
+    
+    resources:
+      limits:
+        cpu: "1000m"
+        memory: "2Gi"
+      requests:
+        cpu: "250m"
+        memory: "512Mi"
+  
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+
+# MongoDB Configuration
+mongodb:
+  enabled: true
+  auth:
+    enabled: true
+    rootPassword: "secure-mongo-password"
+    username: "security_dashboard"
+    password: "secure-dashboard-mongo-password"
+    database: "security_logs"
+  
+  persistence:
+    enabled: true
+    size: 200Gi
+    storageClass: "fast-ssd"
+  
+  resources:
+    limits:
+      cpu: "2000m"
+      memory: "4Gi"
+    requests:
+      cpu: "500m"
+      memory: "1Gi"
+  
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+
+# =============================================================================
+# MONITORING CONFIGURATION
+# =============================================================================
+
+monitoring:
+  # Prometheus Configuration
+  prometheus:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+      interval: 30s
+      scrapeTimeout: 10s
+      labels:
+        app: security-dashboard
+    
+    rules:
+      enabled: true
+      labels:
+        app: security-dashboard
+  
+  # Grafana Configuration
+  grafana:
+    enabled: true
+    adminPassword: "secure-grafana-password"
+    
+    dashboards:
+      enabled: true
+      configMaps:
+        - security-dashboard-dashboards
+    
+    datasources:
+      enabled: true
+      prometheus:
+        url: http://prometheus:9090
+      
+    ingress:
+      enabled: true
+      hosts:
+        - grafana.security-dashboard.nexus-ide.com
+      tls:
+        - secretName: grafana-tls
+          hosts:
+            - grafana.security-dashboard.nexus-ide.com
+
+# =============================================================================
+# LOGGING CONFIGURATION
+# =============================================================================
+
+logging:
+  # Elasticsearch Configuration
+  elasticsearch:
+    enabled: true
+    master:
+      replicaCount: 3
+      persistence:
+        size: 100Gi
+        storageClass: "fast-ssd"
+      resources:
+        limits:
+          cpu: "2000m"
+          memory: "4Gi"
+        requests:
+          cpu: "500m"
+          memory: "2Gi"
+    
+    data:
+      replicaCount: 3
+      persistence:
+        size: 500Gi
+        storageClass: "fast-ssd"
+      resources:
+        limits:
+          cpu: "2000m"
+          memory: "8Gi"
+        requests:
+          cpu: "1000m"
+          memory: "4Gi"
+  
+  # Kibana Configuration
+  kibana:
+    enabled: true
+    replicaCount: 2
+    
+    resources:
+      limits:
+        cpu: "1000m"
+        memory: "2Gi"
+      requests:
+        cpu: "500m"
+        memory: "1Gi"
+    
+    ingress:
+      enabled: true
+      hosts:
+        - kibana.security-dashboard.nexus-ide.com
+      tls:
+        - secretName: kibana-tls
+          hosts:
+            - kibana.security-dashboard.nexus-ide.com
+  
+  # Logstash Configuration
+  logstash:
+    enabled: true
+    replicaCount: 2
+    
+    resources:
+      limits:
+        cpu: "1000m"
+        memory: "2Gi"
+      requests:
+        cpu: "500m"
+        memory: "1Gi"
+
+# =============================================================================
+# SECURITY CONFIGURATION
+# =============================================================================
+
+security:
+  # Network Policies
+  networkPolicy:
+    enabled: true
+    policyTypes:
+      - Ingress
+      - Egress
+    
+    ingress:
+      - from:
+          - namespaceSelector:
+              matchLabels:
+                name: ingress-nginx
+        ports:
+          - protocol: TCP
+            port: 3000
+    
+    egress:
+      - to:
+          - namespaceSelector:
+              matchLabels:
+                name: kube-system
+        ports:
+          - protocol: TCP
+            port: 53
+          - protocol: UDP
+            port: 53
+  
+  # Pod Security Policy
+  podSecurityPolicy:
+    enabled: true
+    allowPrivilegeEscalation: false
+    requiredDropCapabilities:
+      - ALL
+    runAsUser:
+      rule: MustRunAsNonRoot
+    fsGroup:
+      rule: RunAsAny
+    volumes:
+      - configMap
+      - emptyDir
+      - projected
+      - secret
+      - downwardAPI
+      - persistentVolumeClaim
+  
+  # Service Account
+  serviceAccount:
+    create: true
+    annotations: {}
+    name: "security-dashboard"
+  
+  # RBAC
+  rbac:
+    create: true
+    rules:
+      - apiGroups: [""]
+        resources: ["pods", "services", "endpoints"]
+        verbs: ["get", "list", "watch"]
+      - apiGroups: ["apps"]
+        resources: ["deployments", "replicasets"]
+        verbs: ["get", "list", "watch"]
+
+# =============================================================================
+# TLS CONFIGURATION
+# =============================================================================
+
+tls:
+  # Cert-Manager Configuration
+  certManager:
+    enabled: true
+    issuer:
+      name: letsencrypt-prod
+      server: https://acme-v02.api.letsencrypt.org/directory
+      email: admin@nexus-ide.com
+    
+    certificates:
+      - name: security-dashboard-tls
+        secretName: security-dashboard-tls
+        dnsNames:
+          - security-dashboard.nexus-ide.com
+          - ws.security-dashboard.nexus-ide.com
+      - name: grafana-tls
+        secretName: grafana-tls
+        dnsNames:
+          - grafana.security-dashboard.nexus-ide.com
+      - name: kibana-tls
+        secretName: kibana-tls
+        dnsNames:
+          - kibana.security-dashboard.nexus-ide.com
+
+# =============================================================================
+# BACKUP CONFIGURATION
+# =============================================================================
+
+backup:
+  enabled: true
+  
+  # Velero Backup
+  velero:
+    enabled: true
+    schedule: "0 2 * * *"
+    ttl: "720h0m0s"  # 30 days
+    
+    includedNamespaces:
+      - security-dashboard
+    
+    includedResources:
+      - "*"
+    
+    storageLocation: "aws-s3-backup"
+  
+  # Database Backup
+  database:
+    postgresql:
+      enabled: true
+      schedule: "0 1 * * *"
+      retention: "30d"
+      s3Bucket: "nexus-ide-backups"
+    
+    mongodb:
+      enabled: true
+      schedule: "0 3 * * *"
+      retention: "30d"
+      s3Bucket: "nexus-ide-backups"
+
+# =============================================================================
+# PERFORMANCE CONFIGURATION
+# =============================================================================
+
+performance:
+  # Caching
+  cache:
+    enabled: true
+    type: "redis"
+    ttl: 3600
+  
+  # Connection Pooling
+  connectionPool:
+    postgresql:
+      max: 20
+      min: 5
+      idle: 10000
+    
+    redis:
+      max: 10
+      min: 2
+  
+  # Rate Limiting
+  rateLimit:
+    enabled: true
+    windowMs: 900000  # 15 minutes
+    max: 1000  # requests per window
+  
+  # Compression
+  compression:
+    enabled: true
+    level: 6
+    threshold: 1024
+
+# =============================================================================
+# DEVELOPMENT CONFIGURATION
+# =============================================================================
+
+development:
+  enabled: false
+  
+  # Debug Mode
+  debug:
+    enabled: false
+    level: "debug"
+  
+  # Hot Reload
+  hotReload:
+    enabled: false
+  
+  # Test Data
+  testData:
+    enabled: false
+    seed: true
+
+# =============================================================================
+# FEATURE FLAGS
+# =============================================================================
+
+featureFlags:
+  # AI Features
+  aiThreatDetection: true
+  aiIncidentAnalysis: true
+  aiPerformanceOptimization: true
+  
+  # Security Features
+  advancedAuthentication: true
+  multiFactorAuth: true
+  ssoIntegration: true
+  
+  # Monitoring Features
+  realTimeMonitoring: true
+  predictiveAnalytics: true
+  customDashboards: true
+  
+  # Collaboration Features
+  realTimeCollaboration: true
+  teamManagement: true
+  roleBasedAccess: true
+
+# =============================================================================
+# END OF VALUES CONFIGURATION
+# =============================================================================

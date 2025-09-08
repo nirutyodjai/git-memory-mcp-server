@@ -29,7 +29,6 @@ async function initializeRedis() {
                 url: process.env.REDIS_URL,
                 socket: {
                     connectTimeout: 5000,
-                    lazyConnect: true,
                 },
             });
             redisClient.on('error', (err) => {
@@ -116,7 +115,7 @@ async function clear(pattern, options) {
     }
     // Fallback to memory cache
     if (pattern) {
-        const keys = Array.from(memoryCache.keys()).filter(k => k.startsWith(searchPattern.replace('*', '')));
+        const keys = Array.from(memoryCache.keys()).filter((k) => k.startsWith(searchPattern.replace('*', '')));
         keys.forEach(key => memoryCache.delete(key));
     }
     else {
@@ -176,7 +175,7 @@ async function cleanup() {
     memoryCache.clear();
 }
 // Initialize cache on module load
-if (typeof window === 'undefined') {
+if (typeof globalThis !== 'undefined' && typeof globalThis.window === 'undefined') {
     initializeRedis().catch(console.error);
 }
 exports.default = {
@@ -190,4 +189,3 @@ exports.default = {
     cleanup,
     initializeRedis,
 };
-//# sourceMappingURL=index.js.map

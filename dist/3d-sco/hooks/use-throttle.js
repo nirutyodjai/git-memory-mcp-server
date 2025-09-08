@@ -22,4 +22,3 @@ const useThrottle = (func, limit) => {
     }, [func, limit]);
 };
 exports.useThrottle = useThrottle;
-//# sourceMappingURL=use-throttle.js.map

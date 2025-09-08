@@ -1,0 +1,115 @@
+# 🚀 Basic Installation Example
+# This example shows the minimal configuration needed to deploy NEXUS IDE Security Dashboard
+
+# Basic values for development environment
+global:
+  environment: development
+  domain: localhost
+  
+# Application configuration
+app:
+  name: nexus-ide
+  version: "1.0.0"
+  
+# Single replica for development
+replicaCount: 1
+
+# Basic resource limits
+resources:
+  requests:
+    cpu: 100m
+    memory: 256Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
+
+# Simple service configuration
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 3000
+
+# Basic ingress (optional)
+ingress:
+  enabled: false
+  className: nginx
+  hosts:
+    - host: nexus-ide.local
+      paths:
+        - path: /
+          pathType: Prefix
+
+# Disable advanced features for basic setup
+autoscaling:
+  enabled: false
+
+monitoring:
+  enabled: false
+
+security:
+  networkPolicy:
+    enabled: false
+
+# Simple database configuration (using defaults)
+database:
+  postgresql:
+    enabled: true
+    auth:
+      database: nexus_ide
+      username: nexus_user
+      # Note: In production, use external secret management
+      password: "change-me-in-production"
+  
+  redis:
+    enabled: true
+    auth:
+      enabled: false  # Disable auth for development
+  
+  mongodb:
+    enabled: false  # Disable MongoDB for basic setup
+
+# Basic AI configuration
+ai:
+  enabled: true
+  models:
+    openai:
+      enabled: false  # Requires API key
+    local:
+      enabled: true
+      model: "llama2-7b"
+
+# Disable collaboration features for basic setup
+collaboration:
+  enabled: false
+
+# Basic development tools
+development:
+  enabled: true
+  hotReload: true
+  debugging: true
+
+---
+
+# Installation commands:
+
+# 1. Add Helm repository (if using remote chart)
+# helm repo add nexus-ide https://charts.nexus-ide.dev
+# helm repo update
+
+# 2. Install with basic configuration
+# helm install nexus-ide nexus-ide/security-dashboard -f basic-install.yaml
+
+# 3. Or install from local chart
+# helm install nexus-ide . -f examples/basic-install.yaml
+
+# 4. Check deployment status
+# kubectl get pods -l app.kubernetes.io/name=nexus-ide
+
+# 5. Port forward to access locally
+# kubectl port-forward svc/nexus-ide 8080:80
+
+# 6. Access application
+# Open http://localhost:8080 in your browser
+
+# 7. Uninstall when done
+# helm uninstall nexus-ide

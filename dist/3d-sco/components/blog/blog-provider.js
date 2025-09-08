@@ -438,9 +438,7 @@ function BlogProvider({ children }) {
         getRelatedPosts,
         getAllTags,
     };
-    return (<BlogContext.Provider value={value}>
-      {children}
-    </BlogContext.Provider>);
+    return (react_1.default.createElement(BlogContext.Provider, { value: value }, children));
 }
 function useBlog() {
     const context = (0, react_1.useContext)(BlogContext);
@@ -449,4 +447,3 @@ function useBlog() {
     }
     return context;
 }
-//# sourceMappingURL=blog-provider.js.map

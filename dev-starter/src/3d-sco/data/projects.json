@@ -1,0 +1,51 @@
+[
+  {
+    "id": "aidockerfileoptimizer",
+    "category": "AI และ DevOps",
+    "title": "AI Dockerfile Optimizer",
+    "live": "https://ai-docker-file-optimizer.netlify.app/",
+    "github": "https://github.com/Abhiz2411/AI-Docker-file-optimizer"
+  },
+  {
+    "id": "financeme",
+    "category": "DevOps ในธนาคารและการเงิน",
+    "title": "FinanceMe: Complete DevOps Capstone Project",
+    "live": "https://github.com/Abhiz2411/FinanceMe-Devops-Project-01",
+    "github": "https://github.com/Abhiz2411/FinanceMe-Devops-Project-01"
+  },
+  {
+    "id": "comdee",
+    "category": "ระบบกล้องวงจรปิดและเครือข่าย",
+    "title": "COMDEE - ระบบกล้องวงจรปิดและเครือข่าย",
+    "live": "https://www.comdee.co.th",
+    "github": null
+  },
+  {
+    "id": "portfolio",
+    "category": "พอร์ตโฟลิโอ",
+    "title": "My Portfolio",
+    "live": "https://www.abhijitzende.com/",
+    "github": "https://github.com/Abhiz2411/3D-interactive-portfolio"
+  },
+  {
+    "id": "smartparkingassitant",
+    "category": "อินเทอร์เน็ตของสิ่งของ (IoT)",
+    "title": "Smart Parking Assistant",
+    "live": "https://github.com/Abhiz2411/smart-parking-assistant",
+    "github": "https://github.com/Abhiz2411/smart-parking-assistant"
+  },
+  {
+    "id": "smartjobtracker",
+    "category": "Full Stack",
+    "title": "Smart Job Tracker",
+    "live": "https://job-tracker-application-eight.vercel.app/",
+    "github": "https://github.com/Abhiz2411/Job-tracker-application"
+  },
+  {
+    "id": "savinderpurisportfolio",
+    "category": "การพัฒนาเว็บไซต์",
+    "title": "Savinder Puri Portfolio",
+    "live": "https://savinder-puri.vercel.app/",
+    "github": "https://github.com/Abhiz2411/savinder-puri"
+  }
+]

@@ -1,0 +1,26 @@
+startCommand:
+  type: stdio
+  configSchema:
+    type: object
+    properties:
+      apiToken:
+        type: string
+        description: "Bright Data API key, available in https://brightdata.com/cp/setting/users"
+      webUnlockerZone:
+        type: string
+        default: 'mcp_unlocker'
+        description: "Optional: The Web Unlocker zone name (defaults to 'mcp_unlocker')"
+      browserZone:
+        type: string
+        default: 'mcp_browser'
+        description: "Optional: Zone name for the Browser API (enables browser control tools, deafults to 'mcp_browser')"
+  commandFunction: |-
+    config => ({ 
+      command: 'node', 
+      args: ['server.js'], 
+      env: { 
+        API_TOKEN: config.apiToken,
+        WEB_UNLOCKER_ZONE: config.webUnlockerZone,
+        BROWSER_ZONE: config.browserZone
+      } 
+    })

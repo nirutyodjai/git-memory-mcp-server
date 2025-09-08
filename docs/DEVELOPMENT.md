@@ -1,4 +1,18 @@
-# Git Memory MCP Server - Development Guide
+# 🛠️ NEXUS IDE Development Guide
+
+## 📋 Overview
+
+This guide provides comprehensive information for developers who want to contribute to the Git Memory MCP Server and NEXUS IDE integration project. This document is automatically synchronized with the codebase and PRD updates.
+
+### 🔄 Auto-Update System
+
+This development guide is part of an automated system that ensures consistency between:
+- Product Requirements Document (PRD)
+- Codebase changes
+- Documentation updates
+- NEXUS IDE integration
+
+When any component is modified, the system automatically updates related documentation and configurations.
 
 ## Table of Contents
 

@@ -1,0 +1,260 @@
+{
+  "service": {
+    "name": "AI Debugging Assistant",
+    "version": "1.0.0",
+    "description": "Advanced AI-powered debugging assistant for NEXUS IDE",
+    "port": 3010,
+    "host": "localhost",
+    "environment": "development"
+  },
+  "debugging": {
+    "supportedLanguages": [
+      "javascript",
+      "typescript",
+      "python",
+      "java",
+      "cpp",
+      "csharp",
+      "go",
+      "rust",
+      "php",
+      "ruby",
+      "swift",
+      "kotlin",
+      "dart",
+      "scala",
+      "clojure",
+      "haskell",
+      "erlang",
+      "elixir"
+    ],
+    "debuggers": {
+      "javascript": {
+        "command": "node",
+        "args": ["--inspect-brk"],
+        "port": 9229,
+        "protocol": "chrome-devtools"
+      },
+      "typescript": {
+        "command": "ts-node",
+        "args": ["--inspect-brk"],
+        "port": 9230,
+        "protocol": "chrome-devtools"
+      },
+      "python": {
+        "command": "python",
+        "args": ["-m", "pdb"],
+        "protocol": "pdb"
+      },
+      "java": {
+        "command": "jdb",
+        "args": [],
+        "protocol": "jdwp"
+      },
+      "cpp": {
+        "command": "gdb",
+        "args": [],
+        "protocol": "gdb"
+      },
+      "csharp": {
+        "command": "dotnet",
+        "args": ["run", "--debug"],
+        "protocol": "vsdbg"
+      },
+      "go": {
+        "command": "dlv",
+        "args": ["debug"],
+        "protocol": "delve"
+      },
+      "rust": {
+        "command": "rust-gdb",
+        "args": [],
+        "protocol": "gdb"
+      }
+    },
+    "features": {
+      "smartBreakpoints": true,
+      "aiInsights": true,
+      "visualDebugging": true,
+      "timeTravelDebugging": true,
+      "collaborativeDebugging": true,
+      "automaticTestGeneration": true,
+      "performanceMonitoring": true,
+      "memoryAnalysis": true,
+      "securityAnalysis": true
+    },
+    "limits": {
+      "maxConcurrentSessions": 50,
+      "maxBreakpointsPerSession": 100,
+      "maxSnapshotsPerSession": 20,
+      "maxCollaboratorsPerSession": 10,
+      "sessionTimeoutMinutes": 120,
+      "maxOutputLines": 10000
+    }
+  },
+  "ai": {
+    "models": {
+      "codeAnalyzer": {
+        "name": "gpt-4-turbo",
+        "endpoint": "http://localhost:3001/ai/analyze",
+        "apiKey": "${AI_API_KEY}",
+        "maxTokens": 4096,
+        "temperature": 0.1,
+        "capabilities": [
+          "bug-detection",
+          "code-explanation",
+          "optimization",
+          "security-analysis"
+        ]
+      },
+      "errorPredictor": {
+        "name": "claude-3-sonnet",
+        "endpoint": "http://localhost:3002/ai/predict",
+        "apiKey": "${CLAUDE_API_KEY}",
+        "maxTokens": 4096,
+        "temperature": 0.2,
+        "capabilities": [
+          "error-prediction",
+          "runtime-analysis",
+          "memory-leak-detection",
+          "performance-bottleneck-detection"
+        ]
+      },
+      "testGenerator": {
+        "name": "llama-3-70b",
+        "endpoint": "http://localhost:3003/ai/generate",
+        "apiKey": "${LLAMA_API_KEY}",
+        "maxTokens": 8192,
+        "temperature": 0.3,
+        "capabilities": [
+          "test-generation",
+          "edge-case-detection",
+          "coverage-analysis",
+          "mock-generation"
+        ]
+      },
+      "codeOptimizer": {
+        "name": "gemini-pro",
+        "endpoint": "http://localhost:3004/ai/optimize",
+        "apiKey": "${GEMINI_API_KEY}",
+        "maxTokens": 4096,
+        "temperature": 0.1,
+        "capabilities": [
+          "performance-optimization",
+          "code-refactoring",
+          "algorithm-improvement",
+          "memory-optimization"
+        ]
+      }
+    },
+    "fallback": {
+      "enabled": true,
+      "model": "gpt-3.5-turbo",
+      "endpoint": "http://localhost:3000/ai/fallback"
+    },
+    "cache": {
+      "enabled": true,
+      "ttlMinutes": 30,
+      "maxSize": 1000
+    }
+  },
+  "websocket": {
+    "enabled": true,
+    "pingInterval": 30000,
+    "maxConnections": 1000,
+    "compression": true,
+    "heartbeat": true
+  },
+  "security": {
+    "cors": {
+      "enabled": true,
+      "origins": ["http://localhost:3000", "http://localhost:8080"],
+      "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+      "allowedHeaders": ["Content-Type", "Authorization", "X-Requested-With"]
+    },
+    "rateLimit": {
+      "enabled": true,
+      "windowMinutes": 15,
+      "maxRequests": 1000
+    },
+    "authentication": {
+      "enabled": false,
+      "type": "jwt",
+      "secret": "${JWT_SECRET}"
+    }
+  },
+  "logging": {
+    "level": "info",
+    "format": "json",
+    "file": {
+      "enabled": true,
+      "path": "./logs/debug-assistant.log",
+      "maxSize": "10MB",
+      "maxFiles": 5
+    },
+    "console": {
+      "enabled": true,
+      "colorize": true
+    }
+  },
+  "performance": {
+    "monitoring": {
+      "enabled": true,
+      "intervalSeconds": 5,
+      "metrics": [
+        "memory",
+        "cpu",
+        "sessions",
+        "requests",
+        "errors"
+      ]
+    },
+    "optimization": {
+      "garbageCollection": true,
+      "memoryThresholdMB": 512,
+      "cpuThresholdPercent": 80
+    }
+  },
+  "storage": {
+    "sessions": {
+      "type": "memory",
+      "persistent": false,
+      "backupInterval": 300000
+    },
+    "snapshots": {
+      "type": "file",
+      "path": "./data/snapshots",
+      "compression": true
+    },
+    "logs": {
+      "type": "file",
+      "path": "./data/debug-logs",
+      "retention": 7
+    }
+  },
+  "integration": {
+    "git": {
+      "enabled": true,
+      "autoDetect": true
+    },
+    "vscode": {
+      "enabled": true,
+      "protocol": "dap"
+    },
+    "jetbrains": {
+      "enabled": true,
+      "protocol": "jdwp"
+    },
+    "chrome": {
+      "enabled": true,
+      "protocol": "chrome-devtools"
+    }
+  },
+  "experimental": {
+    "quantumDebugging": false,
+    "aiPairProgramming": true,
+    "predictiveBreakpoints": true,
+    "semanticSearch": true,
+    "naturalLanguageQueries": true
+  }
+}

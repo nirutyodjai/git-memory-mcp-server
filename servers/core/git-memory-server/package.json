@@ -1,0 +1,11 @@
+{
+  "name": "git-memory-server",
+  "version": "1.0.0",
+  "description": "Git Memory Server",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "ISC"
+}

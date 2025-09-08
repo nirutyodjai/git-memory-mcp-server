@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXUS IDE - โลโก้เจ๋งๆของเรา</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .container {
+            text-align: center;
+            padding: 2rem;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .hero-section {
+            margin-bottom: 3rem;
+        }
+
+        .logo-container {
+            display: inline-block;
+            margin: 2rem 0;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-container:hover {
+            transform: scale(1.1);
+        }
+
+        .logo-container::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            right: -20px;
+            bottom: -20px;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .logo-container:hover::before {
+            opacity: 1;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin: 1rem 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            background: linear-gradient(45deg, #4facfe, #00f2fe, #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .description {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 3rem;
+            opacity: 0.8;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .feature-description {
+            opacity: 0.8;
+            line-height: 1.5;
+        }
+
+        .logo-variations {
+            margin: 4rem 0;
+        }
+
+        .variations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .variation-item {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .variation-item:hover {
+            transform: scale(1.05);
+        }
+
+        .variation-logo {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 1rem;
+        }
+
+        .variation-title {
+            font-size: 1rem;
+            font-weight: 500;
+            opacity: 0.9;
+        }
+
+        .download-section {
+            margin: 3rem 0;
+        }
+
+        .download-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 2rem 0;
+        }
+
+        .download-btn {
+            background: linear-gradient(45deg, #4facfe, #00f2fe);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(79, 172, 254, 0.4);
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin: 3rem 0;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #4facfe;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            opacity: 0.8;
+            margin-top: 0.5rem;
+        }
+
+        .floating-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .subtitle { font-size: 1.2rem; }
+            .stats { gap: 2rem; }
+            .stat-number { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-particles"></div>
+    
+    <div class="container">
+        <div class="hero-section">
+            <div class="logo-container">
+                <svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="primaryGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+                            <stop offset="50%" style="stop-color:#764ba2;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#f093fb;stop-opacity:1" />
+                        </linearGradient>
+                        <linearGradient id="accentGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#4facfe;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#00f2fe;stop-opacity:1" />
+                        </linearGradient>
+                        <radialGradient id="glowGradient" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.3" />
+                            <stop offset="70%" style="stop-color:#ffffff;stop-opacity:0.1" />
+                            <stop offset="100%" style="stop-color:#ffffff;stop-opacity:0" />
+                        </radialGradient>
+                        <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+                            <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#000000" flood-opacity="0.3"/>
+                        </filter>
+                        <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                            <feMerge> 
+                                <feMergeNode in="coloredBlur"/>
+                                <feMergeNode in="SourceGraphic"/> 
+                            </feMerge>
+                        </filter>
+                    </defs>
+                    <circle cx="100" cy="100" r="90" fill="url(#primaryGradient)" filter="url(#shadow)" opacity="0.9"/>
+                    <circle cx="100" cy="100" r="85" fill="url(#glowGradient)"/>
+                    <g transform="translate(100,100)" filter="url(#glow)">
+                        <circle cx="0" cy="0" r="12" fill="#ffffff" opacity="0.9"/>
+                        <circle cx="0" cy="0" r="8" fill="url(#accentGradient)"/>
+                        <g>
+                            <circle cx="0" cy="-35" r="8" fill="#ffffff" opacity="0.8"/>
+                            <circle cx="0" cy="-35" r="5" fill="url(#accentGradient)"/>
+                            <circle cx="30" cy="-17" r="7" fill="#ffffff" opacity="0.8"/>
+                            <circle cx="30" cy="-17" r="4" fill="url(#accentGradient)"/>
+                            <circle cx="30" cy="17" r="7" fill="#ffffff" opacity="0.8"/>
+                            <circle cx="30" cy="17" r="4" fill="url(#accentGradient)"/>
+                            <circle cx="0" cy="35" r="8" fill="#ffffff" opacity="0.8"/>
+                            <circle cx="0" cy="35" r="5" fill="url(#accentGradient)"/>
+                            <circle cx="-30" cy="17" r="7" fill="#ffffff" opacity="0.8"/>
+                            <circle cx="-30" cy="17" r="4" fill="url(#accentGradient)"/>
+                            <circle cx="-30" cy="-17" r="7" fill="#ffffff" opacity="0.8"/>
+                            <circle cx="-30" cy="-17" r="4" fill="url(#accentGradient)"/>
+                        </g>
+                        <g stroke="#ffffff" stroke-width="2" opacity="0.7">
+                            <line x1="0" y1="0" x2="0" y2="-35"/>
+                            <line x1="0" y1="0" x2="30" y2="-17"/>
+                            <line x1="0" y1="0" x2="30" y2="17"/>
+                            <line x1="0" y1="0" x2="0" y2="35"/>
+                            <line x1="0" y1="0" x2="-30" y2="17"/>
+                            <line x1="0" y1="0" x2="-30" y2="-17"/>
+                            <line x1="0" y1="-35" x2="30" y2="-17" opacity="0.5"/>
+                            <line x1="30" y1="-17" x2="30" y2="17" opacity="0.5"/>
+                            <line x1="30" y1="17" x2="0" y2="35" opacity="0.5"/>
+                            <line x1="0" y1="35" x2="-30" y2="17" opacity="0.5"/>
+                            <line x1="-30" y1="17" x2="-30" y2="-17" opacity="0.5"/>
+                            <line x1="-30" y1="-17" x2="0" y2="-35" opacity="0.5"/>
+                        </g>
+                        <g>
+                            <circle r="2" fill="url(#accentGradient)" opacity="0.8">
+                                <animateMotion dur="3s" repeatCount="indefinite">
+                                    <path d="M 0,0 L 0,-35 L 30,-17 L 30,17 L 0,35 L -30,17 L -30,-17 Z"/>
+                                </animateMotion>
+                            </circle>
+                            <circle r="1.5" fill="#ffffff" opacity="0.9">
+                                <animateMotion dur="2.5s" repeatCount="indefinite" begin="0.5s">
+                                    <path d="M 0,-35 L 30,-17 L 0,0 L -30,17 L 0,35 L 30,17 L 0,0 Z"/>
+                                </animateMotion>
+                            </circle>
+                            <circle r="1" fill="url(#accentGradient)" opacity="0.7">
+                                <animateMotion dur="4s" repeatCount="indefinite" begin="1s">
+                                    <path d="M -30,-17 L 0,0 L 30,17 L 0,35 L -30,17 L 0,0 L 30,-17 Z"/>
+                                </animateMotion>
+                            </circle>
+                        </g>
+                    </g>
+                    <text x="100" y="160" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#ffffff" opacity="0.9">NEXUS</text>
+                    <text x="100" y="175" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#ffffff" opacity="0.7">I D E</text>
+                    <g transform="translate(100,100)">
+                        <circle cx="0" cy="0" r="70" fill="none" stroke="url(#accentGradient)" stroke-width="1" opacity="0.3" stroke-dasharray="5,5">
+                            <animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0" to="360" dur="20s" repeatCount="indefinite"/>
+                        </circle>
+                    </g>
+                    <circle cx="100" cy="100" r="90" fill="none" stroke="url(#accentGradient)" stroke-width="2" opacity="0.5">
+                        <animate attributeName="r" values="85;95;85" dur="2s" repeatCount="indefinite"/>
+                        <animate attributeName="opacity" values="0.5;0.2;0.5" dur="2s" repeatCount="indefinite"/>
+                    </circle>
+                </svg>
+            </div>
+            
+            <h1>NEXUS IDE</h1>
+            <p class="subtitle">The Most Powerful IDE Ever Created</p>
+            <p class="description">
+                โลโก้เจ๋งๆของเรา! NEXUS IDE คือ Next-Generation Integrated Development Environment 
+                ที่รวมเอาจุดแข็งของ IDE ชั้นนำทั้งหมดมาไว้ในที่เดียว พร้อมด้วยระบบ AI ที่ทรงพลัง
+                และการทำงานร่วมกันแบบ real-time
+            </p>
+        </div>
+
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-number">1000+</div>
+                <div class="stat-label">MCP Servers</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">34+</div>
+                <div class="stat-label">AI Models</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">99.97%</div>
+                <div class="stat-label">Uptime</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">300%</div>
+                <div class="stat-label">Faster</div>
+            </div>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🤖</div>
+                <div class="feature-title">AI-Powered Development</div>
+                <div class="feature-description">
+                    ระบบ AI ที่ฉลาดที่สุด รองรับ 8 AI Providers และ 34+ โมเดล 
+                    ช่วยเขียนโค้ด debug และปรับปรุงประสิทธิภาพ
+                </div>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <div class="feature-title">Lightning Fast Performance</div>
+                <div class="feature-description">
+                    ประสิทธิภาพสูงสุด API Response 32ms, Code Completion 15ms 
+                    เร็วกว่า VS Code ถึง 300%
+                </div>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🔗</div>
+                <div class="feature-title">Universal Connectivity</div>
+                <div class="feature-description">
+                    เชื่อมต่อได้กับทุกแหล่งข้อมูล Git Memory MCP Server Cluster 
+                    รองรับ 1000+ servers
+                </div>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🎨</div>
+                <div class="feature-title">Beautiful Design</div>
+                <div class="feature-description">
+                    ออกแบบที่สวยงามและใช้งานง่าย Modern UI/UX 
+                    พร้อม Dark/Light Theme
+                </div>
+            </div>
+        </div>
+
+        <div class="logo-variations">
+            <h2 style="margin-bottom: 2rem; font-size: 2rem;">Logo Variations</h2>
+            <div class="variations-grid">
+                <div class="variation-item">
+                    <div class="variation-logo">
+                        <svg width="100" height="100" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Simplified version -->
+                            <circle cx="100" cy="100" r="90" fill="#667eea"/>
+                            <circle cx="100" cy="100" r="12" fill="#ffffff"/>
+                            <text x="100" y="160" text-anchor="middle" font-family="Arial" font-size="18" font-weight="bold" fill="#ffffff">N</text>
+                        </svg>
+                    </div>
+                    <div class="variation-title">Simplified</div>
+                </div>
+                
+                <div class="variation-item">
+                    <div class="variation-logo">
+                        <svg width="100" height="100" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Monochrome version -->
+                            <circle cx="100" cy="100" r="90" fill="#333333"/>
+                            <circle cx="100" cy="100" r="12" fill="#ffffff"/>
+                            <text x="100" y="160" text-anchor="middle" font-family="Arial" font-size="18" font-weight="bold" fill="#ffffff">NEXUS</text>
+                        </svg>
+                    </div>
+                    <div class="variation-title">Monochrome</div>
+                </div>
+                
+                <div class="variation-item">
+                    <div class="variation-logo">
+                        <svg width="100" height="100" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Icon only -->
+                            <defs>
+                                <linearGradient id="miniGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#4facfe"/>
+                                    <stop offset="100%" style="stop-color:#00f2fe"/>
+                                </linearGradient>
+                            </defs>
+                            <circle cx="100" cy="100" r="12" fill="url(#miniGradient)"/>
+                            <circle cx="100" cy="65" r="8" fill="url(#miniGradient)"/>
+                            <circle cx="130" cy="83" r="7" fill="url(#miniGradient)"/>
+                            <circle cx="130" cy="117" r="7" fill="url(#miniGradient)"/>
+                            <circle cx="100" cy="135" r="8" fill="url(#miniGradient)"/>
+                            <circle cx="70" cy="117" r="7" fill="url(#miniGradient)"/>
+                            <circle cx="70" cy="83" r="7" fill="url(#miniGradient)"/>
+                        </svg>
+                    </div>
+                    <div class="variation-title">Icon Only</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="download-section">
+            <h2 style="margin-bottom: 2rem; font-size: 2rem;">Download Logo Assets</h2>
+            <div class="download-buttons">
+                <a href="nexus-logo.svg" download class="download-btn">📥 Download SVG</a>
+                <a href="#" class="download-btn">🎨 Brand Guidelines</a>
+                <a href="#" class="download-btn">📦 Full Asset Pack</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Create floating particles
+        function createParticles() {
+            const container = document.querySelector('.floating-particles');
+            const particleCount = 50;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                container.appendChild(particle);
+            }
+        }
+        
+        // Initialize particles when page loads
+        window.addEventListener('load', createParticles);
+        
+        // Add hover effects to logo
+        const logoContainer = document.querySelector('.logo-container');
+        logoContainer.addEventListener('mouseenter', function() {
+            this.style.filter = 'drop-shadow(0 0 20px rgba(79, 172, 254, 0.5))';
+        });
+        
+        logoContainer.addEventListener('mouseleave', function() {
+            this.style.filter = 'none';
+        });
+    </script>
+</body>
+</html>

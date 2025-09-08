@@ -221,4 +221,3 @@ function getBrowserLocale() {
     const browserLang = navigator.language.split('-')[0];
     return config_1.locales.includes(browserLang) ? browserLang : config_1.defaultLocale;
 }
-//# sourceMappingURL=client.js.map

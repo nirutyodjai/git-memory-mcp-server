@@ -82,9 +82,7 @@ const EasterEggs = () => {
             });
         }
     }, [isDevToolsOpen]);
-    return (<>
-      <nyan_cat_1.default />
-    </>);
+    return (react_1.default.createElement(react_1.default.Fragment, null,
+        react_1.default.createElement(nyan_cat_1.default, null)));
 };
 exports.default = EasterEggs;
-//# sourceMappingURL=easter-eggs.js.map

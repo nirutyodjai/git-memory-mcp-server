@@ -1,0 +1,117 @@
+{
+  "proxy": {
+    "enabled": true,
+    "mode": "api-gateway",
+    "apiGateway": {
+      "url": "http://localhost:8080",
+      "endpoints": {
+        "mcp": "/api/mcp",
+        "git": "/api/git",
+        "memory": "/api/memory",
+        "ai": "/api/ai",
+        "websocket": "/ws"
+      },
+      "timeout": 30000,
+      "retries": 3,
+      "retryDelay": 1000
+    },
+    "mcpProxy": {
+      "url": "http://localhost:65262",
+      "maxServers": 500,
+      "loadBalancing": {
+        "algorithm": "round-robin",
+        "healthCheck": true,
+        "healthCheckInterval": 30000
+      },
+      "circuitBreaker": {
+        "enabled": true,
+        "threshold": 5,
+        "timeout": 60000,
+        "resetTimeout": 30000
+      }
+    },
+    "loadBalancer": {
+      "url": "http://localhost:65263",
+      "strategy": "least-connections",
+      "stickySession": false,
+      "healthCheck": {
+        "enabled": true,
+        "interval": 15000,
+        "timeout": 5000,
+        "retries": 3
+      }
+    },
+    "fallback": {
+      "enabled": true,
+      "directConnection": {
+        "gitMemoryServer": "ws://localhost:65261",
+        "coordinatorServer": "ws://localhost:9000"
+      },
+      "timeout": 5000
+    },
+    "cache": {
+      "enabled": true,
+      "ttl": 300000,
+      "maxSize": 1000,
+      "strategy": "lru"
+    },
+    "security": {
+      "authentication": {
+        "enabled": true,
+        "type": "jwt",
+        "tokenHeader": "Authorization",
+        "tokenPrefix": "Bearer "
+      },
+      "rateLimit": {
+        "enabled": true,
+        "windowMs": 60000,
+        "maxRequests": 1000,
+        "skipSuccessfulRequests": false
+      },
+      "cors": {
+        "enabled": true,
+        "origin": ["http://localhost:3000", "http://localhost:5173"],
+        "credentials": true
+      }
+    },
+    "monitoring": {
+      "enabled": true,
+      "metricsEndpoint": "/metrics",
+      "healthEndpoint": "/health",
+      "statusEndpoint": "/status",
+      "loggingLevel": "info"
+    }
+  },
+  "directConnection": {
+    "enabled": false,
+    "servers": {
+      "gitMemory": {
+        "url": "ws://localhost:65261",
+        "protocol": "websocket",
+        "reconnect": true,
+        "reconnectInterval": 5000,
+        "maxReconnectAttempts": 5
+      },
+      "coordinator": {
+        "url": "ws://localhost:9000",
+        "protocol": "websocket",
+        "reconnect": true,
+        "reconnectInterval": 5000,
+        "maxReconnectAttempts": 5
+      }
+    }
+  },
+  "development": {
+    "autoStart": {
+      "enabled": true,
+      "services": ["api-gateway", "mcp-proxy", "load-balancer"],
+      "startupDelay": 2000
+    },
+    "debugging": {
+      "enabled": true,
+      "logLevel": "debug",
+      "showNetworkRequests": true,
+      "showProxyRouting": true
+    }
+  }
+}

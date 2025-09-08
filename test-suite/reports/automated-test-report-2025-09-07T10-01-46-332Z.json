@@ -1,0 +1,141 @@
+{
+  "timestamp": "2025-09-07T09:57:52.087Z",
+  "summary": {
+    "total": 0,
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "duration": 0,
+    "successRate": 0
+  },
+  "suites": [
+    {
+      "name": "Unit Tests",
+      "type": "unit",
+      "priority": 1,
+      "required": true,
+      "status": "failed",
+      "duration": 53256.0493,
+      "error": "Test suite exited with code 1: ",
+      "summary": {
+        "total": 0,
+        "passed": 0,
+        "failed": 1,
+        "skipped": 0
+      }
+    },
+    {
+      "name": "API Tests",
+      "type": "api",
+      "priority": 2,
+      "required": true,
+      "status": "failed",
+      "duration": 30383.2327,
+      "error": "Test suite exited with code 1: 💥 เกิดข้อผิดพลาดในการทดสอบ API: Error: เซิร์ฟเวอร์ไม่พร้อมใช้งาน\n    at APITestRunner.waitForServer (D:\\Ai Server\\git-memory-mcp-server\\test-suite\\api\\api-tests.js:811:15)\n    at async APITestRunner.runAllAPITests (D:\\Ai Server\\git-memory-mcp-server\\test-suite\\api\\api-tests.js:751:13)\n💥 เกิดข้อผิดพลาดในการทดสอบ API: Error: เซิร์ฟเวอร์ไม่พร้อมใช้งาน\n    at APITestRunner.waitForServer (D:\\Ai Server\\git-memory-mcp-server\\test-suite\\api\\api-tests.js:811:15)\n    at async APITestRunner.runAllAPITests (D:\\Ai Server\\git-memory-mcp-server\\test-suite\\api\\api-tests.js:751:13)\n",
+      "summary": {
+        "total": 0,
+        "passed": 0,
+        "failed": 1,
+        "skipped": 0
+      }
+    },
+    {
+      "name": "Integration Tests",
+      "type": "integration",
+      "priority": 2,
+      "required": true,
+      "status": "failed",
+      "duration": 119963.02659999998,
+      "error": "Test suite exited with code 1: 💥 เกิดข้อผิดพลาดในการทดสอบ Integration: Error: Main Server ไม่พร้อมใช้งาน: \n    at IntegrationTestRunner.waitForServices (D:\\Ai Server\\git-memory-mcp-server\\test-suite\\integration\\integration-tests.js:379:31)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async IntegrationTestRunner.runAllIntegrationTests (D:\\Ai Server\\git-memory-mcp-server\\test-suite\\integration\\integration-tests.js:326:13)\n💥 เกิดข้อผิดพลาดในการทดสอบ Integration: Error: Main Server ไม่พร้อมใช้งาน: \n    at IntegrationTestRunner.waitForServices (D:\\Ai Server\\git-memory-mcp-server\\test-suite\\integration\\integration-tests.js:379:31)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async IntegrationTestRunner.runAllIntegrationTests (D:\\Ai Server\\git-memory-mcp-server\\test-suite\\integration\\integration-tests.js:326:13)\n",
+      "summary": {
+        "total": 0,
+        "passed": 0,
+        "failed": 1,
+        "skipped": 0
+      }
+    },
+    {
+      "name": "Security Tests",
+      "type": "security",
+      "priority": 3,
+      "required": false,
+      "status": "failed",
+      "duration": 30403.117499999993,
+      "error": "Test suite exited with code 1: 💥 เกิดข้อผิดพลาดในการทดสอบความปลอดภัย: Error: เซิร์ฟเวอร์ไม่พร้อมใช้งาน\n    at SecurityTestRunner.waitForServer (D:\\Ai Server\\git-memory-mcp-server\\test-suite\\security\\security-tests.js:794:15)\n    at async SecurityTestRunner.runAllSecurityTests (D:\\Ai Server\\git-memory-mcp-server\\test-suite\\security\\security-tests.js:738:13)\n💥 เกิดข้อผิดพลาดในการทดสอบความปลอดภัย: Error: เซิร์ฟเวอร์ไม่พร้อมใช้งาน\n    at SecurityTestRunner.waitForServer (D:\\Ai Server\\git-memory-mcp-server\\test-suite\\security\\security-tests.js:794:15)\n    at async SecurityTestRunner.runAllSecurityTests (D:\\Ai Server\\git-memory-mcp-server\\test-suite\\security\\security-tests.js:738:13)\n",
+      "summary": {
+        "total": 0,
+        "passed": 0,
+        "failed": 1,
+        "skipped": 0
+      }
+    },
+    {
+      "name": "Performance Tests",
+      "type": "performance",
+      "priority": 3,
+      "required": false,
+      "status": "failed",
+      "duration": 30431.326300000015,
+      "error": "Test suite exited with code 1: 💥 เกิดข้อผิดพลาดในการทดสอบ Performance: Error: เซิร์ฟเวอร์ไม่พร้อมใช้งาน\n    at PerformanceTestRunner.waitForServer (D:\\Ai Server\\git-memory-mcp-server\\test-suite\\performance\\performance-tests.js:820:15)\n    at async PerformanceTestRunner.runAllPerformanceTests (D:\\Ai Server\\git-memory-mcp-server\\test-suite\\performance\\performance-tests.js:724:13)\n💥 เกิดข้อผิดพลาดในการทดสอบ Performance: Error: เซิร์ฟเวอร์ไม่พร้อมใช้งาน\n    at PerformanceTestRunner.waitForServer (D:\\Ai Server\\git-memory-mcp-server\\test-suite\\performance\\performance-tests.js:820:15)\n    at async PerformanceTestRunner.runAllPerformanceTests (D:\\Ai Server\\git-memory-mcp-server\\test-suite\\performance\\performance-tests.js:724:13)\n",
+      "summary": {
+        "total": 0,
+        "passed": 0,
+        "failed": 1,
+        "skipped": 0
+      }
+    },
+    {
+      "name": "E2E Tests",
+      "type": "e2e",
+      "priority": 4,
+      "required": false,
+      "status": "failed",
+      "duration": 37.5228000000061,
+      "error": "Test suite exited with code 1: node:internal/modules/cjs/loader:1368\r\n  throw err;\r\n  ^\r\n\r\nError: Cannot find module 'puppeteer'\r\nRequire stack:\r\n- D:\\Ai Server\\git-memory-mcp-server\\test-suite\\e2e\\nexus-ide.e2e.test.js\r\n    at Function._resolveFilename (node:internal/modules/cjs/loader:1365:15)\r\n    at defaultResolveImpl (node:internal/modules/cjs/loader:1021:19)\r\n    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1026:22)\r\n    at Function._load (node:internal/modules/cjs/loader:1175:37)\r\n    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\r\n    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)\r\n    at Module.require (node:internal/modules/cjs/loader:1445:12)\r\n    at require (node:internal/modules/helpers:135:16)\r\n    at Object.<anonymous> (D:\\Ai Server\\git-memory-mcp-server\\test-suite\\e2e\\nexus-ide.e2e.test.js:6:19)\r\n    at Module._compile (node:internal/modules/cjs/loader:1688:14) {\r\n  code: 'MODULE_NOT_FOUND',\r\n  requireStack: [\r\n    'D:\\\\Ai Server\\\\git-memory-mcp-server\\\\test-suite\\\\e2e\\\\nexus-ide.e2e.test.js'\r\n  ]\r\n}\r\n\r\nNode.js v22.18.0\r\n",
+      "summary": {
+        "total": 0,
+        "passed": 0,
+        "failed": 1,
+        "skipped": 0
+      }
+    },
+    {
+      "name": "Performance Benchmark",
+      "type": "benchmark",
+      "priority": 5,
+      "required": false,
+      "status": "failed",
+      "duration": 30430.18060000002,
+      "error": "Test suite exited with code 1: 💥 เกิดข้อผิดพลาดในการทดสอบ: Error: เซิร์ฟเวอร์ไม่พร้อมใช้งาน\n    at PerformanceBenchmarkRunner.waitForServer (D:\\Ai Server\\git-memory-mcp-server\\test-suite\\performance\\performance-benchmark.js:581:15)\n    at async PerformanceBenchmarkRunner.runAllBenchmarks (D:\\Ai Server\\git-memory-mcp-server\\test-suite\\performance\\performance-benchmark.js:547:13)\n💥 เกิดข้อผิดพลาดในการทดสอบประสิทธิภาพ: Error: เซิร์ฟเวอร์ไม่พร้อมใช้งาน\n    at PerformanceBenchmarkRunner.waitForServer (D:\\Ai Server\\git-memory-mcp-server\\test-suite\\performance\\performance-benchmark.js:581:15)\n    at async PerformanceBenchmarkRunner.runAllBenchmarks (D:\\Ai Server\\git-memory-mcp-server\\test-suite\\performance\\performance-benchmark.js:547:13)\n",
+      "summary": {
+        "total": 0,
+        "passed": 0,
+        "failed": 1,
+        "skipped": 0
+      }
+    }
+  ],
+  "services": {},
+  "environment": {
+    "nodeVersion": "v22.18.0",
+    "platform": "win32",
+    "arch": "x64",
+    "memory": {
+      "rss": 51228672,
+      "heapTotal": 5861376,
+      "heapUsed": 4744512,
+      "external": 1694375,
+      "arrayBuffers": 10515
+    },
+    "cwd": "D:\\Ai Server\\git-memory-mcp-server",
+    "finalMemory": {
+      "rss": 61833216,
+      "heapTotal": 10997760,
+      "heapUsed": 9579136,
+      "external": 3583789,
+      "arrayBuffers": 83501
+    }
+  },
+  "errors": [],
+  "warnings": []
+}

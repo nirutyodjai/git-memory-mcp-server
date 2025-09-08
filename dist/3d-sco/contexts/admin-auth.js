@@ -93,9 +93,7 @@ function AdminAuthProvider({ children }) {
     (0, react_1.useEffect)(() => {
         checkAuth();
     }, []);
-    return (<AdminAuthContext.Provider value={{ user, loading, login, logout, checkAuth }}>
-      {children}
-    </AdminAuthContext.Provider>);
+    return (react_1.default.createElement(AdminAuthContext.Provider, { value: { user, loading, login, logout, checkAuth } }, children));
 }
 function useAdminAuth() {
     const context = (0, react_1.useContext)(AdminAuthContext);
@@ -104,4 +102,3 @@ function useAdminAuth() {
     }
     return context;
 }
-//# sourceMappingURL=admin-auth.js.map

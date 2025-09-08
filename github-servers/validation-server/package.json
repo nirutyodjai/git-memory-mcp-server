@@ -1,9 +1,0 @@
-{
-  "name": "validation-server",
-  "version": "1.0.0",
-  "description": "Data validation and verification",
-  "main": "server.js",
-  "scripts": {
-    "start": "node server.js"
-  }
-}

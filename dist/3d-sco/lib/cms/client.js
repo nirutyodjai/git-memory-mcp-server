@@ -239,4 +239,3 @@ function getExcerpt(content, maxLength = 160) {
     const plainText = stripHtml(content);
     return truncateText(plainText, maxLength);
 }
-//# sourceMappingURL=client.js.map

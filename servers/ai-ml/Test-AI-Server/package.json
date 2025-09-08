@@ -1,0 +1,10 @@
+{
+  "name": "test-ai-server-mcp",
+  "version": "1.0.0",
+  "description": "Test AI MCP Server",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {}
+}

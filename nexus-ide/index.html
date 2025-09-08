@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/nexus-logo.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="NEXUS IDE - Next-Generation AI-Powered Integrated Development Environment" />
+    <meta name="keywords" content="IDE, AI, Development, Code Editor, Programming, NEXUS" />
+    <meta name="author" content="NEXUS IDE Team" />
+    <title>NEXUS IDE - Ultimate AI-Powered IDE</title>
+    
+    <!-- Preload critical fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Theme variables -->
+    <style>
+      :root {
+        /* Light theme */
+        --background: 0 0% 100%;
+        --foreground: 222.2 84% 4.9%;
+        --card: 0 0% 100%;
+        --card-foreground: 222.2 84% 4.9%;
+        --popover: 0 0% 100%;
+        --popover-foreground: 222.2 84% 4.9%;
+        --primary: 221.2 83.2% 53.3%;
+        --primary-foreground: 210 40% 98%;
+        --secondary: 210 40% 96%;
+        --secondary-foreground: 222.2 84% 4.9%;
+        --muted: 210 40% 96%;
+        --muted-foreground: 215.4 16.3% 46.9%;
+        --accent: 210 40% 96%;
+        --accent-foreground: 222.2 84% 4.9%;
+        --destructive: 0 84.2% 60.2%;
+        --destructive-foreground: 210 40% 98%;
+        --border: 214.3 31.8% 91.4%;
+        --input: 214.3 31.8% 91.4%;
+        --ring: 221.2 83.2% 53.3%;
+        --radius: 0.5rem;
+        
+        /* NEXUS IDE specific colors */
+        --editor-bg: 0 0% 100%;
+        --editor-fg: 222.2 84% 4.9%;
+        --editor-selection: 221.2 83.2% 53.3% / 0.2;
+        --editor-cursor: 221.2 83.2% 53.3%;
+        --editor-line: 214.3 31.8% 91.4%;
+        
+        --sidebar-bg: 210 40% 98%;
+        --sidebar-fg: 222.2 84% 4.9%;
+        --sidebar-hover: 210 40% 96%;
+        --sidebar-active: 221.2 83.2% 53.3% / 0.1;
+        
+        --terminal-bg: 222.2 84% 4.9%;
+        --terminal-fg: 210 40% 98%;
+        --terminal-cursor: 221.2 83.2% 53.3%;
+      }
+      
+      .dark {
+        /* Dark theme */
+        --background: 222.2 84% 4.9%;
+        --foreground: 210 40% 98%;
+        --card: 222.2 84% 4.9%;
+        --card-foreground: 210 40% 98%;
+        --popover: 222.2 84% 4.9%;
+        --popover-foreground: 210 40% 98%;
+        --primary: 217.2 91.2% 59.8%;
+        --primary-foreground: 222.2 84% 4.9%;
+        --secondary: 217.2 32.6% 17.5%;
+        --secondary-foreground: 210 40% 98%;
+        --muted: 217.2 32.6% 17.5%;
+        --muted-foreground: 215 20.2% 65.1%;
+        --accent: 217.2 32.6% 17.5%;
+        --accent-foreground: 210 40% 98%;
+        --destructive: 0 62.8% 30.6%;
+        --destructive-foreground: 210 40% 98%;
+        --border: 217.2 32.6% 17.5%;
+        --input: 217.2 32.6% 17.5%;
+        --ring: 224.3 76.3% 94.1%;
+        
+        /* NEXUS IDE specific colors - dark */
+        --editor-bg: 222.2 84% 4.9%;
+        --editor-fg: 210 40% 98%;
+        --editor-selection: 217.2 91.2% 59.8% / 0.2;
+        --editor-cursor: 217.2 91.2% 59.8%;
+        --editor-line: 217.2 32.6% 17.5%;
+        
+        --sidebar-bg: 217.2 32.6% 17.5%;
+        --sidebar-fg: 210 40% 98%;
+        --sidebar-hover: 217.2 32.6% 20%;
+        --sidebar-active: 217.2 91.2% 59.8% / 0.1;
+        
+        --terminal-bg: 222.2 84% 4.9%;
+        --terminal-fg: 210 40% 98%;
+        --terminal-cursor: 217.2 91.2% 59.8%;
+      }
+      
+      * {
+        border-color: hsl(var(--border));
+      }
+      
+      body {
+        background-color: hsl(var(--background));
+        color: hsl(var(--foreground));
+        font-family: 'Inter', system-ui, sans-serif;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+      
+      /* Loading screen styles */
+      .loading-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        transition: opacity 0.5s ease-out;
+      }
+      
+      .loading-logo {
+        width: 120px;
+        height: 120px;
+        margin-bottom: 2rem;
+        animation: pulse 2s ease-in-out infinite;
+      }
+      
+      .loading-text {
+        color: white;
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        text-align: center;
+      }
+      
+      .loading-subtitle {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 1rem;
+        font-weight: 400;
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+      
+      .loading-spinner {
+        width: 40px;
+        height: 40px;
+        border: 3px solid rgba(255, 255, 255, 0.3);
+        border-top: 3px solid white;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+      
+      @keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+      }
+      
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      
+      .fade-out {
+        opacity: 0;
+        pointer-events: none;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+      <svg class="loading-logo" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="60" cy="60" r="50" stroke="white" stroke-width="3" fill="none" opacity="0.3"/>
+        <path d="M30 60L50 40L70 60L90 40" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="60" cy="75" r="8" fill="white"/>
+        <text x="60" y="105" text-anchor="middle" fill="white" font-family="Inter" font-size="12" font-weight="600">NEXUS</text>
+      </svg>
+      <div class="loading-text">NEXUS IDE</div>
+      <div class="loading-subtitle">Next-Generation AI-Powered IDE</div>
+      <div class="loading-spinner"></div>
+    </div>
+    
+    <!-- Main App Container -->
+    <div id="root"></div>
+    
+    <!-- Scripts -->
+    <script type="module" src="/src/main.tsx"></script>
+    
+    <!-- Loading screen removal script -->
+    <script>
+      // Remove loading screen when app is ready
+      window.addEventListener('load', () => {
+        setTimeout(() => {
+          const loadingScreen = document.getElementById('loading-screen');
+          if (loadingScreen) {
+            loadingScreen.classList.add('fade-out');
+            setTimeout(() => {
+              loadingScreen.remove();
+            }, 500);
+          }
+        }, 2000); // Show loading for at least 2 seconds
+      });
+    </script>
+  </body>
+</html>

@@ -161,7 +161,10 @@ class CSRFProtection {
     }
 }
 exports.CSRFProtection = CSRFProtection;
-CSRFProtection.SECRET_KEY = process.env.CSRF_SECRET || 'default-csrf-secret';
+CSRFProtection.SECRET_KEY = process.env.CSRF_SECRET || (() => {
+    console.warn('Warning: CSRF_SECRET not set in environment variables. Using insecure default.');
+    return 'default-csrf-secret';
+})();
 // Request validation
 class RequestValidator {
     // Check for suspicious patterns in request
@@ -257,4 +260,3 @@ function verifyHashedData(data, hash, salt) {
     const verifyHash = crypto_1.default.pbkdf2Sync(data, salt, 10000, 64, 'sha512').toString('hex');
     return hash === verifyHash;
 }
-//# sourceMappingURL=security.js.map

@@ -122,4 +122,3 @@ function createRateLimitResponse(result) {
         message: result.allowed ? 'OK' : 'Too Many Requests'
     };
 }
-//# sourceMappingURL=rate-limit.js.map

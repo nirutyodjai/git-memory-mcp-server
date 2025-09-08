@@ -1,0 +1,8 @@
+{
+    "name": "Default Tenant",
+    "upstream_servers": [
+        "git-memory-server",
+        "3d-sco-memory"
+    ],
+    "subscriptionId": "free"
+}

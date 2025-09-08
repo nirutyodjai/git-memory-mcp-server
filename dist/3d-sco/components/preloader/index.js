@@ -50,10 +50,8 @@ function Preloader({ children, disabled = false }) {
             },
         });
     }, []);
-    return (<exports.preloaderContext.Provider value={{ isLoading, bypassLoading, loadingPercent }}>
-      <framer_motion_1.AnimatePresence mode="wait">{isLoading && <loader_1.default />}</framer_motion_1.AnimatePresence>
-      {children}
-    </exports.preloaderContext.Provider>);
+    return (React.createElement(exports.preloaderContext.Provider, { value: { isLoading, bypassLoading, loadingPercent } },
+        React.createElement(framer_motion_1.AnimatePresence, { mode: "wait" }, isLoading && React.createElement(loader_1.default, null)),
+        children));
 }
 exports.default = Preloader;
-//# sourceMappingURL=index.js.map

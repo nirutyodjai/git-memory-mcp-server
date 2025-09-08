@@ -146,11 +146,11 @@ class GitOperationsService {
         files,
         summary: {
           total_files: files.length,
-          modified: files.filter(f => f.status.includes('modified')).length,
-          added: files.filter(f => f.status.includes('added')).length,
-          deleted: files.filter(f => f.status.includes('deleted')).length,
-          untracked: files.filter(f => f.status.includes('untracked')).length,
-          staged: files.filter(f => f.status.includes('staged')).length
+          modified: files.filter(f => typeof f.status === 'string' && f.status.includes('modified')).length,
+          added: files.filter(f => typeof f.status === 'string' && f.status.includes('added')).length,
+          deleted: files.filter(f => typeof f.status === 'string' && f.status.includes('deleted')).length,
+          untracked: files.filter(f => typeof f.status === 'string' && f.status.includes('untracked')).length,
+          staged: files.filter(f => typeof f.status === 'string' && f.status.includes('staged')).length
         },
         upstream: aheadBehind,
         is_clean: files.length === 0
@@ -458,7 +458,7 @@ class GitOperationsService {
           );
           
           remoteBranches = remoteOutput.split('\n')
-            .filter(line => line.trim() && !line.includes('HEAD'))
+            .filter(line => line.trim() && typeof line === 'string' && !line.includes('HEAD'))
             .map(name => ({
               name: name.trim(),
               type: 'remote',

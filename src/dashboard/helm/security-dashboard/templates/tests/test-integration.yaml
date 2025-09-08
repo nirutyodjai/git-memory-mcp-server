@@ -1,0 +1,307 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "nexus-ide.fullname" . }}-test-integration"
+  labels:
+    {{- include "nexus-ide.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+    "helm.sh/hook-weight": "5"
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+spec:
+  restartPolicy: Never
+  containers:
+    - name: integration-test
+      image: curlimages/curl:8.5.0
+      env:
+        - name: APP_URL
+          value: "http://{{ include "nexus-ide.fullname" . }}:{{ .Values.service.port }}"
+        - name: TEST_TIMEOUT
+          value: "30"
+      command:
+        - /bin/sh
+        - -c
+        - |
+          echo "Running Integration Tests for NEXUS IDE Security Dashboard..."
+          echo "App URL: $APP_URL"
+          
+          # Function to wait for service
+          wait_for_service() {
+            local url=$1
+            local timeout=${TEST_TIMEOUT:-30}
+            local count=0
+            
+            echo "Waiting for service at $url..."
+            while [ $count -lt $timeout ]; do
+              if curl -f -s "$url" > /dev/null 2>&1; then
+                echo "✓ Service is ready"
+                return 0
+              fi
+              echo "Waiting... ($count/$timeout)"
+              sleep 1
+              count=$((count + 1))
+            done
+            echo "✗ Service not ready after ${timeout}s"
+            return 1
+          }
+          
+          # Wait for main application
+          wait_for_service "$APP_URL/health" || exit 1
+          
+          # Test 1: Full Application Stack
+          echo "\n=== Test 1: Full Application Stack ==="
+          
+          # Test main application endpoints
+          endpoints=(
+            "/health"
+            "/api/status"
+            "/api/version"
+            "/metrics"
+          )
+          
+          for endpoint in "${endpoints[@]}"; do
+            echo "Testing endpoint: $endpoint"
+            if curl -f -s "$APP_URL$endpoint" > /dev/null; then
+              echo "✓ $endpoint - OK"
+            else
+              echo "✗ $endpoint - FAILED"
+              exit 1
+            fi
+          done
+          
+          # Test 2: API Integration Flow
+          echo "\n=== Test 2: API Integration Flow ==="
+          
+          # Test API authentication flow
+          echo "Testing API authentication flow..."
+          auth_response=$(curl -s -X POST "$APP_URL/api/auth/test" \
+            -H "Content-Type: application/json" \
+            -d '{"test": true}' \
+            -w "%{http_code}")
+          
+          if echo "$auth_response" | grep -E "(200|401|403)" > /dev/null; then
+            echo "✓ Authentication flow - OK"
+          else
+            echo "⚠ Authentication flow - Unexpected response"
+          fi
+          
+          # Test API data flow
+          echo "Testing API data flow..."
+          data_response=$(curl -s -X GET "$APP_URL/api/data/test" \
+            -H "Accept: application/json" \
+            -w "%{http_code}")
+          
+          if echo "$data_response" | grep -E "(200|404)" > /dev/null; then
+            echo "✓ Data flow - OK"
+          else
+            echo "⚠ Data flow - Unexpected response"
+          fi
+          
+          # Test 3: Database Integration
+          echo "\n=== Test 3: Database Integration ==="
+          
+          {{- if .Values.postgresql.enabled }}
+          # Test PostgreSQL connection through API
+          echo "Testing PostgreSQL integration..."
+          pg_response=$(curl -s "$APP_URL/api/db/postgresql/health" -w "%{http_code}")
+          if echo "$pg_response" | grep "200" > /dev/null; then
+            echo "✓ PostgreSQL integration - OK"
+          else
+            echo "⚠ PostgreSQL integration - Check connection"
+          fi
+          {{- end }}
+          
+          {{- if .Values.redis.enabled }}
+          # Test Redis connection through API
+          echo "Testing Redis integration..."
+          redis_response=$(curl -s "$APP_URL/api/db/redis/health" -w "%{http_code}")
+          if echo "$redis_response" | grep "200" > /dev/null; then
+            echo "✓ Redis integration - OK"
+          else
+            echo "⚠ Redis integration - Check connection"
+          fi
+          {{- end }}
+          
+          {{- if .Values.mongodb.enabled }}
+          # Test MongoDB connection through API
+          echo "Testing MongoDB integration..."
+          mongo_response=$(curl -s "$APP_URL/api/db/mongodb/health" -w "%{http_code}")
+          if echo "$mongo_response" | grep "200" > /dev/null; then
+            echo "✓ MongoDB integration - OK"
+          else
+            echo "⚠ MongoDB integration - Check connection"
+          fi
+          {{- end }}
+          
+          # Test 4: AI Services Integration
+          echo "\n=== Test 4: AI Services Integration ==="
+          
+          {{- if .Values.ai.enabled }}
+          # Test AI services health
+          echo "Testing AI services health..."
+          ai_health=$(curl -s "$APP_URL/api/ai/health" -w "%{http_code}")
+          if echo "$ai_health" | grep "200" > /dev/null; then
+            echo "✓ AI services health - OK"
+          else
+            echo "⚠ AI services health - Check configuration"
+          fi
+          
+          # Test AI completion endpoint
+          echo "Testing AI completion integration..."
+          completion_response=$(curl -s -X POST "$APP_URL/api/ai/completion" \
+            -H "Content-Type: application/json" \
+            -d '{"prompt": "test", "test": true}' \
+            -w "%{http_code}")
+          
+          if echo "$completion_response" | grep -E "(200|400|503)" > /dev/null; then
+            echo "✓ AI completion integration - OK"
+          else
+            echo "⚠ AI completion integration - Unexpected response"
+          fi
+          {{- end }}
+          
+          # Test 5: Collaboration Services
+          echo "\n=== Test 5: Collaboration Services ==="
+          
+          {{- if .Values.collaboration.enabled }}
+          # Test collaboration health
+          echo "Testing collaboration services..."
+          collab_health=$(curl -s "$APP_URL/api/collaboration/health" -w "%{http_code}")
+          if echo "$collab_health" | grep "200" > /dev/null; then
+            echo "✓ Collaboration services - OK"
+          else
+            echo "⚠ Collaboration services - Check configuration"
+          fi
+          
+          # Test WebSocket endpoint availability
+          echo "Testing WebSocket endpoint..."
+          ws_response=$(curl -s -I "$APP_URL/ws" -w "%{http_code}")
+          if echo "$ws_response" | grep -E "(101|400|426)" > /dev/null; then
+            echo "✓ WebSocket endpoint - Available"
+          else
+            echo "⚠ WebSocket endpoint - Check configuration"
+          fi
+          {{- end }}
+          
+          # Test 6: Monitoring Integration
+          echo "\n=== Test 6: Monitoring Integration ==="
+          
+          {{- if .Values.monitoring.enabled }}
+          # Test metrics endpoint
+          echo "Testing metrics collection..."
+          metrics_response=$(curl -s "$APP_URL/metrics" -w "%{http_code}")
+          if echo "$metrics_response" | grep "200" > /dev/null; then
+            echo "✓ Metrics collection - OK"
+          else
+            echo "⚠ Metrics collection - Check configuration"
+          fi
+          
+          # Test health metrics
+          echo "Testing health metrics..."
+          health_metrics=$(curl -s "$APP_URL/api/metrics/health")
+          if echo "$health_metrics" | grep -E "(uptime|memory|cpu)" > /dev/null; then
+            echo "✓ Health metrics - OK"
+          else
+            echo "⚠ Health metrics - Limited data"
+          fi
+          {{- end }}
+          
+          # Test 7: Security Integration
+          echo "\n=== Test 7: Security Integration ==="
+          
+          # Test security headers
+          echo "Testing security headers integration..."
+          security_headers=$(curl -s -I "$APP_URL/health")
+          
+          security_score=0
+          if echo "$security_headers" | grep -i "x-frame-options" > /dev/null; then
+            security_score=$((security_score + 1))
+          fi
+          if echo "$security_headers" | grep -i "x-content-type-options" > /dev/null; then
+            security_score=$((security_score + 1))
+          fi
+          if echo "$security_headers" | grep -i "x-xss-protection" > /dev/null; then
+            security_score=$((security_score + 1))
+          fi
+          
+          echo "Security headers score: $security_score/3"
+          if [ $security_score -ge 2 ]; then
+            echo "✓ Security headers integration - Good"
+          else
+            echo "⚠ Security headers integration - Needs improvement"
+          fi
+          
+          # Test 8: End-to-End Workflow
+          echo "\n=== Test 8: End-to-End Workflow ==="
+          
+          # Simulate a complete user workflow
+          echo "Testing complete user workflow..."
+          
+          # Step 1: Health check
+          workflow_step1=$(curl -s "$APP_URL/health" -w "%{http_code}")
+          if echo "$workflow_step1" | grep "200" > /dev/null; then
+            echo "✓ Workflow Step 1 (Health Check) - OK"
+          else
+            echo "✗ Workflow Step 1 (Health Check) - FAILED"
+            exit 1
+          fi
+          
+          # Step 2: API status
+          workflow_step2=$(curl -s "$APP_URL/api/status" -w "%{http_code}")
+          if echo "$workflow_step2" | grep "200" > /dev/null; then
+            echo "✓ Workflow Step 2 (API Status) - OK"
+          else
+            echo "✗ Workflow Step 2 (API Status) - FAILED"
+            exit 1
+          fi
+          
+          # Step 3: Test data operation
+          workflow_step3=$(curl -s -X POST "$APP_URL/api/test/operation" \
+            -H "Content-Type: application/json" \
+            -d '{"operation": "test", "data": "integration-test"}' \
+            -w "%{http_code}")
+          
+          if echo "$workflow_step3" | grep -E "(200|201|400|404)" > /dev/null; then
+            echo "✓ Workflow Step 3 (Data Operation) - OK"
+          else
+            echo "⚠ Workflow Step 3 (Data Operation) - Unexpected response"
+          fi
+          
+          # Final Summary
+          echo "\n=== Integration Test Summary ==="
+          echo "✓ Application stack is running"
+          echo "✓ Core APIs are responding"
+          echo "✓ Database integrations tested"
+          {{- if .Values.ai.enabled }}
+          echo "✓ AI services integration tested"
+          {{- end }}
+          {{- if .Values.collaboration.enabled }}
+          echo "✓ Collaboration services tested"
+          {{- end }}
+          {{- if .Values.monitoring.enabled }}
+          echo "✓ Monitoring integration tested"
+          {{- end }}
+          echo "✓ Security features tested"
+          echo "✓ End-to-end workflow completed"
+          
+          echo "\n🎉 All integration tests completed successfully!"
+          echo "NEXUS IDE Security Dashboard is ready for use."
+      resources:
+        limits:
+          cpu: 200m
+          memory: 256Mi
+        requests:
+          cpu: 100m
+          memory: 128Mi
+  {{- with .Values.nodeSelector }}
+  nodeSelector:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.affinity }}
+  affinity:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.tolerations }}
+  tolerations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}

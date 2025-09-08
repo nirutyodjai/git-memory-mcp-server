@@ -366,7 +366,7 @@ class DistributedMemoryService extends EventEmitter {
       }
 
       if (Array.isArray(tags) && tags.length) {
-        items = items.filter(it => Array.isArray(it.meta.tags) && tags.every(t => it.meta.tags.includes(t)));
+        items = items.filter(it => Array.isArray(it.meta.tags) && tags.every(t => Array.isArray(it.meta.tags) && it.meta.tags.includes(t)));
       }
 
       if (!includeExpired) {

@@ -101,164 +101,89 @@ function BackupSystem({ onBackupComplete, onRestoreComplete }) {
             alert('กรุณาเลือกไฟล์ JSON เท่านั้น');
         }
     };
-    return (<div className="space-y-6">
-      {/* Backup Section */}
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-        <div className="flex items-center gap-3 mb-4">
-          <lucide_react_1.Database className="w-6 h-6 text-blue-600"/>
-          <h2 className="text-xl font-bold text-gray-900 dark:text-white">
-            สำรองข้อมูล
-          </h2>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-          <button onClick={createFullBackup} disabled={isBackingUp} className="flex items-center justify-center gap-2 p-4 border-2 border-dashed border-blue-300 dark:border-blue-600 rounded-lg hover:border-blue-500 dark:hover:border-blue-400 transition-colors">
-            {isBackingUp ? (<lucide_react_1.Loader2 className="w-5 h-5 animate-spin text-blue-600"/>) : (<lucide_react_1.Download className="w-5 h-5 text-blue-600"/>)}
-            <span className="text-blue-600 font-medium">
-              {isBackingUp ? 'กำลังสำรองข้อมูล...' : 'สำรองข้อมูลทั้งหมด'}
-            </span>
-          </button>
-
-          <div className="relative">
-            <input type="file" accept=".json" onChange={handleFileUpload} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" disabled={isRestoring}/>
-            <div className="flex items-center justify-center gap-2 p-4 border-2 border-dashed border-green-300 dark:border-green-600 rounded-lg hover:border-green-500 dark:hover:border-green-400 transition-colors">
-              {isRestoring ? (<lucide_react_1.Loader2 className="w-5 h-5 animate-spin text-green-600"/>) : (<lucide_react_1.Upload className="w-5 h-5 text-green-600"/>)}
-              <span className="text-green-600 font-medium">
-                {isRestoring ? 'กำลังกู้คืนข้อมูล...' : 'กู้คืนจากไฟล์สำรอง'}
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4">
-          <div className="flex items-start gap-3">
-            <lucide_react_1.AlertTriangle className="w-5 h-5 text-yellow-600 dark:text-yellow-400 mt-0.5"/>
-            <div>
-              <h3 className="font-medium text-yellow-800 dark:text-yellow-200 mb-1">
-                คำเตือนสำคัญ
-              </h3>
-              <ul className="text-sm text-yellow-700 dark:text-yellow-300 space-y-1">
-                <li>• การกู้คืนข้อมูลจะเขียนทับข้อมูลปัจจุบันทั้งหมด</li>
-                <li>• กรุณาสำรองข้อมูลปัจจุบันก่อนทำการกู้คืน</li>
-                <li>• ตรวจสอบไฟล์สำรองให้แน่ใจว่าถูกต้องและสมบูรณ์</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Export Section */}
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-        <div className="flex items-center gap-3 mb-4">
-          <lucide_react_1.FileText className="w-6 h-6 text-purple-600"/>
-          <h2 className="text-xl font-bold text-gray-900 dark:text-white">
-            ส่งออกข้อมูลแยกประเภท
-          </h2>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <button onClick={() => exportData('projects')} className="flex flex-col items-center gap-2 p-4 border border-gray-200 dark:border-gray-600 rounded-lg hover:border-blue-500 dark:hover:border-blue-400 transition-colors">
-            <lucide_react_1.Database className="w-8 h-8 text-blue-600"/>
-            <span className="font-medium text-gray-900 dark:text-white">โปรเจกต์</span>
-            <span className="text-sm text-gray-500 dark:text-gray-400">ส่งออกข้อมูลโปรเจกต์</span>
-          </button>
-
-          <button onClick={() => exportData('blog')} className="flex flex-col items-center gap-2 p-4 border border-gray-200 dark:border-gray-600 rounded-lg hover:border-green-500 dark:hover:border-green-400 transition-colors">
-            <lucide_react_1.FileText className="w-8 h-8 text-green-600"/>
-            <span className="font-medium text-gray-900 dark:text-white">บล็อก</span>
-            <span className="text-sm text-gray-500 dark:text-gray-400">ส่งออกบทความ</span>
-          </button>
-
-          <button onClick={() => exportData('subscribers')} className="flex flex-col items-center gap-2 p-4 border border-gray-200 dark:border-gray-600 rounded-lg hover:border-purple-500 dark:hover:border-purple-400 transition-colors">
-            <lucide_react_1.Mail className="w-8 h-8 text-purple-600"/>
-            <span className="font-medium text-gray-900 dark:text-white">สมาชิก</span>
-            <span className="text-sm text-gray-500 dark:text-gray-400">ส่งออกรายชื่อสมาชิก</span>
-          </button>
-
-          <button onClick={() => exportData('uploads')} className="flex flex-col items-center gap-2 p-4 border border-gray-200 dark:border-gray-600 rounded-lg hover:border-orange-500 dark:hover:border-orange-400 transition-colors">
-            <lucide_react_1.Image className="w-8 h-8 text-orange-600"/>
-            <span className="font-medium text-gray-900 dark:text-white">ไฟล์</span>
-            <span className="text-sm text-gray-500 dark:text-gray-400">ส่งออกรายการไฟล์</span>
-          </button>
-        </div>
-      </div>
-
-      {/* Backup History */}
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-        <div className="flex items-center gap-3 mb-4">
-          <lucide_react_1.Calendar className="w-6 h-6 text-gray-600"/>
-          <h2 className="text-xl font-bold text-gray-900 dark:text-white">
-            ประวัติการสำรองข้อมูล
-          </h2>
-        </div>
-
-        {backupHistory.length === 0 ? (<div className="text-center py-8 text-gray-500 dark:text-gray-400">
-            <lucide_react_1.Database className="w-12 h-12 mx-auto mb-3 opacity-50"/>
-            <p>ยังไม่มีประวัติการสำรองข้อมูล</p>
-          </div>) : (<div className="space-y-3">
-            {backupHistory.map((backup) => (<div key={backup.id} className="flex items-center justify-between p-3 border border-gray-200 dark:border-gray-600 rounded-lg">
-                <div className="flex items-center gap-3">
-                  <lucide_react_1.CheckCircle className="w-5 h-5 text-green-600"/>
-                  <div>
-                    <div className="font-medium text-gray-900 dark:text-white">
-                      {backup.name}
-                    </div>
-                    <div className="text-sm text-gray-500 dark:text-gray-400">
-                      {backup.date} • {backup.size} • {backup.type === 'full' ? 'สำรองทั้งหมด' : 'สำรองบางส่วน'}
-                    </div>
-                  </div>
-                </div>
-                <button className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300">
-                  <lucide_react_1.Download className="w-4 h-4"/>
-                </button>
-              </div>))}
-          </div>)}
-      </div>
-
-      {/* Automated Backup Settings */}
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-        <div className="flex items-center gap-3 mb-4">
-          <lucide_react_1.Calendar className="w-6 h-6 text-indigo-600"/>
-          <h2 className="text-xl font-bold text-gray-900 dark:text-white">
-            การสำรองข้อมูลอัตโนมัติ
-          </h2>
-        </div>
-
-        <div className="space-y-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <div className="font-medium text-gray-900 dark:text-white">
-                เปิดใช้งานการสำรองอัตโนมัติ
-              </div>
-              <div className="text-sm text-gray-500 dark:text-gray-400">
-                สำรองข้อมูลทุกวันเวลา 02:00 น.
-              </div>
-            </div>
-            <label className="relative inline-flex items-center cursor-pointer">
-              <input type="checkbox" className="sr-only peer"/>
-              <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-            </label>
-          </div>
-
-          <div className="flex items-center justify-between">
-            <div>
-              <div className="font-medium text-gray-900 dark:text-white">
-                เก็บไฟล์สำรองไว้
-              </div>
-              <div className="text-sm text-gray-500 dark:text-gray-400">
-                จำนวนไฟล์สำรองที่เก็บไว้
-              </div>
-            </div>
-            <select className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
-              <option value="7">7 ไฟล์</option>
-              <option value="14">14 ไฟล์</option>
-              <option value="30">30 ไฟล์</option>
-              <option value="-1">ไม่จำกัด</option>
-            </select>
-          </div>
-        </div>
-      </div>
-    </div>);
+    return (React.createElement("div", { className: "space-y-6" },
+        React.createElement("div", { className: "bg-white dark:bg-gray-800 rounded-lg shadow p-6" },
+            React.createElement("div", { className: "flex items-center gap-3 mb-4" },
+                React.createElement(lucide_react_1.Database, { className: "w-6 h-6 text-blue-600" }),
+                React.createElement("h2", { className: "text-xl font-bold text-gray-900 dark:text-white" }, "\u0E2A\u0E33\u0E23\u0E2D\u0E07\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25")),
+            React.createElement("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-4 mb-6" },
+                React.createElement("button", { onClick: createFullBackup, disabled: isBackingUp, className: "flex items-center justify-center gap-2 p-4 border-2 border-dashed border-blue-300 dark:border-blue-600 rounded-lg hover:border-blue-500 dark:hover:border-blue-400 transition-colors" },
+                    isBackingUp ? (React.createElement(lucide_react_1.Loader2, { className: "w-5 h-5 animate-spin text-blue-600" })) : (React.createElement(lucide_react_1.Download, { className: "w-5 h-5 text-blue-600" })),
+                    React.createElement("span", { className: "text-blue-600 font-medium" }, isBackingUp ? 'กำลังสำรองข้อมูล...' : 'สำรองข้อมูลทั้งหมด')),
+                React.createElement("div", { className: "relative" },
+                    React.createElement("input", { type: "file", accept: ".json", onChange: handleFileUpload, className: "absolute inset-0 w-full h-full opacity-0 cursor-pointer", disabled: isRestoring }),
+                    React.createElement("div", { className: "flex items-center justify-center gap-2 p-4 border-2 border-dashed border-green-300 dark:border-green-600 rounded-lg hover:border-green-500 dark:hover:border-green-400 transition-colors" },
+                        isRestoring ? (React.createElement(lucide_react_1.Loader2, { className: "w-5 h-5 animate-spin text-green-600" })) : (React.createElement(lucide_react_1.Upload, { className: "w-5 h-5 text-green-600" })),
+                        React.createElement("span", { className: "text-green-600 font-medium" }, isRestoring ? 'กำลังกู้คืนข้อมูล...' : 'กู้คืนจากไฟล์สำรอง')))),
+            React.createElement("div", { className: "bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4" },
+                React.createElement("div", { className: "flex items-start gap-3" },
+                    React.createElement(lucide_react_1.AlertTriangle, { className: "w-5 h-5 text-yellow-600 dark:text-yellow-400 mt-0.5" }),
+                    React.createElement("div", null,
+                        React.createElement("h3", { className: "font-medium text-yellow-800 dark:text-yellow-200 mb-1" }, "\u0E04\u0E33\u0E40\u0E15\u0E37\u0E2D\u0E19\u0E2A\u0E33\u0E04\u0E31\u0E0D"),
+                        React.createElement("ul", { className: "text-sm text-yellow-700 dark:text-yellow-300 space-y-1" },
+                            React.createElement("li", null, "\u2022 \u0E01\u0E32\u0E23\u0E01\u0E39\u0E49\u0E04\u0E37\u0E19\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25\u0E08\u0E30\u0E40\u0E02\u0E35\u0E22\u0E19\u0E17\u0E31\u0E1A\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25\u0E1B\u0E31\u0E08\u0E08\u0E38\u0E1A\u0E31\u0E19\u0E17\u0E31\u0E49\u0E07\u0E2B\u0E21\u0E14"),
+                            React.createElement("li", null, "\u2022 \u0E01\u0E23\u0E38\u0E13\u0E32\u0E2A\u0E33\u0E23\u0E2D\u0E07\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25\u0E1B\u0E31\u0E08\u0E08\u0E38\u0E1A\u0E31\u0E19\u0E01\u0E48\u0E2D\u0E19\u0E17\u0E33\u0E01\u0E32\u0E23\u0E01\u0E39\u0E49\u0E04\u0E37\u0E19"),
+                            React.createElement("li", null, "\u2022 \u0E15\u0E23\u0E27\u0E08\u0E2A\u0E2D\u0E1A\u0E44\u0E1F\u0E25\u0E4C\u0E2A\u0E33\u0E23\u0E2D\u0E07\u0E43\u0E2B\u0E49\u0E41\u0E19\u0E48\u0E43\u0E08\u0E27\u0E48\u0E32\u0E16\u0E39\u0E01\u0E15\u0E49\u0E2D\u0E07\u0E41\u0E25\u0E30\u0E2A\u0E21\u0E1A\u0E39\u0E23\u0E13\u0E4C")))))),
+        React.createElement("div", { className: "bg-white dark:bg-gray-800 rounded-lg shadow p-6" },
+            React.createElement("div", { className: "flex items-center gap-3 mb-4" },
+                React.createElement(lucide_react_1.FileText, { className: "w-6 h-6 text-purple-600" }),
+                React.createElement("h2", { className: "text-xl font-bold text-gray-900 dark:text-white" }, "\u0E2A\u0E48\u0E07\u0E2D\u0E2D\u0E01\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25\u0E41\u0E22\u0E01\u0E1B\u0E23\u0E30\u0E40\u0E20\u0E17")),
+            React.createElement("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4" },
+                React.createElement("button", { onClick: () => exportData('projects'), className: "flex flex-col items-center gap-2 p-4 border border-gray-200 dark:border-gray-600 rounded-lg hover:border-blue-500 dark:hover:border-blue-400 transition-colors" },
+                    React.createElement(lucide_react_1.Database, { className: "w-8 h-8 text-blue-600" }),
+                    React.createElement("span", { className: "font-medium text-gray-900 dark:text-white" }, "\u0E42\u0E1B\u0E23\u0E40\u0E08\u0E01\u0E15\u0E4C"),
+                    React.createElement("span", { className: "text-sm text-gray-500 dark:text-gray-400" }, "\u0E2A\u0E48\u0E07\u0E2D\u0E2D\u0E01\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25\u0E42\u0E1B\u0E23\u0E40\u0E08\u0E01\u0E15\u0E4C")),
+                React.createElement("button", { onClick: () => exportData('blog'), className: "flex flex-col items-center gap-2 p-4 border border-gray-200 dark:border-gray-600 rounded-lg hover:border-green-500 dark:hover:border-green-400 transition-colors" },
+                    React.createElement(lucide_react_1.FileText, { className: "w-8 h-8 text-green-600" }),
+                    React.createElement("span", { className: "font-medium text-gray-900 dark:text-white" }, "\u0E1A\u0E25\u0E47\u0E2D\u0E01"),
+                    React.createElement("span", { className: "text-sm text-gray-500 dark:text-gray-400" }, "\u0E2A\u0E48\u0E07\u0E2D\u0E2D\u0E01\u0E1A\u0E17\u0E04\u0E27\u0E32\u0E21")),
+                React.createElement("button", { onClick: () => exportData('subscribers'), className: "flex flex-col items-center gap-2 p-4 border border-gray-200 dark:border-gray-600 rounded-lg hover:border-purple-500 dark:hover:border-purple-400 transition-colors" },
+                    React.createElement(lucide_react_1.Mail, { className: "w-8 h-8 text-purple-600" }),
+                    React.createElement("span", { className: "font-medium text-gray-900 dark:text-white" }, "\u0E2A\u0E21\u0E32\u0E0A\u0E34\u0E01"),
+                    React.createElement("span", { className: "text-sm text-gray-500 dark:text-gray-400" }, "\u0E2A\u0E48\u0E07\u0E2D\u0E2D\u0E01\u0E23\u0E32\u0E22\u0E0A\u0E37\u0E48\u0E2D\u0E2A\u0E21\u0E32\u0E0A\u0E34\u0E01")),
+                React.createElement("button", { onClick: () => exportData('uploads'), className: "flex flex-col items-center gap-2 p-4 border border-gray-200 dark:border-gray-600 rounded-lg hover:border-orange-500 dark:hover:border-orange-400 transition-colors" },
+                    React.createElement(lucide_react_1.Image, { className: "w-8 h-8 text-orange-600" }),
+                    React.createElement("span", { className: "font-medium text-gray-900 dark:text-white" }, "\u0E44\u0E1F\u0E25\u0E4C"),
+                    React.createElement("span", { className: "text-sm text-gray-500 dark:text-gray-400" }, "\u0E2A\u0E48\u0E07\u0E2D\u0E2D\u0E01\u0E23\u0E32\u0E22\u0E01\u0E32\u0E23\u0E44\u0E1F\u0E25\u0E4C")))),
+        React.createElement("div", { className: "bg-white dark:bg-gray-800 rounded-lg shadow p-6" },
+            React.createElement("div", { className: "flex items-center gap-3 mb-4" },
+                React.createElement(lucide_react_1.Calendar, { className: "w-6 h-6 text-gray-600" }),
+                React.createElement("h2", { className: "text-xl font-bold text-gray-900 dark:text-white" }, "\u0E1B\u0E23\u0E30\u0E27\u0E31\u0E15\u0E34\u0E01\u0E32\u0E23\u0E2A\u0E33\u0E23\u0E2D\u0E07\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25")),
+            backupHistory.length === 0 ? (React.createElement("div", { className: "text-center py-8 text-gray-500 dark:text-gray-400" },
+                React.createElement(lucide_react_1.Database, { className: "w-12 h-12 mx-auto mb-3 opacity-50" }),
+                React.createElement("p", null, "\u0E22\u0E31\u0E07\u0E44\u0E21\u0E48\u0E21\u0E35\u0E1B\u0E23\u0E30\u0E27\u0E31\u0E15\u0E34\u0E01\u0E32\u0E23\u0E2A\u0E33\u0E23\u0E2D\u0E07\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25"))) : (React.createElement("div", { className: "space-y-3" }, backupHistory.map((backup) => (React.createElement("div", { key: backup.id, className: "flex items-center justify-between p-3 border border-gray-200 dark:border-gray-600 rounded-lg" },
+                React.createElement("div", { className: "flex items-center gap-3" },
+                    React.createElement(lucide_react_1.CheckCircle, { className: "w-5 h-5 text-green-600" }),
+                    React.createElement("div", null,
+                        React.createElement("div", { className: "font-medium text-gray-900 dark:text-white" }, backup.name),
+                        React.createElement("div", { className: "text-sm text-gray-500 dark:text-gray-400" },
+                            backup.date,
+                            " \u2022 ",
+                            backup.size,
+                            " \u2022 ",
+                            backup.type === 'full' ? 'สำรองทั้งหมด' : 'สำรองบางส่วน'))),
+                React.createElement("button", { className: "text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300" },
+                    React.createElement(lucide_react_1.Download, { className: "w-4 h-4" })))))))),
+        React.createElement("div", { className: "bg-white dark:bg-gray-800 rounded-lg shadow p-6" },
+            React.createElement("div", { className: "flex items-center gap-3 mb-4" },
+                React.createElement(lucide_react_1.Calendar, { className: "w-6 h-6 text-indigo-600" }),
+                React.createElement("h2", { className: "text-xl font-bold text-gray-900 dark:text-white" }, "\u0E01\u0E32\u0E23\u0E2A\u0E33\u0E23\u0E2D\u0E07\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25\u0E2D\u0E31\u0E15\u0E42\u0E19\u0E21\u0E31\u0E15\u0E34")),
+            React.createElement("div", { className: "space-y-4" },
+                React.createElement("div", { className: "flex items-center justify-between" },
+                    React.createElement("div", null,
+                        React.createElement("div", { className: "font-medium text-gray-900 dark:text-white" }, "\u0E40\u0E1B\u0E34\u0E14\u0E43\u0E0A\u0E49\u0E07\u0E32\u0E19\u0E01\u0E32\u0E23\u0E2A\u0E33\u0E23\u0E2D\u0E07\u0E2D\u0E31\u0E15\u0E42\u0E19\u0E21\u0E31\u0E15\u0E34"),
+                        React.createElement("div", { className: "text-sm text-gray-500 dark:text-gray-400" }, "\u0E2A\u0E33\u0E23\u0E2D\u0E07\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25\u0E17\u0E38\u0E01\u0E27\u0E31\u0E19\u0E40\u0E27\u0E25\u0E32 02:00 \u0E19.")),
+                    React.createElement("label", { className: "relative inline-flex items-center cursor-pointer" },
+                        React.createElement("input", { type: "checkbox", className: "sr-only peer" }),
+                        React.createElement("div", { className: "w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600" }))),
+                React.createElement("div", { className: "flex items-center justify-between" },
+                    React.createElement("div", null,
+                        React.createElement("div", { className: "font-medium text-gray-900 dark:text-white" }, "\u0E40\u0E01\u0E47\u0E1A\u0E44\u0E1F\u0E25\u0E4C\u0E2A\u0E33\u0E23\u0E2D\u0E07\u0E44\u0E27\u0E49"),
+                        React.createElement("div", { className: "text-sm text-gray-500 dark:text-gray-400" }, "\u0E08\u0E33\u0E19\u0E27\u0E19\u0E44\u0E1F\u0E25\u0E4C\u0E2A\u0E33\u0E23\u0E2D\u0E07\u0E17\u0E35\u0E48\u0E40\u0E01\u0E47\u0E1A\u0E44\u0E27\u0E49")),
+                    React.createElement("select", { className: "px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white" },
+                        React.createElement("option", { value: "7" }, "7 \u0E44\u0E1F\u0E25\u0E4C"),
+                        React.createElement("option", { value: "14" }, "14 \u0E44\u0E1F\u0E25\u0E4C"),
+                        React.createElement("option", { value: "30" }, "30 \u0E44\u0E1F\u0E25\u0E4C"),
+                        React.createElement("option", { value: "-1" }, "\u0E44\u0E21\u0E48\u0E08\u0E33\u0E01\u0E31\u0E14")))))));
 }
 exports.default = BackupSystem;
-//# sourceMappingURL=backup-system.js.map

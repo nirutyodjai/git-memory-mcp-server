@@ -1,0 +1,21 @@
+{
+  "server": {
+    "port": 8080,
+    "host": "0.0.0.0"
+  },
+  "ssl": {
+    "enabled": false
+  },
+  "auth": {
+    "enabled": false
+  },
+  "cache": {
+    "redis": {
+      "enabled": false
+    }
+  },
+  "logging": {
+    "level": "debug",
+    "destination": "console"
+  }
+}

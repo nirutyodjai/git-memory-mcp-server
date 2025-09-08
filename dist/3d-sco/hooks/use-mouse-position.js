@@ -16,4 +16,3 @@ const useMousePosition = () => {
     return mousePosition;
 };
 exports.useMousePosition = useMousePosition;
-//# sourceMappingURL=use-mouse-position.js.map

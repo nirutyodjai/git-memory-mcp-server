@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXUS IDE - Test Results</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 20px; background: #f5f5f5; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 10px 10px 0 0; }
+        .summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; padding: 30px; }
+        .metric { background: #f8f9fa; padding: 20px; border-radius: 8px; text-align: center; border-left: 4px solid #007bff; }
+        .metric.success { border-left-color: #28a745; }
+        .metric.danger { border-left-color: #dc3545; }
+        .metric.warning { border-left-color: #ffc107; }
+        .results { padding: 0 30px 30px; }
+        .category { margin-bottom: 30px; }
+        .category h3 { color: #333; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        .test-item { display: flex; justify-content: space-between; align-items: center; padding: 10px; margin: 5px 0; border-radius: 5px; }
+        .test-item.passed { background: #d4edda; border-left: 4px solid #28a745; }
+        .test-item.failed { background: #f8d7da; border-left: 4px solid #dc3545; }
+        .badge { padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; }
+        .badge.success { background: #28a745; color: white; }
+        .badge.danger { background: #dc3545; color: white; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 NEXUS IDE - Test Results</h1>
+            <p>Generated: 2025-09-07T09:58:45.456Z</p>
+            <p>Duration: 53.13 seconds</p>
+        </div>
+        
+        <div class="summary">
+            <div class="metric success">
+                <h3>21</h3>
+                <p>Tests Passed</p>
+            </div>
+            <div class="metric danger">
+                <h3>9</h3>
+                <p>Tests Failed</p>
+            </div>
+            <div class="metric">
+                <h3>30</h3>
+                <p>Total Tests</p>
+            </div>
+            <div class="metric warning">
+                <h3>70.00%</h3>
+                <p>Success Rate</p>
+            </div>
+        </div>
+        
+        <div class="results">
+            
+                <div class="category">
+                    <h3>UNIT Tests (2)</h3>
+                    
+                        <div class="test-item passed">
+                            <span>git-memory-coordinator.test.js</span>
+                            <div>
+                                <span class="badge success">
+                                    PASSED
+                                </span>
+                                <small>275ms</small>
+                            </div>
+                        </div>
+                    
+                        <div class="test-item failed">
+                            <span>nexus-web-server.test.js</span>
+                            <div>
+                                <span class="badge danger">
+                                    FAILED
+                                </span>
+                                <small>161ms</small>
+                            </div>
+                        </div>
+                    
+                </div>
+            
+                <div class="category">
+                    <h3>INTEGRATION Tests (5)</h3>
+                    
+                        <div class="test-item passed">
+                            <span>mcp-server-communication</span>
+                            <div>
+                                <span class="badge success">
+                                    PASSED
+                                </span>
+                                <small>1435ms</small>
+                            </div>
+                        </div>
+                    
+                        <div class="test-item passed">
+                            <span>git-memory-integration</span>
+                            <div>
+                                <span class="badge success">
+                                    PASSED
+                                </span>
+                                <small>1244ms</small>
+                            </div>
+                        </div>
+                    
+                        <div class="test-item passed">
+                            <span>universal-data-hub</span>
+                            <div>
+                                <span class="badge success">
+                                    PASSED
+                                </span>
+                                <small>1575ms</small>
+                            </div>
+                        </div>
+                    
+                        <div class="test-item passed">
+                            <span>nexus-master-control</span>
+                            <div>
+                                <span class="badge success">
+                                    PASSED
+                                </span>
+                                <small>1137ms</small>
+                            </div>
+                        </div>
+                    
+                        <div class="test-item failed">
+                            <span>websocket-connections</span>
+                            <div>
+                                <span class="badge danger">
+                                    FAILED
+                                </span>
+                                <small>1973ms</small>
+                            </div>
+                        </div>
+                    
+                </div>
+            
+                <div class="category">
+                    <h3>E2E Tests (7)</h3>
+                    
+                        <div class="test-item passed">
+                            <span>User Login Flow</span>
+                            <div>
+                                <span class="badge success">
+                                    PASSED
+                                </span>
+                                <small>2991ms</small>
+                            </div>
+                        </div>
+                    
+                        <div class="test-item passed">
+                            <span>File Explorer Navigation</span>
+                            <div>
+                                <span class="badge success">
+                                    PASSED
+                                </span>
+                                <small>4133ms</small>
+                            </div>
+                        </div>
+                    
+                        <div class="test-item passed">
+                            <span>Code Editor Functionality</span>
+                            <div>
+                                <span class="badge success">
+                                    PASSED
+                                </span>
+                                <small>4355ms</small>
+                            </div>
+                        </div>
+                    
+                        <div class="test-item passed">
+                            <span>Terminal Operations</span>
+                            <div>
+                                <span class="badge success">
+                                    PASSED
+                                </span>
+                                <small>2224ms</small>
+                            </div>
+                        </div>
+                    
+                        <div class="test-item failed">
+                            <span>AI Copilot Interaction</span>
+                            <div>
+                                <span class="badge danger">
+                                    FAILED
+                                </span>
+                                <small>4011ms</small>
+                            </div>
+                        </div>
+                    
+                        <div class="test-item passed">
+                            <span>Real-time Collaboration</span>
+                            <div>
+                                <span class="badge success">
+                                    PASSED
+                                </span>
+                                <small>3670ms</small>
+                            </div>
+                        </div>
+                    
+                        <div class="test-item passed">
+                            <span>Plugin Installation</span>
+                            <div>
+                                <span class="badge success">
+                                    PASSED
+                                </span>
+                                <small>5663ms</small>
+                            </div>
+                        </div>
+                    
+                </div>
+            
+                <div class="category">
+                    <h3>PERFORMANCE Tests (4)</h3>
+                    
+                        <div class="test-item passed">
+                            <span>Load Test - 100 concurrent users</span>
+                            <div>
+                                <span class="badge success">
+                                    PASSED
+                                </span>
+                                <small>3302ms</small>
+                            </div>
+                        </div>
+                    
+                        <div class="test-item failed">
+                            <span>Stress Test - MCP Servers</span>
+                            <div>
+                                <span class="badge danger">
+                                    FAILED
+                                </span>
+                                <small>2072ms</small>
+                            </div>
+                        </div>
+                    
+                        <div class="test-item failed">
+                            <span>Memory Usage Test</span>
+                            <div>
+                                <span class="badge danger">
+                                    FAILED
+                                </span>
+                                <small>1592ms</small>
+                            </div>
+                        </div>
+                    
+                        <div class="test-item failed">
+                            <span>Response Time Test</span>
+                            <div>
+                                <span class="badge danger">
+                                    FAILED
+                                </span>
+                                <small>3891ms</small>
+                            </div>
+                        </div>
+                    
+                </div>
+            
+                <div class="category">
+                    <h3>SECURITY Tests (7)</h3>
+                    
+                        <div class="test-item passed">
+                            <span>SQL Injection Protection</span>
+                            <div>
+                                <span class="badge success">
+                                    PASSED
+                                </span>
+                                <small>789ms</small>
+                            </div>
+                        </div>
+                    
+                        <div class="test-item passed">
+                            <span>XSS Protection</span>
+                            <div>
+                                <span class="badge success">
+                                    PASSED
+                                </span>
+                                <small>1125ms</small>
+                            </div>
+                        </div>
+                    
+                        <div class="test-item passed">
+                            <span>CSRF Protection</span>
+                            <div>
+                                <span class="badge success">
+                                    PASSED
+                                </span>
+                                <small>525ms</small>
+                            </div>
+                        </div>
+                    
+                        <div class="test-item passed">
+                            <span>Authentication Tests</span>
+                            <div>
+                                <span class="badge success">
+                                    PASSED
+                                </span>
+                                <small>858ms</small>
+                            </div>
+                        </div>
+                    
+                        <div class="test-item passed">
+                            <span>Authorization Tests</span>
+                            <div>
+                                <span class="badge success">
+                                    PASSED
+                                </span>
+                                <small>612ms</small>
+                            </div>
+                        </div>
+                    
+                        <div class="test-item passed">
+                            <span>Input Validation</span>
+                            <div>
+                                <span class="badge success">
+                                    PASSED
+                                </span>
+                                <small>1498ms</small>
+                            </div>
+                        </div>
+                    
+                        <div class="test-item passed">
+                            <span>Rate Limiting</span>
+                            <div>
+                                <span class="badge success">
+                                    PASSED
+                                </span>
+                                <small>1965ms</small>
+                            </div>
+                        </div>
+                    
+                </div>
+            
+                <div class="category">
+                    <h3>API Tests (5)</h3>
+                    
+                        <div class="test-item passed">
+                            <span>GET /api/status</span>
+                            <div>
+                                <span class="badge success">
+                                    PASSED
+                                </span>
+                                <small>3ms</small>
+                            </div>
+                        </div>
+                    
+                        <div class="test-item passed">
+                            <span>GET /api/mcp-servers</span>
+                            <div>
+                                <span class="badge success">
+                                    PASSED
+                                </span>
+                                <small>2ms</small>
+                            </div>
+                        </div>
+                    
+                </div>
+            
+        </div>
+    </div>
+</body>
+</html>

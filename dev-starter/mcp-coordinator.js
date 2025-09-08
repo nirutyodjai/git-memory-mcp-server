@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+require('dotenv').config();
 const { Server } = require('@modelcontextprotocol/sdk/server/index.js');
 const { StdioServerTransport } = require('@modelcontextprotocol/sdk/server/stdio.js');
 const { CallToolRequestSchema, ListToolsRequestSchema } = require('@modelcontextprotocol/sdk/types.js');
@@ -8,6 +9,8 @@ const path = require('path');
 const { execSync, spawn } = require('child_process');
 const http = require('http');
 const express = require('express');
+const axios = require('axios');
+const { v4: uuidv4 } = require('uuid');
 
 class MCPCoordinator {
   constructor() {
@@ -30,7 +33,7 @@ class MCPCoordinator {
     this.batchSize = 100; // Increased batch size for faster deployment
     this.currentPhase = 0;
     this.maxServers = 1500;
-    this.maxServersPerCategory = 150;
+    this.maxServersPerCategory = 100;
     
     this.initializeDirectories();
     this.setupTools();
@@ -62,6 +65,8 @@ class MCPCoordinator {
       this.currentPhase = data.currentPhase || 0;
       this.mcpServers = new Map(data.mcpServers || []);
       this.categories = new Map(data.categories || []);
+      // Ensure categories updated for 1500 capacity
+      await this.ensureCategoriesUpToDate();
     } catch (error) {
       // Create default configuration
       await this.createDefaultConfiguration();
@@ -79,19 +84,68 @@ class MCPCoordinator {
     await fs.writeFile(this.configPath, JSON.stringify(config, null, 2));
   }
 
+  // Ensure categories include new ones for 1500 capacity without destroying existing data
+  async ensureCategoriesUpToDate() {
+    const expected = {
+      'database': { portStart: 3100, portEnd: 3199, maxServers: 100 },
+      'filesystem': { portStart: 3200, portEnd: 3299, maxServers: 100 },
+      'api': { portStart: 3300, portEnd: 3399, maxServers: 100 },
+      'ai-ml': { portStart: 3400, portEnd: 3499, maxServers: 100 },
+      'version-control': { portStart: 3500, portEnd: 3599, maxServers: 100 },
+      'dev-tools': { portStart: 3600, portEnd: 3699, maxServers: 100 },
+      'system-ops': { portStart: 3700, portEnd: 3799, maxServers: 100 },
+      'communication': { portStart: 3800, portEnd: 3899, maxServers: 100 },
+      'business': { portStart: 3900, portEnd: 3999, maxServers: 100 },
+      'iot-hardware': { portStart: 4000, portEnd: 4099, maxServers: 100 },
+      'data-science': { portStart: 4100, portEnd: 4199, maxServers: 100 },
+      'security': { portStart: 4200, portEnd: 4299, maxServers: 100 },
+      'media': { portStart: 4300, portEnd: 4399, maxServers: 100 },
+      'gaming': { portStart: 4400, portEnd: 4499, maxServers: 100 },
+      'blockchain': { portStart: 4500, portEnd: 4599, maxServers: 100 }
+    };
+
+    let changed = false;
+    for (const [name, conf] of Object.entries(expected)) {
+      if (!this.categories.has(name)) {
+        this.categories.set(name, { ...conf, count: 0 });
+        const categoryDir = path.join(this.memoryPath, 'categories', name);
+        await fs.mkdir(categoryDir, { recursive: true });
+        changed = true;
+      } else {
+        // ensure maxServers exists
+        const existing = this.categories.get(name);
+        if (existing && typeof existing.maxServers === 'undefined') {
+          existing.maxServers = 100;
+          this.categories.set(name, existing);
+          changed = true;
+        }
+      }
+    }
+
+    if (changed) {
+      await this.saveConfiguration();
+    }
+  }
+
   async createDefaultConfiguration() {
-    // Define categories with expanded port ranges for 1000 servers (100 per category)
+    // Define categories with expanded port ranges for 1500 servers (100 per category)
     const defaultCategories = {
-      'database': { portStart: 3100, portEnd: 3249, count: 0, maxServers: 150 },
-      'filesystem': { portStart: 3250, portEnd: 3399, count: 0, maxServers: 150 },
-      'api': { portStart: 3400, portEnd: 3549, count: 0, maxServers: 150 },
-      'ai-ml': { portStart: 3550, portEnd: 3699, count: 0, maxServers: 150 },
-      'version-control': { portStart: 3700, portEnd: 3849, count: 0, maxServers: 150 },
-      'dev-tools': { portStart: 3850, portEnd: 3999, count: 0, maxServers: 150 },
-      'system-ops': { portStart: 4000, portEnd: 4149, count: 0, maxServers: 150 },
-      'communication': { portStart: 4150, portEnd: 4299, count: 0, maxServers: 150 },
-      'business': { portStart: 4300, portEnd: 4449, count: 0, maxServers: 150 },
-      'iot-hardware': { portStart: 4450, portEnd: 4599, count: 0, maxServers: 150 }
+      'database': { portStart: 3100, portEnd: 3199, count: 0, maxServers: 100 },
+      'filesystem': { portStart: 3200, portEnd: 3299, count: 0, maxServers: 100 },
+      'api': { portStart: 3300, portEnd: 3399, count: 0, maxServers: 100 },
+      'ai-ml': { portStart: 3400, portEnd: 3499, count: 0, maxServers: 100 },
+      'version-control': { portStart: 3500, portEnd: 3599, count: 0, maxServers: 100 },
+      'dev-tools': { portStart: 3600, portEnd: 3699, count: 0, maxServers: 100 },
+      'system-ops': { portStart: 3700, portEnd: 3799, count: 0, maxServers: 100 },
+      'communication': { portStart: 3800, portEnd: 3899, count: 0, maxServers: 100 },
+      'business': { portStart: 3900, portEnd: 3999, count: 0, maxServers: 100 },
+      'iot-hardware': { portStart: 4000, portEnd: 4099, count: 0, maxServers: 100 },
+      // additional categories for 1500 capacity
+      'data-science': { portStart: 4100, portEnd: 4199, count: 0, maxServers: 100 },
+      'security': { portStart: 4200, portEnd: 4299, count: 0, maxServers: 100 },
+      'media': { portStart: 4300, portEnd: 4399, count: 0, maxServers: 100 },
+      'gaming': { portStart: 4400, portEnd: 4499, count: 0, maxServers: 100 },
+      'blockchain': { portStart: 4500, portEnd: 4599, count: 0, maxServers: 100 }
     };
     
     for (const [category, config] of Object.entries(defaultCategories)) {
@@ -112,7 +166,7 @@ class MCPCoordinator {
         tools: [
           {
             name: 'deploy_batch',
-            description: 'Deploy a batch of MCP servers (up to 150 servers per batch for 1500-server capacity)',
+            description: 'Deploy a batch of MCP servers (up to 100 servers per batch for 1500-server capacity)',
             inputSchema: {
               type: 'object',
               properties: {
@@ -122,8 +176,8 @@ class MCPCoordinator {
                 },
                 count: {
                   type: 'number',
-                  description: 'Number of servers to deploy (max 150 per batch)',
-                  maximum: 150
+                  description: 'Number of servers to deploy (max 100 per batch)',
+                  maximum: 100
                 },
                 startIndex: {
                   type: 'number',
@@ -744,13 +798,50 @@ server.run().catch(console.error);
     app.use((req, res, next) => {
       res.header('Access-Control-Allow-Origin', '*');
       res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-      res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+      res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization, X-Request-Id');
       if (req.method === 'OPTIONS') {
         res.sendStatus(200);
       } else {
         next();
       }
     });
+
+    // Attach request id and standard 200 OK helper for new endpoints
+    app.use((req, res, next) => {
+      const reqId = req.headers['x-request-id'] || uuidv4();
+      res.setHeader('X-Request-Id', reqId);
+      req.requestId = reqId;
+      next();
+    });
+
+    const ok = (res, data, meta = {}) => {
+      return res.status(200).json({
+        code: 200,
+        ok: true,
+        data,
+        meta: Object.assign({
+          requestId: res.getHeader('X-Request-Id'),
+          service: 'mcp-coordinator',
+          version: '1.0.0'
+        }, meta),
+        ts: new Date().toISOString()
+      });
+    };
+
+    const fail = (res, message, details) => {
+      return res.status(200).json({
+        code: 200,
+        ok: false,
+        error: message,
+        details: details || null,
+        meta: {
+          requestId: res.getHeader('X-Request-Id'),
+          service: 'mcp-coordinator',
+          version: '1.0.0'
+        },
+        ts: new Date().toISOString()
+      });
+    };
     
     // API endpoints
     app.get('/servers', async (req, res) => {
@@ -780,7 +871,81 @@ server.run().catch(console.error);
         res.status(500).json({ success: false, error: error.message });
       }
     });
-    
+
+    // Start servers (single or batch)
+    app.post('/servers/start', async (req, res) => {
+      try {
+        const { id, ids, category, limit } = req.body || {};
+        if (id) {
+          const r = await this.startServerProcess(id);
+          return ok(res, r);
+        }
+        let targetIds = [];
+        if (Array.isArray(ids) && ids.length > 0) {
+          targetIds = ids;
+        } else if (category) {
+          targetIds = Array.from(this.mcpServers.values())
+            .filter(s => s.category === category && s.status !== 'running')
+            .map(s => s.id);
+        }
+        if (targetIds.length === 0) return fail(res, 'No target servers to start');
+        const toStart = typeof limit === 'number' ? targetIds.slice(0, Math.max(0, limit)) : targetIds;
+
+        const queue = [...toStart];
+        const started = [];
+        const failed = [];
+        const workers = Math.min(this.concurrentStarts, queue.length);
+        const runner = async () => {
+          while (queue.length) {
+            const next = queue.shift();
+            try {
+              const rr = await this.startServerProcess(next);
+              started.push(rr);
+            } catch (e) {
+              failed.push({ id: next, error: e.message });
+            }
+          }
+        };
+        await Promise.all(Array.from({ length: workers }, runner));
+        return ok(res, { started, failed, requested: toStart.length });
+      } catch (error) {
+        return fail(res, 'Start servers error', { message: error.message });
+      }
+    });
+
+    // Stop servers (single or batch)
+    app.post('/servers/stop', async (req, res) => {
+      try {
+        const { id, ids, category, limit } = req.body || {};
+        if (id) {
+          const r = await this.stopServerProcess(id);
+          return ok(res, r);
+        }
+        let targetIds = [];
+        if (Array.isArray(ids) && ids.length > 0) {
+          targetIds = ids;
+        } else if (category) {
+          targetIds = Array.from(this.mcpServers.values())
+            .filter(s => s.category === category && s.status === 'running')
+            .map(s => s.id);
+        }
+        if (targetIds.length === 0) return fail(res, 'No target servers to stop');
+        const toStop = typeof limit === 'number' ? targetIds.slice(0, Math.max(0, limit)) : targetIds;
+
+        const results = [];
+        for (const sid of toStop) {
+          try {
+            const r = await this.stopServerProcess(sid);
+            results.push(r);
+          } catch (e) {
+            results.push({ serverId: sid, status: 'error', error: e.message });
+          }
+        }
+        return ok(res, { results, requested: toStop.length });
+      } catch (error) {
+        return fail(res, 'Stop servers error', { message: error.message });
+      }
+    });
     app.get('/stats', (req, res) => {
       res.json({
         success: true,
@@ -796,11 +961,593 @@ server.run().catch(console.error);
         }
       });
     });
-    
-    const port = process.env.MCP_COORDINATOR_PORT || 3000;
-    app.listen(port, () => {
-      console.error(`MCP Coordinator HTTP server running on port ${port}`);
+
+    // New: AI providers health endpoint
+    app.get('/ai/providers/health', async (req, res) => {
+      try {
+        const toInt = (v, d) => {
+          const n = parseInt(v, 10);
+          return Number.isFinite(n) ? n : d;
+        };
+        const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
+        const timeoutMs = clamp(toInt(req.query.timeoutMs, 2000), 300, 20000);
+
+        const requested = (req.query.provider || req.query.providers || '').toString().trim();
+        const list = requested
+          ? Array.from(new Set(requested.split(',').map(s => s.trim().toLowerCase()).filter(Boolean)))
+          : ['ollama', 'openai'];
+
+        const results = {};
+
+        // Ollama health
+        if (list.includes('ollama')) {
+          const sanitize = (v) => (v || '').toString().trim().replace(/^['"]|['"]$/g, '').replace(/\/$/, '');
+          const OLLAMA_BASE = sanitize(req.query.ollamaBaseUrl || req.query.ollama_base || process.env.OLLAMA_BASE_URL || process.env.OLLAMA_HOST || 'http://localhost:11434');
+
+          const tryEndpoints = async () => {
+            const endpoints = ['/api/version', '/api/tags'];
+            for (const p of endpoints) {
+              const url = new URL(p, OLLAMA_BASE).toString();
+              const started = Date.now();
+              try {
+                const r = await axios.get(url, { timeout: timeoutMs });
+                const latencyMs = Date.now() - started;
+                const data = r.data || {};
+                return {
+                  healthy: true,
+                  reachable: true,
+                  status: 'ok',
+                  statusCode: r.status,
+                  baseUrl: OLLAMA_BASE,
+                  endpoint: url,
+                  latencyMs,
+                  version: typeof data.version === 'string' ? data.version : undefined,
+                  raw: undefined
+                };
+              } catch (error) {
+                const latencyMs = Date.now() - started;
+                // Try next endpoint, but if this is the last, return failure
+                if (p === endpoints[endpoints.length - 1]) {
+                  return {
+                    healthy: false,
+                    reachable: !['ECONNREFUSED', 'ENOTFOUND', 'EAI_AGAIN', 'ETIMEDOUT'].includes(error?.code || ''),
+                    status: (error?.code === 'ECONNABORTED' || error?.message?.includes('timeout')) ? 'timeout' : 'error',
+                    statusCode: error?.response?.status || null,
+                    baseUrl: OLLAMA_BASE,
+                    endpoint: url,
+                    latencyMs,
+                    error: error?.message || String(error)
+                  };
+                }
+              }
+            }
+          };
+
+          results.ollama = await tryEndpoints();
+        }
+
+        // OpenAI health
+        if (list.includes('openai')) {
+          const OPENAI_BASE = (req.query.openaiBaseUrl || process.env.OPENAI_BASE_URL || 'https://api.openai.com').toString().replace(/\/$/, '');
+          const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+          const url = `${OPENAI_BASE}/v1/models`;
+          const started = Date.now();
+          try {
+            const headers = {};
+            if (OPENAI_API_KEY) headers['Authorization'] = `Bearer ${OPENAI_API_KEY}`;
+            const r = await axios.get(url, { headers, timeout: timeoutMs });
+            const latencyMs = Date.now() - started;
+            results.openai = {
+              healthy: true,
+              reachable: true,
+              status: 'ok',
+              statusCode: r.status,
+              baseUrl: OPENAI_BASE,
+              latencyMs,
+              authConfigured: !!OPENAI_API_KEY
+            };
+          } catch (error) {
+            const latencyMs = Date.now() - started;
+            const statusCode = error?.response?.status || null;
+            const unauthorized = statusCode === 401 || statusCode === 403;
+            results.openai = {
+              healthy: unauthorized ? false : false,
+              reachable: !['ECONNREFUSED', 'ENOTFOUND', 'EAI_AGAIN', 'ETIMEDOUT'].includes(error?.code || ''),
+              status: (error?.code === 'ECONNABORTED' || error?.message?.includes('timeout')) ? 'timeout' : (unauthorized ? 'unauthorized' : 'error'),
+              statusCode,
+              baseUrl: OPENAI_BASE,
+              latencyMs,
+              authConfigured: !!OPENAI_API_KEY,
+              error: error?.message || String(error)
+            };
+          }
+        }
+
+        const providerCount = Object.keys(results).length;
+        const healthyCount = Object.values(results).filter(v => v && v.healthy).length;
+
+        return ok(res, {
+          providers: results,
+          summary: {
+            total: providerCount,
+            healthy: healthyCount,
+            unhealthy: providerCount - healthyCount,
+            timestamp: new Date().toISOString()
+          }
+        }, { timeoutMs, requested: { providers: list } });
+      } catch (error) {
+        return fail(res, 'Providers health error', { message: error.message });
+      }
     });
+
+    // New: Standardized 200 OK AI inference endpoint
+    app.post('/ai/infer', async (req, res) => {
+      try {
+        const { provider = (process.env.AI_PROVIDER || 'mock'), model, messages, prompt, temperature, max_tokens, baseUrl, options } = req.body || {};
+
+        const normMessages = Array.isArray(messages) && messages.length > 0
+          ? messages
+          : [{ role: 'user', content: typeof prompt === 'string' ? prompt : JSON.stringify(prompt || '') }];
+
+        const pickFirstText = (msgs) => {
+          const last = msgs[msgs.length - 1];
+          if (!last) return '';
+          if (typeof last.content === 'string') return last.content;
+          if (Array.isArray(last.content)) {
+            const t = last.content.find((c) => c && (c.text || c.content || c.value));
+            return t?.text || t?.content || t?.value || '';
+          }
+          return '';
+        };
+
+        const doOpenAI = async () => {
+          const OPENAI_BASE = (baseUrl || process.env.OPENAI_BASE_URL || 'https://api.openai.com').replace(/\/$/, '');
+          const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+          if (!OPENAI_API_KEY) return fail(res, 'OPENAI_API_KEY is not configured');
+
+          // Build OpenAI chat.completions body with per-request options mapping
+          const buildOpenAIBody = () => {
+            const body = {
+              model: model || process.env.OPENAI_DEFAULT_MODEL || 'gpt-4o-mini',
+              messages: normMessages,
+              stream: false
+            };
+            if (typeof temperature === 'number') body.temperature = temperature;
+            if (typeof max_tokens === 'number') body.max_tokens = max_tokens;
+            const opts = options && typeof options === 'object' ? options : {};
+            if (typeof opts.top_p === 'number') body.top_p = opts.top_p;
+            if (typeof opts.frequency_penalty === 'number') body.frequency_penalty = opts.frequency_penalty;
+            if (typeof opts.presence_penalty === 'number') body.presence_penalty = opts.presence_penalty;
+            if (typeof opts.n === 'number') body.n = opts.n;
+            if (typeof opts.user === 'string') body.user = opts.user;
+            if (typeof opts.stop === 'string' || Array.isArray(opts.stop)) body.stop = opts.stop;
+            if (opts.logit_bias && typeof opts.logit_bias === 'object') body.logit_bias = opts.logit_bias;
+            if (opts.response_format && typeof opts.response_format === 'object') body.response_format = opts.response_format;
+            return body;
+          };
+
+          const body = buildOpenAIBody();
+          const r = await axios.post(`${OPENAI_BASE}/v1/chat/completions`, body, {
+            headers: { Authorization: `Bearer ${OPENAI_API_KEY}` },
+            timeout: typeof req.body?.timeoutMs === 'number' ? req.body.timeoutMs : undefined
+          });
+          const d = r.data;
+          const text = d?.choices?.[0]?.message?.content || '';
+          return ok(res, {
+            provider: 'openai',
+            model: body.model,
+            output: text,
+            usage: d?.usage || null,
+            raw: d
+          });
+        };
+
+        const doOllama = async () => {
+          const sanitize = (v) => (v || '').toString().trim().replace(/^["']|["']$/g, '').replace(/\/$/, '');
+          const OLLAMA_BASE = sanitize(baseUrl || process.env.OLLAMA_BASE_URL || process.env.OLLAMA_HOST || 'http://localhost:11434');
+          const endpoint = new URL('/api/generate', OLLAMA_BASE).toString();
+
+          // Per-request controls
+          const { stream: streamReq, stream_mode, streamMode, timeoutMs } = req.body || {};
+          const resolvedMode = (streamMode || stream_mode || (typeof streamReq === 'string' ? streamReq : (streamReq ? 'lines' : null))) || null; // 'lines' | 'sse' | null
+
+          // Map generic options -> Ollama options
+          const mapOptions = (baseOpts) => {
+            const out = Object.assign({}, baseOpts || {});
+            if (typeof temperature === 'number') out.temperature = temperature;
+            if (typeof max_tokens === 'number') out.num_predict = max_tokens;
+            if (options && typeof options === 'object') {
+              const { top_p, stop, repeat_penalty, top_k, seed } = options;
+              if (typeof top_p === 'number') out.top_p = top_p;
+              if (typeof top_k === 'number') out.top_k = top_k;
+              if (typeof repeat_penalty === 'number') out.repeat_penalty = repeat_penalty;
+              if (typeof seed === 'number') out.seed = seed;
+              if (Array.isArray(stop) || typeof stop === 'string') out.stop = stop;
+              // pass-through other ollama-native options if provided
+              for (const k of Object.keys(options)) {
+                if (!(k in out)) out[k] = options[k];
+              }
+            }
+            return out;
+          };
+
+          // Non-streaming path (default)
+          if (!resolvedMode) {
+            const body = {
+              model: model || process.env.OLLAMA_MODEL || 'llama3.1',
+              prompt: pickFirstText(normMessages),
+              stream: false,
+              options: mapOptions({})
+            };
+            try {
+              const r = await axios.post(endpoint, body, { timeout: typeof timeoutMs === 'number' ? timeoutMs : undefined });
+              const d = r.data;
+              return ok(res, {
+                provider: 'ollama',
+                model: body.model,
+                output: d?.response || '',
+                endpoint,
+                raw: d
+              });
+            } catch (error) {
+              return fail(res, 'Inference error (ollama)', {
+                provider: 'ollama',
+                url: endpoint,
+                model: body.model,
+                message: error?.message,
+                code: error?.code || null,
+                status: error?.response?.status || null,
+                response: typeof error?.response?.data === 'string'
+                  ? error.response.data.slice(0, 500)
+                  : error?.response?.data || null
+              });
+            }
+          }
+
+          // Streaming path
+          const streamBody = {
+            model: model || process.env.OLLAMA_MODEL || 'llama3.1',
+            prompt: pickFirstText(normMessages),
+            stream: true,
+            options: mapOptions({})
+          };
+
+          const axiosOpts = { responseType: 'stream', timeout: typeof timeoutMs === 'number' ? timeoutMs : undefined };
+          let responseStream;
+          try {
+            const r = await axios.post(endpoint, streamBody, axiosOpts);
+            responseStream = r.data;
+          } catch (error) {
+            return fail(res, 'Inference error (ollama, stream setup)', {
+              provider: 'ollama',
+              url: endpoint,
+              model: streamBody.model,
+              message: error?.message,
+              code: error?.code || null,
+              status: error?.response?.status || null,
+              response: typeof error?.response?.data === 'string' ? error.response.data.slice(0, 500) : error?.response?.data || null
+            });
+          }
+
+          const mode = (resolvedMode || 'lines').toLowerCase();
+          if (mode === 'sse') {
+            // SSE headers
+            res.setHeader('Content-Type', 'text/event-stream; charset=utf-8');
+            res.setHeader('Cache-Control', 'no-cache, no-transform');
+            res.setHeader('Connection', 'keep-alive');
+            if (typeof res.flushHeaders === 'function') {
+              try { res.flushHeaders(); } catch {}
+            }
+            res.write(': ok\n\n');
+
+            let buf = '';
+            responseStream.on('data', (chunk) => {
+              buf += chunk.toString('utf8');
+              const parts = buf.split('\n');
+              buf = parts.pop();
+              for (const line of parts) {
+                const s = line.trim();
+                if (!s) continue;
+                try {
+                  const obj = JSON.parse(s);
+                  const tok = typeof obj?.response === 'string' ? obj.response : '';
+                  res.write(`event: token\n`);
+                  res.write(`data: ${JSON.stringify({ provider: 'ollama', model: streamBody.model, token: tok })}\n\n`);
+                  if (obj?.done) {
+                    res.write(`event: done\n`);
+                    res.write(`data: ${JSON.stringify({ provider: 'ollama', model: streamBody.model, done: true, raw: { stats: obj?.eval_count ? obj : undefined } })}\n\n`);
+                  }
+                } catch (e) {
+                  // ignore parse errors per-line
+                }
+              }
+            });
+            responseStream.on('end', () => {
+              try { res.end(); } catch {}
+            });
+            responseStream.on('error', (err) => {
+              try {
+                res.write(`event: error\n`);
+                res.write(`data: ${JSON.stringify({ message: err?.message || 'stream error' })}\n\n`);
+                res.end();
+              } catch {}
+            });
+            return; // handled via stream
+          }
+
+          // Default NDJSON lines mode
+          res.setHeader('Content-Type', 'application/x-ndjson; charset=utf-8');
+          let buf = '';
+          responseStream.on('data', (chunk) => {
+            buf += chunk.toString('utf8');
+            const parts = buf.split('\n');
+            buf = parts.pop();
+            for (const line of parts) {
+              const s = line.trim();
+              if (!s) continue;
+              try {
+                const obj = JSON.parse(s);
+                const tok = typeof obj?.response === 'string' ? obj.response : '';
+                const payload = { provider: 'ollama', model: streamBody.model, token: tok };
+                res.write(JSON.stringify(payload) + '\n');
+                if (obj?.done) {
+                  res.write(JSON.stringify({ provider: 'ollama', model: streamBody.model, done: true, raw: { stats: obj?.eval_count ? obj : undefined } }) + '\n');
+                }
+              } catch (e) {
+                // ignore parse errors per-line
+              }
+            }
+          });
+          responseStream.on('end', () => {
+            try { res.end(); } catch {}
+          });
+          responseStream.on('error', (err) => {
+            try {
+              res.write(JSON.stringify({ error: err?.message || 'stream error' }) + '\n');
+              res.end();
+            } catch {}
+          });
+          return; // handled via stream
+        };
+
+        const doMock = async () => {
+          const text = pickFirstText(normMessages);
+          return ok(res, {
+            provider: 'mock',
+            model: model || 'mock-echo',
+            output: `[mock] ${text}`,
+            raw: { echo: text }
+          });
+        };
+
+        // Reliability orchestrator: retries + fallback for non-streaming requests
+        const toInt = (v, d) => {
+          const n = parseInt(v, 10); return Number.isFinite(n) ? n : d;
+        };
+        const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
+        const isTruthy = (v) => v === true || v === 'true' || v === 1 || v === '1';
+
+        const policy = (req.body?.policy || req.body?.providerPolicy || '').toString().toLowerCase();
+        const retries = clamp(toInt(req.body?.retries, 1), 0, 5);
+        const baseDelayMs = clamp(toInt(req.body?.retryDelayMs, 250), 50, 5000);
+        const providerTimeoutMs = toInt(req.body?.providerTimeoutMs, undefined);
+        const overallTimeoutMs = toInt(req.body?.overallTimeoutMs, undefined);
+        const fallbackListInput = req.body?.fallbackProviders || req.body?.fallback || [];
+        const preferParallel = policy === 'parallel';
+
+        // If streaming requested, skip orchestrator to avoid mixing partial outputs
+        const streamingRequested = !!(req.body?.stream || req.body?.stream_mode || req.body?.streamMode);
+
+        const normalizeProviders = (p) => Array.from(new Set((Array.isArray(p) ? p : [p]).filter(Boolean).map(x => `${x}`.toLowerCase())));
+        const defaultOrder = normalizeProviders(provider || ['openai', 'ollama', 'mock']);
+        const fallbackOrder = normalizeProviders(fallbackListInput);
+        const order = fallbackOrder.length > 0 ? fallbackOrder : (defaultOrder[0] ? [defaultOrder[0], 'openai', 'ollama', 'mock'] : ['openai', 'ollama', 'mock']);
+        const providerOrder = Array.from(new Set(order));
+
+        const jitter = (n) => Math.floor(n * (0.8 + Math.random() * 0.4));
+        const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+
+        const invokeOpenAIReturn = async () => {
+          const OPENAI_BASE = (baseUrl || process.env.OPENAI_BASE_URL || 'https://api.openai.com').replace(/\/$/, '');
+          const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+          if (!OPENAI_API_KEY) return { ok: false, error: 'OPENAI_API_KEY is not configured' };
+          const body = {
+            model: model || process.env.OPENAI_DEFAULT_MODEL || 'gpt-4o-mini',
+            messages: normMessages,
+            stream: false
+          };
+          if (typeof temperature === 'number') body.temperature = temperature;
+          if (typeof max_tokens === 'number') body.max_tokens = max_tokens;
+          const opts = options && typeof options === 'object' ? options : {};
+          if (typeof opts.top_p === 'number') body.top_p = opts.top_p;
+          if (typeof opts.frequency_penalty === 'number') body.frequency_penalty = opts.frequency_penalty;
+          if (typeof opts.presence_penalty === 'number') body.presence_penalty = opts.presence_penalty;
+          if (typeof opts.n === 'number') body.n = opts.n;
+          if (typeof opts.user === 'string') body.user = opts.user;
+          if (typeof opts.stop === 'string' || Array.isArray(opts.stop)) body.stop = opts.stop;
+          if (opts.logit_bias && typeof opts.logit_bias === 'object') body.logit_bias = opts.logit_bias;
+          if (opts.response_format && typeof opts.response_format === 'object') body.response_format = opts.response_format;
+
+          try {
+            const r = await axios.post(`${OPENAI_BASE}/v1/chat/completions`, body, {
+              headers: { Authorization: `Bearer ${OPENAI_API_KEY}` },
+              timeout: providerTimeoutMs || toInt(req.body?.timeoutMs, undefined)
+            });
+            const d = r.data;
+            const text = d?.choices?.[0]?.message?.content || '';
+            return { ok: true, provider: 'openai', model: body.model, output: text, raw: d, usage: d?.usage || null };
+          } catch (error) {
+            return { ok: false, error: error?.message || 'openai error', code: error?.code || null, status: error?.response?.status || null };
+          }
+        };
+
+        const invokeOllamaReturn = async () => {
+          const sanitize = (v) => (v || '').toString().trim().replace(/^["']|["']$/g, '').replace(/\/$/, '');
+          const OLLAMA_BASE = sanitize(baseUrl || process.env.OLLAMA_BASE_URL || process.env.OLLAMA_HOST || 'http://localhost:11434');
+          const endpoint = new URL('/api/generate', OLLAMA_BASE).toString();
+          const body = {
+            model: model || process.env.OLLAMA_MODEL || 'llama3.1',
+            prompt: pickFirstText(normMessages),
+            stream: false,
+            options: (() => {
+              const out = {};
+              if (typeof temperature === 'number') out.temperature = temperature;
+              if (typeof max_tokens === 'number') out.num_predict = max_tokens;
+              if (options && typeof options === 'object') {
+                const { top_p, stop, repeat_penalty, top_k, seed } = options;
+                if (typeof top_p === 'number') out.top_p = top_p;
+                if (typeof top_k === 'number') out.top_k = top_k;
+                if (typeof repeat_penalty === 'number') out.repeat_penalty = repeat_penalty;
+                if (typeof seed === 'number') out.seed = seed;
+                if (Array.isArray(stop) || typeof stop === 'string') out.stop = stop;
+                for (const k of Object.keys(options)) if (!(k in out)) out[k] = options[k];
+              }
+              return out;
+            })()
+          };
+          try {
+            const r = await axios.post(endpoint, body, { timeout: providerTimeoutMs || toInt(req.body?.timeoutMs, undefined) });
+            const d = r.data;
+            return { ok: true, provider: 'ollama', model: body.model, output: d?.response || '', raw: d, endpoint };
+          } catch (error) {
+            return { ok: false, error: error?.message || 'ollama error', code: error?.code || null, status: error?.response?.status || null };
+          }
+        };
+
+        const invokeMockReturn = async () => {
+          const text = pickFirstText(normMessages);
+          return { ok: true, provider: 'mock', model: model || 'mock-echo', output: `[mock] ${text}`, raw: { echo: text } };
+        };
+
+        const attemptWithRetry = async (fn, label) => {
+          let lastErr = null;
+          for (let i = 0; i <= retries; i++) {
+            const started = Date.now();
+            try {
+              const r = await fn();
+              if (r && r.ok) return r;
+              lastErr = r?.error || `${label} unknown error`;
+            } catch (e) {
+              lastErr = e?.message || `${label} thrown error`;
+            }
+            // backoff except after last try
+            if (i < retries) await sleep(jitter(baseDelayMs * Math.pow(2, i)));
+            // respect overall timeout
+            if (overallTimeoutMs && Date.now() - started > overallTimeoutMs) break;
+          }
+          return { ok: false, error: lastErr || `${label} failed` };
+        };
+
+        // Orchestrator applies only when non-streaming and any reliability control is requested
+        const reliabilityRequested = streamingRequested ? false : (
+          isTruthy(req.body?.enableReliability) || typeof req.body?.retries === 'number' || Array.isArray(req.body?.fallbackProviders) || ['fallback','prefer-openai','prefer-ollama','parallel'].includes(policy)
+        );
+
+        if (reliabilityRequested) {
+          const tryProvider = async (p) => {
+            if (p === 'openai') return await attemptWithRetry(invokeOpenAIReturn, 'openai');
+            if (p === 'ollama') return await attemptWithRetry(invokeOllamaReturn, 'ollama');
+            if (p === 'mock') return await attemptWithRetry(invokeMockReturn, 'mock');
+            return { ok: false, error: `provider not supported: ${p}` };
+          };
+
+          // Parallel race policy
+          if (preferParallel) {
+            const tasks = providerOrder.map(p => tryProvider(p));
+            const settled = await Promise.allSettled(tasks);
+            const firstOk = settled.find(s => s.status === 'fulfilled' && s.value && s.value.ok);
+            if (firstOk && firstOk.value) {
+              const r = firstOk.value;
+              return ok(res, { provider: r.provider, model: r.model, output: r.output, raw: r.raw, usage: r.usage || null });
+            }
+            const errors = settled.map(s => (s.status === 'fulfilled' ? s.value?.error : s.reason?.message)).filter(Boolean);
+            return fail(res, 'All providers failed (parallel)', { errors });
+          }
+
+          // Sequential fallback policy
+          const errors = [];
+          for (const p of providerOrder) {
+            const r = await tryProvider(p);
+            if (r.ok) {
+              return ok(res, { provider: r.provider, model: r.model, output: r.output, raw: r.raw, usage: r.usage || null });
+            }
+            errors.push({ provider: p, error: r.error });
+          }
+          return fail(res, 'All providers failed (fallback)', { errors, order: providerOrder });
+        }
+
+        if (provider === 'openai') return await doOpenAI();
+        if (provider === 'ollama') return await doOllama();
+        if (provider === 'mock') return await doMock();
+
+        return fail(res, `Provider not supported yet: ${provider}`);
+      } catch (error) {
+        return fail(res, 'Inference error', { message: error.message });
+      }
+    });
+
+    // New: Memory ingest endpoint to Git Memory shared space
+    app.post('/memory/ingest', async (req, res) => {
+      try {
+        const { source = 'unknown', content, metadata } = req.body || {};
+        if (!content) return fail(res, 'content is required');
+
+        const id = uuidv4();
+        const dir = path.join(this.memoryPath, 'shared', 'ingest');
+        await fs.mkdir(dir, { recursive: true });
+        const payload = {
+          id,
+          source,
+          content,
+          metadata: metadata || {},
+          createdAt: new Date().toISOString()
+        };
+        const filePath = path.join(dir, `${id}.json`);
+        await fs.writeFile(filePath, JSON.stringify(payload, null, 2));
+        await this.gitCommit(`Ingest memory: ${source} (${id})`);
+        return ok(res, { id, path: filePath });
+      } catch (error) {
+        return fail(res, 'Ingest error', { message: error.message });
+      }
+    });
+    
+    // Auto-free port selection with fallback
+    const desired = parseInt(process.env.MCP_COORDINATOR_PORT || '3000', 10);
+    const strictPort = (process.env.MCP_COORDINATOR_PORT_STRICT || '').toString() === '1';
+    const maxAttempts = 25;
+
+    const listenOnce = (port) => new Promise((resolve, reject) => {
+      const server = app.listen(port, () => resolve({ server, port }));
+      server.on('error', (err) => reject({ err, port }));
+    });
+
+    let bound = null;
+    let attempt = 0;
+    let portToTry = desired;
+    while (!bound && attempt < maxAttempts) {
+      try {
+        bound = await listenOnce(portToTry);
+      } catch (e) {
+        const code = e?.err?.code || '';
+        if (code === 'EADDRINUSE' && !strictPort) {
+          attempt++;
+          portToTry++;
+          if (attempt === 1) console.error(`[coordinator] Port ${e.port} in use, trying next free port...`);
+          continue;
+        }
+        // unrecoverable
+        throw e.err || e;
+      }
+    }
+
+    if (!bound) {
+      throw new Error(`Unable to bind HTTP server after ${maxAttempts} attempts starting at ${desired}`);
+    }
+
+    this.httpServer = bound.server;
+    const finalPort = bound.port;
+    const note = finalPort === desired ? '' : ` (fallback from ${desired})`;
+    console.error(`MCP Coordinator HTTP server running on port ${finalPort}${note}`);
   }
   
   async run() {

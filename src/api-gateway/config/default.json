@@ -1,0 +1,182 @@
+{
+  "auth": {
+    "jwtSecret": "your-default-secret-key-please-change",
+    "enabled": true,
+    "strategy": "jwt",
+    "tokenExpiry": "24h",
+    "refreshTokenExpiry": "7d",
+    "algorithms": [
+      "HS256"
+    ]
+  },
+  "server": {
+    "port": 8080,
+    "httpsPort": 8443,
+    "host": "0.0.0.0",
+    "maxConnections": 1000,
+    "keepAliveTimeout": 5000,
+    "headersTimeout": 60000
+  },
+  "ssl": {
+    "enabled": false
+  },
+  "loadBalancing": {
+    "algorithm": "round-robin",
+    "healthCheckInterval": 30000,
+    "healthCheckTimeout": 5000,
+    "healthCheckPath": "/health",
+    "maxRetries": 3,
+    "retryDelay": 1000,
+    "retryBackoff": "exponential"
+  },
+  "rateLimit": {
+    "enabled": true,
+    "windowMs": 900000,
+    "max": 1000,
+    "skipSuccessfulRequests": false,
+    "skipFailedRequests": false,
+    "keyGenerator": "ip",
+    "store": "memory",
+    "message": {
+      "error": "Too many requests"
+    }
+  },
+  "circuitBreaker": {
+    "enabled": true,
+    "failureThreshold": 5,
+    "resetTimeout": 60000,
+    "monitoringPeriod": 10000,
+    "volumeThreshold": 10,
+    "errorThresholdPercentage": 50
+  },
+  "cache": {
+    "enabled": true,
+    "ttl": 300,
+    "maxSize": 1000,
+    "strategy": "lru",
+    "redis": {
+      "enabled": false,
+      "host": "localhost",
+      "port": 6379,
+      "db": 0,
+      "keyPrefix": "gateway:",
+      "maxRetriesPerRequest": 3
+    }
+  },
+  "authorization": {
+    "enabled": true,
+    "strategy": "rbac",
+    "roles": [
+      "admin",
+      "user",
+      "guest"
+    ],
+    "permissions": [
+      "read",
+      "write",
+      "delete"
+    ],
+    "defaultRole": "guest"
+  },
+  "compression": {
+    "enabled": true,
+    "threshold": 1024,
+    "level": 6,
+    "chunkSize": 16384,
+    "windowBits": 15,
+    "memLevel": 8
+  },
+  "cors": {
+    "enabled": true,
+    "origin": "*",
+    "methods": [
+      "GET",
+      "POST",
+      "PUT",
+      "DELETE",
+      "OPTIONS"
+    ],
+    "allowedHeaders": [
+      "Content-Type",
+      "Authorization"
+    ],
+    "exposedHeaders": [],
+    "credentials": false,
+    "maxAge": 86400
+  },
+  "monitoring": {
+    "enabled": true,
+    "metricsPath": "/metrics",
+    "healthPath": "/health",
+    "statusPath": "/status",
+    "collectDefaultMetrics": true,
+    "metricsInterval": 10000,
+    "histogramBuckets": [
+      0.1,
+      0.3,
+      0.5,
+      0.7,
+      1,
+      3,
+      5,
+      7,
+      10
+    ]
+  },
+  "websocket": {
+    "enabled": true,
+    "path": "/ws",
+    "heartbeatInterval": 30000,
+    "maxConnections": 1000,
+    "compression": true,
+    "perMessageDeflate": true
+  },
+  "upstreams": [
+    {
+      "id": "a7c5a9a8-9c6e-4f4a-b8a3-1b9a2b3c4d5e",
+      "name": "Code-Llama-70B",
+      "path": "/code-llama-70b",
+      "url": "http://localhost:3001",
+      "category": "ai-ml"
+    }
+  ],
+  "serviceDiscovery": {
+    "enabled": false,
+    "provider": "consul",
+    "refreshInterval": 30000,
+    "serviceName": "mcp-server",
+    "tags": [],
+    "healthCheck": {
+      "enabled": true,
+      "interval": "10s",
+      "timeout": "3s"
+    }
+  },
+  "logging": {
+    "level": "info",
+    "format": "text",
+    "destination": "console",
+    "file": {
+      "path": "./logs/gateway.log",
+      "maxSize": "10MB",
+      "maxFiles": 5,
+      "compress": true
+    },
+    "requestLogging": true,
+    "errorLogging": true
+  },
+  "security": {
+    "helmet": {
+      "enabled": true,
+      "contentSecurityPolicy": true,
+      "hsts": true,
+      "noSniff": true,
+      "xssFilter": true
+    },
+    "rateLimitByIP": true,
+    "rateLimitByUser": true,
+    "blacklist": [],
+    "whitelist": [],
+    "maxRequestSize": "10mb"
+  }
+}

@@ -353,7 +353,7 @@ class SemanticMemoryService {
               // Filter by tags if specified
               if (tags && tags.length > 0) {
                 const docTags = document.metadata?.tags || [];
-                const hasMatchingTag = tags.some(tag => docTags.includes(tag));
+                const hasMatchingTag = tags.some(tag => Array.isArray(docTags) && docTags.includes(tag));
                 if (!hasMatchingTag) continue;
               }
               

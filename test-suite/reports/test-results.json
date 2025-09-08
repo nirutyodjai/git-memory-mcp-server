@@ -1,0 +1,324 @@
+{
+  "timestamp": "2025-09-07T09:58:45.456Z",
+  "duration": 53135,
+  "summary": {
+    "total": 30,
+    "passed": 21,
+    "failed": 9,
+    "skipped": 0,
+    "successRate": "70.00"
+  },
+  "results": {
+    "unit": {
+      "passed": 1,
+      "failed": 1,
+      "skipped": 0,
+      "tests": [
+        {
+          "name": "git-memory-coordinator.test.js",
+          "passed": true,
+          "duration": 275,
+          "output": "🧪 เริ่มต้น Unit Tests สำหรับ Git Memory Coordinator\n  🔍 testStartStop\n    ✅ ผ่าน (0ms)\n  🔍 testAddRepository\n    ✅ ผ่าน (1ms)\n  🔍 testRemoveRepository\n    ✅ ผ่าน (0ms)\n  🔍 testGetRepositoryStatus\n    ✅ ผ่าน (0ms)\n  🔍 testSyncRepository\n    ✅ ผ่าน (113ms)\n  🔍 testGetMemoryUsage\n    ✅ ผ่าน (1ms)\n  🔍 testSearchInMemory\n    ✅ ผ่าน (106ms)\n  🔍 testErrorHandling\n    ✅ ผ่าน (0ms)\n  🔍 testConcurrentOperations\n    ✅ ผ่าน (0ms)\n  🔍 testConfigValidation\n    ✅ ผ่าน (0ms)\n\n📊 สรุปผล Unit Tests:\n  ✅ ผ่าน: 10/10\n  ❌ ล้มเหลว: 0/10\n  🎯 อัตราความสำเร็จ: 100.0%\n",
+          "error": null
+        },
+        {
+          "name": "nexus-web-server.test.js",
+          "passed": false,
+          "duration": 161,
+          "output": "🧪 เริ่มต้น Unit Tests สำหรับ NEXUS Web Server\n  🔍 testServerStartStop\n    ✅ ผ่าน (4ms)\n  🔍 testHttpRoutes\n    ✅ ผ่าน (41ms)\n  🔍 testApiEndpoints\n    ❌ ล้มเหลว: read ECONNRESET\n  🔍 testWebSocketConnection\n    ❌ ล้มเหลว: Server is already running\n  🔍 testCorsHeaders\n    ❌ ล้มเหลว: Server is already running\n  🔍 testErrorHandling\n    ❌ ล้มเหลว: Server is already running\n  🔍 testServerInfo\n    ❌ ล้มเหลว: Expected values to be strictly equal:\n\ntrue !== false\n\n  🔍 testCustomRoutes\n    ❌ ล้มเหลว: Server is already running\n  🔍 testConcurrentConnections\n    ❌ ล้มเหลว: Server is already running\n  🔍 testHealthCheck\n    ❌ ล้มเหลว: Server is already running\n\n📊 สรุปผล Unit Tests:\n  ✅ ผ่าน: 2/10\n  ❌ ล้มเหลว: 8/10\n  🎯 อัตราความสำเร็จ: 20.0%\n\n❌ การทดสอบที่ล้มเหลว:\n  - testApiEndpoints: read ECONNRESET\n  - testWebSocketConnection: Server is already running\n  - testCorsHeaders: Server is already running\n  - testErrorHandling: Server is already running\n  - testServerInfo: Expected values to be strictly equal:\n\ntrue !== false\n\n  - testCustomRoutes: Server is already running\n  - testConcurrentConnections: Server is already running\n  - testHealthCheck: Server is already running\n",
+          "error": ""
+        }
+      ]
+    },
+    "integration": {
+      "passed": 4,
+      "failed": 1,
+      "skipped": 0,
+      "tests": [
+        {
+          "name": "mcp-server-communication",
+          "passed": true,
+          "duration": 1435,
+          "error": null
+        },
+        {
+          "name": "git-memory-integration",
+          "passed": true,
+          "duration": 1244,
+          "error": null
+        },
+        {
+          "name": "universal-data-hub",
+          "passed": true,
+          "duration": 1575,
+          "error": null
+        },
+        {
+          "name": "nexus-master-control",
+          "passed": true,
+          "duration": 1137,
+          "error": null
+        },
+        {
+          "name": "websocket-connections",
+          "passed": false,
+          "duration": 1973,
+          "error": "Integration test failed"
+        }
+      ]
+    },
+    "e2e": {
+      "passed": 6,
+      "failed": 1,
+      "skipped": 0,
+      "tests": [
+        {
+          "name": "User Login Flow",
+          "passed": true,
+          "duration": 2991,
+          "error": null
+        },
+        {
+          "name": "File Explorer Navigation",
+          "passed": true,
+          "duration": 4133,
+          "error": null
+        },
+        {
+          "name": "Code Editor Functionality",
+          "passed": true,
+          "duration": 4355,
+          "error": null
+        },
+        {
+          "name": "Terminal Operations",
+          "passed": true,
+          "duration": 2224,
+          "error": null
+        },
+        {
+          "name": "AI Copilot Interaction",
+          "passed": false,
+          "duration": 4011,
+          "error": "E2E test scenario failed"
+        },
+        {
+          "name": "Real-time Collaboration",
+          "passed": true,
+          "duration": 3670,
+          "error": null
+        },
+        {
+          "name": "Plugin Installation",
+          "passed": true,
+          "duration": 5663,
+          "error": null
+        }
+      ]
+    },
+    "performance": {
+      "passed": 1,
+      "failed": 3,
+      "skipped": 0,
+      "tests": [
+        {
+          "name": "Load Test - 100 concurrent users",
+          "passed": true,
+          "duration": 3302,
+          "metric": "499ms avg response",
+          "error": null
+        },
+        {
+          "name": "Stress Test - MCP Servers",
+          "passed": false,
+          "duration": 2072,
+          "metric": "553ms avg response",
+          "error": "Performance threshold exceeded"
+        },
+        {
+          "name": "Memory Usage Test",
+          "passed": false,
+          "duration": 1592,
+          "metric": "342ms avg response",
+          "error": "Performance threshold exceeded"
+        },
+        {
+          "name": "Response Time Test",
+          "passed": false,
+          "duration": 3891,
+          "metric": "456ms avg response",
+          "error": "Performance threshold exceeded"
+        }
+      ]
+    },
+    "security": {
+      "passed": 7,
+      "failed": 0,
+      "skipped": 0,
+      "tests": [
+        {
+          "name": "SQL Injection Protection",
+          "passed": true,
+          "duration": 789,
+          "error": null
+        },
+        {
+          "name": "XSS Protection",
+          "passed": true,
+          "duration": 1125,
+          "error": null
+        },
+        {
+          "name": "CSRF Protection",
+          "passed": true,
+          "duration": 525,
+          "error": null
+        },
+        {
+          "name": "Authentication Tests",
+          "passed": true,
+          "duration": 858,
+          "error": null
+        },
+        {
+          "name": "Authorization Tests",
+          "passed": true,
+          "duration": 612,
+          "error": null
+        },
+        {
+          "name": "Input Validation",
+          "passed": true,
+          "duration": 1498,
+          "error": null
+        },
+        {
+          "name": "Rate Limiting",
+          "passed": true,
+          "duration": 1965,
+          "error": null
+        }
+      ]
+    },
+    "api": {
+      "passed": 2,
+      "failed": 3,
+      "skipped": 0,
+      "tests": [
+        {
+          "name": "GET /api/status",
+          "passed": true,
+          "duration": 3,
+          "error": null
+        },
+        {
+          "name": "GET /api/mcp-servers",
+          "passed": true,
+          "duration": 2,
+          "error": null
+        }
+      ]
+    }
+  },
+  "config": {
+    "testTimeout": 60000,
+    "parallelTests": 4,
+    "retryCount": 3,
+    "coverage": {
+      "enabled": true,
+      "threshold": 80,
+      "formats": [
+        "html",
+        "json",
+        "text"
+      ],
+      "exclude": [
+        "node_modules/**",
+        "test-suite/**",
+        "coverage/**",
+        "*.config.js"
+      ]
+    },
+    "performance": {
+      "maxResponseTime": 1000,
+      "maxMemoryUsage": 512,
+      "maxCpuUsage": 80,
+      "loadTest": {
+        "concurrentUsers": 100,
+        "duration": 30,
+        "rampUpTime": 10
+      }
+    },
+    "endpoints": {
+      "nexusIde": "http://localhost:8081",
+      "gitMemory": "http://localhost:9001",
+      "dashboard": "http://localhost:3003",
+      "websocket": "ws://localhost:8081",
+      "mcpServers": "http://localhost:8081/api/mcp-servers"
+    },
+    "timeouts": {
+      "unit": 10000,
+      "integration": 20000,
+      "e2e": 60000,
+      "performance": 120000,
+      "api": 30000,
+      "security": 40000,
+      "startup": 30000
+    },
+    "database": {
+      "testDb": "nexus_test",
+      "host": "localhost",
+      "port": 5432,
+      "username": "test_user",
+      "password": "test_password"
+    },
+    "security": {
+      "enableSqlInjectionTests": true,
+      "enableXssTests": true,
+      "enableCsrfTests": true,
+      "enableAuthTests": true,
+      "enableRateLimitTests": true
+    },
+    "e2e": {
+      "browser": "chromium",
+      "headless": true,
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "timeout": 60000,
+      "retries": 2
+    },
+    "reporting": {
+      "formats": [
+        "html",
+        "json",
+        "csv",
+        "junit"
+      ],
+      "outputDir": "test-suite/reports",
+      "includeScreenshots": true,
+      "includeVideos": false
+    },
+    "notifications": {
+      "slack": {
+        "enabled": false,
+        "webhook": "",
+        "channel": "#nexus-tests"
+      },
+      "email": {
+        "enabled": false,
+        "recipients": [],
+        "smtp": {
+          "host": "",
+          "port": 587,
+          "secure": false,
+          "auth": {
+            "user": "",
+            "pass": ""
+          }
+        }
+      }
+    }
+  }
+}

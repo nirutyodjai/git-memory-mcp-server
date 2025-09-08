@@ -89,91 +89,49 @@ function ChatLayout({ className, defaultRoomId, showRoomList = true }) {
         };
     }, [selectedRoom, leaveRoom]);
     if (!session) {
-        return (<card_1.Card className={(0, utils_1.cn)("flex items-center justify-center h-96", className)}>
-        <div className="text-center">
-          <lucide_react_1.MessageCircle className="w-12 h-12 text-gray-300 mx-auto mb-4"/>
-          <p className="text-gray-500 mb-4">กรุณาเข้าสู่ระบบเพื่อใช้งานแชท</p>
-          <button_1.Button onClick={() => window.location.href = '/auth/signin'}>
-            เข้าสู่ระบบ
-          </button_1.Button>
-        </div>
-      </card_1.Card>);
+        return (react_1.default.createElement(card_1.Card, { className: (0, utils_1.cn)("flex items-center justify-center h-96", className) },
+            react_1.default.createElement("div", { className: "text-center" },
+                react_1.default.createElement(lucide_react_1.MessageCircle, { className: "w-12 h-12 text-gray-300 mx-auto mb-4" }),
+                react_1.default.createElement("p", { className: "text-gray-500 mb-4" }, "\u0E01\u0E23\u0E38\u0E13\u0E32\u0E40\u0E02\u0E49\u0E32\u0E2A\u0E39\u0E48\u0E23\u0E30\u0E1A\u0E1A\u0E40\u0E1E\u0E37\u0E48\u0E2D\u0E43\u0E0A\u0E49\u0E07\u0E32\u0E19\u0E41\u0E0A\u0E17"),
+                react_1.default.createElement(button_1.Button, { onClick: () => window.location.href = '/auth/signin' }, "\u0E40\u0E02\u0E49\u0E32\u0E2A\u0E39\u0E48\u0E23\u0E30\u0E1A\u0E1A"))));
     }
     if (isMinimized) {
-        return (<div className="fixed bottom-4 right-4 z-50">
-        <button_1.Button onClick={() => setIsMinimized(false)} className="rounded-full w-14 h-14 shadow-lg" size="lg">
-          <lucide_react_1.MessageCircle className="w-6 h-6"/>
-        </button_1.Button>
-      </div>);
+        return (react_1.default.createElement("div", { className: "fixed bottom-4 right-4 z-50" },
+            react_1.default.createElement(button_1.Button, { onClick: () => setIsMinimized(false), className: "rounded-full w-14 h-14 shadow-lg", size: "lg" },
+                react_1.default.createElement(lucide_react_1.MessageCircle, { className: "w-6 h-6" }))));
     }
-    return (<div className={(0, utils_1.cn)("flex h-full bg-white dark:bg-gray-900 rounded-lg shadow-lg overflow-hidden", className)}>
-      {/* Mobile Room List Overlay */}
-      {isMobileRoomListOpen && (<div className="fixed inset-0 z-50 lg:hidden">
-          <div className="absolute inset-0 bg-black/50" onClick={() => setIsMobileRoomListOpen(false)}/>
-          <div className="absolute left-0 top-0 bottom-0 w-80 bg-white dark:bg-gray-900">
-            <div className="flex items-center justify-between p-4 border-b">
-              <h2 className="text-lg font-semibold">ห้องแชท</h2>
-              <button_1.Button variant="ghost" size="sm" onClick={() => setIsMobileRoomListOpen(false)}>
-                <lucide_react_1.X className="w-4 h-4"/>
-              </button_1.Button>
-            </div>
-            <ChatRoomList_1.default onRoomSelect={handleRoomSelect} selectedRoomId={selectedRoom?.id}/>
-          </div>
-        </div>)}
-
-      {/* Desktop Room List */}
-      {showRoomList && (<div className="hidden lg:block w-80 border-r border-gray-200 dark:border-gray-700">
-          <ChatRoomList_1.default onRoomSelect={handleRoomSelect} selectedRoomId={selectedRoom?.id}/>
-        </div>)}
-
-      {/* Chat Interface */}
-      <div className="flex-1 flex flex-col">
-        {selectedRoom ? (<>
-            {/* Mobile Header */}
-            <div className="lg:hidden flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
-              <div className="flex items-center space-x-3">
-                {showRoomList && (<button_1.Button variant="ghost" size="sm" onClick={() => setIsMobileRoomListOpen(true)}>
-                    <lucide_react_1.Menu className="w-4 h-4"/>
-                  </button_1.Button>)}
-                <div>
-                  <h1 className="font-semibold text-gray-900 dark:text-white">
-                    {selectedRoom.name}
-                  </h1>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">
-                    {selectedRoom.memberCount} สมาชิก
-                  </p>
-                </div>
-              </div>
-              <button_1.Button variant="ghost" size="sm" onClick={() => setIsMinimized(true)}>
-                <lucide_react_1.X className="w-4 h-4"/>
-              </button_1.Button>
-            </div>
-
-            {/* Chat Interface */}
-            <ChatInterface_1.default roomId={selectedRoom.id} roomName={selectedRoom.name} isPrivate={selectedRoom.isPrivate}/>
-          </>) : (
+    return (react_1.default.createElement("div", { className: (0, utils_1.cn)("flex h-full bg-white dark:bg-gray-900 rounded-lg shadow-lg overflow-hidden", className) },
+        isMobileRoomListOpen && (react_1.default.createElement("div", { className: "fixed inset-0 z-50 lg:hidden" },
+            react_1.default.createElement("div", { className: "absolute inset-0 bg-black/50", onClick: () => setIsMobileRoomListOpen(false) }),
+            react_1.default.createElement("div", { className: "absolute left-0 top-0 bottom-0 w-80 bg-white dark:bg-gray-900" },
+                react_1.default.createElement("div", { className: "flex items-center justify-between p-4 border-b" },
+                    react_1.default.createElement("h2", { className: "text-lg font-semibold" }, "\u0E2B\u0E49\u0E2D\u0E07\u0E41\u0E0A\u0E17"),
+                    react_1.default.createElement(button_1.Button, { variant: "ghost", size: "sm", onClick: () => setIsMobileRoomListOpen(false) },
+                        react_1.default.createElement(lucide_react_1.X, { className: "w-4 h-4" }))),
+                react_1.default.createElement(ChatRoomList_1.default, { onRoomSelect: handleRoomSelect, selectedRoomId: selectedRoom?.id })))),
+        showRoomList && (react_1.default.createElement("div", { className: "hidden lg:block w-80 border-r border-gray-200 dark:border-gray-700" },
+            react_1.default.createElement(ChatRoomList_1.default, { onRoomSelect: handleRoomSelect, selectedRoomId: selectedRoom?.id }))),
+        react_1.default.createElement("div", { className: "flex-1 flex flex-col" }, selectedRoom ? (react_1.default.createElement(react_1.default.Fragment, null,
+            react_1.default.createElement("div", { className: "lg:hidden flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700" },
+                react_1.default.createElement("div", { className: "flex items-center space-x-3" },
+                    showRoomList && (react_1.default.createElement(button_1.Button, { variant: "ghost", size: "sm", onClick: () => setIsMobileRoomListOpen(true) },
+                        react_1.default.createElement(lucide_react_1.Menu, { className: "w-4 h-4" }))),
+                    react_1.default.createElement("div", null,
+                        react_1.default.createElement("h1", { className: "font-semibold text-gray-900 dark:text-white" }, selectedRoom.name),
+                        react_1.default.createElement("p", { className: "text-sm text-gray-500 dark:text-gray-400" },
+                            selectedRoom.memberCount,
+                            " \u0E2A\u0E21\u0E32\u0E0A\u0E34\u0E01"))),
+                react_1.default.createElement(button_1.Button, { variant: "ghost", size: "sm", onClick: () => setIsMinimized(true) },
+                    react_1.default.createElement(lucide_react_1.X, { className: "w-4 h-4" }))),
+            react_1.default.createElement(ChatInterface_1.default, { roomId: selectedRoom.id, roomName: selectedRoom.name, isPrivate: selectedRoom.isPrivate }))) : (
         /* No Room Selected */
-        <div className="flex-1 flex items-center justify-center">
-            <div className="text-center">
-              <lucide_react_1.MessageCircle className="w-16 h-16 text-gray-300 dark:text-gray-600 mx-auto mb-4"/>
-              <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
-                เลือกห้องแชทเพื่อเริ่มสนทนา
-              </h3>
-              <p className="text-gray-500 dark:text-gray-400 mb-4">
-                เลือกห้องแชทจากรายการด้านซ้าย หรือสร้างห้องใหม่
-              </p>
-              {!showRoomList && (<button_1.Button onClick={() => setIsMobileRoomListOpen(true)} variant="outline">
-                  <lucide_react_1.Menu className="w-4 h-4 mr-2"/>
-                  เลือกห้องแชท
-                </button_1.Button>)}
-            </div>
-          </div>)}
-      </div>
-
-      {/* Connection Status Indicator */}
-      {!isConnected && (<div className="absolute top-4 right-4 bg-red-500 text-white px-3 py-1 rounded-full text-sm">
-          ไม่ได้เชื่อมต่อ
-        </div>)}
-    </div>);
+        react_1.default.createElement("div", { className: "flex-1 flex items-center justify-center" },
+            react_1.default.createElement("div", { className: "text-center" },
+                react_1.default.createElement(lucide_react_1.MessageCircle, { className: "w-16 h-16 text-gray-300 dark:text-gray-600 mx-auto mb-4" }),
+                react_1.default.createElement("h3", { className: "text-lg font-medium text-gray-900 dark:text-white mb-2" }, "\u0E40\u0E25\u0E37\u0E2D\u0E01\u0E2B\u0E49\u0E2D\u0E07\u0E41\u0E0A\u0E17\u0E40\u0E1E\u0E37\u0E48\u0E2D\u0E40\u0E23\u0E34\u0E48\u0E21\u0E2A\u0E19\u0E17\u0E19\u0E32"),
+                react_1.default.createElement("p", { className: "text-gray-500 dark:text-gray-400 mb-4" }, "\u0E40\u0E25\u0E37\u0E2D\u0E01\u0E2B\u0E49\u0E2D\u0E07\u0E41\u0E0A\u0E17\u0E08\u0E32\u0E01\u0E23\u0E32\u0E22\u0E01\u0E32\u0E23\u0E14\u0E49\u0E32\u0E19\u0E0B\u0E49\u0E32\u0E22 \u0E2B\u0E23\u0E37\u0E2D\u0E2A\u0E23\u0E49\u0E32\u0E07\u0E2B\u0E49\u0E2D\u0E07\u0E43\u0E2B\u0E21\u0E48"),
+                !showRoomList && (react_1.default.createElement(button_1.Button, { onClick: () => setIsMobileRoomListOpen(true), variant: "outline" },
+                    react_1.default.createElement(lucide_react_1.Menu, { className: "w-4 h-4 mr-2" }),
+                    "\u0E40\u0E25\u0E37\u0E2D\u0E01\u0E2B\u0E49\u0E2D\u0E07\u0E41\u0E0A\u0E17")))))),
+        !isConnected && (react_1.default.createElement("div", { className: "absolute top-4 right-4 bg-red-500 text-white px-3 py-1 rounded-full text-sm" }, "\u0E44\u0E21\u0E48\u0E44\u0E14\u0E49\u0E40\u0E0A\u0E37\u0E48\u0E2D\u0E21\u0E15\u0E48\u0E2D"))));
 }
-//# sourceMappingURL=ChatLayout.js.map

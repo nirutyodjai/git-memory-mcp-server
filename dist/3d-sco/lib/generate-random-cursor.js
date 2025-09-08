@@ -63,4 +63,3 @@ const generateRandomCursor = () => {
     return { name, color };
 };
 exports.generateRandomCursor = generateRandomCursor;
-//# sourceMappingURL=generate-random-cursor.js.map

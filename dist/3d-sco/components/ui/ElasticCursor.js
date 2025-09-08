@@ -200,17 +200,15 @@ function ElasticCursor() {
     if (isMobile)
         return null;
     // Return UI
-    return (<>
-      <div ref={jellyRef} id={"jelly-id"} className={(0, utils_1.cn)(`w-[${CURSOR_DIAMETER}px] h-[${CURSOR_DIAMETER}px] border-2 border-black dark:border-white`, "jelly-blob fixed left-0 top-0 rounded-lg z-[999] pointer-events-none will-change-transform", "translate-x-[-50%] translate-y-[-50%]")} style={{
-            zIndex: 100,
-            backdropFilter: "invert(100%)",
-        }}></div>
-      <div className="w-3 h-3 rounded-full fixed translate-x-[-50%] translate-y-[-50%] pointer-events-none transition-none duration-300" style={{
-            top: y,
-            left: x,
-            backdropFilter: "invert(100%)",
-        }}></div>
-    </>);
+    return (react_1.default.createElement(react_1.default.Fragment, null,
+        react_1.default.createElement("div", { ref: jellyRef, id: "jelly-id", className: (0, utils_1.cn)(`w-[${CURSOR_DIAMETER}px] h-[${CURSOR_DIAMETER}px] border-2 border-black dark:border-white`, "jelly-blob fixed left-0 top-0 rounded-lg z-[999] pointer-events-none will-change-transform", "translate-x-[-50%] translate-y-[-50%]"), style: {
+                zIndex: 100,
+                backdropFilter: "invert(100%)",
+            } }),
+        react_1.default.createElement("div", { className: "w-3 h-3 rounded-full fixed translate-x-[-50%] translate-y-[-50%] pointer-events-none transition-none duration-300", style: {
+                top: y,
+                left: x,
+                backdropFilter: "invert(100%)",
+            } })));
 }
 exports.default = ElasticCursor;
-//# sourceMappingURL=ElasticCursor.js.map

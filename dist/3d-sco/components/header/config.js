@@ -59,4 +59,3 @@ const links = [
     }
 ];
 exports.links = links;
-//# sourceMappingURL=config.js.map

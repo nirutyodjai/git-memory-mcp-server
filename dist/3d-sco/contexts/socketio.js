@@ -67,9 +67,6 @@ const SocketContextProvider = ({ children }) => {
             socket.disconnect();
         };
     }, []);
-    return (<exports.SocketContext.Provider value={{ socket: socket, users, setUsers, msgs }}>
-      {children}
-    </exports.SocketContext.Provider>);
+    return (react_1.default.createElement(exports.SocketContext.Provider, { value: { socket: socket, users, setUsers, msgs } }, children));
 };
 exports.default = SocketContextProvider;
-//# sourceMappingURL=socketio.js.map

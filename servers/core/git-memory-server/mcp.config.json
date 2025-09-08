@@ -1,0 +1,9 @@
+{
+    "mcpServers": {
+        "git-memory-server": {
+            "command": "node",
+            "args": ["index.js", "--port=4005"],
+            "port": 4005
+        }
+    }
+}

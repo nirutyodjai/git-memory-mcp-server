@@ -1,0 +1,7 @@
+{
+    "id": "premium",
+    "name": "Premium Tenant",
+    "upstreams": [
+        "git-memory-server"
+    ]
+}

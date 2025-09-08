@@ -78,4 +78,3 @@ const addLocaleToPathname = (pathname, locale) => {
     return `/${locale}${cleanPathname}`;
 };
 exports.addLocaleToPathname = addLocaleToPathname;
-//# sourceMappingURL=config.js.map

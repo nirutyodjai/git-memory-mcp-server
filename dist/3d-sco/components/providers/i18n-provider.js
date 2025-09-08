@@ -143,9 +143,7 @@ function I18nProvider({ children, initialLocale }) {
         isLoading,
         translations
     };
-    return (<I18nContext.Provider value={contextValue}>
-      {children}
-    </I18nContext.Provider>);
+    return (react_1.default.createElement(I18nContext.Provider, { value: contextValue }, children));
 }
 function useI18n() {
     const context = (0, react_1.useContext)(I18nContext);
@@ -176,4 +174,3 @@ function useLocale() {
     const { locale, setLocale, isLoading } = useI18n();
     return { locale, setLocale, isLoading };
 }
-//# sourceMappingURL=i18n-provider.js.map

@@ -127,63 +127,41 @@ maxFiles = 10, uploadPath = '/api/upload' }) {
         });
         setUploadedFiles([]);
     };
-    return (<div className="space-y-4">
-      <card_1.Card>
-        <card_1.CardContent className="p-6">
-          <div {...getRootProps()} className={`border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors ${isDragActive
-            ? 'border-primary bg-primary/5'
-            : 'border-gray-300 hover:border-primary'} ${isUploading ? 'opacity-50 cursor-not-allowed' : ''}`}>
-            <input {...getInputProps()}/>
-            <lucide_react_1.Upload className="mx-auto h-12 w-12 text-gray-400 mb-4"/>
-            {isDragActive ? (<p className="text-lg font-medium">วางไฟล์ที่นี่...</p>) : (<div>
-                <p className="text-lg font-medium mb-2">
-                  ลากและวางไฟล์ที่นี่ หรือคลิกเพื่อเลือกไฟล์
-                </p>
-                <p className="text-sm text-gray-500">
-                  รองรับไฟล์: {acceptedFileTypes.join(', ')} | ขนาดสูงสุด: {maxFileSize / 1024 / 1024}MB
-                </p>
-              </div>)}
-          </div>
-        </card_1.CardContent>
-      </card_1.Card>
-
-      {uploadedFiles.length > 0 && (<card_1.Card>
-          <card_1.CardContent className="p-6">
-            <div className="flex justify-between items-center mb-4">
-              <h3 className="text-lg font-semibold">ไฟล์ที่อัปโหลด ({uploadedFiles.length})</h3>
-              <button_1.Button variant="outline" size="sm" onClick={clearAll}>
-                ลบทั้งหมด
-              </button_1.Button>
-            </div>
-            
-            <div className="space-y-3">
-              {uploadedFiles.map((uploadedFile, index) => (<div key={index} className="flex items-center space-x-3 p-3 border rounded-lg">
-                  <div className="flex-shrink-0">
-                    {uploadedFile.preview ? (<img src={uploadedFile.preview} alt={uploadedFile.file.name} className="w-12 h-12 object-cover rounded"/>) : (<div className="w-12 h-12 bg-gray-100 rounded flex items-center justify-center">
-                        <lucide_react_1.File className="w-6 h-6 text-gray-400"/>
-                      </div>)}
-                  </div>
-                  
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium truncate">{uploadedFile.file.name}</p>
-                    <p className="text-xs text-gray-500">
-                      {(uploadedFile.file.size / 1024 / 1024).toFixed(2)} MB
-                    </p>
-                    
-                    {uploadedFile.status === 'uploading' && (<progress_1.Progress value={uploadedFile.progress} className="mt-2"/>)}
-                    
-                    {uploadedFile.status === 'completed' && (<p className="text-xs text-green-600 mt-1">อัปโหลดสำเร็จ</p>)}
-                    
-                    {uploadedFile.status === 'error' && (<p className="text-xs text-red-600 mt-1">เกิดข้อผิดพลาด</p>)}
-                  </div>
-                  
-                  <button_1.Button variant="ghost" size="sm" onClick={() => removeFile(index)} className="flex-shrink-0">
-                    <lucide_react_1.X className="w-4 h-4"/>
-                  </button_1.Button>
-                </div>))}
-            </div>
-          </card_1.CardContent>
-        </card_1.Card>)}
-    </div>);
+    return (react_1.default.createElement("div", { className: "space-y-4" },
+        react_1.default.createElement(card_1.Card, null,
+            react_1.default.createElement(card_1.CardContent, { className: "p-6" },
+                react_1.default.createElement("div", { ...getRootProps(), className: `border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors ${isDragActive
+                        ? 'border-primary bg-primary/5'
+                        : 'border-gray-300 hover:border-primary'} ${isUploading ? 'opacity-50 cursor-not-allowed' : ''}` },
+                    react_1.default.createElement("input", { ...getInputProps() }),
+                    react_1.default.createElement(lucide_react_1.Upload, { className: "mx-auto h-12 w-12 text-gray-400 mb-4" }),
+                    isDragActive ? (react_1.default.createElement("p", { className: "text-lg font-medium" }, "\u0E27\u0E32\u0E07\u0E44\u0E1F\u0E25\u0E4C\u0E17\u0E35\u0E48\u0E19\u0E35\u0E48...")) : (react_1.default.createElement("div", null,
+                        react_1.default.createElement("p", { className: "text-lg font-medium mb-2" }, "\u0E25\u0E32\u0E01\u0E41\u0E25\u0E30\u0E27\u0E32\u0E07\u0E44\u0E1F\u0E25\u0E4C\u0E17\u0E35\u0E48\u0E19\u0E35\u0E48 \u0E2B\u0E23\u0E37\u0E2D\u0E04\u0E25\u0E34\u0E01\u0E40\u0E1E\u0E37\u0E48\u0E2D\u0E40\u0E25\u0E37\u0E2D\u0E01\u0E44\u0E1F\u0E25\u0E4C"),
+                        react_1.default.createElement("p", { className: "text-sm text-gray-500" },
+                            "\u0E23\u0E2D\u0E07\u0E23\u0E31\u0E1A\u0E44\u0E1F\u0E25\u0E4C: ",
+                            acceptedFileTypes.join(', '),
+                            " | \u0E02\u0E19\u0E32\u0E14\u0E2A\u0E39\u0E07\u0E2A\u0E38\u0E14: ",
+                            maxFileSize / 1024 / 1024,
+                            "MB")))))),
+        uploadedFiles.length > 0 && (react_1.default.createElement(card_1.Card, null,
+            react_1.default.createElement(card_1.CardContent, { className: "p-6" },
+                react_1.default.createElement("div", { className: "flex justify-between items-center mb-4" },
+                    react_1.default.createElement("h3", { className: "text-lg font-semibold" },
+                        "\u0E44\u0E1F\u0E25\u0E4C\u0E17\u0E35\u0E48\u0E2D\u0E31\u0E1B\u0E42\u0E2B\u0E25\u0E14 (",
+                        uploadedFiles.length,
+                        ")"),
+                    react_1.default.createElement(button_1.Button, { variant: "outline", size: "sm", onClick: clearAll }, "\u0E25\u0E1A\u0E17\u0E31\u0E49\u0E07\u0E2B\u0E21\u0E14")),
+                react_1.default.createElement("div", { className: "space-y-3" }, uploadedFiles.map((uploadedFile, index) => (react_1.default.createElement("div", { key: index, className: "flex items-center space-x-3 p-3 border rounded-lg" },
+                    react_1.default.createElement("div", { className: "flex-shrink-0" }, uploadedFile.preview ? (react_1.default.createElement("img", { src: uploadedFile.preview, alt: uploadedFile.file.name, className: "w-12 h-12 object-cover rounded" })) : (react_1.default.createElement("div", { className: "w-12 h-12 bg-gray-100 rounded flex items-center justify-center" },
+                        react_1.default.createElement(lucide_react_1.File, { className: "w-6 h-6 text-gray-400" })))),
+                    react_1.default.createElement("div", { className: "flex-1 min-w-0" },
+                        react_1.default.createElement("p", { className: "text-sm font-medium truncate" }, uploadedFile.file.name),
+                        react_1.default.createElement("p", { className: "text-xs text-gray-500" },
+                            (uploadedFile.file.size / 1024 / 1024).toFixed(2),
+                            " MB"),
+                        uploadedFile.status === 'uploading' && (react_1.default.createElement(progress_1.Progress, { value: uploadedFile.progress, className: "mt-2" })),
+                        uploadedFile.status === 'completed' && (react_1.default.createElement("p", { className: "text-xs text-green-600 mt-1" }, "\u0E2D\u0E31\u0E1B\u0E42\u0E2B\u0E25\u0E14\u0E2A\u0E33\u0E40\u0E23\u0E47\u0E08")),
+                        uploadedFile.status === 'error' && (react_1.default.createElement("p", { className: "text-xs text-red-600 mt-1" }, "\u0E40\u0E01\u0E34\u0E14\u0E02\u0E49\u0E2D\u0E1C\u0E34\u0E14\u0E1E\u0E25\u0E32\u0E14"))),
+                    react_1.default.createElement(button_1.Button, { variant: "ghost", size: "sm", onClick: () => removeFile(index), className: "flex-shrink-0" },
+                        react_1.default.createElement(lucide_react_1.X, { className: "w-4 h-4" })))))))))));
 }
-//# sourceMappingURL=file-upload.js.map

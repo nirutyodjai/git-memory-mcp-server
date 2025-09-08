@@ -1,0 +1,37 @@
+{
+  "timestamp": "2025-09-06T06:56:03.311Z",
+  "environment": {
+    "nodeVersion": "v22.18.0",
+    "platform": "win32",
+    "arch": "x64",
+    "nodeEnv": "test"
+  },
+  "testConfig": {
+    "testTimeout": 30000,
+    "maxWorkers": "50%",
+    "testEnvironment": "node"
+  },
+  "performance": {
+    "totalMemoryUsage": {
+      "rss": 178765824,
+      "heapTotal": 121643008,
+      "heapUsed": 97519584,
+      "external": 5962088,
+      "arrayBuffers": 2268388
+    },
+    "uptime": 17.210476
+  },
+  "cleanup": {
+    "directoriesCleanedUp": [
+      "test-cache",
+      "test-logs"
+    ],
+    "filesRemoved": [
+      "temp files",
+      "lock files"
+    ],
+    "servicesCleanedUp": [
+      "mockServices"
+    ]
+  }
+}

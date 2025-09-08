@@ -231,69 +231,50 @@ function SEOHead({ title, description, keywords, image, type = 'website', publis
     const fullTitle = finalTitle === DEFAULT_SEO.title ? finalTitle : `${finalTitle} | ${DEFAULT_SEO.siteName}`;
     const imageUrl = image || '/images/og-default.jpg';
     const fullImageUrl = imageUrl.startsWith('http') ? imageUrl : `${currentUrl}${imageUrl}`;
-    return (<head_1.default>
-      {/* Basic Meta Tags */}
-      <title>{fullTitle}</title>
-      <meta name="description" content={optimizedDescription}/>
-      <meta name="keywords" content={[...finalKeywords, ...(tags || [])].join(', ')}/>
-      {author && <meta name="author" content={author}/>}
-      <meta name="viewport" content="width=device-width, initial-scale=1"/>
-      
-      {/* Canonical URL */}
-      <link rel="canonical" href={canonicalUrl}/>
-      
-      {/* Alternate URLs */}
-      {Object.entries(alternateUrls).map(([lang, url]) => (<link key={lang} rel="alternate" hrefLang={lang} href={url}/>))}
-      
-      {/* Open Graph */}
-      <meta property="og:title" content={optimizedTitle}/>
-      <meta property="og:description" content={optimizedDescription}/>
-      <meta property="og:type" content={type}/>
-      <meta property="og:url" content={currentUrl}/>
-      <meta property="og:site_name" content={DEFAULT_SEO.siteName}/>
-      <meta property="og:locale" content={locale}/>
-      {image && (<>
-          <meta property="og:image" content={fullImageUrl}/>
-          <meta property="og:image:width" content="1200"/>
-          <meta property="og:image:height" content="630"/>
-          <meta property="og:image:alt" content={optimizedTitle}/>
-        </>)}
-      {publishedTime && <meta property="article:published_time" content={publishedTime}/>}
-      {modifiedTime && <meta property="article:modified_time" content={modifiedTime}/>}
-      {author && <meta property="article:author" content={author}/>}
-      {section && <meta property="article:section" content={section}/>}
-      {tags && tags.map(tag => (<meta key={tag} property="article:tag" content={tag}/>))}
-      
-      {/* Twitter Card */}
-      <meta name="twitter:card" content="summary_large_image"/>
-      <meta name="twitter:title" content={optimizedTitle}/>
-      <meta name="twitter:description" content={optimizedDescription}/>
-      {image && <meta name="twitter:image" content={fullImageUrl}/>}
-      {author && <meta name="twitter:creator" content={`@${author}`}/>}
-      
-      {/* Robots */}
-      <meta name="robots" content={`${noIndex ? 'noindex' : 'index'}, ${noFollow ? 'nofollow' : 'follow'}`}/>
-      <meta name="googlebot" content={`${noIndex ? 'noindex' : 'index'}, ${noFollow ? 'nofollow' : 'follow'}, max-video-preview:-1, max-image-preview:large, max-snippet:-1`}/>
-      
-      {/* Additional Meta Tags */}
-      <meta name="theme-color" content="#000000"/>
-      <meta name="color-scheme" content="light dark"/>
-      <meta name="format-detection" content="telephone=no"/>
-      
-      {/* Favicons */}
-      <link rel="icon" href="/favicon.ico"/>
-      <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>
-      <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/>
-      <link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
-      <link rel="manifest" href="/site.webmanifest"/>
-      <meta name="msapplication-TileColor" content="#000000"/>
-      <meta name="msapplication-config" content="/browserconfig.xml"/>
-      
-      {/* Structured Data */}
-      {allStructuredData.map((data, index) => (<script key={index} type="application/ld+json" dangerouslySetInnerHTML={{
+    return (React.createElement(head_1.default, null,
+        React.createElement("title", null, fullTitle),
+        React.createElement("meta", { name: "description", content: optimizedDescription }),
+        React.createElement("meta", { name: "keywords", content: [...finalKeywords, ...(tags || [])].join(', ') }),
+        author && React.createElement("meta", { name: "author", content: author }),
+        React.createElement("meta", { name: "viewport", content: "width=device-width, initial-scale=1" }),
+        React.createElement("link", { rel: "canonical", href: canonicalUrl }),
+        Object.entries(alternateUrls).map(([lang, url]) => (React.createElement("link", { key: lang, rel: "alternate", hrefLang: lang, href: url }))),
+        React.createElement("meta", { property: "og:title", content: optimizedTitle }),
+        React.createElement("meta", { property: "og:description", content: optimizedDescription }),
+        React.createElement("meta", { property: "og:type", content: type }),
+        React.createElement("meta", { property: "og:url", content: currentUrl }),
+        React.createElement("meta", { property: "og:site_name", content: DEFAULT_SEO.siteName }),
+        React.createElement("meta", { property: "og:locale", content: locale }),
+        image && (React.createElement(React.Fragment, null,
+            React.createElement("meta", { property: "og:image", content: fullImageUrl }),
+            React.createElement("meta", { property: "og:image:width", content: "1200" }),
+            React.createElement("meta", { property: "og:image:height", content: "630" }),
+            React.createElement("meta", { property: "og:image:alt", content: optimizedTitle }))),
+        publishedTime && React.createElement("meta", { property: "article:published_time", content: publishedTime }),
+        modifiedTime && React.createElement("meta", { property: "article:modified_time", content: modifiedTime }),
+        author && React.createElement("meta", { property: "article:author", content: author }),
+        section && React.createElement("meta", { property: "article:section", content: section }),
+        tags && tags.map(tag => (React.createElement("meta", { key: tag, property: "article:tag", content: tag }))),
+        React.createElement("meta", { name: "twitter:card", content: "summary_large_image" }),
+        React.createElement("meta", { name: "twitter:title", content: optimizedTitle }),
+        React.createElement("meta", { name: "twitter:description", content: optimizedDescription }),
+        image && React.createElement("meta", { name: "twitter:image", content: fullImageUrl }),
+        author && React.createElement("meta", { name: "twitter:creator", content: `@${author}` }),
+        React.createElement("meta", { name: "robots", content: `${noIndex ? 'noindex' : 'index'}, ${noFollow ? 'nofollow' : 'follow'}` }),
+        React.createElement("meta", { name: "googlebot", content: `${noIndex ? 'noindex' : 'index'}, ${noFollow ? 'nofollow' : 'follow'}, max-video-preview:-1, max-image-preview:large, max-snippet:-1` }),
+        React.createElement("meta", { name: "theme-color", content: "#000000" }),
+        React.createElement("meta", { name: "color-scheme", content: "light dark" }),
+        React.createElement("meta", { name: "format-detection", content: "telephone=no" }),
+        React.createElement("link", { rel: "icon", href: "/favicon.ico" }),
+        React.createElement("link", { rel: "icon", type: "image/png", sizes: "32x32", href: "/favicon-32x32.png" }),
+        React.createElement("link", { rel: "icon", type: "image/png", sizes: "16x16", href: "/favicon-16x16.png" }),
+        React.createElement("link", { rel: "apple-touch-icon", href: "/apple-touch-icon.png" }),
+        React.createElement("link", { rel: "manifest", href: "/site.webmanifest" }),
+        React.createElement("meta", { name: "msapplication-TileColor", content: "#000000" }),
+        React.createElement("meta", { name: "msapplication-config", content: "/browserconfig.xml" }),
+        allStructuredData.map((data, index) => (React.createElement("script", { key: index, type: "application/ld+json", dangerouslySetInnerHTML: {
                 __html: JSON.stringify(data)
-            }}/>))}
-    </head_1.default>);
+            } })))));
 }
 function ArticleSEO({ title, description, author, publishedTime, modifiedTime, image, keywords, tags, section, ...props }) {
     const currentUrl = typeof window !== 'undefined' ? window.location.href : (process.env.NEXT_PUBLIC_BASE_URL || 'https://3d-sco.com');
@@ -308,7 +289,7 @@ function ArticleSEO({ title, description, author, publishedTime, modifiedTime, i
         url: currentUrl,
         keywords
     });
-    return (<SEOHead {...props} title={title} description={description} keywords={keywords} image={image} type="article" author={author} publishedTime={publishedTime} modifiedTime={modifiedTime} section={section} tags={tags} structuredData={[articleSchema]}/>);
+    return (React.createElement(SEOHead, { ...props, title: title, description: description, keywords: keywords, image: image, type: "article", author: author, publishedTime: publishedTime, modifiedTime: modifiedTime, section: section, tags: tags, structuredData: [articleSchema] }));
 }
 function ProductSEO({ title, description, image, price, currency, availability, brand, category, sku, rating, keywords, ...props }) {
     // Generate product structured data
@@ -324,7 +305,7 @@ function ProductSEO({ title, description, image, price, currency, availability, 
         sku,
         rating
     });
-    return (<SEOHead {...props} title={title} description={description} keywords={keywords} image={image} type="website" structuredData={[productSchema]}/>);
+    return (React.createElement(SEOHead, { ...props, title: title, description: description, keywords: keywords, image: image, type: "website", structuredData: [productSchema] }));
 }
 function ServiceSEO({ title, description, provider = '3D-SCO', areaServed, serviceType, keywords, ...props }) {
     const currentUrl = typeof window !== 'undefined' ? window.location.href : (process.env.NEXT_PUBLIC_BASE_URL || 'https://3d-sco.com');
@@ -337,7 +318,7 @@ function ServiceSEO({ title, description, provider = '3D-SCO', areaServed, servi
         serviceType,
         url: currentUrl
     });
-    return (<SEOHead {...props} title={title} description={description} keywords={keywords} type="website" structuredData={[serviceSchema]}/>);
+    return (React.createElement(SEOHead, { ...props, title: title, description: description, keywords: keywords, type: "website", structuredData: [serviceSchema] }));
 }
 // Hook for dynamic SEO updates
 function useSEO() {
@@ -378,4 +359,3 @@ function useSEO() {
     };
 }
 exports.default = SEOHead;
-//# sourceMappingURL=seo-head.js.map

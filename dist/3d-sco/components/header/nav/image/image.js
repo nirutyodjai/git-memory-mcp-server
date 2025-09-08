@@ -9,9 +9,7 @@ const image_1 = __importDefault(require("next/image"));
 const style_module_scss_1 = __importDefault(require("./style.module.scss"));
 const anim_1 = require("../../anim");
 const Index = ({ src, isActive }) => {
-    return (<framer_motion_1.motion.div variants={anim_1.opacity} initial="initial" animate={isActive ? "open" : "closed"} className={style_module_scss_1.default.imageContainer}>
-      <image_1.default src={src} width={400} height={400} className="my-32 w-full h-auto object-cover" alt={"Image"}/>
-    </framer_motion_1.motion.div>);
+    return (react_1.default.createElement(framer_motion_1.motion.div, { variants: anim_1.opacity, initial: "initial", animate: isActive ? "open" : "closed", className: style_module_scss_1.default.imageContainer },
+        react_1.default.createElement(image_1.default, { src: src, width: 400, height: 400, className: "my-32 w-full h-auto object-cover", alt: "Image" })));
 };
 exports.default = Index;
-//# sourceMappingURL=image.js.map

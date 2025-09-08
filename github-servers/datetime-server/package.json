@@ -1,9 +1,0 @@
-{
-  "name": "datetime-server",
-  "version": "1.0.0",
-  "description": "Date and time operations",
-  "main": "server.js",
-  "scripts": {
-    "start": "node server.js"
-  }
-}

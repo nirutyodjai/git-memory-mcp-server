@@ -1,0 +1,339 @@
+{{/*
+=============================================================================
+ENTERPRISE SECURITY DASHBOARD - INSTALLATION NOTES
+Post-Installation Information and Instructions
+=============================================================================
+*/}}
+
+🚀 NEXUS IDE Security Dashboard has been successfully deployed!
+
+{{- $fullName := include "security-dashboard.fullname" . -}}
+{{- $svcPort := .Values.service.port -}}
+
+# =============================================================================
+# 📊 DEPLOYMENT INFORMATION
+# =============================================================================
+
+✅ Release Name: {{ .Release.Name }}
+✅ Namespace: {{ .Release.Namespace }}
+✅ Chart Version: {{ .Chart.Version }}
+✅ App Version: {{ .Chart.AppVersion }}
+✅ Deployment Time: {{ now | date "2006-01-02 15:04:05 UTC" }}
+
+# =============================================================================
+# 🌐 ACCESS INFORMATION
+# =============================================================================
+
+{{- if .Values.ingress.enabled }}
+{{- range $host := .Values.ingress.hosts }}
+  {{- range .paths }}
+🌍 Application URL: {{ if $.Values.ingress.tls }}https{{ else }}http{{ end }}://{{ $host.host }}{{ .path }}
+  {{- end }}
+{{- end }}
+{{- else if contains "NodePort" .Values.service.type }}
+🌍 Application URL: Get the application URL by running these commands:
+  export NODE_PORT=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[0].nodePort}" services {{ $fullName }})
+  export NODE_IP=$(kubectl get nodes --namespace {{ .Release.Namespace }} -o jsonpath="{.items[0].status.addresses[0].address}")
+  echo http://$NODE_IP:$NODE_PORT
+{{- else if contains "LoadBalancer" .Values.service.type }}
+🌍 Application URL: Get the application URL by running these commands:
+     NOTE: It may take a few minutes for the LoadBalancer IP to be available.
+           You can watch the status of by running 'kubectl get --namespace {{ .Release.Namespace }} svc -w {{ $fullName }}'
+  export SERVICE_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ $fullName }} --template "{{ "{{" }} range (index .status.loadBalancer.ingress 0) {{ "}}" }}{{ "{{" }}.{{ "}}" }}{{ "{{" }} end {{ "}}" }}")
+  echo http://$SERVICE_IP:{{ $svcPort }}
+{{- else if contains "ClusterIP" .Values.service.type }}
+🌍 Application URL: Get the application URL by running these commands:
+  export POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ include "security-dashboard.name" . }},app.kubernetes.io/instance={{ .Release.Name }}" -o jsonpath="{.items[0].metadata.name}")
+  export CONTAINER_PORT=$(kubectl get pod --namespace {{ .Release.Namespace }} $POD_NAME -o jsonpath="{.spec.containers[0].ports[0].containerPort}")
+  echo "Visit http://127.0.0.1:8080 to use your application"
+  kubectl --namespace {{ .Release.Namespace }} port-forward $POD_NAME 8080:$CONTAINER_PORT
+{{- end }}
+
+# =============================================================================
+# 🔐 AUTHENTICATION & SECURITY
+# =============================================================================
+
+{{- if .Values.auth.enabled }}
+🔐 Authentication is ENABLED
+{{- if .Values.auth.defaultAdmin.enabled }}
+
+📋 Default Admin Credentials:
+   Username: {{ .Values.auth.defaultAdmin.username | default "admin" }}
+   Password: Get the password by running:
+   kubectl get secret --namespace {{ .Release.Namespace }} {{ $fullName }}-secret -o jsonpath="{.data.ADMIN_PASSWORD}" | base64 --decode
+
+⚠️  IMPORTANT: Please change the default admin password immediately after first login!
+{{- end }}
+
+{{- if .Values.auth.oauth.enabled }}
+🔗 OAuth Authentication:
+{{- range .Values.auth.oauth.providers }}
+   - {{ .name | title }}: {{ .enabled | ternary "✅ Enabled" "❌ Disabled" }}
+{{- end }}
+{{- end }}
+
+{{- if .Values.auth.ldap.enabled }}
+🏢 LDAP Authentication: ✅ Enabled
+   Server: {{ .Values.auth.ldap.server }}
+   Base DN: {{ .Values.auth.ldap.baseDN }}
+{{- end }}
+
+{{- if .Values.auth.saml.enabled }}
+🎫 SAML Authentication: ✅ Enabled
+   Entity ID: {{ .Values.auth.saml.entityId }}
+   SSO URL: {{ .Values.auth.saml.ssoUrl }}
+{{- end }}
+{{- else }}
+⚠️  Authentication is DISABLED - This is not recommended for production!
+{{- end }}
+
+# =============================================================================
+# 💾 DATABASE INFORMATION
+# =============================================================================
+
+{{- if .Values.postgresql.enabled }}
+🐘 PostgreSQL Database: ✅ Enabled (Internal)
+   Host: {{ include "security-dashboard.databaseHost" . }}
+   Port: {{ include "security-dashboard.databasePort" . }}
+   Database: {{ .Values.postgresql.auth.database }}
+   Username: {{ .Values.postgresql.auth.username }}
+{{- else }}
+🐘 PostgreSQL Database: 🔗 External
+   Host: {{ .Values.externalDatabase.host }}
+   Port: {{ .Values.externalDatabase.port }}
+   Database: {{ .Values.externalDatabase.database }}
+{{- end }}
+
+{{- if .Values.redis.enabled }}
+🔴 Redis Cache: ✅ Enabled (Internal)
+   Host: {{ include "security-dashboard.redisHost" . }}
+   Port: {{ include "security-dashboard.redisPort" . }}
+{{- else if .Values.externalRedis.enabled }}
+🔴 Redis Cache: 🔗 External
+   Host: {{ .Values.externalRedis.host }}
+   Port: {{ .Values.externalRedis.port }}
+{{- else }}
+🔴 Redis Cache: ❌ Disabled
+{{- end }}
+
+{{- if .Values.mongodb.enabled }}
+🍃 MongoDB: ✅ Enabled (Internal)
+   Host: {{ include "security-dashboard.mongodbHost" . }}
+   Port: {{ include "security-dashboard.mongodbPort" . }}
+{{- else if .Values.externalMongodb.enabled }}
+🍃 MongoDB: 🔗 External
+   Host: {{ .Values.externalMongodb.host }}
+   Port: {{ .Values.externalMongodb.port }}
+{{- else }}
+🍃 MongoDB: ❌ Disabled
+{{- end }}
+
+# =============================================================================
+# 📈 MONITORING & OBSERVABILITY
+# =============================================================================
+
+{{- if .Values.monitoring.prometheus.enabled }}
+📊 Prometheus Monitoring: ✅ Enabled
+   Metrics Endpoint: /metrics
+   ServiceMonitor: {{ .Values.monitoring.prometheus.serviceMonitor.enabled | ternary "✅ Created" "❌ Not Created" }}
+{{- else }}
+📊 Prometheus Monitoring: ❌ Disabled
+{{- end }}
+
+{{- if .Values.monitoring.grafana.enabled }}
+📈 Grafana Dashboard: ✅ Enabled
+   Dashboard: {{ .Values.monitoring.grafana.dashboard.enabled | ternary "✅ Imported" "❌ Not Imported" }}
+{{- else }}
+📈 Grafana Dashboard: ❌ Disabled
+{{- end }}
+
+{{- if .Values.monitoring.jaeger.enabled }}
+🔍 Jaeger Tracing: ✅ Enabled
+   Endpoint: {{ .Values.monitoring.jaeger.endpoint }}
+{{- else }}
+🔍 Jaeger Tracing: ❌ Disabled
+{{- end }}
+
+{{- if .Values.logging.enabled }}
+📝 Centralized Logging: ✅ Enabled
+   Level: {{ .Values.logging.level | upper }}
+   Format: {{ .Values.logging.format }}
+{{- if .Values.logging.elasticsearch.enabled }}
+   ElasticSearch: ✅ Connected
+{{- end }}
+{{- if .Values.logging.fluentd.enabled }}
+   Fluentd: ✅ Enabled
+{{- end }}
+{{- else }}
+📝 Centralized Logging: ❌ Disabled
+{{- end }}
+
+# =============================================================================
+# 🔄 BACKUP & RECOVERY
+# =============================================================================
+
+{{- if .Values.jobs.backup.enabled }}
+💾 Automated Backup: ✅ Enabled
+   Schedule: {{ .Values.jobs.backup.schedule }}
+   Retention: {{ .Values.jobs.backup.retentionDays }} days
+   Components:
+   {{- if .Values.jobs.backup.database }}
+   - Database: ✅ Included
+   {{- end }}
+   {{- if .Values.jobs.backup.redis }}
+   - Redis: ✅ Included
+   {{- end }}
+   {{- if .Values.jobs.backup.files }}
+   - Files: ✅ Included
+   {{- end }}
+{{- else }}
+💾 Automated Backup: ❌ Disabled
+{{- end }}
+
+# =============================================================================
+# 🚀 SCALING & PERFORMANCE
+# =============================================================================
+
+{{- if .Values.autoscaling.enabled }}
+📈 Auto Scaling: ✅ Enabled
+   Min Replicas: {{ .Values.autoscaling.minReplicas }}
+   Max Replicas: {{ .Values.autoscaling.maxReplicas }}
+   Target CPU: {{ .Values.autoscaling.targetCPUUtilizationPercentage }}%
+   {{- if .Values.autoscaling.targetMemoryUtilizationPercentage }}
+   Target Memory: {{ .Values.autoscaling.targetMemoryUtilizationPercentage }}%
+   {{- end }}
+{{- else }}
+📈 Auto Scaling: ❌ Disabled
+   Replicas: {{ .Values.replicaCount }}
+{{- end }}
+
+{{- if .Values.websocket.enabled }}
+🔌 WebSocket Service: ✅ Enabled
+   Port: {{ .Values.websocket.service.port }}
+   Replicas: {{ .Values.websocket.replicaCount }}
+{{- else }}
+🔌 WebSocket Service: ❌ Disabled
+{{- end }}
+
+# =============================================================================
+# 🛡️ SECURITY FEATURES
+# =============================================================================
+
+{{- if .Values.security.networkPolicy.enabled }}
+🛡️  Network Policies: ✅ Enabled
+{{- else }}
+🛡️  Network Policies: ❌ Disabled
+{{- end }}
+
+{{- if .Values.security.podSecurityPolicy.enabled }}
+🔒 Pod Security Policy: ✅ Enabled
+{{- else }}
+🔒 Pod Security Policy: ❌ Disabled
+{{- end }}
+
+{{- if .Values.tls.enabled }}
+🔐 TLS Encryption: ✅ Enabled
+   Certificate: {{ .Values.tls.secretName }}
+{{- else }}
+🔐 TLS Encryption: ❌ Disabled
+{{- end }}
+
+{{- if .Values.security.rateLimiting.enabled }}
+⚡ Rate Limiting: ✅ Enabled
+   Requests per minute: {{ .Values.security.rateLimiting.requestsPerMinute }}
+{{- else }}
+⚡ Rate Limiting: ❌ Disabled
+{{- end }}
+
+{{- if .Values.jobs.securityScan.enabled }}
+🔍 Security Scanning: ✅ Enabled
+   Schedule: {{ .Values.jobs.securityScan.schedule }}
+{{- else }}
+🔍 Security Scanning: ❌ Disabled
+{{- end }}
+
+# =============================================================================
+# 🔧 USEFUL COMMANDS
+# =============================================================================
+
+📋 Get Pod Status:
+   kubectl get pods -n {{ .Release.Namespace }} -l app.kubernetes.io/instance={{ .Release.Name }}
+
+📋 View Logs:
+   kubectl logs -n {{ .Release.Namespace }} -l app.kubernetes.io/instance={{ .Release.Name }} -f
+
+📋 Get Service Information:
+   kubectl get svc -n {{ .Release.Namespace }} -l app.kubernetes.io/instance={{ .Release.Name }}
+
+📋 Port Forward (for ClusterIP):
+   kubectl port-forward -n {{ .Release.Namespace }} svc/{{ $fullName }} 8080:{{ $svcPort }}
+
+📋 Scale Application:
+   kubectl scale deployment -n {{ .Release.Namespace }} {{ $fullName }} --replicas=<number>
+
+📋 Update Configuration:
+   helm upgrade {{ .Release.Name }} {{ .Chart.Name }} -n {{ .Release.Namespace }} -f values.yaml
+
+📋 Uninstall:
+   helm uninstall {{ .Release.Name }} -n {{ .Release.Namespace }}
+
+# =============================================================================
+# 🆘 TROUBLESHOOTING
+# =============================================================================
+
+❓ If pods are not starting:
+   1. Check pod status: kubectl describe pod -n {{ .Release.Namespace }} <pod-name>
+   2. Check logs: kubectl logs -n {{ .Release.Namespace }} <pod-name>
+   3. Verify secrets and configmaps are created
+   4. Check resource limits and node capacity
+
+❓ If database connection fails:
+   1. Verify database credentials in secrets
+   2. Check database service is running
+   3. Test network connectivity between pods
+   4. Verify database initialization completed
+
+❓ If ingress is not working:
+   1. Check ingress controller is installed
+   2. Verify DNS resolution
+   3. Check TLS certificates if HTTPS is enabled
+   4. Verify ingress annotations are correct
+
+❓ If monitoring is not working:
+   1. Check Prometheus is scraping metrics
+   2. Verify ServiceMonitor is created
+   3. Check network policies allow monitoring traffic
+   4. Verify metrics endpoint is accessible
+
+# =============================================================================
+# 📚 DOCUMENTATION & SUPPORT
+# =============================================================================
+
+📖 Documentation: https://nexus-ide.dev/docs
+🐛 Issue Tracker: https://github.com/nexus-ide/security-dashboard/issues
+💬 Community: https://discord.gg/nexus-ide
+📧 Support: support@nexus-ide.dev
+
+# =============================================================================
+# 🎉 CONGRATULATIONS!
+# =============================================================================
+
+🎉 Your NEXUS IDE Security Dashboard is now ready!
+
+{{- if .Values.development.enabled }}
+⚠️  DEVELOPMENT MODE is enabled - This should not be used in production!
+{{- end }}
+
+{{- if not .Values.auth.enabled }}
+⚠️  Authentication is disabled - Please enable it for production use!
+{{- end }}
+
+{{- if not .Values.tls.enabled }}
+⚠️  TLS is disabled - Please enable HTTPS for production use!
+{{- end }}
+
+Thank you for choosing NEXUS IDE Security Dashboard! 🚀
+
+# =============================================================================
+# END OF INSTALLATION NOTES
+# =============================================================================

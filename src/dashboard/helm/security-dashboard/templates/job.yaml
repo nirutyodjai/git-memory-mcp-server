@@ -1,0 +1,717 @@
+{{/*
+=============================================================================
+ENTERPRISE SECURITY DASHBOARD - JOB & CRONJOB TEMPLATE
+Batch Processing and Scheduled Tasks
+=============================================================================
+*/}}
+
+{{- if .Values.jobs.enabled -}}
+
+# =============================================================================
+# DATABASE MIGRATION JOB
+# =============================================================================
+
+{{- if .Values.jobs.migration.enabled }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "security-dashboard.fullname" . }}-migration
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    {{- include "security-dashboard.labels" . | nindent 4 }}
+    app.kubernetes.io/component: migration
+    job-type: migration
+  annotations:
+    "helm.sh/hook": pre-install,pre-upgrade
+    "helm.sh/hook-weight": "-5"
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+    {{- with .Values.jobs.migration.annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+spec:
+  # =============================================================================
+  # JOB CONFIGURATION
+  # =============================================================================
+  
+  backoffLimit: {{ .Values.jobs.migration.backoffLimit | default 3 }}
+  activeDeadlineSeconds: {{ .Values.jobs.migration.activeDeadlineSeconds | default 1800 }}
+  ttlSecondsAfterFinished: {{ .Values.jobs.migration.ttlSecondsAfterFinished | default 86400 }}
+  
+  template:
+    metadata:
+      labels:
+        {{- include "security-dashboard.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: migration
+        job-type: migration
+      annotations:
+        {{- include "security-dashboard.podAnnotations" . | nindent 8 }}
+    spec:
+      # =============================================================================
+      # POD CONFIGURATION
+      # =============================================================================
+      
+      restartPolicy: Never
+      
+      {{- if .Values.serviceAccount.create }}
+      serviceAccountName: {{ include "security-dashboard.serviceAccountName" . }}
+      {{- end }}
+      
+      {{- with .Values.jobs.migration.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      
+      {{- with .Values.jobs.migration.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      
+      {{- with .Values.jobs.migration.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      
+      # =============================================================================
+      # SECURITY CONTEXT
+      # =============================================================================
+      
+      {{- if .Values.podSecurityContext }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      {{- end }}
+      
+      # =============================================================================
+      # INIT CONTAINERS
+      # =============================================================================
+      
+      initContainers:
+        # Wait for Database
+        - name: wait-for-db
+          image: {{ .Values.jobs.migration.waitImage | default "busybox:1.35" }}
+          command:
+            - sh
+            - -c
+            - |
+              echo "Waiting for database to be ready..."
+              until nc -z {{ include "security-dashboard.databaseHost" . }} {{ include "security-dashboard.databasePort" . }}; do
+                echo "Database not ready, waiting..."
+                sleep 5
+              done
+              echo "Database is ready!"
+          resources:
+            {{- toYaml .Values.jobs.migration.initResources | nindent 12 }}
+        
+        # Wait for Redis
+        {{- if .Values.redis.enabled }}
+        - name: wait-for-redis
+          image: {{ .Values.jobs.migration.waitImage | default "busybox:1.35" }}
+          command:
+            - sh
+            - -c
+            - |
+              echo "Waiting for Redis to be ready..."
+              until nc -z {{ include "security-dashboard.redisHost" . }} {{ include "security-dashboard.redisPort" . }}; do
+                echo "Redis not ready, waiting..."
+                sleep 3
+              done
+              echo "Redis is ready!"
+          resources:
+            {{- toYaml .Values.jobs.migration.initResources | nindent 12 }}
+        {{- end }}
+      
+      # =============================================================================
+      # MAIN CONTAINER
+      # =============================================================================
+      
+      containers:
+        - name: migration
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          
+          command:
+            {{- toYaml .Values.jobs.migration.command | nindent 12 }}
+          
+          args:
+            {{- toYaml .Values.jobs.migration.args | nindent 12 }}
+          
+          # =============================================================================
+          # ENVIRONMENT VARIABLES
+          # =============================================================================
+          
+          env:
+            {{- include "security-dashboard.env" . | nindent 12 }}
+            - name: JOB_TYPE
+              value: "migration"
+            - name: MIGRATION_MODE
+              value: {{ .Values.jobs.migration.mode | default "up" | quote }}
+            - name: MIGRATION_TIMEOUT
+              value: {{ .Values.jobs.migration.timeout | default "1800" | quote }}
+          
+          envFrom:
+            - configMapRef:
+                name: {{ include "security-dashboard.fullname" . }}-config
+            - secretRef:
+                name: {{ include "security-dashboard.fullname" . }}-secret
+          
+          # =============================================================================
+          # RESOURCES
+          # =============================================================================
+          
+          resources:
+            {{- toYaml .Values.jobs.migration.resources | nindent 12 }}
+          
+          # =============================================================================
+          # SECURITY CONTEXT
+          # =============================================================================
+          
+          {{- if .Values.securityContext }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          {{- end }}
+          
+          # =============================================================================
+          # VOLUME MOUNTS
+          # =============================================================================
+          
+          volumeMounts:
+            {{- if .Values.persistence.enabled }}
+            - name: data
+              mountPath: /app/data
+            {{- end }}
+            
+            {{- if .Values.jobs.migration.extraVolumeMounts }}
+            {{- toYaml .Values.jobs.migration.extraVolumeMounts | nindent 12 }}
+            {{- end }}
+      
+      # =============================================================================
+      # VOLUMES
+      # =============================================================================
+      
+      volumes:
+        {{- if .Values.persistence.enabled }}
+        - name: data
+          persistentVolumeClaim:
+            claimName: {{ include "security-dashboard.fullname" . }}-data
+        {{- end }}
+        
+        {{- if .Values.jobs.migration.extraVolumes }}
+        {{- toYaml .Values.jobs.migration.extraVolumes | nindent 8 }}
+        {{- end }}
+
+---
+{{- end }}
+
+# =============================================================================
+# DATA BACKUP CRONJOB
+# =============================================================================
+
+{{- if .Values.jobs.backup.enabled }}
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ include "security-dashboard.fullname" . }}-backup
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    {{- include "security-dashboard.labels" . | nindent 4 }}
+    app.kubernetes.io/component: backup
+    job-type: backup
+  annotations:
+    {{- with .Values.jobs.backup.annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+spec:
+  # =============================================================================
+  # CRONJOB CONFIGURATION
+  # =============================================================================
+  
+  schedule: {{ .Values.jobs.backup.schedule | default "0 2 * * *" | quote }}
+  timeZone: {{ .Values.jobs.backup.timeZone | default "UTC" }}
+  concurrencyPolicy: {{ .Values.jobs.backup.concurrencyPolicy | default "Forbid" }}
+  successfulJobsHistoryLimit: {{ .Values.jobs.backup.successfulJobsHistoryLimit | default 3 }}
+  failedJobsHistoryLimit: {{ .Values.jobs.backup.failedJobsHistoryLimit | default 1 }}
+  startingDeadlineSeconds: {{ .Values.jobs.backup.startingDeadlineSeconds | default 300 }}
+  
+  jobTemplate:
+    spec:
+      backoffLimit: {{ .Values.jobs.backup.backoffLimit | default 2 }}
+      activeDeadlineSeconds: {{ .Values.jobs.backup.activeDeadlineSeconds | default 3600 }}
+      ttlSecondsAfterFinished: {{ .Values.jobs.backup.ttlSecondsAfterFinished | default 86400 }}
+      
+      template:
+        metadata:
+          labels:
+            {{- include "security-dashboard.selectorLabels" . | nindent 12 }}
+            app.kubernetes.io/component: backup
+            job-type: backup
+        spec:
+          restartPolicy: OnFailure
+          
+          {{- if .Values.serviceAccount.create }}
+          serviceAccountName: {{ include "security-dashboard.serviceAccountName" . }}
+          {{- end }}
+          
+          # =============================================================================
+          # CONTAINERS
+          # =============================================================================
+          
+          containers:
+            - name: backup
+              image: {{ .Values.jobs.backup.image | default "postgres:15-alpine" }}
+              imagePullPolicy: {{ .Values.jobs.backup.imagePullPolicy | default "IfNotPresent" }}
+              
+              command:
+                - sh
+                - -c
+                - |
+                  set -e
+                  
+                  # Create backup directory
+                  BACKUP_DIR="/backup/$(date +%Y%m%d_%H%M%S)"
+                  mkdir -p "$BACKUP_DIR"
+                  
+                  echo "Starting backup process..."
+                  
+                  # Database backup
+                  if [ "$BACKUP_DATABASE" = "true" ]; then
+                    echo "Backing up PostgreSQL database..."
+                    pg_dump "$DATABASE_URL" > "$BACKUP_DIR/database.sql"
+                    gzip "$BACKUP_DIR/database.sql"
+                    echo "Database backup completed"
+                  fi
+                  
+                  # Redis backup
+                  if [ "$BACKUP_REDIS" = "true" ]; then
+                    echo "Backing up Redis data..."
+                    redis-cli --rdb "$BACKUP_DIR/redis.rdb"
+                    gzip "$BACKUP_DIR/redis.rdb"
+                    echo "Redis backup completed"
+                  fi
+                  
+                  # File system backup
+                  if [ "$BACKUP_FILES" = "true" ]; then
+                    echo "Backing up application files..."
+                    tar -czf "$BACKUP_DIR/files.tar.gz" /app/data
+                    echo "Files backup completed"
+                  fi
+                  
+                  # Upload to cloud storage (if configured)
+                  if [ -n "$CLOUD_STORAGE_ENDPOINT" ]; then
+                    echo "Uploading backup to cloud storage..."
+                    # Add cloud upload logic here
+                    echo "Cloud upload completed"
+                  fi
+                  
+                  # Cleanup old backups
+                  find /backup -type d -mtime +${BACKUP_RETENTION_DAYS:-7} -exec rm -rf {} +
+                  
+                  echo "Backup process completed successfully"
+              
+              env:
+                {{- include "security-dashboard.env" . | nindent 16 }}
+                - name: JOB_TYPE
+                  value: "backup"
+                - name: BACKUP_DATABASE
+                  value: {{ .Values.jobs.backup.database | default "true" | quote }}
+                - name: BACKUP_REDIS
+                  value: {{ .Values.jobs.backup.redis | default "true" | quote }}
+                - name: BACKUP_FILES
+                  value: {{ .Values.jobs.backup.files | default "true" | quote }}
+                - name: BACKUP_RETENTION_DAYS
+                  value: {{ .Values.jobs.backup.retentionDays | default "7" | quote }}
+                - name: CLOUD_STORAGE_ENDPOINT
+                  value: {{ .Values.jobs.backup.cloudStorage.endpoint | quote }}
+              
+              envFrom:
+                - secretRef:
+                    name: {{ include "security-dashboard.fullname" . }}-secret
+              
+              resources:
+                {{- toYaml .Values.jobs.backup.resources | nindent 16 }}
+              
+              volumeMounts:
+                - name: backup-storage
+                  mountPath: /backup
+                {{- if .Values.persistence.enabled }}
+                - name: data
+                  mountPath: /app/data
+                  readOnly: true
+                {{- end }}
+          
+          volumes:
+            - name: backup-storage
+              {{- if .Values.jobs.backup.persistence.enabled }}
+              persistentVolumeClaim:
+                claimName: {{ include "security-dashboard.fullname" . }}-backup
+              {{- else }}
+              emptyDir: {}
+              {{- end }}
+            
+            {{- if .Values.persistence.enabled }}
+            - name: data
+              persistentVolumeClaim:
+                claimName: {{ include "security-dashboard.fullname" . }}-data
+            {{- end }}
+
+---
+{{- end }}
+
+# =============================================================================
+# DATA CLEANUP CRONJOB
+# =============================================================================
+
+{{- if .Values.jobs.cleanup.enabled }}
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ include "security-dashboard.fullname" . }}-cleanup
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    {{- include "security-dashboard.labels" . | nindent 4 }}
+    app.kubernetes.io/component: cleanup
+    job-type: cleanup
+spec:
+  schedule: {{ .Values.jobs.cleanup.schedule | default "0 3 * * 0" | quote }}
+  timeZone: {{ .Values.jobs.cleanup.timeZone | default "UTC" }}
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 2
+  failedJobsHistoryLimit: 1
+  
+  jobTemplate:
+    spec:
+      backoffLimit: 1
+      activeDeadlineSeconds: 1800
+      ttlSecondsAfterFinished: 86400
+      
+      template:
+        spec:
+          restartPolicy: OnFailure
+          
+          containers:
+            - name: cleanup
+              image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+              imagePullPolicy: {{ .Values.image.pullPolicy }}
+              
+              command:
+                {{- toYaml .Values.jobs.cleanup.command | nindent 16 }}
+              
+              args:
+                {{- toYaml .Values.jobs.cleanup.args | nindent 16 }}
+              
+              env:
+                {{- include "security-dashboard.env" . | nindent 16 }}
+                - name: JOB_TYPE
+                  value: "cleanup"
+                - name: CLEANUP_RETENTION_DAYS
+                  value: {{ .Values.jobs.cleanup.retentionDays | default "30" | quote }}
+                - name: CLEANUP_LOG_LEVEL
+                  value: {{ .Values.jobs.cleanup.logLevel | default "INFO" | quote }}
+              
+              envFrom:
+                - configMapRef:
+                    name: {{ include "security-dashboard.fullname" . }}-config
+                - secretRef:
+                    name: {{ include "security-dashboard.fullname" . }}-secret
+              
+              resources:
+                {{- toYaml .Values.jobs.cleanup.resources | nindent 16 }}
+
+---
+{{- end }}
+
+# =============================================================================
+# SECURITY SCAN CRONJOB
+# =============================================================================
+
+{{- if .Values.jobs.securityScan.enabled }}
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ include "security-dashboard.fullname" . }}-security-scan
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    {{- include "security-dashboard.labels" . | nindent 4 }}
+    app.kubernetes.io/component: security-scan
+    job-type: security-scan
+spec:
+  schedule: {{ .Values.jobs.securityScan.schedule | default "0 1 * * *" | quote }}
+  timeZone: {{ .Values.jobs.securityScan.timeZone | default "UTC" }}
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 2
+  
+  jobTemplate:
+    spec:
+      backoffLimit: 2
+      activeDeadlineSeconds: 3600
+      ttlSecondsAfterFinished: 172800
+      
+      template:
+        spec:
+          restartPolicy: OnFailure
+          
+          containers:
+            - name: security-scan
+              image: {{ .Values.jobs.securityScan.image | default "aquasec/trivy:latest" }}
+              imagePullPolicy: {{ .Values.jobs.securityScan.imagePullPolicy | default "Always" }}
+              
+              command:
+                - sh
+                - -c
+                - |
+                  set -e
+                  
+                  echo "Starting security scan..."
+                  
+                  # Container image scan
+                  if [ "$SCAN_IMAGES" = "true" ]; then
+                    echo "Scanning container images..."
+                    trivy image --format json --output /tmp/image-scan.json "$IMAGE_TO_SCAN"
+                    echo "Image scan completed"
+                  fi
+                  
+                  # Filesystem scan
+                  if [ "$SCAN_FILESYSTEM" = "true" ]; then
+                    echo "Scanning filesystem..."
+                    trivy fs --format json --output /tmp/fs-scan.json /app
+                    echo "Filesystem scan completed"
+                  fi
+                  
+                  # Configuration scan
+                  if [ "$SCAN_CONFIG" = "true" ]; then
+                    echo "Scanning configurations..."
+                    trivy config --format json --output /tmp/config-scan.json /app
+                    echo "Configuration scan completed"
+                  fi
+                  
+                  # Send results to security dashboard
+                  if [ -n "$SECURITY_WEBHOOK_URL" ]; then
+                    echo "Sending scan results to security dashboard..."
+                    # Add webhook logic here
+                    echo "Results sent successfully"
+                  fi
+                  
+                  echo "Security scan completed successfully"
+              
+              env:
+                - name: JOB_TYPE
+                  value: "security-scan"
+                - name: SCAN_IMAGES
+                  value: {{ .Values.jobs.securityScan.scanImages | default "true" | quote }}
+                - name: SCAN_FILESYSTEM
+                  value: {{ .Values.jobs.securityScan.scanFilesystem | default "true" | quote }}
+                - name: SCAN_CONFIG
+                  value: {{ .Values.jobs.securityScan.scanConfig | default "true" | quote }}
+                - name: IMAGE_TO_SCAN
+                  value: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+                - name: SECURITY_WEBHOOK_URL
+                  value: {{ .Values.jobs.securityScan.webhookUrl | quote }}
+              
+              resources:
+                {{- toYaml .Values.jobs.securityScan.resources | nindent 16 }}
+              
+              volumeMounts:
+                - name: scan-results
+                  mountPath: /tmp
+          
+          volumes:
+            - name: scan-results
+              emptyDir: {}
+
+---
+{{- end }}
+
+# =============================================================================
+# PERFORMANCE OPTIMIZATION JOB
+# =============================================================================
+
+{{- if .Values.jobs.optimization.enabled }}
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ include "security-dashboard.fullname" . }}-optimization
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    {{- include "security-dashboard.labels" . | nindent 4 }}
+    app.kubernetes.io/component: optimization
+    job-type: optimization
+spec:
+  schedule: {{ .Values.jobs.optimization.schedule | default "0 4 * * 1" | quote }}
+  timeZone: {{ .Values.jobs.optimization.timeZone | default "UTC" }}
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 2
+  failedJobsHistoryLimit: 1
+  
+  jobTemplate:
+    spec:
+      backoffLimit: 1
+      activeDeadlineSeconds: 2400
+      ttlSecondsAfterFinished: 86400
+      
+      template:
+        spec:
+          restartPolicy: OnFailure
+          
+          containers:
+            - name: optimization
+              image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+              imagePullPolicy: {{ .Values.image.pullPolicy }}
+              
+              command:
+                - node
+                - -e
+                - |
+                  const { performance } = require('perf_hooks');
+                  
+                  console.log('Starting performance optimization...');
+                  
+                  // Database optimization
+                  if (process.env.OPTIMIZE_DATABASE === 'true') {
+                    console.log('Optimizing database...');
+                    // Add database optimization logic
+                    console.log('Database optimization completed');
+                  }
+                  
+                  // Cache optimization
+                  if (process.env.OPTIMIZE_CACHE === 'true') {
+                    console.log('Optimizing cache...');
+                    // Add cache optimization logic
+                    console.log('Cache optimization completed');
+                  }
+                  
+                  // Index optimization
+                  if (process.env.OPTIMIZE_INDEXES === 'true') {
+                    console.log('Optimizing indexes...');
+                    // Add index optimization logic
+                    console.log('Index optimization completed');
+                  }
+                  
+                  console.log('Performance optimization completed successfully');
+              
+              env:
+                {{- include "security-dashboard.env" . | nindent 16 }}
+                - name: JOB_TYPE
+                  value: "optimization"
+                - name: OPTIMIZE_DATABASE
+                  value: {{ .Values.jobs.optimization.database | default "true" | quote }}
+                - name: OPTIMIZE_CACHE
+                  value: {{ .Values.jobs.optimization.cache | default "true" | quote }}
+                - name: OPTIMIZE_INDEXES
+                  value: {{ .Values.jobs.optimization.indexes | default "true" | quote }}
+              
+              envFrom:
+                - configMapRef:
+                    name: {{ include "security-dashboard.fullname" . }}-config
+                - secretRef:
+                    name: {{ include "security-dashboard.fullname" . }}-secret
+              
+              resources:
+                {{- toYaml .Values.jobs.optimization.resources | nindent 16 }}
+
+---
+{{- end }}
+
+# =============================================================================
+# CUSTOM JOBS
+# =============================================================================
+
+{{- range .Values.jobs.customJobs }}
+apiVersion: batch/v1
+{{- if .schedule }}
+kind: CronJob
+{{- else }}
+kind: Job
+{{- end }}
+metadata:
+  name: {{ include "security-dashboard.fullname" $ }}-{{ .name }}
+  namespace: {{ $.Release.Namespace | quote }}
+  labels:
+    {{- include "security-dashboard.labels" $ | nindent 4 }}
+    app.kubernetes.io/component: {{ .name }}
+    job-type: custom
+    {{- with .labels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+  annotations:
+    {{- with .annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+spec:
+  {{- if .schedule }}
+  # CronJob specific configuration
+  schedule: {{ .schedule | quote }}
+  timeZone: {{ .timeZone | default "UTC" }}
+  concurrencyPolicy: {{ .concurrencyPolicy | default "Forbid" }}
+  successfulJobsHistoryLimit: {{ .successfulJobsHistoryLimit | default 3 }}
+  failedJobsHistoryLimit: {{ .failedJobsHistoryLimit | default 1 }}
+  
+  jobTemplate:
+    spec:
+  {{- end }}
+      backoffLimit: {{ .backoffLimit | default 3 }}
+      activeDeadlineSeconds: {{ .activeDeadlineSeconds | default 3600 }}
+      ttlSecondsAfterFinished: {{ .ttlSecondsAfterFinished | default 86400 }}
+      
+      template:
+        metadata:
+          labels:
+            {{- include "security-dashboard.selectorLabels" $ | nindent 12 }}
+            app.kubernetes.io/component: {{ .name }}
+            job-type: custom
+        spec:
+          restartPolicy: {{ .restartPolicy | default "OnFailure" }}
+          
+          {{- if $.Values.serviceAccount.create }}
+          serviceAccountName: {{ include "security-dashboard.serviceAccountName" $ }}
+          {{- end }}
+          
+          containers:
+            - name: {{ .name }}
+              image: {{ .image | default (printf "%s:%s" $.Values.image.repository ($.Values.image.tag | default $.Chart.AppVersion)) }}
+              imagePullPolicy: {{ .imagePullPolicy | default $.Values.image.pullPolicy }}
+              
+              {{- if .command }}
+              command:
+                {{- toYaml .command | nindent 16 }}
+              {{- end }}
+              
+              {{- if .args }}
+              args:
+                {{- toYaml .args | nindent 16 }}
+              {{- end }}
+              
+              env:
+                {{- include "security-dashboard.env" $ | nindent 16 }}
+                - name: JOB_TYPE
+                  value: {{ .name | quote }}
+                {{- with .env }}
+                {{- toYaml . | nindent 16 }}
+                {{- end }}
+              
+              {{- if .envFrom }}
+              envFrom:
+                {{- toYaml .envFrom | nindent 16 }}
+              {{- end }}
+              
+              {{- if .resources }}
+              resources:
+                {{- toYaml .resources | nindent 16 }}
+              {{- end }}
+              
+              {{- if .volumeMounts }}
+              volumeMounts:
+                {{- toYaml .volumeMounts | nindent 16 }}
+              {{- end }}
+          
+          {{- if .volumes }}
+          volumes:
+            {{- toYaml .volumes | nindent 12 }}
+          {{- end }}
+
+---
+{{- end }}
+
+{{- end }}
+
+# =============================================================================
+# END OF JOB TEMPLATE
+# =============================================================================

@@ -1,0 +1,437 @@
+# 🛠️ Development Environment Installation Example
+# This example shows configuration optimized for local development and testing
+
+# Development environment settings
+global:
+  environment: development
+  domain: localhost
+  debug: true
+  
+# Application configuration for development
+app:
+  name: nexus-ide-dev
+  version: "1.0.0-dev"
+  
+# Single replica for development
+replicaCount: 1
+
+# Development-friendly resource allocation
+resources:
+  requests:
+    cpu: 200m
+    memory: 512Mi
+  limits:
+    cpu: 1000m
+    memory: 2Gi
+
+# Development service configuration
+service:
+  type: NodePort
+  port: 80
+  targetPort: 3000
+  nodePort: 30080  # Fixed port for easy access
+
+# Simple ingress for local development
+ingress:
+  enabled: true
+  className: nginx
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+  hosts:
+    - host: nexus-ide.local
+      paths:
+        - path: /
+          pathType: Prefix
+    - host: localhost
+      paths:
+        - path: /
+          pathType: Prefix
+  # No TLS for development
+  tls: []
+
+# Disable auto-scaling for development
+autoscaling:
+  enabled: false
+
+# Development monitoring (lightweight)
+monitoring:
+  enabled: true
+  prometheus:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+      interval: 60s  # Less frequent scraping
+  grafana:
+    enabled: true
+    dashboards:
+      enabled: true
+    # Development-specific dashboards
+    devDashboards:
+      - name: "Development Metrics"
+        panels:
+          - "Request Rate"
+          - "Response Time"
+          - "Error Rate"
+          - "Memory Usage"
+  alerting:
+    enabled: false  # Disable alerting in development
+
+# Relaxed security for development
+security:
+  networkPolicy:
+    enabled: false  # Allow all traffic in development
+  
+  podSecurityPolicy:
+    enabled: false
+  
+  rbac:
+    enabled: true
+    serviceAccount:
+      create: true
+      name: nexus-ide-dev
+
+# Lightweight database configuration
+database:
+  postgresql:
+    enabled: true
+    architecture: standalone  # Single instance
+    auth:
+      database: nexus_ide_dev
+      username: nexus_user
+      password: "dev-password-123"  # Simple password for development
+    primary:
+      resources:
+        requests:
+          cpu: 100m
+          memory: 256Mi
+        limits:
+          cpu: 500m
+          memory: 1Gi
+      persistence:
+        enabled: true
+        size: 10Gi  # Smaller storage for development
+        storageClass: standard
+  
+  redis:
+    enabled: true
+    architecture: standalone
+    auth:
+      enabled: false  # No auth for development
+    master:
+      resources:
+        requests:
+          cpu: 50m
+          memory: 128Mi
+        limits:
+          cpu: 200m
+          memory: 512Mi
+      persistence:
+        enabled: false  # In-memory for development
+  
+  mongodb:
+    enabled: false  # Disable MongoDB for simpler development setup
+
+# Development AI configuration
+ai:
+  enabled: true
+  # Use local models for development to avoid API costs
+  models:
+    openai:
+      enabled: false  # Disable to avoid API costs
+    anthropic:
+      enabled: false  # Disable to avoid API costs
+    local:
+      enabled: true
+      model: "llama2-7b"  # Smaller model for development
+      resources:
+        requests:
+          cpu: 500m
+          memory: 2Gi
+        limits:
+          cpu: 2000m
+          memory: 8Gi
+    # Mock AI for testing
+    mock:
+      enabled: true
+      responses:
+        codeCompletion: "// Mock AI completion"
+        codeExplanation: "This is a mock explanation for development."
+        bugDetection: "No bugs detected (mock response)."
+
+# Enable collaboration features for testing
+collaboration:
+  enabled: true
+  websocket:
+    enabled: true
+    replicas: 1
+    resources:
+      requests:
+        cpu: 100m
+        memory: 256Mi
+      limits:
+        cpu: 500m
+        memory: 1Gi
+  videoCall:
+    enabled: false  # Disable video calls in development
+  
+  # Development-specific features
+  development:
+    mockUsers: true  # Enable mock users for testing
+    simulateLatency: false  # No artificial latency
+    debugMode: true
+
+# Enhanced development tools
+development:
+  enabled: true
+  
+  # Hot reload for faster development
+  hotReload:
+    enabled: true
+    watchPaths:
+      - "/app/src"
+      - "/app/public"
+    excludePaths:
+      - "node_modules"
+      - ".git"
+  
+  # Development debugging
+  debugging:
+    enabled: true
+    port: 9229  # Node.js debug port
+    inspector: true
+  
+  # Code quality tools
+  codeQuality:
+    eslint:
+      enabled: true
+      autoFix: true
+    prettier:
+      enabled: true
+      autoFormat: true
+    typescript:
+      enabled: true
+      strict: false  # Relaxed for development
+  
+  # Development utilities
+  utilities:
+    # Automatic API documentation
+    swagger:
+      enabled: true
+      path: "/api-docs"
+    
+    # Database admin interface
+    pgAdmin:
+      enabled: true
+      port: 5050
+    
+    # Redis admin interface
+    redisCommander:
+      enabled: true
+      port: 8081
+    
+    # File browser
+    fileBrowser:
+      enabled: true
+      port: 8082
+      path: "/files"
+
+# Development logging (verbose)
+logging:
+  enabled: true
+  level: debug  # Verbose logging for development
+  format: pretty  # Human-readable format
+  
+  # Console logging
+  console:
+    enabled: true
+    colorize: true
+  
+  # File logging for debugging
+  file:
+    enabled: true
+    path: "/app/logs"
+    maxSize: "100MB"
+    maxFiles: 5
+  
+  # Disable external logging in development
+  elasticsearch:
+    enabled: false
+  fluentd:
+    enabled: false
+
+# No backup needed in development
+backup:
+  enabled: false
+
+# Development-friendly node placement
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+# No pod disruption budget needed
+podDisruptionBudget:
+  enabled: false
+
+# Development-specific environment variables
+env:
+  NODE_ENV: development
+  DEBUG: "nexus:*"
+  LOG_LEVEL: debug
+  HOT_RELOAD: "true"
+  MOCK_AI: "true"
+  DISABLE_AUTH: "true"  # Disable authentication for easier development
+  CORS_ORIGIN: "*"  # Allow all origins in development
+
+# Development volumes for code mounting
+volumes:
+  # Mount source code for hot reload
+  - name: source-code
+    hostPath:
+      path: /path/to/nexus-ide/src  # Update this path
+      type: Directory
+  
+  # Mount configuration files
+  - name: dev-config
+    configMap:
+      name: nexus-ide-dev-config
+
+volumeMounts:
+  - name: source-code
+    mountPath: /app/src
+  - name: dev-config
+    mountPath: /app/config
+
+# Development-specific init containers
+initContainers:
+  - name: setup-dev-env
+    image: busybox:1.35
+    command:
+      - sh
+      - -c
+      - |
+        echo "Setting up development environment..."
+        mkdir -p /app/logs
+        chmod 777 /app/logs
+        echo "Development environment ready!"
+    volumeMounts:
+      - name: app-logs
+        mountPath: /app/logs
+
+# Development health checks (more lenient)
+healthCheck:
+  livenessProbe:
+    httpGet:
+      path: /health
+      port: 3000
+    initialDelaySeconds: 60  # Longer delay for development
+    periodSeconds: 30
+    timeoutSeconds: 10
+    failureThreshold: 5  # More tolerant
+  
+  readinessProbe:
+    httpGet:
+      path: /ready
+      port: 3000
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 3
+
+---
+
+# Development Installation Guide:
+
+# Prerequisites for local development:
+# 1. Local Kubernetes cluster (minikube, kind, or Docker Desktop)
+# 2. Helm 3.x installed
+# 3. kubectl configured for local cluster
+# 4. Optional: Skaffold for continuous development
+
+# Quick Start:
+
+# 1. Start local Kubernetes cluster
+# minikube start --memory=8192 --cpus=4
+# # or
+# kind create cluster --config=kind-config.yaml
+
+# 2. Enable ingress controller
+# minikube addons enable ingress
+# # or for kind:
+# kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
+
+# 3. Create development namespace
+# kubectl create namespace nexus-ide-dev
+
+# 4. Install NEXUS IDE for development
+# helm install nexus-ide-dev . \
+#   -f examples/development-install.yaml \
+#   -n nexus-ide-dev
+
+# 5. Wait for deployment
+# kubectl wait --for=condition=available --timeout=300s deployment/nexus-ide-dev -n nexus-ide-dev
+
+# 6. Access the application
+# # Method 1: Port forward
+# kubectl port-forward svc/nexus-ide-dev 8080:80 -n nexus-ide-dev
+# # Then open http://localhost:8080
+
+# # Method 2: Ingress (add to /etc/hosts)
+# echo "$(minikube ip) nexus-ide.local" | sudo tee -a /etc/hosts
+# # Then open http://nexus-ide.local
+
+# # Method 3: NodePort
+# minikube service nexus-ide-dev -n nexus-ide-dev
+
+# Development Workflow:
+
+# 1. Enable hot reload (update source code path in values)
+# helm upgrade nexus-ide-dev . \
+#   -f examples/development-install.yaml \
+#   --set volumes[0].hostPath.path=/your/local/path/to/nexus-ide/src \
+#   -n nexus-ide-dev
+
+# 2. View logs
+# kubectl logs -f deployment/nexus-ide-dev -n nexus-ide-dev
+
+# 3. Debug application
+# kubectl port-forward deployment/nexus-ide-dev 9229:9229 -n nexus-ide-dev
+# # Connect your debugger to localhost:9229
+
+# 4. Access development utilities
+# kubectl port-forward svc/nexus-ide-dev 5050:5050 -n nexus-ide-dev  # pgAdmin
+# kubectl port-forward svc/nexus-ide-dev 8081:8081 -n nexus-ide-dev  # Redis Commander
+# kubectl port-forward svc/nexus-ide-dev 8082:8082 -n nexus-ide-dev  # File Browser
+
+# 5. Run tests
+# kubectl exec -it deployment/nexus-ide-dev -n nexus-ide-dev -- npm test
+
+# 6. Clean up
+# helm uninstall nexus-ide-dev -n nexus-ide-dev
+# kubectl delete namespace nexus-ide-dev
+
+# Continuous Development with Skaffold:
+
+# 1. Create skaffold.yaml in your project root:
+# cat > skaffold.yaml << EOF
+# apiVersion: skaffold/v2beta24
+# kind: Config
+# build:
+#   artifacts:
+#   - image: nexus-ide-dev
+#     docker:
+#       dockerfile: Dockerfile.dev
+# deploy:
+#   helm:
+#     releases:
+#     - name: nexus-ide-dev
+#       chartPath: ./helm/security-dashboard
+#       valuesFiles:
+#       - ./helm/security-dashboard/examples/development-install.yaml
+#       namespace: nexus-ide-dev
+# EOF
+
+# 2. Start continuous development
+# skaffold dev --port-forward

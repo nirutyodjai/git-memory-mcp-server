@@ -1,0 +1,19 @@
+{
+  "name": "coding-assistant",
+  "version": "1.0.0",
+  "description": "An AI assistant to help with coding tasks.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [
+    "ai",
+    "coding",
+    "assistant"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}

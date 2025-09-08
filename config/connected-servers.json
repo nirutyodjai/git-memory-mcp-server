@@ -1,0 +1,736 @@
+{
+  "version": "1.1.0",
+  "lastUpdated": "2025-09-06T03:49:51.440Z",
+  "connectedServers": [
+    {
+      "id": "external-server-001",
+      "type": "external-mock",
+      "status": "mock",
+      "config": {
+        "id": "external-server-001",
+        "name": "External MCP Server 1",
+        "endpoint": "http://localhost:3001/mcp",
+        "type": "http",
+        "category": "database",
+        "enabled": true,
+        "priority": 1,
+        "tools": [
+          {
+            "name": "db_query_1",
+            "description": "db_query for server 1",
+            "inputSchema": {
+              "type": "object",
+              "properties": {
+                "input": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "name": "db_insert_1",
+            "description": "db_insert for server 1",
+            "inputSchema": {
+              "type": "object",
+              "properties": {
+                "input": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "name": "db_update_1",
+            "description": "db_update for server 1",
+            "inputSchema": {
+              "type": "object",
+              "properties": {
+                "input": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "name": "db_delete_1",
+            "description": "db_delete for server 1",
+            "inputSchema": {
+              "type": "object",
+              "properties": {
+                "input": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "healthCheck": {
+          "enabled": true,
+          "interval": 60000,
+          "timeout": 5000
+        },
+        "loadBalancing": {
+          "weight": 1,
+          "maxConnections": 10
+        }
+      }
+    },
+    {
+      "id": "external-server-002",
+      "type": "external-mock",
+      "status": "mock",
+      "config": {
+        "id": "external-server-002",
+        "name": "External MCP Server 2",
+        "endpoint": "http://localhost:3002/mcp",
+        "type": "http",
+        "category": "file-system",
+        "enabled": true,
+        "priority": 1,
+        "tools": [
+          {
+            "name": "file_read_2",
+            "description": "file_read for server 2",
+            "inputSchema": {
+              "type": "object",
+              "properties": {
+                "input": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "name": "file_write_2",
+            "description": "file_write for server 2",
+            "inputSchema": {
+              "type": "object",
+              "properties": {
+                "input": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "name": "file_delete_2",
+            "description": "file_delete for server 2",
+            "inputSchema": {
+              "type": "object",
+              "properties": {
+                "input": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "name": "file_list_2",
+            "description": "file_list for server 2",
+            "inputSchema": {
+              "type": "object",
+              "properties": {
+                "input": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "healthCheck": {
+          "enabled": true,
+          "interval": 60000,
+          "timeout": 5000
+        },
+        "loadBalancing": {
+          "weight": 1,
+          "maxConnections": 10
+        }
+      }
+    },
+    {
+      "id": "external-server-003",
+      "type": "external-mock",
+      "status": "mock",
+      "config": {
+        "id": "external-server-003",
+        "name": "External MCP Server 3",
+        "endpoint": "http://localhost:3003/mcp",
+        "type": "http",
+        "category": "ai-ml",
+        "enabled": true,
+        "priority": 1,
+        "tools": [
+          {
+            "name": "text_analyze_3",
+            "description": "text_analyze for server 3",
+            "inputSchema": {
+              "type": "object",
+              "properties": {
+                "input": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "name": "image_process_3",
+            "description": "image_process for server 3",
+            "inputSchema": {
+              "type": "object",
+              "properties": {
+                "input": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "name": "model_predict_3",
+            "description": "model_predict for server 3",
+            "inputSchema": {
+              "type": "object",
+              "properties": {
+                "input": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "name": "data_transform_3",
+            "description": "data_transform for server 3",
+            "inputSchema": {
+              "type": "object",
+              "properties": {
+                "input": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "healthCheck": {
+          "enabled": true,
+          "interval": 60000,
+          "timeout": 5000
+        },
+        "loadBalancing": {
+          "weight": 1,
+          "maxConnections": 10
+        }
+      }
+    },
+    {
+      "id": "external-server-004",
+      "type": "external-mock",
+      "status": "mock",
+      "config": {
+        "id": "external-server-004",
+        "name": "External MCP Server 4",
+        "endpoint": "http://localhost:3004/mcp",
+        "type": "http",
+        "category": "version-control",
+        "enabled": true,
+        "priority": 1,
+        "tools": [
+          {
+            "name": "git_clone_4",
+            "description": "git_clone for server 4",
+            "inputSchema": {
+              "type": "object",
+              "properties": {
+                "input": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "name": "git_commit_4",
+            "description": "git_commit for server 4",
+            "inputSchema": {
+              "type": "object",
+              "properties": {
+                "input": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "name": "git_push_4",
+            "description": "git_push for server 4",
+            "inputSchema": {
+              "type": "object",
+              "properties": {
+                "input": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "name": "git_pull_4",
+            "description": "git_pull for server 4",
+            "inputSchema": {
+              "type": "object",
+              "properties": {
+                "input": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "healthCheck": {
+          "enabled": true,
+          "interval": 60000,
+          "timeout": 5000
+        },
+        "loadBalancing": {
+          "weight": 1,
+          "maxConnections": 10
+        }
+      }
+    },
+    {
+      "id": "external-server-005",
+      "type": "external-mock",
+      "status": "mock",
+      "config": {
+        "id": "external-server-005",
+        "name": "External MCP Server 5",
+        "endpoint": "http://localhost:3005/mcp",
+        "type": "http",
+        "category": "api",
+        "enabled": true,
+        "priority": 1,
+        "tools": [
+          {
+            "name": "api_get_5",
+            "description": "api_get for server 5",
+            "inputSchema": {
+              "type": "object",
+              "properties": {
+                "input": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "name": "api_post_5",
+            "description": "api_post for server 5",
+            "inputSchema": {
+              "type": "object",
+              "properties": {
+                "input": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "name": "api_put_5",
+            "description": "api_put for server 5",
+            "inputSchema": {
+              "type": "object",
+              "properties": {
+                "input": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "name": "api_delete_5",
+            "description": "api_delete for server 5",
+            "inputSchema": {
+              "type": "object",
+              "properties": {
+                "input": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "healthCheck": {
+          "enabled": true,
+          "interval": 60000,
+          "timeout": 5000
+        },
+        "loadBalancing": {
+          "weight": 1,
+          "maxConnections": 10
+        }
+      }
+    },
+    {
+      "id": "external-server-006",
+      "type": "external-mock",
+      "status": "mock",
+      "config": {
+        "id": "external-server-006",
+        "name": "External MCP Server 6",
+        "endpoint": "http://localhost:3006/mcp",
+        "type": "http",
+        "category": "database",
+        "enabled": true,
+        "priority": 1,
+        "tools": [
+          {
+            "name": "db_query_6",
+            "description": "db_query for server 6",
+            "inputSchema": {
+              "type": "object",
+              "properties": {
+                "input": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "name": "db_insert_6",
+            "description": "db_insert for server 6",
+            "inputSchema": {
+              "type": "object",
+              "properties": {
+                "input": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "name": "db_update_6",
+            "description": "db_update for server 6",
+            "inputSchema": {
+              "type": "object",
+              "properties": {
+                "input": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "name": "db_delete_6",
+            "description": "db_delete for server 6",
+            "inputSchema": {
+              "type": "object",
+              "properties": {
+                "input": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "healthCheck": {
+          "enabled": true,
+          "interval": 60000,
+          "timeout": 5000
+        },
+        "loadBalancing": {
+          "weight": 1,
+          "maxConnections": 10
+        }
+      }
+    },
+    {
+      "id": "external-server-007",
+      "type": "external-mock",
+      "status": "mock",
+      "config": {
+        "id": "external-server-007",
+        "name": "External MCP Server 7",
+        "endpoint": "http://localhost:3007/mcp",
+        "type": "http",
+        "category": "file-system",
+        "enabled": true,
+        "priority": 1,
+        "tools": [
+          {
+            "name": "file_read_7",
+            "description": "file_read for server 7",
+            "inputSchema": {
+              "type": "object",
+              "properties": {
+                "input": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "name": "file_write_7",
+            "description": "file_write for server 7",
+            "inputSchema": {
+              "type": "object",
+              "properties": {
+                "input": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "name": "file_delete_7",
+            "description": "file_delete for server 7",
+            "inputSchema": {
+              "type": "object",
+              "properties": {
+                "input": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "name": "file_list_7",
+            "description": "file_list for server 7",
+            "inputSchema": {
+              "type": "object",
+              "properties": {
+                "input": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "healthCheck": {
+          "enabled": true,
+          "interval": 60000,
+          "timeout": 5000
+        },
+        "loadBalancing": {
+          "weight": 1,
+          "maxConnections": 10
+        }
+      }
+    },
+    {
+      "id": "external-server-008",
+      "type": "external-mock",
+      "status": "mock",
+      "config": {
+        "id": "external-server-008",
+        "name": "External MCP Server 8",
+        "endpoint": "http://localhost:3008/mcp",
+        "type": "http",
+        "category": "ai-ml",
+        "enabled": true,
+        "priority": 1,
+        "tools": [
+          {
+            "name": "text_analyze_8",
+            "description": "text_analyze for server 8",
+            "inputSchema": {
+              "type": "object",
+              "properties": {
+                "input": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "name": "image_process_8",
+            "description": "image_process for server 8",
+            "inputSchema": {
+              "type": "object",
+              "properties": {
+                "input": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "name": "model_predict_8",
+            "description": "model_predict for server 8",
+            "inputSchema": {
+              "type": "object",
+              "properties": {
+                "input": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "name": "data_transform_8",
+            "description": "data_transform for server 8",
+            "inputSchema": {
+              "type": "object",
+              "properties": {
+                "input": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "healthCheck": {
+          "enabled": true,
+          "interval": 60000,
+          "timeout": 5000
+        },
+        "loadBalancing": {
+          "weight": 1,
+          "maxConnections": 10
+        }
+      }
+    },
+    {
+      "id": "external-server-009",
+      "type": "external-mock",
+      "status": "mock",
+      "config": {
+        "id": "external-server-009",
+        "name": "External MCP Server 9",
+        "endpoint": "http://localhost:3009/mcp",
+        "type": "http",
+        "category": "version-control",
+        "enabled": true,
+        "priority": 1,
+        "tools": [
+          {
+            "name": "git_clone_9",
+            "description": "git_clone for server 9",
+            "inputSchema": {
+              "type": "object",
+              "properties": {
+                "input": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "name": "git_commit_9",
+            "description": "git_commit for server 9",
+            "inputSchema": {
+              "type": "object",
+              "properties": {
+                "input": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "name": "git_push_9",
+            "description": "git_push for server 9",
+            "inputSchema": {
+              "type": "object",
+              "properties": {
+                "input": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "name": "git_pull_9",
+            "description": "git_pull for server 9",
+            "inputSchema": {
+              "type": "object",
+              "properties": {
+                "input": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "healthCheck": {
+          "enabled": true,
+          "interval": 60000,
+          "timeout": 5000
+        },
+        "loadBalancing": {
+          "weight": 1,
+          "maxConnections": 10
+        }
+      }
+    },
+    {
+      "id": "external-server-010",
+      "type": "external-mock",
+      "status": "mock",
+      "config": {
+        "id": "external-server-010",
+        "name": "External MCP Server 10",
+        "endpoint": "http://localhost:3010/mcp",
+        "type": "http",
+        "category": "api",
+        "enabled": true,
+        "priority": 1,
+        "tools": [
+          {
+            "name": "api_get_10",
+            "description": "api_get for server 10",
+            "inputSchema": {
+              "type": "object",
+              "properties": {
+                "input": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "name": "api_post_10",
+            "description": "api_post for server 10",
+            "inputSchema": {
+              "type": "object",
+              "properties": {
+                "input": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "name": "api_put_10",
+            "description": "api_put for server 10",
+            "inputSchema": {
+              "type": "object",
+              "properties": {
+                "input": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "name": "api_delete_10",
+            "description": "api_delete for server 10",
+            "inputSchema": {
+              "type": "object",
+              "properties": {
+                "input": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "healthCheck": {
+          "enabled": true,
+          "interval": 60000,
+          "timeout": 5000
+        },
+        "loadBalancing": {
+          "weight": 1,
+          "maxConnections": 10
+        }
+      }
+    }
+  ]
+}

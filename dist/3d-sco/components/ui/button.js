@@ -42,11 +42,7 @@ const addClassNameRecursively = (children, className) => {
 };
 const Button = (0, react_1.forwardRef)(({ className, variant, size, asChild = false, children, ...props }, ref) => {
     const Comp = asChild ? react_slot_1.Slot : "button";
-    return (<Comp className={(0, utils_1.cn)(buttonVariants({ variant, size, className }), "cursor-can-hover")} ref={ref} {...props}>
-        {/* add pointer-events-none to every child recursively */}
-        {addClassNameRecursively(children, "pointer-events-none")}
-      </Comp>);
+    return (React.createElement(Comp, { className: (0, utils_1.cn)(buttonVariants({ variant, size, className }), "cursor-can-hover"), ref: ref, ...props }, addClassNameRecursively(children, "pointer-events-none")));
 });
 exports.Button = Button;
 Button.displayName = "Button";
-//# sourceMappingURL=button.js.map

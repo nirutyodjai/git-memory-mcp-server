@@ -329,4 +329,3 @@ exports.PolyhavnTools = PolyhavnTools;
 // Export singleton instances
 exports.blenderTools = BlenderTools.getInstance();
 exports.polyhavnTools = PolyhavnTools.getInstance();
-//# sourceMappingURL=blender-tools.js.map

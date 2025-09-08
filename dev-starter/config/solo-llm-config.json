@@ -1,0 +1,107 @@
+{
+  "version": "1.0.0",
+  "description": "Solo LLM Configuration for Git Memory MCP IDE",
+  "mode": "solo",
+  "defaultProvider": "openai",
+  "providers": {
+    "openai": {
+      "id": "openai",
+      "name": "OpenAI GPT",
+      "type": "rest-api",
+      "enabled": true,
+      "priority": 1,
+      "config": {
+        "baseURL": "https://api.openai.com/v1",
+        "apiKey": "${OPENAI_API_KEY}",
+        "models": {
+          "default": "gpt-4",
+          "fast": "gpt-3.5-turbo",
+          "smart": "gpt-4",
+          "code": "gpt-4"
+        },
+        "maxTokens": 4096,
+        "temperature": 0.7,
+        "timeout": 30000
+      }
+    },
+    "claude": {
+      "id": "claude",
+      "name": "Anthropic Claude",
+      "type": "rest-api",
+      "enabled": true,
+      "priority": 2,
+      "config": {
+        "baseURL": "https://api.anthropic.com/v1",
+        "apiKey": "${ANTHROPIC_API_KEY}",
+        "models": {
+          "default": "claude-3-sonnet-20240229",
+          "fast": "claude-3-haiku-20240307",
+          "smart": "claude-3-opus-20240229",
+          "code": "claude-3-sonnet-20240229"
+        },
+        "maxTokens": 4096,
+        "temperature": 0.7,
+        "timeout": 30000
+      }
+    },
+    "gemini": {
+      "id": "gemini",
+      "name": "Google Gemini",
+      "type": "rest-api",
+      "enabled": false,
+      "priority": 3,
+      "config": {
+        "baseURL": "https://generativelanguage.googleapis.com/v1",
+        "apiKey": "${GEMINI_API_KEY}",
+        "models": {
+          "default": "gemini-pro",
+          "fast": "gemini-pro",
+          "smart": "gemini-pro",
+          "code": "gemini-pro"
+        },
+        "maxTokens": 4096,
+        "temperature": 0.7,
+        "timeout": 30000
+      }
+    },
+    "local": {
+      "id": "local",
+      "name": "Local LLM (Ollama)",
+      "type": "local",
+      "enabled": false,
+      "priority": 4,
+      "config": {
+        "baseURL": "http://localhost:11434/v1",
+        "models": {
+          "default": "llama2",
+          "fast": "llama2:7b",
+          "smart": "llama2:13b",
+          "code": "codellama"
+        },
+        "maxTokens": 2048,
+        "temperature": 0.7,
+        "timeout": 60000
+      }
+    }
+  },
+  "fallback": {
+    "enabled": true,
+    "order": ["openai", "claude", "gemini", "local"]
+  },
+  "rateLimit": {
+    "enabled": true,
+    "requestsPerMinute": 60,
+    "tokensPerMinute": 100000
+  },
+  "cache": {
+    "enabled": true,
+    "ttl": 300000,
+    "maxSize": 1000
+  },
+  "monitoring": {
+    "enabled": true,
+    "logRequests": true,
+    "trackUsage": true,
+    "metricsEndpoint": "/metrics/llm"
+  }
+}

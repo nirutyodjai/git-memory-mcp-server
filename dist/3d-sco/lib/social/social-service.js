@@ -235,4 +235,3 @@ class SocialService {
 }
 exports.SocialService = SocialService;
 exports.socialService = SocialService.getInstance();
-//# sourceMappingURL=social-service.js.map

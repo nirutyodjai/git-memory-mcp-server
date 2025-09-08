@@ -173,4 +173,3 @@ async function reactivateUser(id) {
     const result = await (0, connection_1.query)('UPDATE users SET is_active = true, updated_at = CURRENT_TIMESTAMP WHERE id = $1', [id]);
     return result.rowCount > 0;
 }
-//# sourceMappingURL=user.js.map

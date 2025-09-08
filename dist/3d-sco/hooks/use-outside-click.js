@@ -19,4 +19,3 @@ const useOutsideClick = (ref, callback) => {
     }, [ref, callback]);
 };
 exports.useOutsideClick = useOutsideClick;
-//# sourceMappingURL=use-outside-click.js.map

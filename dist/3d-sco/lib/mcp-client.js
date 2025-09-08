@@ -515,4 +515,3 @@ if (typeof window !== 'undefined') {
     // Client-side only hooks would go here
     // These would be implemented in a separate file for React integration
 }
-//# sourceMappingURL=mcp-client.js.map

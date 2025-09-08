@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "git-memory-mcp-sdk"
+version = "1.0.0"
+authors = [
+    { name="Git Memory MCP Team" },
+]
+description = "Python SDK for the Git Memory MCP Server"
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "requests>=2.28.0",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/git-memory-mcp/python-sdk"
+"Bug Tracker" = "https://github.com/git-memory-mcp/python-sdk/issues"

@@ -1,0 +1,403 @@
+# =============================================================================
+# ENTERPRISE SECURITY DASHBOARD - PROMETHEUS ALERT RULES
+# Comprehensive Alerting for Security, Performance, and Business Metrics
+# =============================================================================
+
+groups:
+  # ===========================================================================
+  # INFRASTRUCTURE ALERTS
+  # ===========================================================================
+  - name: infrastructure.rules
+    interval: 30s
+    rules:
+      # Service Down Alerts
+      - alert: ServiceDown
+        expr: up == 0
+        for: 1m
+        labels:
+          severity: critical
+          category: infrastructure
+          team: platform
+        annotations:
+          summary: "Service {{ $labels.job }} is down"
+          description: "Service {{ $labels.job }} on instance {{ $labels.instance }} has been down for more than 1 minute."
+          runbook_url: "https://runbooks.yourdomain.com/service-down"
+          dashboard_url: "https://grafana.yourdomain.com/d/infrastructure/infrastructure-overview"
+
+      # High CPU Usage
+      - alert: HighCPUUsage
+        expr: 100 - (avg by(instance) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 80
+        for: 5m
+        labels:
+          severity: warning
+          category: infrastructure
+          team: platform
+        annotations:
+          summary: "High CPU usage on {{ $labels.instance }}"
+          description: "CPU usage is above 80% on {{ $labels.instance }} for more than 5 minutes. Current value: {{ $value }}%"
+          runbook_url: "https://runbooks.yourdomain.com/high-cpu"
+
+      # High Memory Usage
+      - alert: HighMemoryUsage
+        expr: (1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) * 100 > 85
+        for: 5m
+        labels:
+          severity: warning
+          category: infrastructure
+          team: platform
+        annotations:
+          summary: "High memory usage on {{ $labels.instance }}"
+          description: "Memory usage is above 85% on {{ $labels.instance }} for more than 5 minutes. Current value: {{ $value }}%"
+          runbook_url: "https://runbooks.yourdomain.com/high-memory"
+
+      # Disk Space Low
+      - alert: DiskSpaceLow
+        expr: (1 - (node_filesystem_avail_bytes{fstype!="tmpfs"} / node_filesystem_size_bytes{fstype!="tmpfs"})) * 100 > 85
+        for: 2m
+        labels:
+          severity: warning
+          category: infrastructure
+          team: platform
+        annotations:
+          summary: "Low disk space on {{ $labels.instance }}"
+          description: "Disk usage is above 85% on {{ $labels.instance }} ({{ $labels.mountpoint }}). Current value: {{ $value }}%"
+          runbook_url: "https://runbooks.yourdomain.com/disk-space"
+
+      # Disk Space Critical
+      - alert: DiskSpaceCritical
+        expr: (1 - (node_filesystem_avail_bytes{fstype!="tmpfs"} / node_filesystem_size_bytes{fstype!="tmpfs"})) * 100 > 95
+        for: 1m
+        labels:
+          severity: critical
+          category: infrastructure
+          team: platform
+        annotations:
+          summary: "Critical disk space on {{ $labels.instance }}"
+          description: "Disk usage is above 95% on {{ $labels.instance }} ({{ $labels.mountpoint }}). Current value: {{ $value }}%"
+          runbook_url: "https://runbooks.yourdomain.com/disk-space-critical"
+
+  # ===========================================================================
+  # APPLICATION ALERTS
+  # ===========================================================================
+  - name: application.rules
+    interval: 15s
+    rules:
+      # High Response Time
+      - alert: HighResponseTime
+        expr: histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m])) > 2
+        for: 3m
+        labels:
+          severity: warning
+          category: application
+          team: backend
+        annotations:
+          summary: "High response time for {{ $labels.method }} {{ $labels.route }}"
+          description: "95th percentile response time is above 2 seconds for {{ $labels.method }} {{ $labels.route }}. Current value: {{ $value }}s"
+          runbook_url: "https://runbooks.yourdomain.com/high-response-time"
+
+      # High Error Rate
+      - alert: HighErrorRate
+        expr: rate(http_requests_total{status=~"5.."}[5m]) / rate(http_requests_total[5m]) * 100 > 5
+        for: 2m
+        labels:
+          severity: critical
+          category: application
+          team: backend
+        annotations:
+          summary: "High error rate for {{ $labels.method }} {{ $labels.route }}"
+          description: "Error rate is above 5% for {{ $labels.method }} {{ $labels.route }}. Current value: {{ $value }}%"
+          runbook_url: "https://runbooks.yourdomain.com/high-error-rate"
+
+      # Application Memory Leak
+      - alert: ApplicationMemoryLeak
+        expr: increase(process_resident_memory_bytes[1h]) > 100000000  # 100MB increase per hour
+        for: 2h
+        labels:
+          severity: warning
+          category: application
+          team: backend
+        annotations:
+          summary: "Potential memory leak in {{ $labels.job }}"
+          description: "Memory usage has increased by more than 100MB in the last hour for {{ $labels.job }}. Current increase: {{ $value }} bytes"
+          runbook_url: "https://runbooks.yourdomain.com/memory-leak"
+
+      # WebSocket Connection Issues
+      - alert: WebSocketConnectionDrop
+        expr: rate(websocket_connections_dropped_total[5m]) > 10
+        for: 2m
+        labels:
+          severity: warning
+          category: application
+          team: backend
+        annotations:
+          summary: "High WebSocket connection drop rate"
+          description: "WebSocket connections are dropping at a rate of {{ $value }} per second"
+          runbook_url: "https://runbooks.yourdomain.com/websocket-issues"
+
+  # ===========================================================================
+  # DATABASE ALERTS
+  # ===========================================================================
+  - name: database.rules
+    interval: 30s
+    rules:
+      # PostgreSQL Connection Issues
+      - alert: PostgreSQLTooManyConnections
+        expr: pg_stat_activity_count / pg_settings_max_connections * 100 > 80
+        for: 2m
+        labels:
+          severity: warning
+          category: database
+          team: dba
+        annotations:
+          summary: "PostgreSQL connection usage is high"
+          description: "PostgreSQL connection usage is above 80%. Current value: {{ $value }}%"
+          runbook_url: "https://runbooks.yourdomain.com/postgres-connections"
+
+      # PostgreSQL Slow Queries
+      - alert: PostgreSQLSlowQueries
+        expr: rate(pg_stat_activity_max_tx_duration[5m]) > 300  # 5 minutes
+        for: 2m
+        labels:
+          severity: warning
+          category: database
+          team: dba
+        annotations:
+          summary: "PostgreSQL has slow running queries"
+          description: "PostgreSQL has queries running for more than 5 minutes"
+          runbook_url: "https://runbooks.yourdomain.com/postgres-slow-queries"
+
+      # Redis Memory Usage
+      - alert: RedisHighMemoryUsage
+        expr: redis_memory_used_bytes / redis_memory_max_bytes * 100 > 85
+        for: 5m
+        labels:
+          severity: warning
+          category: database
+          team: dba
+        annotations:
+          summary: "Redis memory usage is high"
+          description: "Redis memory usage is above 85%. Current value: {{ $value }}%"
+          runbook_url: "https://runbooks.yourdomain.com/redis-memory"
+
+      # Redis Connection Issues
+      - alert: RedisConnectionFailures
+        expr: rate(redis_rejected_connections_total[5m]) > 0
+        for: 1m
+        labels:
+          severity: critical
+          category: database
+          team: dba
+        annotations:
+          summary: "Redis is rejecting connections"
+          description: "Redis is rejecting connections at a rate of {{ $value }} per second"
+          runbook_url: "https://runbooks.yourdomain.com/redis-connections"
+
+  # ===========================================================================
+  # SECURITY ALERTS
+  # ===========================================================================
+  - name: security.rules
+    interval: 15s
+    rules:
+      # Brute Force Attack Detection
+      - alert: BruteForceAttack
+        expr: rate(security_failed_login_attempts_total[5m]) > 10
+        for: 1m
+        labels:
+          severity: critical
+          category: security
+          team: security
+        annotations:
+          summary: "Potential brute force attack detected"
+          description: "Failed login attempts rate is {{ $value }} per second from {{ $labels.source_ip }}"
+          runbook_url: "https://runbooks.yourdomain.com/brute-force"
+
+      # Suspicious API Activity
+      - alert: SuspiciousAPIActivity
+        expr: rate(security_suspicious_requests_total[5m]) > 5
+        for: 2m
+        labels:
+          severity: warning
+          category: security
+          team: security
+        annotations:
+          summary: "Suspicious API activity detected"
+          description: "Suspicious API requests rate is {{ $value }} per second"
+          runbook_url: "https://runbooks.yourdomain.com/suspicious-api"
+
+      # SQL Injection Attempts
+      - alert: SQLInjectionAttempt
+        expr: rate(security_sql_injection_attempts_total[5m]) > 0
+        for: 0s
+        labels:
+          severity: critical
+          category: security
+          team: security
+        annotations:
+          summary: "SQL injection attempt detected"
+          description: "SQL injection attempts detected from {{ $labels.source_ip }}"
+          runbook_url: "https://runbooks.yourdomain.com/sql-injection"
+
+      # XSS Attack Attempts
+      - alert: XSSAttackAttempt
+        expr: rate(security_xss_attempts_total[5m]) > 0
+        for: 0s
+        labels:
+          severity: critical
+          category: security
+          team: security
+        annotations:
+          summary: "XSS attack attempt detected"
+          description: "XSS attack attempts detected from {{ $labels.source_ip }}"
+          runbook_url: "https://runbooks.yourdomain.com/xss-attack"
+
+      # Rate Limit Exceeded
+      - alert: RateLimitExceeded
+        expr: rate(security_rate_limit_exceeded_total[5m]) > 50
+        for: 2m
+        labels:
+          severity: warning
+          category: security
+          team: security
+        annotations:
+          summary: "Rate limit frequently exceeded"
+          description: "Rate limit exceeded {{ $value }} times per second from {{ $labels.source_ip }}"
+          runbook_url: "https://runbooks.yourdomain.com/rate-limit"
+
+      # Unauthorized Access Attempts
+      - alert: UnauthorizedAccess
+        expr: rate(security_unauthorized_access_total[5m]) > 5
+        for: 1m
+        labels:
+          severity: critical
+          category: security
+          team: security
+        annotations:
+          summary: "Unauthorized access attempts detected"
+          description: "Unauthorized access attempts rate is {{ $value }} per second"
+          runbook_url: "https://runbooks.yourdomain.com/unauthorized-access"
+
+  # ===========================================================================
+  # BUSINESS METRICS ALERTS
+  # ===========================================================================
+  - name: business.rules
+    interval: 60s
+    rules:
+      # Low User Activity
+      - alert: LowUserActivity
+        expr: rate(business_active_users_total[1h]) < 10
+        for: 30m
+        labels:
+          severity: warning
+          category: business
+          team: product
+        annotations:
+          summary: "Low user activity detected"
+          description: "Active user rate is below 10 per hour. Current value: {{ $value }}"
+          runbook_url: "https://runbooks.yourdomain.com/low-user-activity"
+
+      # High Session Duration
+      - alert: HighSessionDuration
+        expr: histogram_quantile(0.95, rate(business_session_duration_seconds_bucket[1h])) > 7200  # 2 hours
+        for: 15m
+        labels:
+          severity: info
+          category: business
+          team: product
+        annotations:
+          summary: "Users have unusually long sessions"
+          description: "95th percentile session duration is {{ $value }} seconds"
+          runbook_url: "https://runbooks.yourdomain.com/long-sessions"
+
+      # Feature Usage Drop
+      - alert: FeatureUsageDrop
+        expr: (rate(business_feature_usage_total[1h]) / rate(business_feature_usage_total[1h] offset 24h)) < 0.7
+        for: 2h
+        labels:
+          severity: warning
+          category: business
+          team: product
+        annotations:
+          summary: "Feature usage has dropped significantly"
+          description: "Feature {{ $labels.feature }} usage has dropped by more than 30% compared to yesterday"
+          runbook_url: "https://runbooks.yourdomain.com/feature-usage-drop"
+
+  # ===========================================================================
+  # PERFORMANCE ALERTS
+  # ===========================================================================
+  - name: performance.rules
+    interval: 30s
+    rules:
+      # High Garbage Collection Time
+      - alert: HighGCTime
+        expr: rate(nodejs_gc_duration_seconds_total[5m]) > 0.1
+        for: 5m
+        labels:
+          severity: warning
+          category: performance
+          team: backend
+        annotations:
+          summary: "High garbage collection time"
+          description: "Garbage collection is taking {{ $value }} seconds per second"
+          runbook_url: "https://runbooks.yourdomain.com/high-gc"
+
+      # Event Loop Lag
+      - alert: HighEventLoopLag
+        expr: nodejs_eventloop_lag_seconds > 0.1
+        for: 2m
+        labels:
+          severity: warning
+          category: performance
+          team: backend
+        annotations:
+          summary: "High Node.js event loop lag"
+          description: "Event loop lag is {{ $value }} seconds"
+          runbook_url: "https://runbooks.yourdomain.com/event-loop-lag"
+
+      # High Request Queue
+      - alert: HighRequestQueue
+        expr: http_request_queue_length > 100
+        for: 2m
+        labels:
+          severity: warning
+          category: performance
+          team: backend
+        annotations:
+          summary: "High request queue length"
+          description: "Request queue length is {{ $value }}"
+          runbook_url: "https://runbooks.yourdomain.com/request-queue"
+
+  # ===========================================================================
+  # NETWORK ALERTS
+  # ===========================================================================
+  - name: network.rules
+    interval: 30s
+    rules:
+      # High Network Traffic
+      - alert: HighNetworkTraffic
+        expr: rate(node_network_receive_bytes_total[5m]) > 100000000  # 100MB/s
+        for: 5m
+        labels:
+          severity: warning
+          category: network
+          team: platform
+        annotations:
+          summary: "High network traffic on {{ $labels.instance }}"
+          description: "Network receive rate is {{ $value }} bytes per second on interface {{ $labels.device }}"
+          runbook_url: "https://runbooks.yourdomain.com/high-network-traffic"
+
+      # Network Errors
+      - alert: NetworkErrors
+        expr: rate(node_network_receive_errs_total[5m]) > 10
+        for: 2m
+        labels:
+          severity: warning
+          category: network
+          team: platform
+        annotations:
+          summary: "Network errors on {{ $labels.instance }}"
+          description: "Network error rate is {{ $value }} per second on interface {{ $labels.device }}"
+          runbook_url: "https://runbooks.yourdomain.com/network-errors"
+
+# =============================================================================
+# END OF ALERT RULES
+# =============================================================================

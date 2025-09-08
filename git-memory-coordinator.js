@@ -34,8 +34,8 @@ class GitMemoryCoordinator {
      */
     encryptData(data, password) {
         const crypto = require('crypto');
-        const algorithm = 'aes-256-cbc';
-        const key = crypto.scryptSync(password, 'salt', 32);
+        const algorithm = 'aes-256-ctr';
+        const key = crypto.createHash('sha256').update(password).digest();
         const iv = crypto.randomBytes(16);
         
         const cipher = crypto.createCipher(algorithm, key);
@@ -54,7 +54,7 @@ class GitMemoryCoordinator {
      */
     decryptData(encryptedData, password) {
         const crypto = require('crypto');
-        const key = crypto.scryptSync(password, 'salt', 32);
+        const key = crypto.createHash('sha256').update(password).digest();
         
         const decipher = crypto.createDecipher(encryptedData.algorithm, key);
         let decrypted = decipher.update(encryptedData.encrypted, 'hex', 'utf8');

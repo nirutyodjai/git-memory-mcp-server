@@ -48,10 +48,9 @@ const react_1 = require("react");
 const script_1 = __importDefault(require("next/script"));
 // Google Analytics
 function GoogleAnalytics({ gaId }) {
-    return (<>
-      <script_1.default src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`} strategy="afterInteractive"/>
-      <script_1.default id="google-analytics" strategy="afterInteractive">
-        {`
+    return (React.createElement(React.Fragment, null,
+        React.createElement(script_1.default, { src: `https://www.googletagmanager.com/gtag/js?id=${gaId}`, strategy: "afterInteractive" }),
+        React.createElement(script_1.default, { id: "google-analytics", strategy: "afterInteractive" }, `
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
@@ -59,26 +58,20 @@ function GoogleAnalytics({ gaId }) {
             page_title: document.title,
             page_location: window.location.href,
           });
-        `}
-      </script_1.default>
-    </>);
+        `)));
 }
 // Google Tag Manager
 function GoogleTagManager({ gtmId }) {
-    return (<>
-      <script_1.default id="google-tag-manager" strategy="afterInteractive">
-        {`
+    return (React.createElement(React.Fragment, null,
+        React.createElement(script_1.default, { id: "google-tag-manager", strategy: "afterInteractive" }, `
           (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
           new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
           j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
           })(window,document,'script','dataLayer','${gtmId}');
-        `}
-      </script_1.default>
-      <noscript>
-        <iframe src={`https://www.googletagmanager.com/ns.html?id=${gtmId}`} height="0" width="0" style={{ display: 'none', visibility: 'hidden' }}/>
-      </noscript>
-    </>);
+        `),
+        React.createElement("noscript", null,
+            React.createElement("iframe", { src: `https://www.googletagmanager.com/ns.html?id=${gtmId}`, height: "0", width: "0", style: { display: 'none', visibility: 'hidden' } }))));
 }
 // Facebook Pixel
 function FacebookPixel({ pixelId }) {
@@ -235,12 +228,10 @@ function useErrorTracking() {
 function AnalyticsProvider({ children, gaId, gtmId, pixelId }) {
     usePerformanceMonitoring();
     useErrorTracking();
-    return (<>
-      {gaId && <GoogleAnalytics gaId={gaId}/>}
-      {gtmId && <GoogleTagManager gtmId={gtmId}/>}
-      {pixelId && <FacebookPixel pixelId={pixelId}/>}
-      {children}
-    </>);
+    return (React.createElement(React.Fragment, null,
+        gaId && React.createElement(GoogleAnalytics, { gaId: gaId }),
+        gtmId && React.createElement(GoogleTagManager, { gtmId: gtmId }),
+        pixelId && React.createElement(FacebookPixel, { pixelId: pixelId }),
+        children));
 }
 exports.default = AnalyticsProvider;
-//# sourceMappingURL=analytics.js.map

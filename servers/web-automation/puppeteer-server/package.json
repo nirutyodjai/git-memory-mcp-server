@@ -1,0 +1,14 @@
+{
+  "name": "puppeteer-server",
+  "version": "1.0.0",
+  "description": "Puppeteer Server",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "puppeteer": "^22.10.0"
+  }
+}

@@ -585,15 +585,13 @@ const AnimatedBackground = () => {
         };
         return { start, stop };
     };
-    return (<>
-      <spline_wrapper_1.default ref={splineContainer} scene="/assets/skills-keyboard.spline" onLoad={(app) => {
-            setSplineApp(app);
-            bypassLoading();
-        }} onError={(error) => {
-            console.error('Spline loading error:', error);
-            bypassLoading(); // Continue even if Spline fails
-        }}/>
-    </>);
+    return (react_1.default.createElement(react_1.default.Fragment, null,
+        react_1.default.createElement(spline_wrapper_1.default, { ref: splineContainer, scene: "/assets/skills-keyboard.spline", onLoad: (app) => {
+                setSplineApp(app);
+                bypassLoading();
+            }, onError: (error) => {
+                console.error('Spline loading error:', error);
+                bypassLoading(); // Continue even if Spline fails
+            } })));
 };
 exports.default = AnimatedBackground;
-//# sourceMappingURL=animated-background.js.map

@@ -1,0 +1,471 @@
+{{/*
+=============================================================================
+ENTERPRISE SECURITY DASHBOARD - KUBERNETES DEPLOYMENT
+Main Application Deployment Template
+=============================================================================
+*/}}
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "security-dashboard.fullname" . }}
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    {{- include "security-dashboard.labels" . | nindent 4 }}
+    app.kubernetes.io/component: application
+    app.kubernetes.io/part-of: nexus-ide
+  annotations:
+    deployment.kubernetes.io/revision: "{{ .Release.Revision }}"
+    {{- with .Values.app.annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+spec:
+  {{- if not .Values.app.autoscaling.enabled }}
+  replicas: {{ .Values.app.replicaCount }}
+  {{- end }}
+  
+  # Deployment Strategy
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  
+  # Revision History Limit
+  revisionHistoryLimit: 10
+  
+  # Progress Deadline
+  progressDeadlineSeconds: 600
+  
+  selector:
+    matchLabels:
+      {{- include "security-dashboard.selectorLabels" . | nindent 6 }}
+  
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        checksum/secret: {{ include (print $.Template.BasePath "/secret.yaml") . | sha256sum }}
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "3000"
+        prometheus.io/path: "/metrics"
+        {{- with .Values.app.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      labels:
+        {{- include "security-dashboard.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: application
+        version: {{ .Values.app.image.tag | quote }}
+    
+    spec:
+      {{- with .Values.global.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      
+      # Service Account
+      serviceAccountName: {{ include "security-dashboard.serviceAccountName" . }}
+      
+      # Security Context
+      securityContext:
+        {{- toYaml .Values.global.securityContext | nindent 8 }}
+      
+      # DNS Policy
+      dnsPolicy: ClusterFirst
+      
+      # Restart Policy
+      restartPolicy: Always
+      
+      # Termination Grace Period
+      terminationGracePeriodSeconds: 30
+      
+      # Init Containers
+      initContainers:
+        # Database Migration
+        - name: db-migrate
+          image: "{{ .Values.app.image.registry }}/{{ .Values.app.image.repository }}:{{ .Values.app.image.tag }}"
+          imagePullPolicy: {{ .Values.app.image.pullPolicy }}
+          command:
+            - /bin/sh
+            - -c
+            - |
+              echo "Running database migrations..."
+              npm run migrate
+              echo "Database migrations completed"
+          env:
+            {{- include "security-dashboard.env" . | nindent 12 }}
+          envFrom:
+            - configMapRef:
+                name: {{ include "security-dashboard.fullname" . }}-config
+            - secretRef:
+                name: {{ include "security-dashboard.fullname" . }}-secret
+          resources:
+            limits:
+              cpu: 500m
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+        
+        # Cache Warmup
+        - name: cache-warmup
+          image: "{{ .Values.app.image.registry }}/{{ .Values.app.image.repository }}:{{ .Values.app.image.tag }}"
+          imagePullPolicy: {{ .Values.app.image.pullPolicy }}
+          command:
+            - /bin/sh
+            - -c
+            - |
+              echo "Warming up cache..."
+              npm run cache:warmup
+              echo "Cache warmup completed"
+          env:
+            {{- include "security-dashboard.env" . | nindent 12 }}
+          envFrom:
+            - configMapRef:
+                name: {{ include "security-dashboard.fullname" . }}-config
+            - secretRef:
+                name: {{ include "security-dashboard.fullname" . }}-secret
+          resources:
+            limits:
+              cpu: 200m
+              memory: 256Mi
+            requests:
+              cpu: 50m
+              memory: 64Mi
+      
+      # Main Containers
+      containers:
+        # Security Dashboard Application
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.app.image.registry }}/{{ .Values.app.image.repository }}:{{ .Values.app.image.tag }}"
+          imagePullPolicy: {{ .Values.app.image.pullPolicy }}
+          
+          # Security Context
+          securityContext:
+            {{- toYaml .Values.app.securityContext | nindent 12 }}
+          
+          # Ports
+          ports:
+            - name: http
+              containerPort: 3000
+              protocol: TCP
+            - name: websocket
+              containerPort: 8080
+              protocol: TCP
+            - name: metrics
+              containerPort: 9090
+              protocol: TCP
+          
+          # Environment Variables
+          env:
+            {{- include "security-dashboard.env" . | nindent 12 }}
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            - name: NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+          
+          # Environment From
+          envFrom:
+            - configMapRef:
+                name: {{ include "security-dashboard.fullname" . }}-config
+            - secretRef:
+                name: {{ include "security-dashboard.fullname" . }}-secret
+          
+          # Resource Limits
+          resources:
+            {{- toYaml .Values.app.resources | nindent 12 }}
+          
+          # Volume Mounts
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+            - name: var-cache
+              mountPath: /var/cache
+            - name: config-volume
+              mountPath: /app/config
+              readOnly: true
+            - name: logs-volume
+              mountPath: /app/logs
+            {{- if .Values.tls.certManager.enabled }}
+            - name: tls-certs
+              mountPath: /app/certs
+              readOnly: true
+            {{- end }}
+          
+          # Liveness Probe
+          livenessProbe:
+            {{- toYaml .Values.app.livenessProbe | nindent 12 }}
+          
+          # Readiness Probe
+          readinessProbe:
+            {{- toYaml .Values.app.readinessProbe | nindent 12 }}
+          
+          # Startup Probe
+          startupProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            timeoutSeconds: 3
+            failureThreshold: 30
+            successThreshold: 1
+          
+          # Lifecycle Hooks
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                  - /bin/sh
+                  - -c
+                  - |
+                    echo "Gracefully shutting down..."
+                    kill -TERM 1
+                    sleep 15
+        
+        # Sidecar: Log Shipper
+        {{- if .Values.logging.elasticsearch.enabled }}
+        - name: log-shipper
+          image: fluent/fluent-bit:2.1.10
+          imagePullPolicy: IfNotPresent
+          
+          resources:
+            limits:
+              cpu: 100m
+              memory: 128Mi
+            requests:
+              cpu: 50m
+              memory: 64Mi
+          
+          volumeMounts:
+            - name: logs-volume
+              mountPath: /app/logs
+              readOnly: true
+            - name: fluent-bit-config
+              mountPath: /fluent-bit/etc
+              readOnly: true
+        {{- end }}
+        
+        # Sidecar: Metrics Exporter
+        {{- if .Values.monitoring.prometheus.enabled }}
+        - name: metrics-exporter
+          image: prom/node-exporter:v1.6.1
+          imagePullPolicy: IfNotPresent
+          
+          args:
+            - --path.rootfs=/host
+            - --collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)
+          
+          ports:
+            - name: metrics
+              containerPort: 9100
+              protocol: TCP
+          
+          resources:
+            limits:
+              cpu: 100m
+              memory: 128Mi
+            requests:
+              cpu: 50m
+              memory: 64Mi
+          
+          volumeMounts:
+            - name: proc
+              mountPath: /host/proc
+              readOnly: true
+            - name: sys
+              mountPath: /host/sys
+              readOnly: true
+        {{- end }}
+      
+      # Volumes
+      volumes:
+        # Temporary Storage
+        - name: tmp
+          emptyDir: {}
+        
+        # Cache Storage
+        - name: var-cache
+          emptyDir: {}
+        
+        # Configuration
+        - name: config-volume
+          configMap:
+            name: {{ include "security-dashboard.fullname" . }}-config
+            defaultMode: 0644
+        
+        # Logs Storage
+        - name: logs-volume
+          emptyDir: {}
+        
+        {{- if .Values.tls.certManager.enabled }}
+        # TLS Certificates
+        - name: tls-certs
+          secret:
+            secretName: {{ include "security-dashboard.fullname" . }}-tls
+            defaultMode: 0644
+        {{- end }}
+        
+        {{- if .Values.logging.elasticsearch.enabled }}
+        # Fluent Bit Configuration
+        - name: fluent-bit-config
+          configMap:
+            name: {{ include "security-dashboard.fullname" . }}-fluent-bit
+        {{- end }}
+        
+        {{- if .Values.monitoring.prometheus.enabled }}
+        # Host Proc (for metrics)
+        - name: proc
+          hostPath:
+            path: /proc
+        
+        # Host Sys (for metrics)
+        - name: sys
+          hostPath:
+            path: /sys
+        {{- end }}
+      
+      # Node Selector
+      {{- with .Values.app.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      
+      # Affinity Rules
+      {{- with .Values.app.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- else }}
+      affinity:
+        # Pod Anti-Affinity (prefer different nodes)
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: app.kubernetes.io/name
+                      operator: In
+                      values:
+                        - {{ include "security-dashboard.name" . }}
+                topologyKey: kubernetes.io/hostname
+      {{- end }}
+      
+      # Tolerations
+      {{- with .Values.app.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      
+      # Priority Class
+      {{- if .Values.app.priorityClassName }}
+      priorityClassName: {{ .Values.app.priorityClassName }}
+      {{- end }}
+
+---
+{{/*
+=============================================================================
+WEBSOCKET SERVICE DEPLOYMENT
+=============================================================================
+*/}}
+
+{{- if .Values.service.websocket.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "security-dashboard.fullname" . }}-websocket
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    {{- include "security-dashboard.labels" . | nindent 4 }}
+    app.kubernetes.io/component: websocket
+    app.kubernetes.io/part-of: nexus-ide
+spec:
+  replicas: {{ .Values.app.replicaCount }}
+  
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  
+  selector:
+    matchLabels:
+      {{- include "security-dashboard.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: websocket
+  
+  template:
+    metadata:
+      labels:
+        {{- include "security-dashboard.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: websocket
+    
+    spec:
+      {{- with .Values.global.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      
+      serviceAccountName: {{ include "security-dashboard.serviceAccountName" . }}
+      
+      securityContext:
+        {{- toYaml .Values.global.securityContext | nindent 8 }}
+      
+      containers:
+        - name: websocket
+          image: "{{ .Values.app.image.registry }}/{{ .Values.app.image.repository }}:{{ .Values.app.image.tag }}"
+          imagePullPolicy: {{ .Values.app.image.pullPolicy }}
+          
+          command: ["node", "websocket-server.js"]
+          
+          ports:
+            - name: websocket
+              containerPort: 8080
+              protocol: TCP
+          
+          env:
+            {{- include "security-dashboard.env" . | nindent 12 }}
+            - name: SERVER_TYPE
+              value: "websocket"
+          
+          envFrom:
+            - configMapRef:
+                name: {{ include "security-dashboard.fullname" . }}-config
+            - secretRef:
+                name: {{ include "security-dashboard.fullname" . }}-secret
+          
+          resources:
+            limits:
+              cpu: 500m
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 256Mi
+          
+          livenessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          
+          readinessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 5
+{{- end }}
+
+# =============================================================================
+# END OF DEPLOYMENT TEMPLATES
+# =============================================================================

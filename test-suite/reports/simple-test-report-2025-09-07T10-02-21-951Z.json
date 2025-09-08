@@ -1,0 +1,27 @@
+{
+  "timestamp": "2025-09-07T10:02:21.951Z",
+  "config": {
+    "baseUrl": "http://localhost:8081",
+    "timeout": 10000,
+    "retries": 3
+  },
+  "results": {
+    "total": 6,
+    "passed": 4,
+    "failed": 2,
+    "errors": [
+      {
+        "test": "API Endpoints",
+        "error": "Request failed with status code 404"
+      },
+      {
+        "test": "File Operations",
+        "error": "Request failed with status code 404"
+      }
+    ]
+  },
+  "summary": {
+    "successRate": 66.66666666666666,
+    "duration": 1757239341951
+  }
+}

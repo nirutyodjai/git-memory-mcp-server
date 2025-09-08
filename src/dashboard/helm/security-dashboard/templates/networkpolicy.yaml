@@ -1,0 +1,581 @@
+{{/*
+=============================================================================
+ENTERPRISE SECURITY DASHBOARD - NETWORK POLICY TEMPLATE
+Kubernetes Network Security Configuration
+=============================================================================
+*/}}
+
+{{- if .Values.networkPolicy.enabled -}}
+
+# =============================================================================
+# DEFAULT DENY ALL NETWORK POLICY
+# =============================================================================
+
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ include "security-dashboard.fullname" . }}-deny-all
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    {{- include "security-dashboard.labels" . | nindent 4 }}
+    app.kubernetes.io/component: network-security
+  annotations:
+    description: "Default deny all ingress and egress traffic"
+spec:
+  podSelector: {}
+  policyTypes:
+    - Ingress
+    - Egress
+
+---
+# =============================================================================
+# APPLICATION INGRESS NETWORK POLICY
+# =============================================================================
+
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ include "security-dashboard.fullname" . }}-ingress
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    {{- include "security-dashboard.labels" . | nindent 4 }}
+    app.kubernetes.io/component: network-security
+  annotations:
+    description: "Allow ingress traffic to application pods"
+spec:
+  podSelector:
+    matchLabels:
+      {{- include "security-dashboard.selectorLabels" . | nindent 6 }}
+  
+  policyTypes:
+    - Ingress
+  
+  ingress:
+    # Allow traffic from ingress controller
+    {{- if .Values.networkPolicy.ingress.fromIngressController }}
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              name: {{ .Values.networkPolicy.ingress.ingressControllerNamespace | default "ingress-nginx" }}
+        - podSelector:
+            matchLabels:
+              {{- toYaml .Values.networkPolicy.ingress.ingressControllerLabels | nindent 14 }}
+      ports:
+        - protocol: TCP
+          port: {{ .Values.service.port }}
+    {{- end }}
+    
+    # Allow traffic from load balancer
+    {{- if .Values.networkPolicy.ingress.fromLoadBalancer }}
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              name: {{ .Values.networkPolicy.ingress.loadBalancerNamespace | default "kube-system" }}
+      ports:
+        - protocol: TCP
+          port: {{ .Values.service.port }}
+    {{- end }}
+    
+    # Allow traffic from monitoring namespace
+    {{- if .Values.networkPolicy.ingress.fromMonitoring }}
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              name: {{ .Values.monitoring.namespace | default "monitoring" }}
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: prometheus
+      ports:
+        - protocol: TCP
+          port: {{ .Values.monitoring.port | default 9090 }}
+    {{- end }}
+    
+    # Allow traffic from same namespace
+    {{- if .Values.networkPolicy.ingress.fromSameNamespace }}
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              name: {{ .Release.Namespace }}
+      ports:
+        - protocol: TCP
+          port: {{ .Values.service.port }}
+        {{- if .Values.websocket.enabled }}
+        - protocol: TCP
+          port: {{ .Values.websocket.port | default 8080 }}
+        {{- end }}
+    {{- end }}
+    
+    # Custom ingress rules
+    {{- range .Values.networkPolicy.ingress.customRules }}
+    - from:
+        {{- if .namespaceSelector }}
+        - namespaceSelector:
+            {{- toYaml .namespaceSelector | nindent 12 }}
+        {{- end }}
+        {{- if .podSelector }}
+        - podSelector:
+            {{- toYaml .podSelector | nindent 12 }}
+        {{- end }}
+        {{- if .ipBlock }}
+        - ipBlock:
+            {{- toYaml .ipBlock | nindent 12 }}
+        {{- end }}
+      {{- if .ports }}
+      ports:
+        {{- range .ports }}
+        - protocol: {{ .protocol | default "TCP" }}
+          port: {{ .port }}
+          {{- if .endPort }}
+          endPort: {{ .endPort }}
+          {{- end }}
+        {{- end }}
+      {{- end }}
+    {{- end }}
+
+---
+# =============================================================================
+# APPLICATION EGRESS NETWORK POLICY
+# =============================================================================
+
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ include "security-dashboard.fullname" . }}-egress
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    {{- include "security-dashboard.labels" . | nindent 4 }}
+    app.kubernetes.io/component: network-security
+  annotations:
+    description: "Allow egress traffic from application pods"
+spec:
+  podSelector:
+    matchLabels:
+      {{- include "security-dashboard.selectorLabels" . | nindent 6 }}
+  
+  policyTypes:
+    - Egress
+  
+  egress:
+    # Allow DNS resolution
+    {{- if .Values.networkPolicy.egress.allowDNS }}
+    - to: []
+      ports:
+        - protocol: UDP
+          port: 53
+        - protocol: TCP
+          port: 53
+    {{- end }}
+    
+    # Allow access to Kubernetes API server
+    {{- if .Values.networkPolicy.egress.allowKubernetesAPI }}
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              name: kube-system
+        - podSelector:
+            matchLabels:
+              component: kube-apiserver
+      ports:
+        - protocol: TCP
+          port: 443
+        - protocol: TCP
+          port: 6443
+    {{- end }}
+    
+    # Allow access to databases
+    {{- if .Values.networkPolicy.egress.allowDatabases }}
+    # PostgreSQL
+    {{- if .Values.postgresql.enabled }}
+    - to:
+        {{- if .Values.postgresql.external }}
+        - ipBlock:
+            cidr: {{ .Values.postgresql.externalCIDR | default "0.0.0.0/0" }}
+        {{- else }}
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: postgresql
+        {{- end }}
+      ports:
+        - protocol: TCP
+          port: {{ .Values.postgresql.port | default 5432 }}
+    {{- end }}
+    
+    # Redis
+    {{- if .Values.redis.enabled }}
+    - to:
+        {{- if .Values.redis.external }}
+        - ipBlock:
+            cidr: {{ .Values.redis.externalCIDR | default "0.0.0.0/0" }}
+        {{- else }}
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: redis
+        {{- end }}
+      ports:
+        - protocol: TCP
+          port: {{ .Values.redis.port | default 6379 }}
+    {{- end }}
+    
+    # MongoDB
+    {{- if .Values.mongodb.enabled }}
+    - to:
+        {{- if .Values.mongodb.external }}
+        - ipBlock:
+            cidr: {{ .Values.mongodb.externalCIDR | default "0.0.0.0/0" }}
+        {{- else }}
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: mongodb
+        {{- end }}
+      ports:
+        - protocol: TCP
+          port: {{ .Values.mongodb.port | default 27017 }}
+    {{- end }}
+    {{- end }}
+    
+    # Allow access to monitoring services
+    {{- if .Values.networkPolicy.egress.allowMonitoring }}
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              name: {{ .Values.monitoring.namespace | default "monitoring" }}
+      ports:
+        - protocol: TCP
+          port: 9090  # Prometheus
+        - protocol: TCP
+          port: 3000  # Grafana
+        - protocol: TCP
+          port: 14268 # Jaeger
+    {{- end }}
+    
+    # Allow access to logging services
+    {{- if .Values.networkPolicy.egress.allowLogging }}
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              name: {{ .Values.logging.namespace | default "logging" }}
+      ports:
+        - protocol: TCP
+          port: 9200  # Elasticsearch
+        - protocol: TCP
+          port: 24224 # Fluentd
+    {{- end }}
+    
+    # Allow HTTPS traffic to external services
+    {{- if .Values.networkPolicy.egress.allowHTTPS }}
+    - to: []
+      ports:
+        - protocol: TCP
+          port: 443
+    {{- end }}
+    
+    # Allow HTTP traffic to external services
+    {{- if .Values.networkPolicy.egress.allowHTTP }}
+    - to: []
+      ports:
+        - protocol: TCP
+          port: 80
+    {{- end }}
+    
+    # Allow access to external AI services
+    {{- if .Values.networkPolicy.egress.allowAIServices }}
+    {{- range .Values.aiServices }}
+    {{- if .external }}
+    - to:
+        - ipBlock:
+            cidr: {{ .cidr | default "0.0.0.0/0" }}
+      ports:
+        - protocol: TCP
+          port: {{ .port | default 443 }}
+    {{- end }}
+    {{- end }}
+    {{- end }}
+    
+    # Custom egress rules
+    {{- range .Values.networkPolicy.egress.customRules }}
+    - to:
+        {{- if .namespaceSelector }}
+        - namespaceSelector:
+            {{- toYaml .namespaceSelector | nindent 12 }}
+        {{- end }}
+        {{- if .podSelector }}
+        - podSelector:
+            {{- toYaml .podSelector | nindent 12 }}
+        {{- end }}
+        {{- if .ipBlock }}
+        - ipBlock:
+            {{- toYaml .ipBlock | nindent 12 }}
+        {{- end }}
+      {{- if .ports }}
+      ports:
+        {{- range .ports }}
+        - protocol: {{ .protocol | default "TCP" }}
+          port: {{ .port }}
+          {{- if .endPort }}
+          endPort: {{ .endPort }}
+          {{- end }}
+        {{- end }}
+      {{- end }}
+    {{- end }}
+
+---
+# =============================================================================
+# WEBSOCKET SERVICE NETWORK POLICY
+# =============================================================================
+
+{{- if .Values.websocket.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ include "security-dashboard.fullname" . }}-websocket
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    {{- include "security-dashboard.labels" . | nindent 4 }}
+    app.kubernetes.io/component: websocket-network-security
+spec:
+  podSelector:
+    matchLabels:
+      {{- include "security-dashboard.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: websocket
+  
+  policyTypes:
+    - Ingress
+    - Egress
+  
+  ingress:
+    # Allow WebSocket connections from clients
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              name: {{ .Values.networkPolicy.ingress.ingressControllerNamespace | default "ingress-nginx" }}
+      ports:
+        - protocol: TCP
+          port: {{ .Values.websocket.port | default 8080 }}
+    
+    # Allow connections from same namespace
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              name: {{ .Release.Namespace }}
+      ports:
+        - protocol: TCP
+          port: {{ .Values.websocket.port | default 8080 }}
+  
+  egress:
+    # Allow DNS resolution
+    - to: []
+      ports:
+        - protocol: UDP
+          port: 53
+    
+    # Allow access to main application
+    - to:
+        - podSelector:
+            matchLabels:
+              {{- include "security-dashboard.selectorLabels" . | nindent 14 }}
+      ports:
+        - protocol: TCP
+          port: {{ .Values.service.port }}
+    
+    # Allow access to Redis for session management
+    {{- if .Values.redis.enabled }}
+    - to:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: redis
+      ports:
+        - protocol: TCP
+          port: {{ .Values.redis.port | default 6379 }}
+    {{- end }}
+{{- end }}
+
+---
+# =============================================================================
+# DATABASE NETWORK POLICIES
+# =============================================================================
+
+{{- if and .Values.postgresql.enabled (not .Values.postgresql.external) }}
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ include "security-dashboard.fullname" . }}-postgresql
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    {{- include "security-dashboard.labels" . | nindent 4 }}
+    app.kubernetes.io/component: database-network-security
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: postgresql
+  
+  policyTypes:
+    - Ingress
+  
+  ingress:
+    # Allow connections from application pods
+    - from:
+        - podSelector:
+            matchLabels:
+              {{- include "security-dashboard.selectorLabels" . | nindent 14 }}
+      ports:
+        - protocol: TCP
+          port: {{ .Values.postgresql.port | default 5432 }}
+    
+    # Allow connections from backup pods
+    {{- if .Values.backup.enabled }}
+    - from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: {{ include "security-dashboard.name" . }}
+              app.kubernetes.io/component: backup
+      ports:
+        - protocol: TCP
+          port: {{ .Values.postgresql.port | default 5432 }}
+    {{- end }}
+
+---
+{{- end }}
+
+{{- if and .Values.redis.enabled (not .Values.redis.external) }}
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ include "security-dashboard.fullname" . }}-redis
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    {{- include "security-dashboard.labels" . | nindent 4 }}
+    app.kubernetes.io/component: cache-network-security
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: redis
+  
+  policyTypes:
+    - Ingress
+  
+  ingress:
+    # Allow connections from application pods
+    - from:
+        - podSelector:
+            matchLabels:
+              {{- include "security-dashboard.selectorLabels" . | nindent 14 }}
+      ports:
+        - protocol: TCP
+          port: {{ .Values.redis.port | default 6379 }}
+    
+    # Allow connections from WebSocket pods
+    {{- if .Values.websocket.enabled }}
+    - from:
+        - podSelector:
+            matchLabels:
+              {{- include "security-dashboard.selectorLabels" . | nindent 14 }}
+              app.kubernetes.io/component: websocket
+      ports:
+        - protocol: TCP
+          port: {{ .Values.redis.port | default 6379 }}
+    {{- end }}
+
+---
+{{- end }}
+
+# =============================================================================
+# MONITORING NETWORK POLICIES
+# =============================================================================
+
+{{- if .Values.monitoring.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ include "security-dashboard.fullname" . }}-monitoring
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    {{- include "security-dashboard.labels" . | nindent 4 }}
+    app.kubernetes.io/component: monitoring-network-security
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: prometheus
+  
+  policyTypes:
+    - Ingress
+    - Egress
+  
+  ingress:
+    # Allow access from Grafana
+    - from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: grafana
+      ports:
+        - protocol: TCP
+          port: 9090
+    
+    # Allow access from ingress controller
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              name: {{ .Values.networkPolicy.ingress.ingressControllerNamespace | default "ingress-nginx" }}
+      ports:
+        - protocol: TCP
+          port: 9090
+  
+  egress:
+    # Allow scraping application metrics
+    - to:
+        - podSelector:
+            matchLabels:
+              {{- include "security-dashboard.selectorLabels" . | nindent 14 }}
+      ports:
+        - protocol: TCP
+          port: {{ .Values.monitoring.port | default 9090 }}
+    
+    # Allow DNS resolution
+    - to: []
+      ports:
+        - protocol: UDP
+          port: 53
+{{- end }}
+
+---
+# =============================================================================
+# CUSTOM NETWORK POLICIES
+# =============================================================================
+
+{{- range .Values.networkPolicy.customPolicies }}
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ include "security-dashboard.fullname" $ }}-{{ .name }}
+  namespace: {{ $.Release.Namespace | quote }}
+  labels:
+    {{- include "security-dashboard.labels" $ | nindent 4 }}
+    app.kubernetes.io/component: {{ .name }}-network-security
+  annotations:
+    {{- with .annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+spec:
+  podSelector:
+    {{- toYaml .podSelector | nindent 4 }}
+  
+  policyTypes:
+    {{- toYaml .policyTypes | nindent 4 }}
+  
+  {{- if .ingress }}
+  ingress:
+    {{- toYaml .ingress | nindent 4 }}
+  {{- end }}
+  
+  {{- if .egress }}
+  egress:
+    {{- toYaml .egress | nindent 4 }}
+  {{- end }}
+
+---
+{{- end }}
+
+{{- end }}
+
+# =============================================================================
+# END OF NETWORK POLICY TEMPLATE
+# =============================================================================

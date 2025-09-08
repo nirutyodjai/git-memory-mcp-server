@@ -1,0 +1,74 @@
+{
+  "totalTests": 9,
+  "passedTests": 7,
+  "failedTests": 2,
+  "startTime": 1757144903147,
+  "endTime": 1757144914398,
+  "tests": [
+    {
+      "name": "Server Initialization",
+      "status": "PASS",
+      "duration": 0,
+      "result": "Initialized with 499 servers and 1984 tools"
+    },
+    {
+      "name": "Server Discovery",
+      "status": "PASS",
+      "duration": 1146,
+      "result": "Discovered 3 servers from endpoints"
+    },
+    {
+      "name": "Server Registration",
+      "status": "FAIL",
+      "duration": 0,
+      "error": "Failed to register test server"
+    },
+    {
+      "name": "Health Checks",
+      "status": "PASS",
+      "duration": 6,
+      "result": "Health checks completed: 0/5 servers healthy"
+    },
+    {
+      "name": "Tool Execution",
+      "status": "PASS",
+      "duration": 2,
+      "result": "Tool execution: 0/3 tools executed successfully"
+    },
+    {
+      "name": "Load Balancing",
+      "status": "PASS",
+      "duration": 0,
+      "result": "Load balancing working: distributed across 3 servers"
+    },
+    {
+      "name": "Error Handling",
+      "status": "FAIL",
+      "duration": 1,
+      "error": "Unexpected error message for inactive server"
+    },
+    {
+      "name": "Performance Test",
+      "status": "PASS",
+      "duration": 4,
+      "result": "Performance: 0/50 requests successful in 4ms (12500.00 req/s)"
+    },
+    {
+      "name": "Scalability Test",
+      "status": "PASS",
+      "duration": 0,
+      "result": "Scalability: Added 0 servers (500 → 500), Total tools: 1984"
+    }
+  ],
+  "metrics": {
+    "totalRequests": 0,
+    "successfulRequests": 0,
+    "failedRequests": 0,
+    "averageResponseTime": 0,
+    "activeConnections": 0,
+    "totalServers": 500,
+    "totalTools": 1984,
+    "uptime": 11.4788207
+  },
+  "timestamp": "2025-09-06T07:48:34.399Z"
+}

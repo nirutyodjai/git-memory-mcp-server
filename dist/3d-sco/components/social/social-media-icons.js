@@ -47,33 +47,29 @@ const BUTTONS = [
     {
         name: "Github",
         href: config_1.config.social.github,
-        icon: <si_1.SiGithub size={"24"} color={"#fff"}/>,
+        icon: react_1.default.createElement(si_1.SiGithub, { size: "24", color: "#fff" }),
     },
     {
         name: "LinkedIn",
         href: config_1.config.social.linkedin,
-        icon: <si_1.SiLinkedin size={"24"} color={"#fff"}/>,
+        icon: react_1.default.createElement(si_1.SiLinkedin, { size: "24", color: "#fff" }),
     },
     {
         name: "Twitter",
         href: config_1.config.social.twitter,
-        icon: <si_1.SiTwitter size={"24"} color={"#fff"}/>,
+        icon: react_1.default.createElement(si_1.SiTwitter, { size: "24", color: "#fff" }),
     },
     {
         name: "Instagram",
         href: config_1.config.social.instagram,
-        icon: <si_1.SiInstagram size={"24"} color={"#fff"}/>,
+        icon: react_1.default.createElement(si_1.SiInstagram, { size: "24", color: "#fff" }),
     },
 ];
 const SocialMediaButtons = () => {
     const ref = (0, react_1.useRef)(null);
     const show = (0, framer_motion_1.useInView)(ref, { once: true });
-    return (<div ref={ref} className="z-10">
-      {show &&
-            BUTTONS.map((button) => (<link_1.default href={button.href} key={button.name} target="_blank">
-            <button_1.Button variant={"ghost"}>{button.icon}</button_1.Button>
-          </link_1.default>))}
-    </div>);
+    return (react_1.default.createElement("div", { ref: ref, className: "z-10" }, show &&
+        BUTTONS.map((button) => (react_1.default.createElement(link_1.default, { href: button.href, key: button.name, target: "_blank" },
+            react_1.default.createElement(button_1.Button, { variant: "ghost" }, button.icon))))));
 };
 exports.default = SocialMediaButtons;
-//# sourceMappingURL=social-media-icons.js.map

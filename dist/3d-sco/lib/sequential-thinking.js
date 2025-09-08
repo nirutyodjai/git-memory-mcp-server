@@ -445,4 +445,3 @@ class SequentialThinking {
 exports.SequentialThinking = SequentialThinking;
 // Export singleton instance
 exports.sequentialThinking = SequentialThinking.getInstance();
-//# sourceMappingURL=sequential-thinking.js.map

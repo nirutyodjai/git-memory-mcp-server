@@ -1,0 +1,213 @@
+{
+  "nexusIDE": {
+    "version": "2.0.0",
+    "endpoint": "http://localhost:3000",
+    "apiKey": "",
+    "features": {
+      "realTimeSync": true,
+      "autoUpdate": true,
+      "conflictResolution": "server-wins",
+      "healthMonitoring": true,
+      "performanceMetrics": true,
+      "changeTracking": true,
+      "documentationSync": true
+    },
+    "sync": {
+      "interval": 30000,
+      "immediate": true,
+      "batchSize": 100,
+      "retryAttempts": 3,
+      "retryDelay": 5000,
+      "timeout": 10000
+    },
+    "notifications": {
+      "enabled": true,
+      "channels": {
+        "webhook": null,
+        "email": null,
+        "slack": null,
+        "discord": null
+      },
+      "events": {
+        "serverStart": true,
+        "serverStop": true,
+        "syncComplete": true,
+        "syncError": true,
+        "prdUpdate": true,
+        "configChange": true
+      }
+    }
+  },
+  "gitMemoryServer": {
+    "name": "Git Memory MCP Server",
+    "version": "1.0.0",
+    "description": "Advanced Git Memory Management with MCP Protocol Support for NEXUS IDE",
+    "capabilities": {
+      "mcp": {
+        "version": "1.0",
+        "transport": ["stdio", "websocket", "http"],
+        "features": [
+          "memory-persistence",
+          "git-integration",
+          "real-time-sync",
+          "health-monitoring",
+          "performance-metrics"
+        ]
+      },
+      "git": {
+        "operations": [
+          "clone",
+          "pull",
+          "push",
+          "commit",
+          "branch",
+          "merge",
+          "status",
+          "log",
+          "diff"
+        ],
+        "hooks": {
+          "preCommit": true,
+          "postCommit": true,
+          "prePush": true,
+          "postReceive": true
+        }
+      },
+      "memory": {
+        "persistence": true,
+        "compression": true,
+        "encryption": false,
+        "backup": true,
+        "maxSize": "1GB",
+        "cleanupInterval": 3600000
+      },
+      "api": {
+        "rest": true,
+        "graphql": false,
+        "websocket": true,
+        "grpc": false
+      }
+    },
+    "endpoints": {
+      "health": "/health",
+      "metrics": "/metrics",
+      "status": "/status",
+      "memory": "/memory",
+      "git": "/git",
+      "mcp": "/mcp",
+      "websocket": "/ws"
+    },
+    "performance": {
+      "maxConnections": 1000,
+      "requestTimeout": 30000,
+      "memoryLimit": "512MB",
+      "cpuThreshold": 80,
+      "responseTimeTarget": 100
+    }
+  },
+  "integration": {
+    "mode": "development",
+    "autoStart": true,
+    "autoRestart": true,
+    "healthCheck": {
+      "enabled": true,
+      "interval": 10000,
+      "timeout": 5000,
+      "retries": 3
+    },
+    "logging": {
+      "level": "info",
+      "format": "json",
+      "destination": "console",
+      "rotation": {
+        "enabled": false,
+        "maxSize": "10MB",
+        "maxFiles": 5
+      }
+    },
+    "security": {
+      "authentication": {
+        "enabled": false,
+        "method": "bearer",
+        "tokenExpiry": 3600
+      },
+      "authorization": {
+        "enabled": false,
+        "roles": ["admin", "user", "readonly"]
+      },
+      "cors": {
+        "enabled": true,
+        "origins": ["http://localhost:3000", "https://nexus-ide.com"],
+        "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+        "headers": ["Content-Type", "Authorization", "X-Requested-With"]
+      },
+      "rateLimit": {
+        "enabled": true,
+        "windowMs": 900000,
+        "maxRequests": 1000
+      }
+    }
+  },
+  "development": {
+    "hotReload": true,
+    "debugMode": true,
+    "verboseLogging": true,
+    "mockData": false,
+    "testMode": false,
+    "profiling": {
+      "enabled": false,
+      "interval": 60000,
+      "memorySnapshots": false
+    }
+  },
+  "production": {
+    "clustering": {
+      "enabled": false,
+      "workers": "auto",
+      "strategy": "round-robin"
+    },
+    "caching": {
+      "enabled": true,
+      "provider": "redis",
+      "ttl": 3600,
+      "maxSize": "100MB"
+    },
+    "monitoring": {
+      "enabled": true,
+      "provider": "prometheus",
+      "endpoint": "/metrics",
+      "interval": 15000
+    },
+    "backup": {
+      "enabled": true,
+      "interval": 86400000,
+      "retention": 30,
+      "destination": "./backups",
+      "compression": true
+    }
+  },
+  "metadata": {
+    "createdAt": "2024-01-06T00:00:00.000Z",
+    "updatedAt": "2024-01-06T00:00:00.000Z",
+    "version": "1.0.0",
+    "author": "NEXUS IDE Team",
+    "license": "MIT",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/nexus-ide/git-memory-mcp-server"
+    },
+    "documentation": {
+      "readme": "README.md",
+      "prd": "NEXUS-IDE-PRD-Updated.md",
+      "api": "docs/api.md",
+      "changelog": "CHANGELOG.md"
+    },
+    "tags": [
+      "nexus-ide",
+      "mcp-server",
+      "git-memory",
+      "real-time-sync",
+      "development-tools"
+    ]
+  }
+}

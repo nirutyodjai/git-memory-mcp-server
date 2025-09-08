@@ -72,14 +72,19 @@ class WEB_001Server {
 
     startHealthServer() {
         const healthServer = http.createServer((req, res) => {
-            res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ 
-                status: 'healthy', 
-                server: 'web-001',
-                port: 3900,
-                category: 'web-dev',
-                timestamp: new Date().toISOString()
-            }));
+            if (req.url === '/health') {
+                res.writeHead(200, { 'Content-Type': 'text/plain' });
+                res.end('OK');
+            } else {
+                res.writeHead(200, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ 
+                    status: 'healthy', 
+                    server: 'web-001',
+                    port: 3900,
+                    category: 'web-dev',
+                    timestamp: new Date().toISOString()
+                }));
+            }
         });
 
         healthServer.listen(3900, () => {

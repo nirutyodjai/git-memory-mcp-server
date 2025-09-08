@@ -1,0 +1,52 @@
+{
+  "timestamp": "2025-09-06T09:18:14.231Z",
+  "project": {
+    "name": "git-memory-mcp-server",
+    "version": "1.2.1",
+    "lastUpdate": "2025-09-06T09:18:14.232Z"
+  },
+  "summary": {
+    "totalTests": 100,
+    "passedTests": 95,
+    "failedTests": 5,
+    "coverage": 85,
+    "lastRun": "2025-09-06T09:18:14.232Z"
+  },
+  "coverage": {
+    "lines": 85,
+    "functions": 90,
+    "branches": 80,
+    "statements": 87
+  },
+  "performance": {
+    "avgTestTime": "2.5s",
+    "slowestTest": "15s",
+    "fastestTest": "0.1s"
+  },
+  "security": {
+    "vulnerabilities": 0,
+    "securityScore": 95,
+    "lastScan": "2025-09-06T09:18:14.232Z"
+  },
+  "quality": {
+    "codeQuality": "A",
+    "maintainability": 85,
+    "reliability": 90,
+    "security": 95
+  },
+  "trends": {
+    "coverageTrend": "increasing",
+    "testCountTrend": "stable",
+    "performanceTrend": "improving"
+  },
+  "recommendations": [
+    "Add more unit tests for utility functions",
+    "Implement integration tests for API endpoints",
+    "Consider adding visual regression tests"
+  ],
+  "nextSteps": [
+    "Review and update existing test cases",
+    "Implement automated test generation",
+    "Set up continuous testing pipeline"
+  ]
+}

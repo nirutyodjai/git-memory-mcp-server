@@ -35,10 +35,13 @@ var __importStar = (this && this.__importStar) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.EmailTemplate = void 0;
 const React = __importStar(require("react"));
-const EmailTemplate = ({ fullName, email, message, }) => (<div>
-    <h1>จาก: {fullName}!</h1>
-    <div className="text-red-500">{email} ส่งข้อความถึงคุณ</div>
-    <blockquote>{message}</blockquote>
-  </div>);
+const EmailTemplate = ({ fullName, email, message, }) => (React.createElement("div", null,
+    React.createElement("h1", null,
+        "\u0E08\u0E32\u0E01: ",
+        fullName,
+        "!"),
+    React.createElement("div", { className: "text-red-500" },
+        email,
+        " \u0E2A\u0E48\u0E07\u0E02\u0E49\u0E2D\u0E04\u0E27\u0E32\u0E21\u0E16\u0E36\u0E07\u0E04\u0E38\u0E13"),
+    React.createElement("blockquote", null, message)));
 exports.EmailTemplate = EmailTemplate;
-//# sourceMappingURL=email-template.js.map

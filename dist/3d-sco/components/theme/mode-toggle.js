@@ -43,25 +43,14 @@ const dropdown_menu_1 = require("@/components/ui/dropdown-menu");
 const utils_1 = require("@/lib/utils");
 function ModeToggle({ className }) {
     const { setTheme } = (0, next_themes_1.useTheme)();
-    return (<dropdown_menu_1.DropdownMenu>
-      <dropdown_menu_1.DropdownMenuTrigger asChild>
-        <button_1.Button variant="outline" size="icon" className={(0, utils_1.cn)("border-none bg-transparent", className)}>
-          <lucide_react_1.Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0"/>
-          <lucide_react_1.Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100"/>
-          <span className="sr-only">Toggle theme</span>
-        </button_1.Button>
-      </dropdown_menu_1.DropdownMenuTrigger>
-      <dropdown_menu_1.DropdownMenuContent align="end" className="z-10">
-        <dropdown_menu_1.DropdownMenuItem onClick={() => setTheme("light")}>
-          Light
-        </dropdown_menu_1.DropdownMenuItem>
-        <dropdown_menu_1.DropdownMenuItem onClick={() => setTheme("dark")}>
-          Dark
-        </dropdown_menu_1.DropdownMenuItem>
-        <dropdown_menu_1.DropdownMenuItem onClick={() => setTheme("system")}>
-          System
-        </dropdown_menu_1.DropdownMenuItem>
-      </dropdown_menu_1.DropdownMenuContent>
-    </dropdown_menu_1.DropdownMenu>);
+    return (React.createElement(dropdown_menu_1.DropdownMenu, null,
+        React.createElement(dropdown_menu_1.DropdownMenuTrigger, { asChild: true },
+            React.createElement(button_1.Button, { variant: "outline", size: "icon", className: (0, utils_1.cn)("border-none bg-transparent", className) },
+                React.createElement(lucide_react_1.Sun, { className: "h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" }),
+                React.createElement(lucide_react_1.Moon, { className: "absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" }),
+                React.createElement("span", { className: "sr-only" }, "Toggle theme"))),
+        React.createElement(dropdown_menu_1.DropdownMenuContent, { align: "end", className: "z-10" },
+            React.createElement(dropdown_menu_1.DropdownMenuItem, { onClick: () => setTheme("light") }, "Light"),
+            React.createElement(dropdown_menu_1.DropdownMenuItem, { onClick: () => setTheme("dark") }, "Dark"),
+            React.createElement(dropdown_menu_1.DropdownMenuItem, { onClick: () => setTheme("system") }, "System"))));
 }
-//# sourceMappingURL=mode-toggle.js.map

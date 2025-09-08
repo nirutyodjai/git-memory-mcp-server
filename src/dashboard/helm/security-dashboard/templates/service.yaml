@@ -1,0 +1,384 @@
+{{/*
+=============================================================================
+ENTERPRISE SECURITY DASHBOARD - KUBERNETES SERVICES
+Service Templates for Application and WebSocket
+=============================================================================
+*/}}
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "security-dashboard.fullname" . }}
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    {{- include "security-dashboard.labels" . | nindent 4 }}
+    app.kubernetes.io/component: application
+    app.kubernetes.io/part-of: nexus-ide
+  annotations:
+    {{- with .Values.service.annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+    # Prometheus Monitoring
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "3000"
+    prometheus.io/path: "/metrics"
+    # Service Mesh Annotations
+    service.istio.io/canonical-name: {{ include "security-dashboard.name" . }}
+    service.istio.io/canonical-revision: {{ .Values.app.image.tag | quote }}
+spec:
+  type: {{ .Values.service.type }}
+  
+  {{- if eq .Values.service.type "LoadBalancer" }}
+  {{- with .Values.service.loadBalancerIP }}
+  loadBalancerIP: {{ . }}
+  {{- end }}
+  {{- with .Values.service.loadBalancerSourceRanges }}
+  loadBalancerSourceRanges:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- end }}
+  
+  {{- if eq .Values.service.type "ExternalName" }}
+  externalName: {{ .Values.service.externalName }}
+  {{- end }}
+  
+  ports:
+    # Main HTTP Port
+    - port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.targetPort }}
+      protocol: TCP
+      name: http
+      {{- if and (eq .Values.service.type "NodePort") .Values.service.nodePort }}
+      nodePort: {{ .Values.service.nodePort }}
+      {{- end }}
+    
+    # Metrics Port
+    - port: 9090
+      targetPort: 9090
+      protocol: TCP
+      name: metrics
+    
+    # Health Check Port
+    - port: 8080
+      targetPort: 8080
+      protocol: TCP
+      name: health
+  
+  selector:
+    {{- include "security-dashboard.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/component: application
+  
+  # Session Affinity
+  sessionAffinity: {{ .Values.service.sessionAffinity | default "None" }}
+  {{- if eq (.Values.service.sessionAffinity | default "None") "ClientIP" }}
+  sessionAffinityConfig:
+    clientIP:
+      timeoutSeconds: {{ .Values.service.sessionAffinityTimeout | default 10800 }}
+  {{- end }}
+
+---
+{{/*
+=============================================================================
+WEBSOCKET SERVICE
+=============================================================================
+*/}}
+
+{{- if .Values.service.websocket.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "security-dashboard.fullname" . }}-websocket
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    {{- include "security-dashboard.labels" . | nindent 4 }}
+    app.kubernetes.io/component: websocket
+    app.kubernetes.io/part-of: nexus-ide
+  annotations:
+    # WebSocket Specific Annotations
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+    nginx.ingress.kubernetes.io/websocket-services: "{{ include "security-dashboard.fullname" . }}-websocket"
+    # Service Mesh Annotations
+    service.istio.io/canonical-name: {{ include "security-dashboard.name" . }}-websocket
+    service.istio.io/canonical-revision: {{ .Values.app.image.tag | quote }}
+spec:
+  type: {{ .Values.service.type }}
+  
+  ports:
+    # WebSocket Port
+    - port: {{ .Values.service.websocket.port }}
+      targetPort: {{ .Values.service.websocket.targetPort }}
+      protocol: TCP
+      name: websocket
+      {{- if and (eq .Values.service.type "NodePort") .Values.service.websocket.nodePort }}
+      nodePort: {{ .Values.service.websocket.nodePort }}
+      {{- end }}
+  
+  selector:
+    {{- include "security-dashboard.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/component: websocket
+  
+  # Session Affinity for WebSocket connections
+  sessionAffinity: ClientIP
+  sessionAffinityConfig:
+    clientIP:
+      timeoutSeconds: 10800  # 3 hours
+{{- end }}
+
+---
+{{/*
+=============================================================================
+HEADLESS SERVICE FOR STATEFULSET DISCOVERY
+=============================================================================
+*/}}
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "security-dashboard.fullname" . }}-headless
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    {{- include "security-dashboard.labels" . | nindent 4 }}
+    app.kubernetes.io/component: headless
+    app.kubernetes.io/part-of: nexus-ide
+  annotations:
+    service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"
+spec:
+  type: ClusterIP
+  clusterIP: None
+  
+  ports:
+    # Main HTTP Port
+    - port: {{ .Values.service.targetPort }}
+      targetPort: {{ .Values.service.targetPort }}
+      protocol: TCP
+      name: http
+    
+    # WebSocket Port
+    {{- if .Values.service.websocket.enabled }}
+    - port: {{ .Values.service.websocket.targetPort }}
+      targetPort: {{ .Values.service.websocket.targetPort }}
+      protocol: TCP
+      name: websocket
+    {{- end }}
+    
+    # Metrics Port
+    - port: 9090
+      targetPort: 9090
+      protocol: TCP
+      name: metrics
+  
+  selector:
+    {{- include "security-dashboard.selectorLabels" . | nindent 4 }}
+  
+  # Publish not ready addresses
+  publishNotReadyAddresses: true
+
+---
+{{/*
+=============================================================================
+EXTERNAL SERVICE FOR DATABASE ACCESS
+=============================================================================
+*/}}
+
+{{- if .Values.postgresql.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "security-dashboard.fullname" . }}-postgresql
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    {{- include "security-dashboard.labels" . | nindent 4 }}
+    app.kubernetes.io/component: database
+    app.kubernetes.io/part-of: nexus-ide
+spec:
+  type: ExternalName
+  externalName: {{ include "security-dashboard.postgresql.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local
+  ports:
+    - port: 5432
+      targetPort: 5432
+      protocol: TCP
+      name: postgresql
+{{- end }}
+
+---
+{{/*
+=============================================================================
+EXTERNAL SERVICE FOR REDIS ACCESS
+=============================================================================
+*/}}
+
+{{- if .Values.redis.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "security-dashboard.fullname" . }}-redis
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    {{- include "security-dashboard.labels" . | nindent 4 }}
+    app.kubernetes.io/component: cache
+    app.kubernetes.io/part-of: nexus-ide
+spec:
+  type: ExternalName
+  externalName: {{ include "security-dashboard.redis.fullname" . }}-master.{{ .Release.Namespace }}.svc.cluster.local
+  ports:
+    - port: 6379
+      targetPort: 6379
+      protocol: TCP
+      name: redis
+{{- end }}
+
+---
+{{/*
+=============================================================================
+EXTERNAL SERVICE FOR MONGODB ACCESS
+=============================================================================
+*/}}
+
+{{- if .Values.mongodb.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "security-dashboard.fullname" . }}-mongodb
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    {{- include "security-dashboard.labels" . | nindent 4 }}
+    app.kubernetes.io/component: document-store
+    app.kubernetes.io/part-of: nexus-ide
+spec:
+  type: ExternalName
+  externalName: {{ include "security-dashboard.mongodb.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local
+  ports:
+    - port: 27017
+      targetPort: 27017
+      protocol: TCP
+      name: mongodb
+{{- end }}
+
+---
+{{/*
+=============================================================================
+MONITORING SERVICE FOR PROMETHEUS SCRAPING
+=============================================================================
+*/}}
+
+{{- if .Values.monitoring.prometheus.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "security-dashboard.fullname" . }}-monitoring
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    {{- include "security-dashboard.labels" . | nindent 4 }}
+    app.kubernetes.io/component: monitoring
+    app.kubernetes.io/part-of: nexus-ide
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "9090"
+    prometheus.io/path: "/metrics"
+    prometheus.io/interval: "30s"
+spec:
+  type: ClusterIP
+  
+  ports:
+    # Application Metrics
+    - port: 9090
+      targetPort: 9090
+      protocol: TCP
+      name: app-metrics
+    
+    # Node Exporter Metrics
+    - port: 9100
+      targetPort: 9100
+      protocol: TCP
+      name: node-metrics
+    
+    # Custom Metrics
+    - port: 9091
+      targetPort: 9091
+      protocol: TCP
+      name: custom-metrics
+  
+  selector:
+    {{- include "security-dashboard.selectorLabels" . | nindent 4 }}
+{{- end }}
+
+---
+{{/*
+=============================================================================
+LOAD BALANCER SERVICE FOR EXTERNAL ACCESS
+=============================================================================
+*/}}
+
+{{- if eq .Values.service.type "LoadBalancer" }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "security-dashboard.fullname" . }}-lb
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    {{- include "security-dashboard.labels" . | nindent 4 }}
+    app.kubernetes.io/component: load-balancer
+    app.kubernetes.io/part-of: nexus-ide
+  annotations:
+    # AWS Load Balancer Annotations
+    service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
+    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: "http"
+    service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "https"
+    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: "{{ .Values.tls.awsCertArn }}"
+    service.beta.kubernetes.io/aws-load-balancer-connection-draining-enabled: "true"
+    service.beta.kubernetes.io/aws-load-balancer-connection-draining-timeout: "60"
+    service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
+    # GCP Load Balancer Annotations
+    cloud.google.com/neg: '{"ingress": true}'
+    cloud.google.com/backend-config: '{"default": "{{ include "security-dashboard.fullname" . }}-backend-config"}'
+    # Azure Load Balancer Annotations
+    service.beta.kubernetes.io/azure-load-balancer-internal: "false"
+spec:
+  type: LoadBalancer
+  
+  {{- with .Values.service.loadBalancerIP }}
+  loadBalancerIP: {{ . }}
+  {{- end }}
+  
+  {{- with .Values.service.loadBalancerSourceRanges }}
+  loadBalancerSourceRanges:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  
+  ports:
+    # HTTP Port
+    - port: 80
+      targetPort: {{ .Values.service.targetPort }}
+      protocol: TCP
+      name: http
+    
+    # HTTPS Port
+    - port: 443
+      targetPort: {{ .Values.service.targetPort }}
+      protocol: TCP
+      name: https
+    
+    # WebSocket Port
+    {{- if .Values.service.websocket.enabled }}
+    - port: {{ .Values.service.websocket.port }}
+      targetPort: {{ .Values.service.websocket.targetPort }}
+      protocol: TCP
+      name: websocket
+    {{- end }}
+  
+  selector:
+    {{- include "security-dashboard.selectorLabels" . | nindent 4 }}
+  
+  # External Traffic Policy
+  externalTrafficPolicy: {{ .Values.service.externalTrafficPolicy | default "Cluster" }}
+  
+  # Health Check Node Port
+  {{- if .Values.service.healthCheckNodePort }}
+  healthCheckNodePort: {{ .Values.service.healthCheckNodePort }}
+  {{- end }}
+{{- end }}
+
+# =============================================================================
+# END OF SERVICE TEMPLATES
+# =============================================================================

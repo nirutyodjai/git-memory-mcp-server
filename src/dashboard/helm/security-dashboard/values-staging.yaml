@@ -1,0 +1,642 @@
+# 🚀 NEXUS IDE Security Dashboard - Staging Environment Configuration
+# This file contains staging-specific overrides for the base values.yaml
+
+# Global staging configuration
+global:
+  environment: staging
+  debug: true
+  logLevel: debug
+  
+  # Staging domain configuration
+  domain: staging.nexus-ide.dev
+  
+  # Resource limits for staging (reduced from production)
+  resourceQuota:
+    enabled: true
+    limits:
+      cpu: "4"
+      memory: "8Gi"
+      storage: "50Gi"
+      persistentVolumeClaims: "10"
+
+# Application configuration
+replicaCount: 2
+
+image:
+  repository: ghcr.io/nexus-ide/security-dashboard
+  tag: "staging-latest"
+  pullPolicy: Always
+
+# Service configuration
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 3000
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
+    service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"
+
+# Ingress configuration for staging
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    cert-manager.io/cluster-issuer: "letsencrypt-staging"
+    nginx.ingress.kubernetes.io/rate-limit: "100"
+    nginx.ingress.kubernetes.io/rate-limit-window: "1m"
+  hosts:
+    - host: staging.nexus-ide.dev
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - secretName: nexus-ide-staging-tls
+      hosts:
+        - staging.nexus-ide.dev
+
+# Resource configuration (reduced for staging)
+resources:
+  limits:
+    cpu: 1000m
+    memory: 2Gi
+  requests:
+    cpu: 500m
+    memory: 1Gi
+
+# Auto-scaling configuration
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 70
+  targetMemoryUtilizationPercentage: 80
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 300
+      policies:
+      - type: Percent
+        value: 50
+        periodSeconds: 60
+    scaleUp:
+      stabilizationWindowSeconds: 60
+      policies:
+      - type: Percent
+        value: 100
+        periodSeconds: 30
+
+# Persistence configuration
+persistence:
+  enabled: true
+  storageClass: "gp3"
+  size: 20Gi
+  accessMode: ReadWriteOnce
+  annotations:
+    volume.beta.kubernetes.io/storage-provisioner: ebs.csi.aws.com
+
+# Database configurations for staging
+postgresql:
+  enabled: true
+  auth:
+    postgresPassword: "staging-postgres-password"
+    username: "nexus_staging"
+    password: "staging-db-password"
+    database: "nexus_ide_staging"
+  primary:
+    persistence:
+      enabled: true
+      size: 20Gi
+      storageClass: "gp3"
+    resources:
+      limits:
+        cpu: 500m
+        memory: 1Gi
+      requests:
+        cpu: 250m
+        memory: 512Mi
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+
+redis:
+  enabled: true
+  auth:
+    enabled: true
+    password: "staging-redis-password"
+  master:
+    persistence:
+      enabled: true
+      size: 5Gi
+      storageClass: "gp3"
+    resources:
+      limits:
+        cpu: 250m
+        memory: 512Mi
+      requests:
+        cpu: 100m
+        memory: 256Mi
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+
+mongodb:
+  enabled: false  # Disabled in staging to save resources
+
+# Authentication configuration
+auth:
+  enabled: true
+  provider: "oauth2"
+  oauth2:
+    clientId: "nexus-ide-staging"
+    clientSecret: "staging-oauth-secret"
+    issuerUrl: "https://auth.staging.nexus-ide.dev"
+    redirectUrl: "https://staging.nexus-ide.dev/auth/callback"
+  jwt:
+    secret: "staging-jwt-secret-key"
+    expiresIn: "24h"
+  session:
+    secret: "staging-session-secret"
+    maxAge: 86400000  # 24 hours
+
+# TLS configuration
+tls:
+  enabled: true
+  certManager:
+    enabled: true
+    issuer: "letsencrypt-staging"
+  certificates:
+    - name: "nexus-ide-staging-tls"
+      dnsNames:
+        - "staging.nexus-ide.dev"
+        - "*.staging.nexus-ide.dev"
+
+# Monitoring configuration
+monitoring:
+  enabled: true
+  prometheus:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+      interval: 30s
+      scrapeTimeout: 10s
+    rules:
+      enabled: true
+  grafana:
+    enabled: true
+    adminPassword: "staging-grafana-admin"
+    persistence:
+      enabled: true
+      size: 5Gi
+    dashboards:
+      enabled: true
+      configMaps:
+        - nexus-ide-dashboards
+  jaeger:
+    enabled: true
+    storage:
+      type: memory  # Use memory storage for staging
+
+# Logging configuration
+logging:
+  enabled: true
+  level: debug
+  format: json
+  elasticsearch:
+    enabled: false  # Disabled in staging
+  fluentd:
+    enabled: true
+    resources:
+      limits:
+        cpu: 200m
+        memory: 512Mi
+      requests:
+        cpu: 100m
+        memory: 256Mi
+
+# Backup configuration (simplified for staging)
+backup:
+  enabled: true
+  schedule: "0 2 * * *"  # Daily at 2 AM
+  retention: "7d"  # Keep backups for 7 days
+  storage:
+    type: "s3"
+    s3:
+      bucket: "nexus-ide-staging-backups"
+      region: "us-west-2"
+      prefix: "staging/"
+  databases:
+    postgresql:
+      enabled: true
+    redis:
+      enabled: true
+
+# Security configuration
+security:
+  networkPolicy:
+    enabled: true
+    ingress:
+      - from:
+          - namespaceSelector:
+              matchLabels:
+                name: ingress-nginx
+        ports:
+          - protocol: TCP
+            port: 3000
+      - from:
+          - namespaceSelector:
+              matchLabels:
+                name: monitoring
+        ports:
+          - protocol: TCP
+            port: 9090
+  podSecurityPolicy:
+    enabled: true
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 1001
+    fsGroup: 1001
+    capabilities:
+      drop:
+        - ALL
+  rbac:
+    create: true
+    rules:
+      - apiGroups: [""]
+        resources: ["configmaps", "secrets"]
+        verbs: ["get", "list", "watch"]
+
+# AI/ML configuration (reduced for staging)
+ai:
+  enabled: true
+  models:
+    gpt4:
+      enabled: true
+      apiKey: "staging-openai-api-key"
+      model: "gpt-4"
+      maxTokens: 2000
+    claude:
+      enabled: true
+      apiKey: "staging-anthropic-api-key"
+      model: "claude-3-sonnet"
+    local:
+      enabled: false  # Disabled in staging
+  features:
+    codeCompletion:
+      enabled: true
+      cacheSize: "1Gi"
+    codeGeneration:
+      enabled: true
+      maxRequests: 100
+    codeReview:
+      enabled: true
+      autoReview: false  # Manual review in staging
+
+# WebSocket configuration
+websocket:
+  enabled: true
+  maxConnections: 500  # Reduced for staging
+  heartbeatInterval: 30000
+  timeout: 60000
+  redis:
+    enabled: true
+    adapter: "redis"
+
+# Collaboration features
+collaboration:
+  enabled: true
+  maxRooms: 50  # Reduced for staging
+  maxUsersPerRoom: 10
+  features:
+    liveShare:
+      enabled: true
+    voiceChat:
+      enabled: false  # Disabled in staging
+    videoChat:
+      enabled: false  # Disabled in staging
+    screenShare:
+      enabled: true
+
+# Development tools
+development:
+  enabled: true
+  hotReload: true
+  debugMode: true
+  profiling:
+    enabled: true
+  testing:
+    enabled: true
+    coverage:
+      enabled: true
+      threshold: 70
+
+# Jobs configuration
+jobs:
+  cleanup:
+    enabled: true
+    schedule: "0 1 * * *"  # Daily at 1 AM
+    retention:
+      logs: "3d"
+      metrics: "7d"
+      traces: "3d"
+  healthCheck:
+    enabled: true
+    schedule: "*/5 * * * *"  # Every 5 minutes
+    endpoints:
+      - "/health"
+      - "/ready"
+      - "/metrics"
+
+# Node selector for staging nodes
+nodeSelector:
+  environment: staging
+  node-type: general-purpose
+
+# Tolerations for staging
+tolerations:
+  - key: "staging"
+    operator: "Equal"
+    value: "true"
+    effect: "NoSchedule"
+
+# Affinity rules
+affinity:
+  podAntiAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values:
+                  - security-dashboard
+          topologyKey: kubernetes.io/hostname
+
+# Environment-specific annotations
+podAnnotations:
+  environment: "staging"
+  version: "staging-latest"
+  prometheus.io/scrape: "true"
+  prometheus.io/port: "9090"
+  prometheus.io/path: "/metrics"
+
+# Service annotations
+serviceAnnotations:
+  service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
+  service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"
+  external-dns.alpha.kubernetes.io/hostname: "staging.nexus-ide.dev"
+
+# ConfigMap data for staging
+configMap:
+  data:
+    NODE_ENV: "staging"
+    LOG_LEVEL: "debug"
+    API_BASE_URL: "https://api.staging.nexus-ide.dev"
+    WS_BASE_URL: "wss://ws.staging.nexus-ide.dev"
+    REDIS_URL: "redis://nexus-ide-redis-master:6379"
+    DATABASE_URL: "postgresql://nexus_staging:staging-db-password@nexus-ide-postgresql:5432/nexus_ide_staging"
+    SENTRY_DSN: "https://staging-sentry-dsn@sentry.io/project"
+    ANALYTICS_ENABLED: "true"
+    FEATURE_FLAGS: |
+      {
+        "ai_code_completion": true,
+        "real_time_collaboration": true,
+        "advanced_debugging": true,
+        "performance_monitoring": true,
+        "security_scanning": true,
+        "beta_features": true
+      }
+
+# Secrets (these should be managed externally in production)
+secrets:
+  create: true
+  data:
+    # Database credentials
+    POSTGRES_PASSWORD: "c3RhZ2luZy1wb3N0Z3Jlcy1wYXNzd29yZA=="  # base64 encoded
+    REDIS_PASSWORD: "c3RhZ2luZy1yZWRpcy1wYXNzd29yZA=="  # base64 encoded
+    
+    # API keys (staging keys)
+    OPENAI_API_KEY: "c3RhZ2luZy1vcGVuYWktYXBpLWtleQ=="  # base64 encoded
+    ANTHROPIC_API_KEY: "c3RhZ2luZy1hbnRocm9waWMtYXBpLWtleQ=="  # base64 encoded
+    
+    # JWT and session secrets
+    JWT_SECRET: "c3RhZ2luZy1qd3Qtc2VjcmV0LWtleQ=="  # base64 encoded
+    SESSION_SECRET: "c3RhZ2luZy1zZXNzaW9uLXNlY3JldA=="  # base64 encoded
+    
+    # OAuth2 credentials
+    OAUTH2_CLIENT_SECRET: "c3RhZ2luZy1vYXV0aC1zZWNyZXQ="  # base64 encoded
+
+# Health checks
+livenessProbe:
+  httpGet:
+    path: /health
+    port: 3000
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 3
+
+readinessProbe:
+  httpGet:
+    path: /ready
+    port: 3000
+  initialDelaySeconds: 10
+  periodSeconds: 5
+  timeoutSeconds: 3
+  failureThreshold: 3
+
+# Startup probe
+startupProbe:
+  httpGet:
+    path: /health
+    port: 3000
+  initialDelaySeconds: 10
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 30
+
+# Pod disruption budget
+podDisruptionBudget:
+  enabled: true
+  minAvailable: 1
+  # maxUnavailable: 50%
+
+# Horizontal Pod Autoscaler v2
+hpa:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 5
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: 80
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 300
+      policies:
+      - type: Percent
+        value: 50
+        periodSeconds: 60
+    scaleUp:
+      stabilizationWindowSeconds: 60
+      policies:
+      - type: Percent
+        value: 100
+        periodSeconds: 30
+
+# Network policies
+networkPolicy:
+  enabled: true
+  policyTypes:
+    - Ingress
+    - Egress
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              name: ingress-nginx
+      ports:
+        - protocol: TCP
+          port: 3000
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              name: monitoring
+      ports:
+        - protocol: TCP
+          port: 9090
+  egress:
+    - to: []
+      ports:
+        - protocol: TCP
+          port: 53
+        - protocol: UDP
+          port: 53
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              name: kube-system
+      ports:
+        - protocol: TCP
+          port: 443
+
+# Service monitor for Prometheus
+serviceMonitor:
+  enabled: true
+  namespace: monitoring
+  labels:
+    app: nexus-ide-dashboard
+    environment: staging
+  interval: 30s
+  scrapeTimeout: 10s
+  path: /metrics
+  port: metrics
+
+# Grafana dashboard
+grafanaDashboard:
+  enabled: true
+  namespace: monitoring
+  labels:
+    grafana_dashboard: "1"
+  annotations:
+    grafana-folder: "/grafana-dashboard-definitions/nexus-ide"
+
+# External secrets (if using external-secrets operator)
+externalSecrets:
+  enabled: false  # Disabled in staging, using regular secrets
+  secretStore:
+    name: "aws-secrets-manager"
+    kind: "SecretStore"
+  secrets:
+    - name: "nexus-ide-staging-secrets"
+      refreshInterval: "1h"
+      data:
+        - secretKey: "POSTGRES_PASSWORD"
+          remoteRef:
+            key: "nexus-ide/staging/postgres"
+            property: "password"
+
+# Init containers
+initContainers:
+  - name: wait-for-db
+    image: postgres:15-alpine
+    command:
+      - sh
+      - -c
+      - |
+        until pg_isready -h nexus-ide-postgresql -p 5432 -U nexus_staging; do
+          echo "Waiting for PostgreSQL..."
+          sleep 2
+        done
+        echo "PostgreSQL is ready!"
+  - name: wait-for-redis
+    image: redis:7-alpine
+    command:
+      - sh
+      - -c
+      - |
+        until redis-cli -h nexus-ide-redis-master -p 6379 ping; do
+          echo "Waiting for Redis..."
+          sleep 2
+        done
+        echo "Redis is ready!"
+
+# Sidecar containers
+sidecarContainers:
+  - name: log-forwarder
+    image: fluent/fluent-bit:2.2
+    resources:
+      limits:
+        cpu: 100m
+        memory: 128Mi
+      requests:
+        cpu: 50m
+        memory: 64Mi
+    volumeMounts:
+      - name: varlog
+        mountPath: /var/log
+      - name: fluent-bit-config
+        mountPath: /fluent-bit/etc
+
+# Additional volumes
+additionalVolumes:
+  - name: varlog
+    emptyDir: {}
+  - name: fluent-bit-config
+    configMap:
+      name: fluent-bit-config
+
+# Additional volume mounts
+additionalVolumeMounts:
+  - name: varlog
+    mountPath: /var/log
+  - name: app-config
+    mountPath: /app/config
+    readOnly: true
+
+# Custom labels
+customLabels:
+  environment: staging
+  team: nexus-ide
+  project: security-dashboard
+  version: staging-latest
+  cost-center: engineering
+
+# Custom annotations
+customAnnotations:
+  deployment.kubernetes.io/revision: "1"
+  meta.helm.sh/release-name: nexus-ide-dashboard
+  meta.helm.sh/release-namespace: nexus-ide-staging

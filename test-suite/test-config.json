@@ -1,0 +1,92 @@
+{
+  "testTimeout": 60000,
+  "timeouts": {
+    "unit": 10000,
+    "integration": 20000,
+    "e2e": 60000,
+    "performance": 120000,
+    "api": 30000,
+    "security": 40000,
+    "startup": 30000
+  },
+  "parallelTests": 4,
+  "retryCount": 3,
+  "coverage": {
+    "enabled": true,
+    "threshold": 80,
+    "formats": ["html", "json", "text"],
+    "exclude": [
+      "node_modules/**",
+      "test-suite/**",
+      "coverage/**",
+      "*.config.js"
+    ]
+  },
+  "performance": {
+    "maxResponseTime": 1000,
+    "maxMemoryUsage": 512,
+    "maxCpuUsage": 80,
+    "loadTest": {
+      "concurrentUsers": 100,
+      "duration": 30,
+      "rampUpTime": 10
+    }
+  },
+  "endpoints": {
+    "nexusIde": "http://localhost:8081",
+    "gitMemory": "http://localhost:9001",
+    "dashboard": "http://localhost:3003",
+    "websocket": "ws://localhost:8081",
+    "mcpServers": "http://localhost:8081/api/mcp-servers"
+  },
+  "database": {
+    "testDb": "nexus_test",
+    "host": "localhost",
+    "port": 5432,
+    "username": "test_user",
+    "password": "test_password"
+  },
+  "security": {
+    "enableSqlInjectionTests": true,
+    "enableXssTests": true,
+    "enableCsrfTests": true,
+    "enableAuthTests": true,
+    "enableRateLimitTests": true
+  },
+  "e2e": {
+    "browser": "chromium",
+    "headless": true,
+    "viewport": {
+      "width": 1920,
+      "height": 1080
+    },
+    "timeout": 60000,
+    "retries": 2
+  },
+  "reporting": {
+    "formats": ["html", "json", "csv", "junit"],
+    "outputDir": "test-suite/reports",
+    "includeScreenshots": true,
+    "includeVideos": false
+  },
+  "notifications": {
+    "slack": {
+      "enabled": false,
+      "webhook": "",
+      "channel": "#nexus-tests"
+    },
+    "email": {
+      "enabled": false,
+      "recipients": [],
+      "smtp": {
+        "host": "",
+        "port": 587,
+        "secure": false,
+        "auth": {
+          "user": "",
+          "pass": ""
+        }
+      }
+    }
+  }
+}

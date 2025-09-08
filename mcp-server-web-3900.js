@@ -1,84 +1,38 @@
 #!/usr/bin/env node
 
-const { Server } = require('@modelcontextprotocol/sdk/server/index.js');
-const { StdioServerTransport } = require('@modelcontextprotocol/sdk/server/stdio.js');
-const { CallToolRequestSchema, ListToolsRequestSchema } = require('@modelcontextprotocol/sdk/types.js');
-const http = require('http');
+/**
+ * mcp-server-web-3900 - MCP Server (web)
+ * Port: 3900
+ * This is a bridge script that starts the actual server
+ */
 
-class mcpserverweb3900Server {
-    constructor() {
-        this.server = new Server({
-            name: 'mcp-server-web-3900',
-            version: '1.0.0'
-        }, {
-            capabilities: {
-                tools: {},
-                resources: {}
-            }
-        });
-        
-        this.setupHandlers();
-        this.startHealthServer(3900);
-    }
+const { spawn } = require('child_process');
+const path = require('path');
 
-    setupHandlers() {
-        this.server.setRequestHandler(ListToolsRequestSchema, async () => ({
-            tools: [
-                {
-                    name: 'web_operation',
-                    description: 'Perform web operations',
-                    inputSchema: {
-                        type: 'object',
-                        properties: {
-                            action: { type: 'string' },
-                            data: { type: 'object' }
-                        },
-                        required: ['action']
-                    }
-                }
-            ]
-        }));
+// Start the actual MCP server
+const serverPath = path.join(__dirname, 'servers', 'web', '1', 'web-001.js');
+const serverProcess = spawn('node', [serverPath], {
+    stdio: 'inherit',
+    cwd: __dirname
+});
 
-        this.server.setRequestHandler(CallToolRequestSchema, async (request) => {
-            const { name, arguments: args } = request.params;
-            
-            if (name === 'web_operation') {
-                return {
-                    content: [{
-                        type: 'text',
-                        text: `WEB operation ${args.action} completed successfully`
-                    }]
-                };
-            }
-            
-            throw new Error(`Unknown tool: ${name}`);
-        });
-    }
+serverProcess.on('error', (error) => {
+    console.error(`Failed to start web-001 server: ${error.message}`);
+    process.exit(1);
+});
 
-    startHealthServer(port) {
-        const healthServer = http.createServer((req, res) => {
-            res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({
-                status: 'healthy',
-                name: 'mcp-server-web-3900',
-                port: port,
-                category: 'web',
-                uptime: process.uptime(),
-                memory: process.memoryUsage()
-            }));
-        });
-        
-        healthServer.listen(port, () => {
-            console.log(`[mcp-server-web-3900] Health server running on port ${port}`);
-        });
-    }
+serverProcess.on('exit', (code) => {
+    console.log(`web-001 server exited with code ${code}`);
+    process.exit(code);
+});
 
-    async run() {
-        const transport = new StdioServerTransport();
-        await this.server.connect(transport);
-        console.log(`[mcp-server-web-3900] MCP Server running on stdio`);
-    }
-}
+// Handle process termination
+process.on('SIGINT', () => {
+    console.log('Terminating web-001 server...');
+    serverProcess.kill('SIGINT');
+});
 
-const server = new mcpserverweb3900Server();
-server.run().catch(console.error);
+process.on('SIGTERM', () => {
+    console.log('Terminating web-001 server...');
+    serverProcess.kill('SIGTERM');
+});

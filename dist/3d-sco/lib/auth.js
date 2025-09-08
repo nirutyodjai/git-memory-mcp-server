@@ -13,9 +13,18 @@ exports.hasRole = hasRole;
 exports.hashPassword = hashPassword;
 exports.verifyPassword = verifyPassword;
 // Admin credentials (in production, use environment variables)
-const ADMIN_USERNAME = process.env.ADMIN_USERNAME || 'admin';
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin123';
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
+const ADMIN_USERNAME = process.env.ADMIN_USERNAME || (() => {
+    console.warn('Warning: ADMIN_USERNAME not set in environment variables. Using default.');
+    return 'admin';
+})();
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || (() => {
+    console.warn('Warning: ADMIN_PASSWORD not set in environment variables. Using default.');
+    return 'password';
+})();
+const JWT_SECRET = process.env.JWT_SECRET || (() => {
+    console.warn('Warning: JWT_SECRET not set in environment variables. Using insecure default.');
+    return 'your-secret-key';
+})();
 // Simple JWT-like token generation (in production, use proper JWT library)
 function generateToken(user) {
     const payload = {
@@ -139,4 +148,3 @@ function hashPassword(password) {
 function verifyPassword(password, hash) {
     return hashPassword(password) === hash;
 }
-//# sourceMappingURL=auth.js.map

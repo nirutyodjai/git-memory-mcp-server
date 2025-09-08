@@ -17,7 +17,10 @@ class SharedDataCoordinator {
         this.app = express();
         this.server = null;
         this.wss = null;
-        this.port = 3500;
+        // Allow overriding port; default 3500
+        this.port = parseInt(process.env.SHARED_COORD_PORT || process.env.PORT || '3500', 10);
+        this.strictPort = ['1','true','yes','on'].includes(String(process.env.SHARED_COORD_PORT_STRICT || process.env.PORT_STRICT || '').toLowerCase());
+        this.maxPortAttempts = parseInt(process.env.SHARED_COORD_PORT_MAX_ATTEMPTS || process.env.PORT_MAX_ATTEMPTS || '50', 10);
         this.gitMemoryPath = '.git-memory';
         this.sharedDataPath = path.join(this.gitMemoryPath, 'shared');
         this.connectedServers = new Map();
@@ -183,6 +186,15 @@ class SharedDataCoordinator {
     setupWebSocket() {
         this.server = http.createServer(this.app);
         this.wss = new WebSocket.Server({ server: this.server });
+        
+        // ป้องกัน error ของ WebSocketServer ที่ไม่มีการจับ (เช่น EADDRINUSE ตอนชนพอร์ต) เพื่อให้ HTTP server จัดการ retry ได้
+        this.wss.on('error', (err) => {
+            if (err && err.code === 'EADDRINUSE') {
+                // ปล่อยให้ฝั่ง HTTP server จัดการ logic การเลื่อนพอร์ต/รีทราย
+                return;
+            }
+            console.error('WebSocket server error:', err?.message || err);
+        });
         
         this.wss.on('connection', (ws, req) => {
             console.log('🔌 WebSocket connection established');
@@ -437,21 +449,43 @@ class SharedDataCoordinator {
     }
 
     start() {
-        this.server.listen(this.port, () => {
-            console.log(`🚀 Shared Data Coordinator running on port ${this.port}`);
-            console.log(`📁 Git Memory path: ${this.gitMemoryPath}`);
-            console.log(`📊 Shared data path: ${this.sharedDataPath}`);
-            console.log('\n🔗 Available endpoints:');
-            console.log(`   POST /register - Register MCP server`);
-            console.log(`   POST /share/:dataType - Share data`);
-            console.log(`   GET /share/:dataType - Get shared data`);
-            console.log(`   GET /servers - List connected servers`);
-            console.log(`   POST /git-memory/:operation - Git operations`);
-            console.log(`   POST /heartbeat - Server heartbeat`);
-            console.log(`   WebSocket: ws://localhost:${this.port}`);
-        });
+        let attempt = 0;
+        const tryListen = () => {
+            const currentPort = this.port;
+            this.server.listen(this.port, () => {
+                console.log(`🚀 Shared Data Coordinator running on port ${this.port}`);
+                console.log(`📁 Git Memory path: ${this.gitMemoryPath}`);
+                console.log(`📊 Shared data path: ${this.sharedDataPath}`);
+                console.log('\n🔗 Available endpoints:');
+                console.log(`   POST /register - Register MCP server`);
+                console.log(`   POST /share/:dataType - Share data`);
+                console.log(`   GET /share/:dataType - Get shared data`);
+                console.log(`   GET /servers - List connected servers`);
+                console.log(`   POST /git-memory/:operation - Git operations`);
+                console.log(`   POST /heartbeat - Server heartbeat`);
+                console.log(`   WebSocket: ws://localhost:${this.port}`);
+                
+                this.startHealthCheck();
+            });
+            
+            this.server.once('error', (err) => {
+                if (err && err.code === 'EADDRINUSE' && !this.strictPort && attempt < this.maxPortAttempts) {
+                    attempt++;
+                    console.warn(`⚠️ Port ${currentPort} in use. Trying ${currentPort + 1} (attempt ${attempt}/${this.maxPortAttempts})...`);
+                    this.port = currentPort + 1;
+                    const backoff = Math.min(1000, 100 + attempt * 50);
+                    setTimeout(tryListen, backoff);
+                } else if (err && err.code === 'EADDRINUSE') {
+                    console.error(`❌ Port ${currentPort} is already in use and strict mode is enabled or attempts exceeded.`);
+                    process.exit(1);
+                } else {
+                    console.error('❌ Server error:', err?.message || err);
+                    process.exit(1);
+                }
+            });
+        };
         
-        this.startHealthCheck();
+        tryListen();
     }
 }
 

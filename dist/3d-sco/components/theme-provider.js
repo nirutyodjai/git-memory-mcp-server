@@ -38,6 +38,5 @@ exports.ThemeProvider = ThemeProvider;
 const React = __importStar(require("react"));
 const next_themes_1 = require("next-themes");
 function ThemeProvider({ children, ...props }) {
-    return <next_themes_1.ThemeProvider {...props}>{children}</next_themes_1.ThemeProvider>;
+    return React.createElement(next_themes_1.ThemeProvider, { ...props }, children);
 }
-//# sourceMappingURL=theme-provider.js.map

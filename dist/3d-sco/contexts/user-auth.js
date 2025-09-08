@@ -145,7 +145,7 @@ function UserAuthProvider({ children }) {
     (0, react_1.useEffect)(() => {
         checkAuth();
     }, []);
-    return (<UserAuthContext.Provider value={{
+    return (react_1.default.createElement(UserAuthContext.Provider, { value: {
             user,
             loading,
             login,
@@ -153,9 +153,7 @@ function UserAuthProvider({ children }) {
             logout,
             updateProfile,
             checkAuth,
-        }}>
-      {children}
-    </UserAuthContext.Provider>);
+        } }, children));
 }
 function useUserAuth() {
     const context = (0, react_1.useContext)(UserAuthContext);
@@ -164,4 +162,3 @@ function useUserAuth() {
     }
     return context;
 }
-//# sourceMappingURL=user-auth.js.map

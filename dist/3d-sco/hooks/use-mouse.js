@@ -26,4 +26,3 @@ const useMouse = ({ allowPage, allowAngle, allowAcc, } = {}) => {
     return { x, y, angle, acceleration };
 };
 exports.useMouse = useMouse;
-//# sourceMappingURL=use-mouse.js.map

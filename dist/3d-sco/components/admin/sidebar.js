@@ -63,54 +63,32 @@ const sidebarItems = [
 ];
 function Sidebar({ className }) {
     const pathname = (0, navigation_1.usePathname)();
-    return (<div className={(0, utils_1.cn)('pb-12', className)}>
-      <div className="space-y-4 py-4">
-        <div className="px-3 py-2">
-          <div className="flex items-center mb-6">
-            <lucide_react_1.Shield className="h-8 w-8 text-primary mr-3"/>
-            <h2 className="text-lg font-semibold tracking-tight">
-              แผงควบคุมแอดมิน
-            </h2>
-          </div>
-          <div className="space-y-1">
-            <button_1.Button variant="ghost" className="w-full justify-start" asChild>
-              <link_1.default href="/">
-                <lucide_react_1.Home className="mr-2 h-4 w-4"/>
-                กลับสู่เว็บไซต์หลัก
-              </link_1.default>
-            </button_1.Button>
-          </div>
-        </div>
-        <div className="px-3 py-2">
-          <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight">
-            เมนูหลัก
-          </h2>
-          <div className="space-y-1">
-            {sidebarItems.map((item) => (<button_1.Button key={item.href} variant={pathname === item.href ? 'secondary' : 'ghost'} className="w-full justify-start" asChild>
-                <link_1.default href={item.href}>
-                  <item.icon className="mr-2 h-4 w-4"/>
-                  {item.title}
-                </link_1.default>
-              </button_1.Button>))}
-          </div>
-        </div>
-      </div>
-    </div>);
+    return (React.createElement("div", { className: (0, utils_1.cn)('pb-12', className) },
+        React.createElement("div", { className: "space-y-4 py-4" },
+            React.createElement("div", { className: "px-3 py-2" },
+                React.createElement("div", { className: "flex items-center mb-6" },
+                    React.createElement(lucide_react_1.Shield, { className: "h-8 w-8 text-primary mr-3" }),
+                    React.createElement("h2", { className: "text-lg font-semibold tracking-tight" }, "\u0E41\u0E1C\u0E07\u0E04\u0E27\u0E1A\u0E04\u0E38\u0E21\u0E41\u0E2D\u0E14\u0E21\u0E34\u0E19")),
+                React.createElement("div", { className: "space-y-1" },
+                    React.createElement(button_1.Button, { variant: "ghost", className: "w-full justify-start", asChild: true },
+                        React.createElement(link_1.default, { href: "/" },
+                            React.createElement(lucide_react_1.Home, { className: "mr-2 h-4 w-4" }),
+                            "\u0E01\u0E25\u0E31\u0E1A\u0E2A\u0E39\u0E48\u0E40\u0E27\u0E47\u0E1A\u0E44\u0E0B\u0E15\u0E4C\u0E2B\u0E25\u0E31\u0E01")))),
+            React.createElement("div", { className: "px-3 py-2" },
+                React.createElement("h2", { className: "mb-2 px-4 text-lg font-semibold tracking-tight" }, "\u0E40\u0E21\u0E19\u0E39\u0E2B\u0E25\u0E31\u0E01"),
+                React.createElement("div", { className: "space-y-1" }, sidebarItems.map((item) => (React.createElement(button_1.Button, { key: item.href, variant: pathname === item.href ? 'secondary' : 'ghost', className: "w-full justify-start", asChild: true },
+                    React.createElement(link_1.default, { href: item.href },
+                        React.createElement(item.icon, { className: "mr-2 h-4 w-4" }),
+                        item.title)))))))));
 }
 function MobileSidebar() {
     const [open, setOpen] = (0, react_1.useState)(false);
-    return (<sheet_1.Sheet open={open} onOpenChange={setOpen}>
-      <sheet_1.SheetTrigger asChild>
-        <button_1.Button variant="ghost" className="mr-2 px-0 text-base hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 md:hidden">
-          <lucide_react_1.Menu className="h-6 w-6"/>
-          <span className="sr-only">Toggle Menu</span>
-        </button_1.Button>
-      </sheet_1.SheetTrigger>
-      <sheet_1.SheetContent side="left" className="pr-0">
-        <scroll_area_1.ScrollArea className="my-4 h-[calc(100vh-8rem)] pb-10 pl-6">
-          <Sidebar />
-        </scroll_area_1.ScrollArea>
-      </sheet_1.SheetContent>
-    </sheet_1.Sheet>);
+    return (React.createElement(sheet_1.Sheet, { open: open, onOpenChange: setOpen },
+        React.createElement(sheet_1.SheetTrigger, { asChild: true },
+            React.createElement(button_1.Button, { variant: "ghost", className: "mr-2 px-0 text-base hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 md:hidden" },
+                React.createElement(lucide_react_1.Menu, { className: "h-6 w-6" }),
+                React.createElement("span", { className: "sr-only" }, "Toggle Menu"))),
+        React.createElement(sheet_1.SheetContent, { side: "left", className: "pr-0" },
+            React.createElement(scroll_area_1.ScrollArea, { className: "my-4 h-[calc(100vh-8rem)] pb-10 pl-6" },
+                React.createElement(Sidebar, null)))));
 }
-//# sourceMappingURL=sidebar.js.map

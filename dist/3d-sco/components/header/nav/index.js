@@ -16,16 +16,10 @@ const Index = ({ setIsActive }) => {
         isActive: false,
         index: 0,
     });
-    return (<framer_motion_1.motion.div variants={anim_1.height} initial="initial" animate="enter" exit="exit" className={style_module_scss_1.default.nav}>
-      <div className={(0, utils_1.cn)(style_module_scss_1.default.wrapper, 'flex justify-end sm:justify-start')}>
-        <div className={style_module_scss_1.default.container}>
-          <body_1.default links={config_1.links} selectedLink={selectedLink} setSelectedLink={setSelectedLink} setIsActive={setIsActive}/>
-          {/* <Footer /> */}
-        </div>
-        <image_1.default src={config_1.links[selectedLink.index].thumbnail} isActive={selectedLink.isActive}/>
-        {/* <p>{links[selectedLink.index].thumbnail}</p> */}
-      </div>
-    </framer_motion_1.motion.div>);
+    return (React.createElement(framer_motion_1.motion.div, { variants: anim_1.height, initial: "initial", animate: "enter", exit: "exit", className: style_module_scss_1.default.nav },
+        React.createElement("div", { className: (0, utils_1.cn)(style_module_scss_1.default.wrapper, 'flex justify-end sm:justify-start') },
+            React.createElement("div", { className: style_module_scss_1.default.container },
+                React.createElement(body_1.default, { links: config_1.links, selectedLink: selectedLink, setSelectedLink: setSelectedLink, setIsActive: setIsActive })),
+            React.createElement(image_1.default, { src: config_1.links[selectedLink.index].thumbnail, isActive: selectedLink.isActive }))));
 };
 exports.default = Index;
-//# sourceMappingURL=index.js.map

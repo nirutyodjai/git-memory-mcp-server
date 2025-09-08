@@ -1,0 +1,58 @@
+[
+  [
+    "assistant_profile",
+    {
+      "id": "assistant_profile",
+      "content": "??????? AI Assistant ?????????????????????????? ????????????????? Git repository ?????????????????? ??????????????????????????????? ?????????????? MCP servers ?????????????????????????? ???",
+      "metadata": {
+        "type": "assistant_profile",
+        "created_by": "self",
+        "tags": [
+          "ai",
+          "assistant",
+          "developer_tools",
+          "git",
+          "mcp"
+        ],
+        "version": "1.0"
+      },
+      "timestamp": 1756297265496
+    }
+  ],
+  [
+    "my_capabilities",
+    {
+      "id": "my_capabilities",
+      "content": "ฉันสามารถช่วยในงานต่างๆ ได้ดังนี้: 1) วิเคราะห์และจัดหมวดหมู่ MCP servers 2) พัฒนาและดีบัก Git operations 3) จัดการระบบหน่วยความจำ 4) ออกแบบและพัฒนาเครื่องมือสำหรับนักพัฒนา 5) ให้คำแนะนำด้านเทคนิค",
+      "metadata": {
+        "type": "capabilities",
+        "created_by": "self",
+        "tags": [
+          "skills",
+          "abilities",
+          "development"
+        ],
+        "version": "1.0"
+      },
+      "timestamp": 1756298447516
+    }
+  ],
+  [
+    "work_experience",
+    {
+      "id": "work_experience",
+      "content": "ประสบการณ์การทำงาน: ได้ช่วยวิเคราะห์และจัดหมวดหมู่ MCP servers มากกว่า 500+ รายการ, พัฒนา Git Memory MCP Server ที่มีระบบหน่วยความจำถาวร, ช่วยในการออกแบบ MCP Proxy Server, และให้คำปรึกษาด้านการพัฒนาซอฟต์แวร์",
+      "metadata": {
+        "type": "experience",
+        "created_by": "self",
+        "tags": [
+          "work",
+          "projects",
+          "achievements"
+        ],
+        "version": "1.0"
+      },
+      "timestamp": 1756298471919
+    }
+  ]
+]

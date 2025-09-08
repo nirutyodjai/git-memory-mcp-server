@@ -1,0 +1,521 @@
+# =============================================================================
+# NEXUS IDE - AI Central Server Docker Compose Configuration
+# =============================================================================
+# 
+# This Docker Compose file sets up the complete AI Central Server environment
+# including all required services and dependencies.
+# 
+# Usage:
+# - Development: docker-compose up -d
+# - Production: docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+# - Scaling: docker-compose up -d --scale ai-central=3
+# 
+# Services included:
+# - AI Central Server (Main application)
+# - MongoDB (Primary database)
+# - Redis (Caching and session storage)
+# - PostgreSQL (Analytics and reporting)
+# - Nginx (Load balancer and reverse proxy)
+# - Prometheus (Metrics collection)
+# - Grafana (Monitoring dashboard)
+# - Elasticsearch (Logging and search)
+# - Kibana (Log visualization)
+# =============================================================================
+
+version: '3.8'
+
+services:
+  # ==========================================================================
+  # AI Central Server - Main Application
+  # ==========================================================================
+  ai-central:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    container_name: nexus-ai-central
+    restart: unless-stopped
+    ports:
+      - "4200:4200"
+    environment:
+      - NODE_ENV=production
+      - PORT=4200
+      - HOST=0.0.0.0
+      
+      # Database Configuration
+      - MONGO_URI=mongodb://mongo:27017/nexus-ai
+      - REDIS_URL=redis://redis:6379
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB=nexus_ai
+      - POSTGRES_USER=nexus_user
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-nexus_password_2024}
+      
+      # Security
+      - JWT_SECRET=${JWT_SECRET:-your_super_secret_jwt_key_here_make_it_long_and_random}
+      - ENCRYPTION_KEY=${ENCRYPTION_KEY:-your_32_character_encryption_key}
+      
+      # AI Model Configuration
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+      - LLAMA_API_URL=http://ollama:11434
+      
+      # Performance
+      - MAX_CONCURRENT_REQUESTS=200
+      - CACHE_TTL=3600
+      - REQUEST_TIMEOUT=30000
+      
+      # Features
+      - ENABLE_CODE_COMPLETION=true
+      - ENABLE_CONVERSATION=true
+      - ENABLE_DEBUGGING=true
+      - ENABLE_OPTIMIZATION=true
+      - ENABLE_RATE_LIMITING=true
+      
+      # Monitoring
+      - METRICS_ENABLED=true
+      - HEALTH_CHECK_ENABLED=true
+      - LOG_LEVEL=info
+      
+      # External Services
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+      - PROMETHEUS_URL=http://prometheus:9090
+    
+    volumes:
+      - ./logs:/app/logs
+      - ./uploads:/app/uploads
+      - ./cache:/app/cache
+      - ai-central-data:/app/data
+    
+    depends_on:
+      - mongo
+      - redis
+      - postgres
+      - elasticsearch
+    
+    networks:
+      - nexus-network
+    
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4200/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 4G
+        reservations:
+          cpus: '1.0'
+          memory: 2G
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+
+  # ==========================================================================
+  # MongoDB - Primary Database
+  # ==========================================================================
+  mongo:
+    image: mongo:7-jammy
+    container_name: nexus-mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_ROOT_USERNAME:-admin}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_ROOT_PASSWORD:-admin_password_2024}
+      - MONGO_INITDB_DATABASE=nexus-ai
+    volumes:
+      - mongo-data:/data/db
+      - mongo-config:/data/configdb
+      - ./scripts/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    networks:
+      - nexus-network
+    command: mongod --auth --bind_ip_all --replSet rs0
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # ==========================================================================
+  # Redis - Caching and Session Storage
+  # ==========================================================================
+  redis:
+    image: redis:7-alpine
+    container_name: nexus-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    environment:
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-redis_password_2024}
+    volumes:
+      - redis-data:/data
+      - ./config/redis.conf:/usr/local/etc/redis/redis.conf:ro
+    networks:
+      - nexus-network
+    command: redis-server /usr/local/etc/redis/redis.conf --requirepass ${REDIS_PASSWORD:-redis_password_2024}
+    healthcheck:
+      test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 1G
+        reservations:
+          cpus: '0.25'
+          memory: 512M
+
+  # ==========================================================================
+  # PostgreSQL - Analytics and Reporting
+  # ==========================================================================
+  postgres:
+    image: postgres:16-alpine
+    container_name: nexus-postgres
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=nexus_ai
+      - POSTGRES_USER=nexus_user
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-nexus_password_2024}
+      - POSTGRES_INITDB_ARGS=--auth-host=scram-sha-256
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./scripts/postgres-init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    networks:
+      - nexus-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U nexus_user -d nexus_ai"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 2G
+        reservations:
+          cpus: '0.5'
+          memory: 1G
+
+  # ==========================================================================
+  # Ollama - Local AI Models
+  # ==========================================================================
+  ollama:
+    image: ollama/ollama:latest
+    container_name: nexus-ollama
+    restart: unless-stopped
+    ports:
+      - "11434:11434"
+    environment:
+      - OLLAMA_HOST=0.0.0.0
+      - OLLAMA_ORIGINS=*
+    volumes:
+      - ollama-data:/root/.ollama
+    networks:
+      - nexus-network
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 8G
+        reservations:
+          cpus: '2.0'
+          memory: 4G
+    # Uncomment if you have NVIDIA GPU support
+    # runtime: nvidia
+    # environment:
+    #   - NVIDIA_VISIBLE_DEVICES=all
+    #   - NVIDIA_DRIVER_CAPABILITIES=compute,utility
+
+  # ==========================================================================
+  # Nginx - Load Balancer and Reverse Proxy
+  # ==========================================================================
+  nginx:
+    image: nginx:alpine
+    container_name: nexus-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./config/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./config/nginx/sites-available:/etc/nginx/sites-available:ro
+      - ./ssl:/etc/nginx/ssl:ro
+      - nginx-logs:/var/log/nginx
+    depends_on:
+      - ai-central
+    networks:
+      - nexus-network
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # ==========================================================================
+  # Elasticsearch - Logging and Search
+  # ==========================================================================
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.11.0
+    container_name: nexus-elasticsearch
+    restart: unless-stopped
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+      - bootstrap.memory_lock=true
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+    networks:
+      - nexus-network
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:9200/_cluster/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G
+        reservations:
+          cpus: '1.0'
+          memory: 1G
+
+  # ==========================================================================
+  # Kibana - Log Visualization
+  # ==========================================================================
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.11.0
+    container_name: nexus-kibana
+    restart: unless-stopped
+    ports:
+      - "5601:5601"
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+      - SERVER_NAME=nexus-kibana
+      - SERVER_HOST=0.0.0.0
+    depends_on:
+      - elasticsearch
+    networks:
+      - nexus-network
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:5601/api/status || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  # ==========================================================================
+  # Prometheus - Metrics Collection
+  # ==========================================================================
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: nexus-prometheus
+    restart: unless-stopped
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=200h'
+      - '--web.enable-lifecycle'
+    networks:
+      - nexus-network
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:9090/-/healthy"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # ==========================================================================
+  # Grafana - Monitoring Dashboard
+  # ==========================================================================
+  grafana:
+    image: grafana/grafana:latest
+    container_name: nexus-grafana
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=${GRAFANA_USER:-admin}
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD:-admin_password_2024}
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_SERVER_DOMAIN=localhost
+      - GF_SMTP_ENABLED=false
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./config/grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./config/grafana/dashboards:/var/lib/grafana/dashboards:ro
+    depends_on:
+      - prometheus
+    networks:
+      - nexus-network
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:3000/api/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # ==========================================================================
+  # Node Exporter - System Metrics
+  # ==========================================================================
+  node-exporter:
+    image: prom/node-exporter:latest
+    container_name: nexus-node-exporter
+    restart: unless-stopped
+    ports:
+      - "9100:9100"
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.rootfs=/rootfs'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+    networks:
+      - nexus-network
+
+  # ==========================================================================
+  # cAdvisor - Container Metrics
+  # ==========================================================================
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    container_name: nexus-cadvisor
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+    privileged: true
+    devices:
+      - /dev/kmsg
+    networks:
+      - nexus-network
+
+# =============================================================================
+# Networks Configuration
+# =============================================================================
+networks:
+  nexus-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+          gateway: 172.20.0.1
+
+# =============================================================================
+# Volumes Configuration
+# =============================================================================
+volumes:
+  # Application Data
+  ai-central-data:
+    driver: local
+  
+  # Database Volumes
+  mongo-data:
+    driver: local
+  mongo-config:
+    driver: local
+  redis-data:
+    driver: local
+  postgres-data:
+    driver: local
+  
+  # AI Models
+  ollama-data:
+    driver: local
+  
+  # Monitoring and Logging
+  elasticsearch-data:
+    driver: local
+  prometheus-data:
+    driver: local
+  grafana-data:
+    driver: local
+  nginx-logs:
+    driver: local
+
+# =============================================================================
+# Docker Compose Commands Reference
+# =============================================================================
+# 
+# Basic Commands:
+# - docker-compose up -d                    # Start all services in background
+# - docker-compose down                     # Stop and remove all services
+# - docker-compose restart                  # Restart all services
+# - docker-compose logs -f                  # Follow logs from all services
+# - docker-compose logs -f ai-central       # Follow logs from specific service
+# 
+# Service Management:
+# - docker-compose up -d ai-central         # Start specific service
+# - docker-compose restart ai-central       # Restart specific service
+# - docker-compose stop ai-central          # Stop specific service
+# - docker-compose rm ai-central            # Remove specific service
+# 
+# Scaling:
+# - docker-compose up -d --scale ai-central=3  # Scale AI Central to 3 instances
+# - docker-compose up -d --scale redis=2       # Scale Redis to 2 instances
+# 
+# Development:
+# - docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d
+# - docker-compose exec ai-central bash     # Access container shell
+# - docker-compose exec mongo mongosh       # Access MongoDB shell
+# - docker-compose exec redis redis-cli     # Access Redis CLI
+# 
+# Production:
+# - docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+# - docker-compose pull                     # Pull latest images
+# - docker-compose build --no-cache         # Rebuild images
+# 
+# Monitoring:
+# - docker-compose ps                       # Show running services
+# - docker-compose top                      # Show running processes
+# - docker stats                            # Show resource usage
+# 
+# Cleanup:
+# - docker-compose down -v                 # Remove services and volumes
+# - docker system prune -a                 # Clean up unused Docker resources
+# - docker volume prune                    # Remove unused volumes
+# 
+# Backup:
+# - docker-compose exec mongo mongodump --out /backup
+# - docker-compose exec postgres pg_dump -U nexus_user nexus_ai > backup.sql
+# 
+# =============================================================================

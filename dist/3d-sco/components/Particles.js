@@ -202,8 +202,6 @@ function Particles({ className = "", quantity = 30, staticity = 50, ease = 50, r
         });
         window.requestAnimationFrame(animate);
     };
-    return (<div className={(0, utils_1.cn)(className, "dark:bg-gradient-to-tl from-black via-zinc-600/20 to-black")} ref={canvasContainerRef} aria-hidden="true">
-      <canvas ref={canvasRef}/>
-    </div>);
+    return (react_1.default.createElement("div", { className: (0, utils_1.cn)(className, "dark:bg-gradient-to-tl from-black via-zinc-600/20 to-black"), ref: canvasContainerRef, "aria-hidden": "true" },
+        react_1.default.createElement("canvas", { ref: canvasRef })));
 }
-//# sourceMappingURL=Particles.js.map

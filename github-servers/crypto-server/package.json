@@ -1,9 +1,0 @@
-{
-  "name": "crypto-server",
-  "version": "1.0.0",
-  "description": "Cryptographic operations and security",
-  "main": "server.js",
-  "scripts": {
-    "start": "node server.js"
-  }
-}

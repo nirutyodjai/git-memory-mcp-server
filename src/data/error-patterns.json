@@ -1,0 +1,58 @@
+{
+  "undefined-variable": {
+    "type": "runtime",
+    "pattern": "ReferenceError: (\\w+) is not defined",
+    "fixes": [
+      "Declare the variable before using it",
+      "Check for typos in variable name",
+      "Import the required module or function"
+    ],
+    "autoFix": true,
+    "confidence": 0.9,
+    "usage": 0,
+    "successRate": 0,
+    "lastUsed": null
+  },
+  "syntax-error": {
+    "type": "syntax",
+    "pattern": "SyntaxError: (.+)",
+    "fixes": [
+      "Check for missing brackets, parentheses, or semicolons",
+      "Verify proper indentation",
+      "Check for invalid characters"
+    ],
+    "autoFix": true,
+    "confidence": 0.95,
+    "usage": 0,
+    "successRate": 0,
+    "lastUsed": null
+  },
+  "type-error": {
+    "type": "runtime",
+    "pattern": "TypeError: (.+)",
+    "fixes": [
+      "Check data types before operations",
+      "Add null/undefined checks",
+      "Verify object properties exist"
+    ],
+    "autoFix": false,
+    "confidence": 0.8,
+    "usage": 0,
+    "successRate": 0,
+    "lastUsed": null
+  },
+  "async-await-error": {
+    "type": "logic",
+    "pattern": "await.*not.*async",
+    "fixes": [
+      "Add async keyword to function",
+      "Use .then() instead of await",
+      "Wrap in async IIFE"
+    ],
+    "autoFix": true,
+    "confidence": 0.9,
+    "usage": 0,
+    "successRate": 0,
+    "lastUsed": null
+  }
+}

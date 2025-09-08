@@ -450,4 +450,3 @@ class MemoryTools {
 exports.MemoryTools = MemoryTools;
 // Export singleton instance
 exports.memoryTools = MemoryTools.getInstance();
-//# sourceMappingURL=memory-tools.js.map

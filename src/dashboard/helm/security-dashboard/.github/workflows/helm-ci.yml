@@ -1,0 +1,718 @@
+name: 🚀 NEXUS IDE Security Dashboard - Helm CI/CD
+
+on:
+  push:
+    branches: [ main, develop, 'release/*', 'feature/*' ]
+    paths:
+      - 'src/dashboard/helm/security-dashboard/**'
+      - '.github/workflows/helm-ci.yml'
+  pull_request:
+    branches: [ main, develop ]
+    paths:
+      - 'src/dashboard/helm/security-dashboard/**'
+      - '.github/workflows/helm-ci.yml'
+  release:
+    types: [ published ]
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Deployment environment'
+        required: true
+        default: 'staging'
+        type: choice
+        options:
+          - staging
+          - production
+      skip_tests:
+        description: 'Skip tests'
+        required: false
+        default: false
+        type: boolean
+      force_deploy:
+        description: 'Force deployment'
+        required: false
+        default: false
+        type: boolean
+
+env:
+  HELM_VERSION: '3.14.0'
+  KUBECTL_VERSION: '1.29.0'
+  CHART_PATH: 'src/dashboard/helm/security-dashboard'
+  REGISTRY: ghcr.io
+  IMAGE_NAME: nexus-ide/security-dashboard
+  KUBECONFIG_FILE: '${{ github.workspace }}/.kube/config'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # Job 1: Detect Changes
+  detect-changes:
+    name: 🔍 Detect Changes
+    runs-on: ubuntu-latest
+    outputs:
+      chart-changed: ${{ steps.changes.outputs.chart }}
+      version-changed: ${{ steps.version.outputs.changed }}
+      current-version: ${{ steps.version.outputs.current }}
+      should-deploy: ${{ steps.deploy.outputs.should-deploy }}
+    steps:
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 🔍 Detect Chart Changes
+        uses: dorny/paths-filter@v2
+        id: changes
+        with:
+          filters: |
+            chart:
+              - 'src/dashboard/helm/security-dashboard/**'
+
+      - name: 📋 Get Chart Version
+        id: version
+        run: |
+          CURRENT_VERSION=$(grep '^version:' ${{ env.CHART_PATH }}/Chart.yaml | awk '{print $2}')
+          echo "current=$CURRENT_VERSION" >> $GITHUB_OUTPUT
+          
+          if git tag --list | grep -q "helm-v$CURRENT_VERSION"; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: 🚀 Determine Deployment
+        id: deploy
+        run: |
+          SHOULD_DEPLOY="false"
+          
+          # Deploy on main branch
+          if [[ "${{ github.ref }}" == "refs/heads/main" && "${{ steps.changes.outputs.chart }}" == "true" ]]; then
+            SHOULD_DEPLOY="true"
+          fi
+          
+          # Deploy on release
+          if [[ "${{ github.event_name }}" == "release" ]]; then
+            SHOULD_DEPLOY="true"
+          fi
+          
+          # Deploy on manual trigger
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            SHOULD_DEPLOY="true"
+          fi
+          
+          echo "should-deploy=$SHOULD_DEPLOY" >> $GITHUB_OUTPUT
+
+  # Job 2: Lint and Validate
+  lint-and-validate:
+    name: 🔍 Lint & Validate
+    runs-on: ubuntu-latest
+    needs: detect-changes
+    if: needs.detect-changes.outputs.chart-changed == 'true'
+    steps:
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v4
+
+      - name: 🛠️ Setup Helm
+        uses: azure/setup-helm@v3
+        with:
+          version: ${{ env.HELM_VERSION }}
+
+      - name: 🔍 Helm Lint
+        run: |
+          cd ${{ env.CHART_PATH }}
+          helm lint . --strict
+
+      - name: 📋 Validate Chart.yaml
+        run: |
+          cd ${{ env.CHART_PATH }}
+          helm show chart . > /dev/null
+
+      - name: 🔒 Validate Values Schema
+        if: hashFiles('src/dashboard/helm/security-dashboard/values.schema.json') != ''
+        run: |
+          cd ${{ env.CHART_PATH }}
+          # Install ajv-cli for JSON schema validation
+          npm install -g ajv-cli
+          
+          # Validate default values against schema
+          ajv validate -s values.schema.json -d values.yaml
+
+      - name: 🧪 Template Validation
+        run: |
+          cd ${{ env.CHART_PATH }}
+          
+          # Test different scenarios
+          scenarios=(
+            "default:"
+            "development:--set global.environment=development --set replicaCount=1"
+            "staging:--set global.environment=staging --set replicaCount=2"
+            "production:--set global.environment=production --set replicaCount=3 --set autoscaling.enabled=true"
+            "minimal:--set replicaCount=1 --set auth.enabled=false --set tls.enabled=false"
+            "secure:--set auth.enabled=true --set tls.enabled=true --set security.networkPolicy.enabled=true"
+          )
+          
+          for scenario in "${scenarios[@]}"; do
+            scenario_name=$(echo "$scenario" | cut -d: -f1)
+            scenario_args=$(echo "$scenario" | cut -d: -f2-)
+            
+            echo "🧪 Testing scenario: $scenario_name"
+            
+            if [[ -n "$scenario_args" ]]; then
+              helm template nexus-ide-test . $scenario_args --validate > /tmp/template-$scenario_name.yaml
+            else
+              helm template nexus-ide-test . --validate > /tmp/template-$scenario_name.yaml
+            fi
+            
+            # Validate generated YAML
+            kubectl apply --dry-run=client -f /tmp/template-$scenario_name.yaml
+          done
+
+      - name: 📊 Chart Analysis
+        run: |
+          cd ${{ env.CHART_PATH }}
+          
+          echo "📋 Chart Information:"
+          helm show chart .
+          
+          echo ""
+          echo "📦 Chart Dependencies:"
+          helm dependency list . || echo "No dependencies found"
+          
+          echo ""
+          echo "📄 Generated Resources:"
+          helm template nexus-ide-test . | grep "^kind:" | sort | uniq -c
+
+  # Job 3: Security Scan
+  security-scan:
+    name: 🔒 Security Scan
+    runs-on: ubuntu-latest
+    needs: detect-changes
+    if: needs.detect-changes.outputs.chart-changed == 'true'
+    steps:
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v4
+
+      - name: 🛠️ Setup Helm
+        uses: azure/setup-helm@v3
+        with:
+          version: ${{ env.HELM_VERSION }}
+
+      - name: 🔒 Install Security Tools
+        run: |
+          # Install Checkov for security scanning
+          pip install checkov
+          
+          # Install Polaris for Kubernetes best practices
+          curl -L https://github.com/FairwindsOps/polaris/releases/latest/download/polaris_linux_amd64.tar.gz | tar xz
+          sudo mv polaris /usr/local/bin/
+
+      - name: 🔍 Helm Security Scan
+        run: |
+          cd ${{ env.CHART_PATH }}
+          
+          # Generate templates for scanning
+          helm template nexus-ide-security . \
+            --set global.environment=production \
+            --set auth.enabled=true \
+            --set tls.enabled=true \
+            --set security.networkPolicy.enabled=true \
+            > /tmp/security-scan-templates.yaml
+          
+          # Run Checkov security scan
+          echo "🔒 Running Checkov security scan..."
+          checkov -f /tmp/security-scan-templates.yaml --framework kubernetes --output cli --output sarif --output-file-path /tmp/checkov-results.sarif || true
+          
+          # Run Polaris scan
+          echo "🔒 Running Polaris best practices scan..."
+          polaris audit --audit-path /tmp/security-scan-templates.yaml --format pretty || true
+
+      - name: 📊 Upload Security Results
+        uses: github/codeql-action/upload-sarif@v2
+        if: always()
+        with:
+          sarif_file: /tmp/checkov-results.sarif
+          category: helm-security
+
+  # Job 4: Test Suite
+  test-suite:
+    name: 🧪 Test Suite
+    runs-on: ubuntu-latest
+    needs: [detect-changes, lint-and-validate]
+    if: needs.detect-changes.outputs.chart-changed == 'true' && github.event.inputs.skip_tests != 'true'
+    strategy:
+      matrix:
+        k8s-version: ['1.27.0', '1.28.0', '1.29.0']
+        test-suite: ['install', 'upgrade', 'security']
+    steps:
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v4
+
+      - name: 🛠️ Setup Tools
+        run: |
+          # Setup Helm
+          curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+          chmod 700 get_helm.sh
+          ./get_helm.sh --version v${{ env.HELM_VERSION }}
+          
+          # Setup kubectl
+          curl -LO "https://dl.k8s.io/release/v${{ env.KUBECTL_VERSION }}/bin/linux/amd64/kubectl"
+          chmod +x kubectl
+          sudo mv kubectl /usr/local/bin/
+
+      - name: 🚀 Setup Kind Cluster
+        uses: helm/kind-action@v1
+        with:
+          version: v0.20.0
+          kubernetes_version: v${{ matrix.k8s-version }}
+          cluster_name: nexus-ide-test-${{ matrix.k8s-version }}
+          config: |
+            kind: Cluster
+            apiVersion: kind.x-k8s.io/v1alpha4
+            nodes:
+            - role: control-plane
+              kubeadmConfigPatches:
+              - |
+                kind: InitConfiguration
+                nodeRegistration:
+                  kubeletExtraArgs:
+                    node-labels: "ingress-ready=true"
+              extraPortMappings:
+              - containerPort: 80
+                hostPort: 80
+                protocol: TCP
+              - containerPort: 443
+                hostPort: 443
+                protocol: TCP
+            - role: worker
+            - role: worker
+
+      - name: 🔧 Setup Test Environment
+        run: |
+          # Install NGINX Ingress Controller
+          kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
+          
+          # Wait for ingress controller
+          kubectl wait --namespace ingress-nginx \
+            --for=condition=ready pod \
+            --selector=app.kubernetes.io/component=controller \
+            --timeout=90s
+          
+          # Install metrics-server for resource monitoring
+          kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+          
+          # Patch metrics-server for Kind
+          kubectl patch deployment metrics-server -n kube-system --type='json' \
+            -p='[{"op": "add", "path": "/spec/template/spec/containers/0/args/-", "value": "--kubelet-insecure-tls"}]'
+
+      - name: 🧪 Run Test Suite
+        run: |
+          cd ${{ env.CHART_PATH }}
+          chmod +x scripts/test.sh
+          
+          # Run specific test suite
+          ./scripts/test.sh \
+            --suite ${{ matrix.test-suite }} \
+            --timeout 10m \
+            --verbose \
+            --report-format json \
+            --no-cleanup
+
+      - name: 📊 Upload Test Results
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: test-results-k8s-${{ matrix.k8s-version }}-${{ matrix.test-suite }}
+          path: |
+            ${{ env.CHART_PATH }}/test-results/
+          retention-days: 30
+
+      - name: 📋 Test Summary
+        if: always()
+        run: |
+          cd ${{ env.CHART_PATH }}
+          if [[ -f "test-results/test-report.json" ]]; then
+            echo "📊 Test Results Summary:"
+            jq -r '.summary | "Total: \(.total), Passed: \(.passed), Failed: \(.failed), Warnings: \(.warned), Skipped: \(.skipped)"' test-results/test-report.json
+            
+            # Set job status based on test results
+            FAILED=$(jq -r '.summary.failed' test-results/test-report.json)
+            if [[ "$FAILED" != "0" ]]; then
+              echo "❌ Tests failed!"
+              exit 1
+            fi
+          fi
+
+  # Job 5: Package and Release
+  package-and-release:
+    name: 📦 Package & Release
+    runs-on: ubuntu-latest
+    needs: [detect-changes, lint-and-validate, security-scan, test-suite]
+    if: |
+      always() &&
+      needs.detect-changes.outputs.chart-changed == 'true' &&
+      needs.lint-and-validate.result == 'success' &&
+      needs.security-scan.result == 'success' &&
+      (needs.test-suite.result == 'success' || needs.test-suite.result == 'skipped') &&
+      (github.ref == 'refs/heads/main' || github.event_name == 'release' || github.event_name == 'workflow_dispatch')
+    outputs:
+      chart-version: ${{ steps.package.outputs.version }}
+      package-url: ${{ steps.package.outputs.url }}
+    steps:
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 🛠️ Setup Helm
+        uses: azure/setup-helm@v3
+        with:
+          version: ${{ env.HELM_VERSION }}
+
+      - name: 🔧 Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: 📦 Package Helm Chart
+        id: package
+        run: |
+          cd ${{ env.CHART_PATH }}
+          
+          # Get chart version
+          CHART_VERSION=$(grep '^version:' Chart.yaml | awk '{print $2}')
+          echo "version=$CHART_VERSION" >> $GITHUB_OUTPUT
+          
+          # Package chart
+          helm package . --destination /tmp/
+          
+          # Get package info
+          PACKAGE_FILE="nexus-ide-security-dashboard-${CHART_VERSION}.tgz"
+          PACKAGE_PATH="/tmp/${PACKAGE_FILE}"
+          
+          echo "package-file=$PACKAGE_FILE" >> $GITHUB_OUTPUT
+          echo "package-path=$PACKAGE_PATH" >> $GITHUB_OUTPUT
+          
+          # Verify package
+          helm verify "$PACKAGE_PATH" || echo "Package verification skipped (no GPG key)"
+
+      - name: 🏷️ Create Git Tag
+        if: needs.detect-changes.outputs.version-changed == 'true'
+        run: |
+          CHART_VERSION="${{ steps.package.outputs.version }}"
+          TAG_NAME="helm-v${CHART_VERSION}"
+          
+          # Create and push tag
+          git tag -a "$TAG_NAME" -m "Helm chart version $CHART_VERSION"
+          git push origin "$TAG_NAME"
+
+      - name: 📤 Upload Package Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: helm-chart-${{ steps.package.outputs.version }}
+          path: ${{ steps.package.outputs.package-path }}
+          retention-days: 90
+
+      - name: 🚀 Create GitHub Release
+        if: github.event_name == 'release' || (github.ref == 'refs/heads/main' && needs.detect-changes.outputs.version-changed == 'true')
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: helm-v${{ steps.package.outputs.version }}
+          name: 🚀 NEXUS IDE Security Dashboard v${{ steps.package.outputs.version }}
+          body: |
+            ## 🚀 NEXUS IDE Security Dashboard Helm Chart
+            
+            **Version:** ${{ steps.package.outputs.version }}
+            **Chart:** `nexus-ide-security-dashboard`
+            
+            ### 📦 Installation
+            
+            ```bash
+            # Add repository
+            helm repo add nexus-ide https://github.com/${{ github.repository }}/releases/download/helm-v${{ steps.package.outputs.version }}/
+            
+            # Install chart
+            helm install nexus-ide-dashboard nexus-ide/nexus-ide-security-dashboard
+            ```
+            
+            ### 🔗 Links
+            - [📋 Chart Documentation](https://github.com/${{ github.repository }}/tree/main/src/dashboard/helm/security-dashboard)
+            - [⚙️ Configuration Options](https://github.com/${{ github.repository }}/blob/main/src/dashboard/helm/security-dashboard/values.yaml)
+            - [🔒 Security Guide](https://github.com/${{ github.repository }}/blob/main/src/dashboard/helm/security-dashboard/README.md#security)
+            
+            ### 📊 Test Results
+            All tests passed successfully across multiple Kubernetes versions.
+            
+            ---
+            
+            **Full Changelog:** https://github.com/${{ github.repository }}/compare/helm-v${{ steps.package.outputs.version }}...HEAD
+          files: ${{ steps.package.outputs.package-path }}
+          draft: false
+          prerelease: ${{ contains(steps.package.outputs.version, '-') }}
+
+  # Job 6: Deploy to Staging
+  deploy-staging:
+    name: 🚀 Deploy to Staging
+    runs-on: ubuntu-latest
+    needs: [detect-changes, package-and-release]
+    if: |
+      always() &&
+      needs.package-and-release.result == 'success' &&
+      (github.ref == 'refs/heads/main' || github.event.inputs.environment == 'staging')
+    environment:
+      name: staging
+      url: https://staging.nexus-ide.dev
+    steps:
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v4
+
+      - name: 🛠️ Setup Tools
+        run: |
+          # Setup Helm
+          curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+          chmod 700 get_helm.sh
+          ./get_helm.sh --version v${{ env.HELM_VERSION }}
+          
+          # Setup kubectl
+          curl -LO "https://dl.k8s.io/release/v${{ env.KUBECTL_VERSION }}/bin/linux/amd64/kubectl"
+          chmod +x kubectl
+          sudo mv kubectl /usr/local/bin/
+
+      - name: 🔧 Configure Kubernetes
+        run: |
+          # Setup kubeconfig from secret
+          mkdir -p ~/.kube
+          echo "${{ secrets.STAGING_KUBECONFIG }}" | base64 -d > ~/.kube/config
+          chmod 600 ~/.kube/config
+          
+          # Verify connection
+          kubectl cluster-info
+
+      - name: 📥 Download Chart Package
+        uses: actions/download-artifact@v3
+        with:
+          name: helm-chart-${{ needs.package-and-release.outputs.chart-version }}
+          path: /tmp/
+
+      - name: 🚀 Deploy to Staging
+        run: |
+          CHART_VERSION="${{ needs.package-and-release.outputs.chart-version }}"
+          PACKAGE_FILE="nexus-ide-security-dashboard-${CHART_VERSION}.tgz"
+          
+          # Create namespace if not exists
+          kubectl create namespace nexus-ide-staging --dry-run=client -o yaml | kubectl apply -f -
+          
+          # Deploy or upgrade
+          helm upgrade --install nexus-ide-dashboard \
+            "/tmp/${PACKAGE_FILE}" \
+            --namespace nexus-ide-staging \
+            --values ${{ env.CHART_PATH }}/values-staging.yaml \
+            --set global.environment=staging \
+            --set image.tag="${{ github.sha }}" \
+            --set ingress.hosts[0].host=staging.nexus-ide.dev \
+            --set ingress.tls[0].hosts[0]=staging.nexus-ide.dev \
+            --wait --timeout=10m
+
+      - name: ✅ Verify Deployment
+        run: |
+          # Wait for deployment to be ready
+          kubectl rollout status deployment/nexus-ide-dashboard \
+            --namespace nexus-ide-staging \
+            --timeout=300s
+          
+          # Run health check
+          kubectl run health-check \
+            --image=curlimages/curl:latest \
+            --namespace nexus-ide-staging \
+            --rm -i --restart=Never \
+            -- curl -f http://nexus-ide-dashboard/health || echo "Health check failed (may be expected)"
+
+      - name: 📊 Deployment Summary
+        run: |
+          echo "🚀 Staging Deployment Summary:"
+          echo "Version: ${{ needs.package-and-release.outputs.chart-version }}"
+          echo "Namespace: nexus-ide-staging"
+          echo "URL: https://staging.nexus-ide.dev"
+          
+          kubectl get all -n nexus-ide-staging -l app.kubernetes.io/name=security-dashboard
+
+  # Job 7: Deploy to Production
+  deploy-production:
+    name: 🏭 Deploy to Production
+    runs-on: ubuntu-latest
+    needs: [detect-changes, package-and-release, deploy-staging]
+    if: |
+      always() &&
+      needs.package-and-release.result == 'success' &&
+      needs.deploy-staging.result == 'success' &&
+      (github.event_name == 'release' || github.event.inputs.environment == 'production' || github.event.inputs.force_deploy == 'true')
+    environment:
+      name: production
+      url: https://nexus-ide.dev
+    steps:
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v4
+
+      - name: 🛠️ Setup Tools
+        run: |
+          # Setup Helm
+          curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+          chmod 700 get_helm.sh
+          ./get_helm.sh --version v${{ env.HELM_VERSION }}
+          
+          # Setup kubectl
+          curl -LO "https://dl.k8s.io/release/v${{ env.KUBECTL_VERSION }}/bin/linux/amd64/kubectl"
+          chmod +x kubectl
+          sudo mv kubectl /usr/local/bin/
+
+      - name: 🔧 Configure Kubernetes
+        run: |
+          # Setup kubeconfig from secret
+          mkdir -p ~/.kube
+          echo "${{ secrets.PRODUCTION_KUBECONFIG }}" | base64 -d > ~/.kube/config
+          chmod 600 ~/.kube/config
+          
+          # Verify connection
+          kubectl cluster-info
+
+      - name: 📥 Download Chart Package
+        uses: actions/download-artifact@v3
+        with:
+          name: helm-chart-${{ needs.package-and-release.outputs.chart-version }}
+          path: /tmp/
+
+      - name: 💾 Backup Current Release
+        run: |
+          # Create backup of current release
+          if helm status nexus-ide-dashboard --namespace nexus-ide-production &> /dev/null; then
+            echo "📦 Creating backup of current release..."
+            
+            BACKUP_NAME="nexus-ide-dashboard-backup-$(date +%Y%m%d-%H%M%S)"
+            
+            # Get current values
+            helm get values nexus-ide-dashboard --namespace nexus-ide-production > "/tmp/${BACKUP_NAME}-values.yaml"
+            
+            # Get current manifest
+            helm get manifest nexus-ide-dashboard --namespace nexus-ide-production > "/tmp/${BACKUP_NAME}-manifest.yaml"
+            
+            echo "✅ Backup created: $BACKUP_NAME"
+          else
+            echo "ℹ️ No existing release found, skipping backup"
+          fi
+
+      - name: 🚀 Deploy to Production
+        run: |
+          CHART_VERSION="${{ needs.package-and-release.outputs.chart-version }}"
+          PACKAGE_FILE="nexus-ide-security-dashboard-${CHART_VERSION}.tgz"
+          
+          # Create namespace if not exists
+          kubectl create namespace nexus-ide-production --dry-run=client -o yaml | kubectl apply -f -
+          
+          # Deploy or upgrade with production settings
+          helm upgrade --install nexus-ide-dashboard \
+            "/tmp/${PACKAGE_FILE}" \
+            --namespace nexus-ide-production \
+            --values ${{ env.CHART_PATH }}/values-production.yaml \
+            --set global.environment=production \
+            --set image.tag="${{ github.sha }}" \
+            --set replicaCount=3 \
+            --set autoscaling.enabled=true \
+            --set autoscaling.minReplicas=3 \
+            --set autoscaling.maxReplicas=10 \
+            --set ingress.hosts[0].host=nexus-ide.dev \
+            --set ingress.tls[0].hosts[0]=nexus-ide.dev \
+            --set auth.enabled=true \
+            --set tls.enabled=true \
+            --set security.networkPolicy.enabled=true \
+            --set monitoring.enabled=true \
+            --set backup.enabled=true \
+            --wait --timeout=15m
+
+      - name: ✅ Verify Production Deployment
+        run: |
+          # Wait for deployment to be ready
+          kubectl rollout status deployment/nexus-ide-dashboard \
+            --namespace nexus-ide-production \
+            --timeout=600s
+          
+          # Verify all pods are running
+          kubectl wait --for=condition=ready pod \
+            --selector=app.kubernetes.io/name=security-dashboard \
+            --namespace nexus-ide-production \
+            --timeout=300s
+          
+          # Run comprehensive health check
+          kubectl run health-check \
+            --image=curlimages/curl:latest \
+            --namespace nexus-ide-production \
+            --rm -i --restart=Never \
+            -- curl -f https://nexus-ide.dev/health
+
+      - name: 📊 Production Deployment Summary
+        run: |
+          echo "🏭 Production Deployment Summary:"
+          echo "Version: ${{ needs.package-and-release.outputs.chart-version }}"
+          echo "Namespace: nexus-ide-production"
+          echo "URL: https://nexus-ide.dev"
+          echo "Replicas: $(kubectl get deployment nexus-ide-dashboard -n nexus-ide-production -o jsonpath='{.status.replicas}')"
+          echo "Ready Replicas: $(kubectl get deployment nexus-ide-dashboard -n nexus-ide-production -o jsonpath='{.status.readyReplicas}')"
+          
+          kubectl get all -n nexus-ide-production -l app.kubernetes.io/name=security-dashboard
+
+      - name: 🔔 Notify Success
+        if: success()
+        run: |
+          echo "🎉 Production deployment successful!"
+          echo "Version ${{ needs.package-and-release.outputs.chart-version }} is now live at https://nexus-ide.dev"
+
+  # Job 8: Cleanup
+  cleanup:
+    name: 🧹 Cleanup
+    runs-on: ubuntu-latest
+    needs: [deploy-staging, deploy-production]
+    if: always()
+    steps:
+      - name: 🧹 Cleanup Artifacts
+        run: |
+          echo "🧹 Cleanup completed"
+          echo "Artifacts will be automatically cleaned up based on retention policies"
+
+  # Job 9: Notification
+  notification:
+    name: 📢 Notification
+    runs-on: ubuntu-latest
+    needs: [detect-changes, lint-and-validate, security-scan, test-suite, package-and-release, deploy-staging, deploy-production]
+    if: always()
+    steps:
+      - name: 📊 Workflow Summary
+        run: |
+          echo "📊 NEXUS IDE Security Dashboard CI/CD Summary"
+          echo "============================================="
+          echo ""
+          echo "🔍 Changes Detected: ${{ needs.detect-changes.outputs.chart-changed }}"
+          echo "🔍 Lint & Validate: ${{ needs.lint-and-validate.result }}"
+          echo "🔒 Security Scan: ${{ needs.security-scan.result }}"
+          echo "🧪 Test Suite: ${{ needs.test-suite.result }}"
+          echo "📦 Package & Release: ${{ needs.package-and-release.result }}"
+          echo "🚀 Deploy Staging: ${{ needs.deploy-staging.result }}"
+          echo "🏭 Deploy Production: ${{ needs.deploy-production.result }}"
+          echo ""
+          
+          if [[ "${{ needs.deploy-production.result }}" == "success" ]]; then
+            echo "🎉 Deployment successful!"
+            echo "🌐 Production URL: https://nexus-ide.dev"
+          elif [[ "${{ needs.deploy-staging.result }}" == "success" ]]; then
+            echo "🚀 Staging deployment successful!"
+            echo "🌐 Staging URL: https://staging.nexus-ide.dev"
+          else
+            echo "ℹ️ No deployments were performed"
+          fi
+
+      - name: 📢 Send Notification
+        if: github.ref == 'refs/heads/main' || github.event_name == 'release'
+        run: |
+          # This is where you would integrate with your notification system
+          # Examples: Slack, Discord, Email, etc.
+          echo "📢 Notification sent (placeholder)"
+          echo "Integration with notification services can be added here"

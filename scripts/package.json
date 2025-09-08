@@ -1,0 +1,59 @@
+{
+  "name": "git-memory-mcp-scripts",
+  "version": "1.0.0",
+  "description": "Scripts for managing and connecting additional MCP servers to Git Memory MCP Server system",
+  "main": "connect-additional-mcp-servers.js",
+  "scripts": {
+    "connect": "node connect-additional-mcp-servers.js",
+    "manager": "node mcp-connection-manager.js",
+    "install-deps": "npm install",
+    "setup": "npm install && node setup-environment.js",
+    "test-connections": "node test-mcp-connections.js",
+    "health-check": "node health-check-servers.js",
+    "start-recommended": "node connect-additional-mcp-servers.js --recommended",
+    "start-all": "node connect-additional-mcp-servers.js --all",
+    "interactive": "node mcp-connection-manager.js"
+  },
+  "keywords": [
+    "mcp",
+    "server",
+    "connection",
+    "git-memory",
+    "automation",
+    "management"
+  ],
+  "author": "Git Memory MCP Server Team",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.6.0",
+    "colors": "^1.4.0",
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "commander": "^11.1.0",
+    "inquirer": "^9.2.12",
+    "chalk": "^4.1.2",
+    "ora": "^5.4.1",
+    "boxen": "^5.1.2",
+    "figlet": "^1.7.0",
+    "node-cron": "^3.0.3",
+    "ws": "^8.14.2",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1",
+    "jest": "^29.7.0",
+    "eslint": "^8.52.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/git-memory-mcp-server/scripts"
+  },
+  "bugs": {
+    "url": "https://github.com/git-memory-mcp-server/issues"
+  },
+  "homepage": "https://github.com/git-memory-mcp-server#readme"
+}

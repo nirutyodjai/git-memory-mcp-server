@@ -1,0 +1,56 @@
+{
+  "installedServers": [
+    {
+      "name": "memory-server",
+      "package": "@modelcontextprotocol/server-memory",
+      "command": "npx @modelcontextprotocol/server-memory",
+      "category": "ai-ml",
+      "description": "MCP server for enabling memory for Claude through a knowledge graph",
+      "port": 3301,
+      "status": "installed"
+    },
+    {
+      "name": "filesystem-server",
+      "package": "@modelcontextprotocol/server-filesystem",
+      "command": "npx @modelcontextprotocol/server-filesystem",
+      "category": "filesystem",
+      "description": "MCP server for filesystem access",
+      "port": 3302,
+      "status": "installed"
+    },
+    {
+      "name": "sequential-thinking-server",
+      "package": "@modelcontextprotocol/server-sequential-thinking",
+      "command": "npx @modelcontextprotocol/server-sequential-thinking",
+      "category": "ai-ml",
+      "description": "MCP server for sequential thinking and problem solving",
+      "port": 3303,
+      "status": "installed"
+    },
+    {
+      "name": "bolide-ai-server",
+      "package": "@bolide-ai/mcp",
+      "command": "npx @bolide-ai/mcp",
+      "category": "api",
+      "description": "Bolide AI MCP server for marketing automation",
+      "port": 3304,
+      "status": "installed"
+    },
+    {
+      "name": "reliefweb-server",
+      "package": "@elijahtynes/reliefweb-mcp-server",
+      "command": "npx @elijahtynes/reliefweb-mcp-server",
+      "category": "api",
+      "description": "MCP server for ReliefWeb humanitarian information service",
+      "port": 3305,
+      "status": "installed"
+    }
+  ],
+  "totalInstalled": 5,
+  "lastUpdated": "2025-08-27T16:52:00.000Z",
+  "notes": [
+    "These servers have been installed globally via npm",
+    "Each server needs to be configured and started individually",
+    "Port assignments are suggestions and may need adjustment"
+  ]
+}

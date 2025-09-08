@@ -1,0 +1,1168 @@
+# 🏭 NEXUS IDE Security Dashboard - Production Environment Configuration
+# This file contains production-specific overrides for the base values.yaml
+# SECURITY NOTICE: All sensitive values should be managed via external secret management
+
+# Global production configuration
+global:
+  environment: production
+  debug: false
+  logLevel: info
+  
+  # Production domain configuration
+  domain: nexus-ide.dev
+  
+  # Resource quotas for production
+  resourceQuota:
+    enabled: true
+    limits:
+      cpu: "20"
+      memory: "40Gi"
+      storage: "500Gi"
+      persistentVolumeClaims: "50"
+      secrets: "100"
+      configmaps: "100"
+
+# High availability configuration
+replicaCount: 3
+
+image:
+  repository: ghcr.io/nexus-ide/security-dashboard
+  tag: "v1.0.0"  # Use specific version tags in production
+  pullPolicy: IfNotPresent
+
+# Service configuration for production
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 3000
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
+    service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"
+    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: "arn:aws:acm:us-west-2:123456789012:certificate/12345678-1234-1234-1234-123456789012"
+    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: "http"
+    service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "https"
+
+# Production ingress configuration
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/rate-limit: "1000"
+    nginx.ingress.kubernetes.io/rate-limit-window: "1m"
+    nginx.ingress.kubernetes.io/proxy-body-size: "100m"
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "60"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "60"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "60"
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    nginx.ingress.kubernetes.io/cors-allow-origin: "https://nexus-ide.dev,https://www.nexus-ide.dev"
+  hosts:
+    - host: nexus-ide.dev
+      paths:
+        - path: /
+          pathType: Prefix
+    - host: www.nexus-ide.dev
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - secretName: nexus-ide-production-tls
+      hosts:
+        - nexus-ide.dev
+        - www.nexus-ide.dev
+
+# Production resource configuration
+resources:
+  limits:
+    cpu: 2000m
+    memory: 4Gi
+    ephemeral-storage: 10Gi
+  requests:
+    cpu: 1000m
+    memory: 2Gi
+    ephemeral-storage: 5Gi
+
+# Production auto-scaling configuration
+autoscaling:
+  enabled: true
+  minReplicas: 3
+  maxReplicas: 20
+  targetCPUUtilizationPercentage: 60
+  targetMemoryUtilizationPercentage: 70
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 600  # 10 minutes
+      policies:
+      - type: Percent
+        value: 25
+        periodSeconds: 120
+      - type: Pods
+        value: 2
+        periodSeconds: 120
+    scaleUp:
+      stabilizationWindowSeconds: 120  # 2 minutes
+      policies:
+      - type: Percent
+        value: 50
+        periodSeconds: 60
+      - type: Pods
+        value: 4
+        periodSeconds: 60
+
+# Production persistence configuration
+persistence:
+  enabled: true
+  storageClass: "gp3-encrypted"
+  size: 100Gi
+  accessMode: ReadWriteOnce
+  annotations:
+    volume.beta.kubernetes.io/storage-provisioner: ebs.csi.aws.com
+    volume.beta.kubernetes.io/storage-encrypted: "true"
+
+# Production database configurations
+postgresql:
+  enabled: true
+  architecture: replication  # Master-slave replication
+  auth:
+    postgresPassword: ""  # Managed by external secrets
+    username: "nexus_prod"
+    password: ""  # Managed by external secrets
+    database: "nexus_ide_production"
+    replicationUsername: "replicator"
+    replicationPassword: ""  # Managed by external secrets
+  primary:
+    persistence:
+      enabled: true
+      size: 200Gi
+      storageClass: "gp3-encrypted"
+    resources:
+      limits:
+        cpu: 2000m
+        memory: 4Gi
+      requests:
+        cpu: 1000m
+        memory: 2Gi
+    configuration: |
+      # PostgreSQL production configuration
+      max_connections = 200
+      shared_buffers = 1GB
+      effective_cache_size = 3GB
+      maintenance_work_mem = 256MB
+      checkpoint_completion_target = 0.9
+      wal_buffers = 16MB
+      default_statistics_target = 100
+      random_page_cost = 1.1
+      effective_io_concurrency = 200
+      work_mem = 10MB
+      min_wal_size = 1GB
+      max_wal_size = 4GB
+      max_worker_processes = 8
+      max_parallel_workers_per_gather = 4
+      max_parallel_workers = 8
+      max_parallel_maintenance_workers = 4
+  readReplicas:
+    replicaCount: 2
+    persistence:
+      enabled: true
+      size: 200Gi
+      storageClass: "gp3-encrypted"
+    resources:
+      limits:
+        cpu: 1000m
+        memory: 2Gi
+      requests:
+        cpu: 500m
+        memory: 1Gi
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+      interval: 30s
+  backup:
+    enabled: true
+    cronjob:
+      schedule: "0 2 * * *"  # Daily at 2 AM
+      storage:
+        size: 100Gi
+        storageClass: "gp3-encrypted"
+
+redis:
+  enabled: true
+  architecture: replication  # Master-slave replication
+  auth:
+    enabled: true
+    password: ""  # Managed by external secrets
+  master:
+    persistence:
+      enabled: true
+      size: 20Gi
+      storageClass: "gp3-encrypted"
+    resources:
+      limits:
+        cpu: 1000m
+        memory: 2Gi
+      requests:
+        cpu: 500m
+        memory: 1Gi
+    configuration: |
+      # Redis production configuration
+      maxmemory-policy allkeys-lru
+      timeout 300
+      tcp-keepalive 60
+      maxclients 10000
+      save 900 1
+      save 300 10
+      save 60 10000
+  replica:
+    replicaCount: 2
+    persistence:
+      enabled: true
+      size: 20Gi
+      storageClass: "gp3-encrypted"
+    resources:
+      limits:
+        cpu: 500m
+        memory: 1Gi
+      requests:
+        cpu: 250m
+        memory: 512Mi
+  sentinel:
+    enabled: true
+    masterSet: nexus-ide-redis
+    downAfterMilliseconds: 30000
+    failoverTimeout: 180000
+    parallelSyncs: 1
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+      interval: 30s
+
+mongodb:
+  enabled: true
+  architecture: replicaset
+  replicaCount: 3
+  auth:
+    enabled: true
+    rootPassword: ""  # Managed by external secrets
+    username: "nexus_prod"
+    password: ""  # Managed by external secrets
+    database: "nexus_ide_production"
+  persistence:
+    enabled: true
+    size: 100Gi
+    storageClass: "gp3-encrypted"
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 2Gi
+    requests:
+      cpu: 500m
+      memory: 1Gi
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+
+# Production authentication configuration
+auth:
+  enabled: true
+  provider: "oauth2"
+  oauth2:
+    clientId: "nexus-ide-production"
+    clientSecret: ""  # Managed by external secrets
+    issuerUrl: "https://auth.nexus-ide.dev"
+    redirectUrl: "https://nexus-ide.dev/auth/callback"
+    scopes:
+      - "openid"
+      - "profile"
+      - "email"
+  jwt:
+    secret: ""  # Managed by external secrets
+    expiresIn: "8h"
+    algorithm: "HS256"
+  session:
+    secret: ""  # Managed by external secrets
+    maxAge: 28800000  # 8 hours
+    secure: true
+    httpOnly: true
+    sameSite: "strict"
+  mfa:
+    enabled: true
+    providers:
+      - "totp"
+      - "sms"
+      - "email"
+
+# Production TLS configuration
+tls:
+  enabled: true
+  certManager:
+    enabled: true
+    issuer: "letsencrypt-prod"
+  certificates:
+    - name: "nexus-ide-production-tls"
+      dnsNames:
+        - "nexus-ide.dev"
+        - "www.nexus-ide.dev"
+        - "api.nexus-ide.dev"
+        - "ws.nexus-ide.dev"
+  minVersion: "1.2"
+  cipherSuites:
+    - "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384"
+    - "TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305"
+    - "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256"
+
+# Comprehensive monitoring configuration
+monitoring:
+  enabled: true
+  prometheus:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+      interval: 15s
+      scrapeTimeout: 10s
+      metricRelabelings:
+        - sourceLabels: [__name__]
+          regex: 'go_.*'
+          action: drop
+    rules:
+      enabled: true
+      groups:
+        - name: nexus-ide.rules
+          rules:
+            - alert: NexusIDEHighCPU
+              expr: rate(container_cpu_usage_seconds_total[5m]) > 0.8
+              for: 5m
+              labels:
+                severity: warning
+              annotations:
+                summary: "High CPU usage detected"
+            - alert: NexusIDEHighMemory
+              expr: container_memory_usage_bytes / container_spec_memory_limit_bytes > 0.9
+              for: 5m
+              labels:
+                severity: critical
+              annotations:
+                summary: "High memory usage detected"
+  grafana:
+    enabled: true
+    adminPassword: ""  # Managed by external secrets
+    persistence:
+      enabled: true
+      size: 20Gi
+      storageClass: "gp3-encrypted"
+    resources:
+      limits:
+        cpu: 500m
+        memory: 1Gi
+      requests:
+        cpu: 250m
+        memory: 512Mi
+    dashboards:
+      enabled: true
+      configMaps:
+        - nexus-ide-dashboards
+        - nexus-ide-business-metrics
+    plugins:
+      - grafana-piechart-panel
+      - grafana-worldmap-panel
+      - grafana-clock-panel
+  jaeger:
+    enabled: true
+    storage:
+      type: elasticsearch
+      elasticsearch:
+        nodeCount: 3
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 2Gi
+          requests:
+            cpu: 500m
+            memory: 1Gi
+  alertmanager:
+    enabled: true
+    config:
+      global:
+        smtp_smarthost: 'smtp.nexus-ide.dev:587'
+        smtp_from: 'alerts@nexus-ide.dev'
+      route:
+        group_by: ['alertname']
+        group_wait: 10s
+        group_interval: 10s
+        repeat_interval: 1h
+        receiver: 'web.hook'
+      receivers:
+        - name: 'web.hook'
+          slack_configs:
+            - api_url: ''  # Managed by external secrets
+              channel: '#alerts'
+              title: 'NEXUS IDE Production Alert'
+
+# Production logging configuration
+logging:
+  enabled: true
+  level: info
+  format: json
+  elasticsearch:
+    enabled: true
+    replicas: 3
+    resources:
+      limits:
+        cpu: 1000m
+        memory: 2Gi
+      requests:
+        cpu: 500m
+        memory: 1Gi
+    persistence:
+      enabled: true
+      size: 100Gi
+      storageClass: "gp3-encrypted"
+  fluentd:
+    enabled: true
+    resources:
+      limits:
+        cpu: 500m
+        memory: 1Gi
+      requests:
+        cpu: 250m
+        memory: 512Mi
+  kibana:
+    enabled: true
+    resources:
+      limits:
+        cpu: 500m
+        memory: 1Gi
+      requests:
+        cpu: 250m
+        memory: 512Mi
+
+# Production backup configuration
+backup:
+  enabled: true
+  schedule: "0 1 * * *"  # Daily at 1 AM
+  retention: "30d"  # Keep backups for 30 days
+  storage:
+    type: "s3"
+    s3:
+      bucket: "nexus-ide-production-backups"
+      region: "us-west-2"
+      prefix: "production/"
+      encryption: "AES256"
+      storageClass: "STANDARD_IA"
+  databases:
+    postgresql:
+      enabled: true
+      compression: true
+      encryption: true
+    redis:
+      enabled: true
+      compression: true
+    mongodb:
+      enabled: true
+      compression: true
+      encryption: true
+  verification:
+    enabled: true
+    schedule: "0 3 * * 0"  # Weekly verification
+
+# Enhanced security configuration
+security:
+  networkPolicy:
+    enabled: true
+    ingress:
+      - from:
+          - namespaceSelector:
+              matchLabels:
+                name: ingress-nginx
+        ports:
+          - protocol: TCP
+            port: 3000
+      - from:
+          - namespaceSelector:
+              matchLabels:
+                name: monitoring
+        ports:
+          - protocol: TCP
+            port: 9090
+    egress:
+      - to: []
+        ports:
+          - protocol: TCP
+            port: 53
+          - protocol: UDP
+            port: 53
+      - to: []
+        ports:
+          - protocol: TCP
+            port: 443
+          - protocol: TCP
+            port: 80
+  podSecurityPolicy:
+    enabled: true
+    allowPrivilegeEscalation: false
+    runAsNonRoot: true
+    requiredDropCapabilities:
+      - ALL
+    allowedCapabilities: []
+    volumes:
+      - 'configMap'
+      - 'emptyDir'
+      - 'projected'
+      - 'secret'
+      - 'downwardAPI'
+      - 'persistentVolumeClaim'
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 1001
+    runAsGroup: 1001
+    fsGroup: 1001
+    fsGroupChangePolicy: "OnRootMismatch"
+    seccompProfile:
+      type: RuntimeDefault
+    capabilities:
+      drop:
+        - ALL
+  rbac:
+    create: true
+    rules:
+      - apiGroups: [""]
+        resources: ["configmaps", "secrets"]
+        verbs: ["get", "list", "watch"]
+      - apiGroups: [""]
+        resources: ["pods"]
+        verbs: ["get", "list"]
+  serviceAccount:
+    create: true
+    annotations:
+      eks.amazonaws.com/role-arn: "arn:aws:iam::123456789012:role/nexus-ide-production-role"
+
+# Production AI/ML configuration
+ai:
+  enabled: true
+  models:
+    gpt4:
+      enabled: true
+      apiKey: ""  # Managed by external secrets
+      model: "gpt-4-turbo"
+      maxTokens: 4000
+      temperature: 0.1
+      rateLimit:
+        requests: 1000
+        window: "1h"
+    claude:
+      enabled: true
+      apiKey: ""  # Managed by external secrets
+      model: "claude-3-opus"
+      maxTokens: 4000
+      temperature: 0.1
+    gemini:
+      enabled: true
+      apiKey: ""  # Managed by external secrets
+      model: "gemini-pro"
+    local:
+      enabled: true
+      models:
+        - name: "codellama"
+          replicas: 2
+          resources:
+            limits:
+              nvidia.com/gpu: 1
+              cpu: 4000m
+              memory: 16Gi
+            requests:
+              nvidia.com/gpu: 1
+              cpu: 2000m
+              memory: 8Gi
+  features:
+    codeCompletion:
+      enabled: true
+      cacheSize: "10Gi"
+      cacheTTL: "24h"
+    codeGeneration:
+      enabled: true
+      maxRequests: 10000
+      timeout: "30s"
+    codeReview:
+      enabled: true
+      autoReview: true
+      confidence: 0.8
+    securityScanning:
+      enabled: true
+      providers:
+        - "snyk"
+        - "sonarqube"
+        - "codeql"
+
+# Production WebSocket configuration
+websocket:
+  enabled: true
+  maxConnections: 10000
+  heartbeatInterval: 30000
+  timeout: 120000
+  redis:
+    enabled: true
+    adapter: "redis-cluster"
+  clustering:
+    enabled: true
+    nodes: 3
+  rateLimit:
+    enabled: true
+    maxRequests: 100
+    window: "1m"
+
+# Production collaboration features
+collaboration:
+  enabled: true
+  maxRooms: 1000
+  maxUsersPerRoom: 50
+  features:
+    liveShare:
+      enabled: true
+      maxSessions: 5000
+    voiceChat:
+      enabled: true
+      provider: "webrtc"
+      turnServers:
+        - "turn:turn.nexus-ide.dev:3478"
+    videoChat:
+      enabled: true
+      provider: "webrtc"
+      maxParticipants: 10
+    screenShare:
+      enabled: true
+      quality: "high"
+  analytics:
+    enabled: true
+    retention: "90d"
+
+# Production development tools
+development:
+  enabled: true
+  hotReload: false  # Disabled in production
+  debugMode: false  # Disabled in production
+  profiling:
+    enabled: true
+    sampling: 0.01  # 1% sampling
+  testing:
+    enabled: true
+    coverage:
+      enabled: true
+      threshold: 90
+    e2e:
+      enabled: true
+      schedule: "0 4 * * *"  # Daily at 4 AM
+
+# Production jobs configuration
+jobs:
+  cleanup:
+    enabled: true
+    schedule: "0 2 * * *"  # Daily at 2 AM
+    retention:
+      logs: "30d"
+      metrics: "90d"
+      traces: "7d"
+      sessions: "7d"
+  healthCheck:
+    enabled: true
+    schedule: "*/1 * * * *"  # Every minute
+    endpoints:
+      - "/health"
+      - "/ready"
+      - "/metrics"
+    timeout: "10s"
+  analytics:
+    enabled: true
+    schedule: "0 6 * * *"  # Daily at 6 AM
+    retention: "365d"
+  backup:
+    enabled: true
+    schedule: "0 1 * * *"  # Daily at 1 AM
+    verification: "0 3 * * 0"  # Weekly verification
+
+# Production node selector
+nodeSelector:
+  environment: production
+  node-type: compute-optimized
+  instance-type: c5.2xlarge
+
+# Production tolerations
+tolerations:
+  - key: "production"
+    operator: "Equal"
+    value: "true"
+    effect: "NoSchedule"
+  - key: "high-performance"
+    operator: "Equal"
+    value: "true"
+    effect: "NoSchedule"
+
+# Production affinity rules
+affinity:
+  podAntiAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchExpressions:
+            - key: app.kubernetes.io/name
+              operator: In
+              values:
+                - security-dashboard
+        topologyKey: kubernetes.io/hostname
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: node.kubernetes.io/instance-type
+              operator: In
+              values:
+                - c5.2xlarge
+                - c5.4xlarge
+                - m5.2xlarge
+                - m5.4xlarge
+
+# Production annotations
+podAnnotations:
+  environment: "production"
+  version: "v1.0.0"
+  prometheus.io/scrape: "true"
+  prometheus.io/port: "9090"
+  prometheus.io/path: "/metrics"
+  fluentd.io/exclude: "false"
+  backup.io/enabled: "true"
+
+# Production service annotations
+serviceAnnotations:
+  service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
+  service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"
+  service.beta.kubernetes.io/aws-load-balancer-ssl-cert: "arn:aws:acm:us-west-2:123456789012:certificate/12345678-1234-1234-1234-123456789012"
+  external-dns.alpha.kubernetes.io/hostname: "nexus-ide.dev,www.nexus-ide.dev"
+  service.beta.kubernetes.io/aws-load-balancer-access-log-enabled: "true"
+  service.beta.kubernetes.io/aws-load-balancer-access-log-s3-bucket-name: "nexus-ide-access-logs"
+
+# Production ConfigMap data
+configMap:
+  data:
+    NODE_ENV: "production"
+    LOG_LEVEL: "info"
+    API_BASE_URL: "https://api.nexus-ide.dev"
+    WS_BASE_URL: "wss://ws.nexus-ide.dev"
+    CDN_BASE_URL: "https://cdn.nexus-ide.dev"
+    REDIS_URL: "redis://nexus-ide-redis-master:6379"
+    DATABASE_URL: "postgresql://nexus_prod@nexus-ide-postgresql:5432/nexus_ide_production"
+    MONGODB_URL: "mongodb://nexus_prod@nexus-ide-mongodb:27017/nexus_ide_production"
+    SENTRY_DSN: ""  # Managed by external secrets
+    ANALYTICS_ENABLED: "true"
+    CACHE_TTL: "3600"
+    SESSION_TIMEOUT: "28800"
+    MAX_FILE_SIZE: "104857600"  # 100MB
+    RATE_LIMIT_WINDOW: "900"  # 15 minutes
+    RATE_LIMIT_MAX: "1000"
+    FEATURE_FLAGS: |
+      {
+        "ai_code_completion": true,
+        "real_time_collaboration": true,
+        "advanced_debugging": true,
+        "performance_monitoring": true,
+        "security_scanning": true,
+        "beta_features": false,
+        "enterprise_features": true,
+        "analytics": true,
+        "backup_automation": true
+      }
+
+# External secrets configuration (production uses external secret management)
+externalSecrets:
+  enabled: true
+  secretStore:
+    name: "aws-secrets-manager-prod"
+    kind: "ClusterSecretStore"
+  secrets:
+    - name: "nexus-ide-production-secrets"
+      refreshInterval: "1h"
+      data:
+        # Database credentials
+        - secretKey: "POSTGRES_PASSWORD"
+          remoteRef:
+            key: "nexus-ide/production/postgres"
+            property: "password"
+        - secretKey: "REDIS_PASSWORD"
+          remoteRef:
+            key: "nexus-ide/production/redis"
+            property: "password"
+        - secretKey: "MONGODB_PASSWORD"
+          remoteRef:
+            key: "nexus-ide/production/mongodb"
+            property: "password"
+        
+        # API keys
+        - secretKey: "OPENAI_API_KEY"
+          remoteRef:
+            key: "nexus-ide/production/openai"
+            property: "api_key"
+        - secretKey: "ANTHROPIC_API_KEY"
+          remoteRef:
+            key: "nexus-ide/production/anthropic"
+            property: "api_key"
+        - secretKey: "GOOGLE_API_KEY"
+          remoteRef:
+            key: "nexus-ide/production/google"
+            property: "api_key"
+        
+        # Authentication secrets
+        - secretKey: "JWT_SECRET"
+          remoteRef:
+            key: "nexus-ide/production/auth"
+            property: "jwt_secret"
+        - secretKey: "SESSION_SECRET"
+          remoteRef:
+            key: "nexus-ide/production/auth"
+            property: "session_secret"
+        - secretKey: "OAUTH2_CLIENT_SECRET"
+          remoteRef:
+            key: "nexus-ide/production/oauth2"
+            property: "client_secret"
+        
+        # Monitoring and alerting
+        - secretKey: "SENTRY_DSN"
+          remoteRef:
+            key: "nexus-ide/production/monitoring"
+            property: "sentry_dsn"
+        - secretKey: "SLACK_WEBHOOK_URL"
+          remoteRef:
+            key: "nexus-ide/production/monitoring"
+            property: "slack_webhook"
+        - secretKey: "GRAFANA_ADMIN_PASSWORD"
+          remoteRef:
+            key: "nexus-ide/production/monitoring"
+            property: "grafana_password"
+
+# Production health checks (more stringent)
+livenessProbe:
+  httpGet:
+    path: /health
+    port: 3000
+    scheme: HTTP
+  initialDelaySeconds: 60
+  periodSeconds: 30
+  timeoutSeconds: 10
+  failureThreshold: 3
+  successThreshold: 1
+
+readinessProbe:
+  httpGet:
+    path: /ready
+    port: 3000
+    scheme: HTTP
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 3
+  successThreshold: 1
+
+startupProbe:
+  httpGet:
+    path: /health
+    port: 3000
+    scheme: HTTP
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 60  # Allow up to 10 minutes for startup
+  successThreshold: 1
+
+# Production pod disruption budget
+podDisruptionBudget:
+  enabled: true
+  minAvailable: 2  # Always keep at least 2 pods running
+  # maxUnavailable: 1
+
+# Production HPA configuration
+hpa:
+  enabled: true
+  minReplicas: 3
+  maxReplicas: 20
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 60
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: 70
+    - type: Pods
+      pods:
+        metric:
+          name: http_requests_per_second
+        target:
+          type: AverageValue
+          averageValue: "1000"
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 600
+      policies:
+      - type: Percent
+        value: 25
+        periodSeconds: 120
+      - type: Pods
+        value: 2
+        periodSeconds: 120
+    scaleUp:
+      stabilizationWindowSeconds: 120
+      policies:
+      - type: Percent
+        value: 50
+        periodSeconds: 60
+      - type: Pods
+        value: 4
+        periodSeconds: 60
+
+# Production network policies (more restrictive)
+networkPolicy:
+  enabled: true
+  policyTypes:
+    - Ingress
+    - Egress
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              name: ingress-nginx
+      ports:
+        - protocol: TCP
+          port: 3000
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              name: monitoring
+      ports:
+        - protocol: TCP
+          port: 9090
+    - from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: security-dashboard
+      ports:
+        - protocol: TCP
+          port: 3000
+  egress:
+    # DNS resolution
+    - to: []
+      ports:
+        - protocol: TCP
+          port: 53
+        - protocol: UDP
+          port: 53
+    # HTTPS traffic
+    - to: []
+      ports:
+        - protocol: TCP
+          port: 443
+    # Database connections
+    - to:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: postgresql
+      ports:
+        - protocol: TCP
+          port: 5432
+    - to:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: redis
+      ports:
+        - protocol: TCP
+          port: 6379
+    - to:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: mongodb
+      ports:
+        - protocol: TCP
+          port: 27017
+
+# Production service monitor
+serviceMonitor:
+  enabled: true
+  namespace: monitoring
+  labels:
+    app: nexus-ide-dashboard
+    environment: production
+    tier: frontend
+  interval: 15s
+  scrapeTimeout: 10s
+  path: /metrics
+  port: metrics
+  metricRelabelings:
+    - sourceLabels: [__name__]
+      regex: 'go_.*'
+      action: drop
+    - sourceLabels: [__name__]
+      regex: 'promhttp_.*'
+      action: drop
+
+# Production Grafana dashboard
+grafanaDashboard:
+  enabled: true
+  namespace: monitoring
+  labels:
+    grafana_dashboard: "1"
+    environment: "production"
+  annotations:
+    grafana-folder: "/grafana-dashboard-definitions/nexus-ide/production"
+
+# Production init containers
+initContainers:
+  - name: wait-for-db
+    image: postgres:15-alpine
+    command:
+      - sh
+      - -c
+      - |
+        until pg_isready -h nexus-ide-postgresql -p 5432 -U nexus_prod; do
+          echo "Waiting for PostgreSQL..."
+          sleep 5
+        done
+        echo "PostgreSQL is ready!"
+    resources:
+      limits:
+        cpu: 100m
+        memory: 128Mi
+      requests:
+        cpu: 50m
+        memory: 64Mi
+  - name: wait-for-redis
+    image: redis:7-alpine
+    command:
+      - sh
+      - -c
+      - |
+        until redis-cli -h nexus-ide-redis-master -p 6379 -a "$REDIS_PASSWORD" ping; do
+          echo "Waiting for Redis..."
+          sleep 5
+        done
+        echo "Redis is ready!"
+    env:
+      - name: REDIS_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: nexus-ide-production-secrets
+            key: REDIS_PASSWORD
+    resources:
+      limits:
+        cpu: 100m
+        memory: 128Mi
+      requests:
+        cpu: 50m
+        memory: 64Mi
+  - name: wait-for-mongodb
+    image: mongo:7
+    command:
+      - sh
+      - -c
+      - |
+        until mongosh --host nexus-ide-mongodb --username nexus_prod --password "$MONGODB_PASSWORD" --eval "db.adminCommand('ping')"; do
+          echo "Waiting for MongoDB..."
+          sleep 5
+        done
+        echo "MongoDB is ready!"
+    env:
+      - name: MONGODB_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: nexus-ide-production-secrets
+            key: MONGODB_PASSWORD
+    resources:
+      limits:
+        cpu: 100m
+        memory: 128Mi
+      requests:
+        cpu: 50m
+        memory: 64Mi
+
+# Production sidecar containers
+sidecarContainers:
+  - name: log-forwarder
+    image: fluent/fluent-bit:2.2
+    resources:
+      limits:
+        cpu: 200m
+        memory: 256Mi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+    volumeMounts:
+      - name: varlog
+        mountPath: /var/log
+      - name: fluent-bit-config
+        mountPath: /fluent-bit/etc
+  - name: metrics-exporter
+    image: prom/node-exporter:latest
+    ports:
+      - containerPort: 9100
+        name: metrics
+    resources:
+      limits:
+        cpu: 100m
+        memory: 128Mi
+      requests:
+        cpu: 50m
+        memory: 64Mi
+    securityContext:
+      runAsNonRoot: true
+      runAsUser: 65534
+
+# Production volumes
+additionalVolumes:
+  - name: varlog
+    emptyDir:
+      sizeLimit: 1Gi
+  - name: fluent-bit-config
+    configMap:
+      name: fluent-bit-config
+  - name: app-config
+    configMap:
+      name: nexus-ide-app-config
+  - name: ssl-certs
+    secret:
+      secretName: nexus-ide-production-tls
+
+# Production volume mounts
+additionalVolumeMounts:
+  - name: varlog
+    mountPath: /var/log
+  - name: app-config
+    mountPath: /app/config
+    readOnly: true
+  - name: ssl-certs
+    mountPath: /etc/ssl/certs/nexus-ide
+    readOnly: true
+
+# Production labels
+customLabels:
+  environment: production
+  team: nexus-ide
+  project: security-dashboard
+  version: v1.0.0
+  cost-center: engineering
+  business-unit: product
+  compliance: "sox,pci-dss,gdpr"
+
+# Production annotations
+customAnnotations:
+  deployment.kubernetes.io/revision: "1"
+  meta.helm.sh/release-name: nexus-ide-dashboard
+  meta.helm.sh/release-namespace: nexus-ide-production
+  backup.io/enabled: "true"
+  backup.io/schedule: "0 1 * * *"
+  monitoring.io/enabled: "true"
+  security.io/scan: "true"
+  compliance.io/required: "true"

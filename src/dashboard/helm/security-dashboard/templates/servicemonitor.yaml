@@ -1,0 +1,549 @@
+{{/*
+=============================================================================
+ENTERPRISE SECURITY DASHBOARD - SERVICE MONITOR TEMPLATE
+Prometheus Monitoring Configuration
+=============================================================================
+*/}}
+
+{{- if and .Values.monitoring.enabled .Values.monitoring.serviceMonitor.enabled -}}
+
+# =============================================================================
+# MAIN APPLICATION SERVICE MONITOR
+# =============================================================================
+
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ include "security-dashboard.fullname" . }}
+  namespace: {{ .Values.monitoring.serviceMonitor.namespace | default .Release.Namespace | quote }}
+  labels:
+    {{- include "security-dashboard.labels" . | nindent 4 }}
+    app.kubernetes.io/component: monitoring
+    {{- with .Values.monitoring.serviceMonitor.labels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+  annotations:
+    {{- with .Values.monitoring.serviceMonitor.annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+spec:
+  # =============================================================================
+  # SERVICE SELECTOR
+  # =============================================================================
+  
+  selector:
+    matchLabels:
+      {{- include "security-dashboard.selectorLabels" . | nindent 6 }}
+      {{- with .Values.monitoring.serviceMonitor.selector }}
+      {{- toYaml . | nindent 6 }}
+      {{- end }}
+  
+  # =============================================================================
+  # NAMESPACE SELECTOR
+  # =============================================================================
+  
+  {{- if .Values.monitoring.serviceMonitor.namespaceSelector }}
+  namespaceSelector:
+    {{- toYaml .Values.monitoring.serviceMonitor.namespaceSelector | nindent 4 }}
+  {{- end }}
+  
+  # =============================================================================
+  # ENDPOINTS CONFIGURATION
+  # =============================================================================
+  
+  endpoints:
+    # Main Application Metrics
+    - port: {{ .Values.monitoring.serviceMonitor.endpoints.main.port | default "metrics" }}
+      path: {{ .Values.monitoring.serviceMonitor.endpoints.main.path | default "/metrics" }}
+      interval: {{ .Values.monitoring.serviceMonitor.endpoints.main.interval | default "30s" }}
+      scrapeTimeout: {{ .Values.monitoring.serviceMonitor.endpoints.main.scrapeTimeout | default "10s" }}
+      honorLabels: {{ .Values.monitoring.serviceMonitor.endpoints.main.honorLabels | default true }}
+      
+      {{- if .Values.monitoring.serviceMonitor.endpoints.main.scheme }}
+      scheme: {{ .Values.monitoring.serviceMonitor.endpoints.main.scheme }}
+      {{- end }}
+      
+      {{- if .Values.monitoring.serviceMonitor.endpoints.main.tlsConfig }}
+      tlsConfig:
+        {{- toYaml .Values.monitoring.serviceMonitor.endpoints.main.tlsConfig | nindent 8 }}
+      {{- end }}
+      
+      {{- if .Values.monitoring.serviceMonitor.endpoints.main.basicAuth }}
+      basicAuth:
+        {{- toYaml .Values.monitoring.serviceMonitor.endpoints.main.basicAuth | nindent 8 }}
+      {{- end }}
+      
+      {{- if .Values.monitoring.serviceMonitor.endpoints.main.bearerTokenFile }}
+      bearerTokenFile: {{ .Values.monitoring.serviceMonitor.endpoints.main.bearerTokenFile }}
+      {{- end }}
+      
+      {{- if .Values.monitoring.serviceMonitor.endpoints.main.bearerTokenSecret }}
+      bearerTokenSecret:
+        {{- toYaml .Values.monitoring.serviceMonitor.endpoints.main.bearerTokenSecret | nindent 8 }}
+      {{- end }}
+      
+      # Metric Relabeling
+      {{- if .Values.monitoring.serviceMonitor.endpoints.main.metricRelabelings }}
+      metricRelabelings:
+        {{- toYaml .Values.monitoring.serviceMonitor.endpoints.main.metricRelabelings | nindent 8 }}
+      {{- end }}
+      
+      # Relabeling
+      {{- if .Values.monitoring.serviceMonitor.endpoints.main.relabelings }}
+      relabelings:
+        {{- toYaml .Values.monitoring.serviceMonitor.endpoints.main.relabelings | nindent 8 }}
+      {{- end }}
+      
+      # Additional Parameters
+      {{- if .Values.monitoring.serviceMonitor.endpoints.main.params }}
+      params:
+        {{- toYaml .Values.monitoring.serviceMonitor.endpoints.main.params | nindent 8 }}
+      {{- end }}
+    
+    # Health Check Metrics
+    {{- if .Values.monitoring.serviceMonitor.endpoints.health.enabled }}
+    - port: {{ .Values.monitoring.serviceMonitor.endpoints.health.port | default "http" }}
+      path: {{ .Values.monitoring.serviceMonitor.endpoints.health.path | default "/health/metrics" }}
+      interval: {{ .Values.monitoring.serviceMonitor.endpoints.health.interval | default "15s" }}
+      scrapeTimeout: {{ .Values.monitoring.serviceMonitor.endpoints.health.scrapeTimeout | default "5s" }}
+      honorLabels: {{ .Values.monitoring.serviceMonitor.endpoints.health.honorLabels | default true }}
+      
+      metricRelabelings:
+        - sourceLabels: [__name__]
+          regex: 'health_.*'
+          targetLabel: metric_type
+          replacement: 'health'
+    {{- end }}
+    
+    # Performance Metrics
+    {{- if .Values.monitoring.serviceMonitor.endpoints.performance.enabled }}
+    - port: {{ .Values.monitoring.serviceMonitor.endpoints.performance.port | default "metrics" }}
+      path: {{ .Values.monitoring.serviceMonitor.endpoints.performance.path | default "/performance/metrics" }}
+      interval: {{ .Values.monitoring.serviceMonitor.endpoints.performance.interval | default "60s" }}
+      scrapeTimeout: {{ .Values.monitoring.serviceMonitor.endpoints.performance.scrapeTimeout | default "15s" }}
+      honorLabels: {{ .Values.monitoring.serviceMonitor.endpoints.performance.honorLabels | default true }}
+      
+      metricRelabelings:
+        - sourceLabels: [__name__]
+          regex: 'perf_.*|response_time_.*|throughput_.*'
+          targetLabel: metric_type
+          replacement: 'performance'
+    {{- end }}
+    
+    # Security Metrics
+    {{- if .Values.monitoring.serviceMonitor.endpoints.security.enabled }}
+    - port: {{ .Values.monitoring.serviceMonitor.endpoints.security.port | default "metrics" }}
+      path: {{ .Values.monitoring.serviceMonitor.endpoints.security.path | default "/security/metrics" }}
+      interval: {{ .Values.monitoring.serviceMonitor.endpoints.security.interval | default "30s" }}
+      scrapeTimeout: {{ .Values.monitoring.serviceMonitor.endpoints.security.scrapeTimeout | default "10s" }}
+      honorLabels: {{ .Values.monitoring.serviceMonitor.endpoints.security.honorLabels | default true }}
+      
+      metricRelabelings:
+        - sourceLabels: [__name__]
+          regex: 'security_.*|auth_.*|vulnerability_.*'
+          targetLabel: metric_type
+          replacement: 'security'
+        - sourceLabels: [__name__]
+          regex: 'security_incident_.*'
+          targetLabel: alert_priority
+          replacement: 'high'
+    {{- end }}
+    
+    # Business Metrics
+    {{- if .Values.monitoring.serviceMonitor.endpoints.business.enabled }}
+    - port: {{ .Values.monitoring.serviceMonitor.endpoints.business.port | default "metrics" }}
+      path: {{ .Values.monitoring.serviceMonitor.endpoints.business.path | default "/business/metrics" }}
+      interval: {{ .Values.monitoring.serviceMonitor.endpoints.business.interval | default "120s" }}
+      scrapeTimeout: {{ .Values.monitoring.serviceMonitor.endpoints.business.scrapeTimeout | default "20s" }}
+      honorLabels: {{ .Values.monitoring.serviceMonitor.endpoints.business.honorLabels | default true }}
+      
+      metricRelabelings:
+        - sourceLabels: [__name__]
+          regex: 'business_.*|user_.*|revenue_.*'
+          targetLabel: metric_type
+          replacement: 'business'
+    {{- end }}
+
+---
+# =============================================================================
+# WEBSOCKET SERVICE MONITOR
+# =============================================================================
+
+{{- if and .Values.websocket.enabled .Values.websocket.monitoring.enabled }}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ include "security-dashboard.fullname" . }}-websocket
+  namespace: {{ .Values.monitoring.serviceMonitor.namespace | default .Release.Namespace | quote }}
+  labels:
+    {{- include "security-dashboard.labels" . | nindent 4 }}
+    app.kubernetes.io/component: websocket-monitoring
+spec:
+  selector:
+    matchLabels:
+      {{- include "security-dashboard.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: websocket
+  
+  endpoints:
+    - port: {{ .Values.websocket.monitoring.port | default "metrics" }}
+      path: {{ .Values.websocket.monitoring.path | default "/ws/metrics" }}
+      interval: {{ .Values.websocket.monitoring.interval | default "15s" }}
+      scrapeTimeout: {{ .Values.websocket.monitoring.scrapeTimeout | default "5s" }}
+      
+      metricRelabelings:
+        - sourceLabels: [__name__]
+          regex: 'websocket_.*|ws_.*'
+          targetLabel: metric_type
+          replacement: 'websocket'
+        - sourceLabels: [__name__]
+          regex: 'websocket_connections_.*'
+          targetLabel: connection_metric
+          replacement: 'true'
+
+---
+{{- end }}
+
+# =============================================================================
+# AI PROCESSING SERVICE MONITOR
+# =============================================================================
+
+{{- if and .Values.aiProcessing.enabled .Values.aiProcessing.monitoring.enabled }}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ include "security-dashboard.fullname" . }}-ai-processing
+  namespace: {{ .Values.monitoring.serviceMonitor.namespace | default .Release.Namespace | quote }}
+  labels:
+    {{- include "security-dashboard.labels" . | nindent 4 }}
+    app.kubernetes.io/component: ai-processing-monitoring
+spec:
+  selector:
+    matchLabels:
+      {{- include "security-dashboard.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: ai-processing
+  
+  endpoints:
+    - port: {{ .Values.aiProcessing.monitoring.port | default "metrics" }}
+      path: {{ .Values.aiProcessing.monitoring.path | default "/ai/metrics" }}
+      interval: {{ .Values.aiProcessing.monitoring.interval | default "30s" }}
+      scrapeTimeout: {{ .Values.aiProcessing.monitoring.scrapeTimeout | default "10s" }}
+      
+      metricRelabelings:
+        - sourceLabels: [__name__]
+          regex: 'ai_.*|ml_.*|model_.*'
+          targetLabel: metric_type
+          replacement: 'ai_processing'
+        - sourceLabels: [__name__]
+          regex: 'ai_inference_time_.*'
+          targetLabel: performance_metric
+          replacement: 'true'
+        - sourceLabels: [__name__]
+          regex: 'ai_queue_.*'
+          targetLabel: queue_metric
+          replacement: 'true'
+
+---
+{{- end }}
+
+# =============================================================================
+# DATABASE SERVICE MONITORS
+# =============================================================================
+
+{{- if and .Values.postgresql.enabled .Values.postgresql.monitoring.enabled }}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ include "security-dashboard.fullname" . }}-postgresql
+  namespace: {{ .Values.monitoring.serviceMonitor.namespace | default .Release.Namespace | quote }}
+  labels:
+    {{- include "security-dashboard.labels" . | nindent 4 }}
+    app.kubernetes.io/component: postgresql-monitoring
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: postgresql
+  
+  endpoints:
+    - port: {{ .Values.postgresql.monitoring.port | default "metrics" }}
+      path: {{ .Values.postgresql.monitoring.path | default "/metrics" }}
+      interval: {{ .Values.postgresql.monitoring.interval | default "30s" }}
+      scrapeTimeout: {{ .Values.postgresql.monitoring.scrapeTimeout | default "10s" }}
+      
+      metricRelabelings:
+        - sourceLabels: [__name__]
+          regex: 'pg_.*|postgres_.*'
+          targetLabel: metric_type
+          replacement: 'database'
+        - sourceLabels: [__name__]
+          regex: 'pg_stat_database_.*'
+          targetLabel: database_stat
+          replacement: 'true'
+
+---
+{{- end }}
+
+{{- if and .Values.redis.enabled .Values.redis.monitoring.enabled }}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ include "security-dashboard.fullname" . }}-redis
+  namespace: {{ .Values.monitoring.serviceMonitor.namespace | default .Release.Namespace | quote }}
+  labels:
+    {{- include "security-dashboard.labels" . | nindent 4 }}
+    app.kubernetes.io/component: redis-monitoring
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: redis
+  
+  endpoints:
+    - port: {{ .Values.redis.monitoring.port | default "metrics" }}
+      path: {{ .Values.redis.monitoring.path | default "/metrics" }}
+      interval: {{ .Values.redis.monitoring.interval | default "15s" }}
+      scrapeTimeout: {{ .Values.redis.monitoring.scrapeTimeout | default "5s" }}
+      
+      metricRelabelings:
+        - sourceLabels: [__name__]
+          regex: 'redis_.*'
+          targetLabel: metric_type
+          replacement: 'cache'
+        - sourceLabels: [__name__]
+          regex: 'redis_connected_clients.*'
+          targetLabel: connection_metric
+          replacement: 'true'
+
+---
+{{- end }}
+
+# =============================================================================
+# CUSTOM SERVICE MONITORS
+# =============================================================================
+
+{{- range .Values.monitoring.serviceMonitor.customMonitors }}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ include "security-dashboard.fullname" $ }}-{{ .name }}
+  namespace: {{ .namespace | default $.Values.monitoring.serviceMonitor.namespace | default $.Release.Namespace | quote }}
+  labels:
+    {{- include "security-dashboard.labels" $ | nindent 4 }}
+    app.kubernetes.io/component: {{ .name }}-monitoring
+    {{- with .labels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+  annotations:
+    {{- with .annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+spec:
+  selector:
+    {{- toYaml .selector | nindent 4 }}
+  
+  {{- if .namespaceSelector }}
+  namespaceSelector:
+    {{- toYaml .namespaceSelector | nindent 4 }}
+  {{- end }}
+  
+  endpoints:
+    {{- range .endpoints }}
+    - port: {{ .port }}
+      path: {{ .path | default "/metrics" }}
+      interval: {{ .interval | default "30s" }}
+      scrapeTimeout: {{ .scrapeTimeout | default "10s" }}
+      honorLabels: {{ .honorLabels | default true }}
+      
+      {{- if .scheme }}
+      scheme: {{ .scheme }}
+      {{- end }}
+      
+      {{- if .tlsConfig }}
+      tlsConfig:
+        {{- toYaml .tlsConfig | nindent 8 }}
+      {{- end }}
+      
+      {{- if .basicAuth }}
+      basicAuth:
+        {{- toYaml .basicAuth | nindent 8 }}
+      {{- end }}
+      
+      {{- if .bearerTokenFile }}
+      bearerTokenFile: {{ .bearerTokenFile }}
+      {{- end }}
+      
+      {{- if .bearerTokenSecret }}
+      bearerTokenSecret:
+        {{- toYaml .bearerTokenSecret | nindent 8 }}
+      {{- end }}
+      
+      {{- if .metricRelabelings }}
+      metricRelabelings:
+        {{- toYaml .metricRelabelings | nindent 8 }}
+      {{- end }}
+      
+      {{- if .relabelings }}
+      relabelings:
+        {{- toYaml .relabelings | nindent 8 }}
+      {{- end }}
+      
+      {{- if .params }}
+      params:
+        {{- toYaml .params | nindent 8 }}
+      {{- end }}
+    {{- end }}
+
+---
+{{- end }}
+
+# =============================================================================
+# PROMETHEUS RULE
+# =============================================================================
+
+{{- if .Values.monitoring.prometheusRule.enabled }}
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: {{ include "security-dashboard.fullname" . }}
+  namespace: {{ .Values.monitoring.serviceMonitor.namespace | default .Release.Namespace | quote }}
+  labels:
+    {{- include "security-dashboard.labels" . | nindent 4 }}
+    app.kubernetes.io/component: monitoring-rules
+    {{- with .Values.monitoring.prometheusRule.labels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+spec:
+  groups:
+    # =============================================================================
+    # APPLICATION HEALTH RULES
+    # =============================================================================
+    
+    - name: {{ include "security-dashboard.name" . }}.health
+      interval: {{ .Values.monitoring.prometheusRule.interval | default "30s" }}
+      rules:
+        - alert: ApplicationDown
+          expr: up{job="{{ include "security-dashboard.fullname" . }}"} == 0
+          for: {{ .Values.monitoring.prometheusRule.rules.applicationDown.for | default "1m" }}
+          labels:
+            severity: critical
+            component: application
+          annotations:
+            summary: "Security Dashboard application is down"
+            description: "Security Dashboard application has been down for more than 1 minute."
+        
+        - alert: HighErrorRate
+          expr: |
+            (
+              rate(http_requests_total{job="{{ include "security-dashboard.fullname" . }}",status=~"5.."}[5m])
+              /
+              rate(http_requests_total{job="{{ include "security-dashboard.fullname" . }}"}[5m])
+            ) > {{ .Values.monitoring.prometheusRule.rules.highErrorRate.threshold | default 0.1 }}
+          for: {{ .Values.monitoring.prometheusRule.rules.highErrorRate.for | default "5m" }}
+          labels:
+            severity: warning
+            component: application
+          annotations:
+            summary: "High error rate detected"
+            description: "Error rate is above 10% for more than 5 minutes."
+        
+        - alert: HighResponseTime
+          expr: |
+            histogram_quantile(0.95, rate(http_request_duration_seconds_bucket{job="{{ include "security-dashboard.fullname" . }}"}[5m])) > {{ .Values.monitoring.prometheusRule.rules.highResponseTime.threshold | default 1 }}
+          for: {{ .Values.monitoring.prometheusRule.rules.highResponseTime.for | default "5m" }}
+          labels:
+            severity: warning
+            component: performance
+          annotations:
+            summary: "High response time detected"
+            description: "95th percentile response time is above 1 second for more than 5 minutes."
+    
+    # =============================================================================
+    # RESOURCE UTILIZATION RULES
+    # =============================================================================
+    
+    - name: {{ include "security-dashboard.name" . }}.resources
+      interval: {{ .Values.monitoring.prometheusRule.interval | default "30s" }}
+      rules:
+        - alert: HighCPUUsage
+          expr: |
+            (
+              rate(container_cpu_usage_seconds_total{pod=~"{{ include "security-dashboard.fullname" . }}-.*"}[5m])
+              * 100
+            ) > {{ .Values.monitoring.prometheusRule.rules.highCPUUsage.threshold | default 80 }}
+          for: {{ .Values.monitoring.prometheusRule.rules.highCPUUsage.for | default "10m" }}
+          labels:
+            severity: warning
+            component: resources
+          annotations:
+            summary: "High CPU usage detected"
+            description: "CPU usage is above 80% for more than 10 minutes."
+        
+        - alert: HighMemoryUsage
+          expr: |
+            (
+              container_memory_working_set_bytes{pod=~"{{ include "security-dashboard.fullname" . }}-.*"}
+              /
+              container_spec_memory_limit_bytes{pod=~"{{ include "security-dashboard.fullname" . }}-.*"}
+              * 100
+            ) > {{ .Values.monitoring.prometheusRule.rules.highMemoryUsage.threshold | default 85 }}
+          for: {{ .Values.monitoring.prometheusRule.rules.highMemoryUsage.for | default "5m" }}
+          labels:
+            severity: warning
+            component: resources
+          annotations:
+            summary: "High memory usage detected"
+            description: "Memory usage is above 85% for more than 5 minutes."
+    
+    # =============================================================================
+    # SECURITY RULES
+    # =============================================================================
+    
+    - name: {{ include "security-dashboard.name" . }}.security
+      interval: {{ .Values.monitoring.prometheusRule.interval | default "30s" }}
+      rules:
+        - alert: SecurityIncident
+          expr: increase(security_incidents_total{job="{{ include "security-dashboard.fullname" . }}"}[5m]) > 0
+          for: 0s
+          labels:
+            severity: critical
+            component: security
+          annotations:
+            summary: "Security incident detected"
+            description: "A security incident has been detected and requires immediate attention."
+        
+        - alert: FailedAuthenticationAttempts
+          expr: |
+            rate(auth_failed_attempts_total{job="{{ include "security-dashboard.fullname" . }}"}[5m]) > {{ .Values.monitoring.prometheusRule.rules.failedAuth.threshold | default 10 }}
+          for: {{ .Values.monitoring.prometheusRule.rules.failedAuth.for | default "2m" }}
+          labels:
+            severity: warning
+            component: security
+          annotations:
+            summary: "High number of failed authentication attempts"
+            description: "Failed authentication rate is above 10 per second for more than 2 minutes."
+    
+    # =============================================================================
+    # CUSTOM RULES
+    # =============================================================================
+    
+    {{- range .Values.monitoring.prometheusRule.customRules }}
+    - name: {{ include "security-dashboard.name" $ }}.{{ .name }}
+      interval: {{ .interval | default "30s" }}
+      rules:
+        {{- range .rules }}
+        - alert: {{ .alert }}
+          expr: {{ .expr | quote }}
+          {{- if .for }}
+          for: {{ .for }}
+          {{- end }}
+          labels:
+            {{- toYaml .labels | nindent 12 }}
+          annotations:
+            {{- toYaml .annotations | nindent 12 }}
+        {{- end }}
+    {{- end }}
+{{- end }}
+
+{{- end }}
+
+# =============================================================================
+# END OF SERVICE MONITOR TEMPLATE
+# =============================================================================

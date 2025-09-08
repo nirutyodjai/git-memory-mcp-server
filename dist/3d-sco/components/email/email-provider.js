@@ -371,9 +371,7 @@ function EmailProvider({ children }) {
         loadStats,
         getCampaignStats,
     };
-    return (<EmailContext.Provider value={value}>
-      {children}
-    </EmailContext.Provider>);
+    return (react_1.default.createElement(EmailContext.Provider, { value: value }, children));
 }
 function useEmail() {
     const context = (0, react_1.useContext)(EmailContext);
@@ -382,4 +380,3 @@ function useEmail() {
     }
     return context;
 }
-//# sourceMappingURL=email-provider.js.map

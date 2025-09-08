@@ -22,4 +22,3 @@ const useDevToolsOpen = () => {
     return { isDevToolsOpen };
 };
 exports.useDevToolsOpen = useDevToolsOpen;
-//# sourceMappingURL=use-devtools-open.js.map

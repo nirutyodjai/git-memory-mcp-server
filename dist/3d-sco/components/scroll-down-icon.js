@@ -50,16 +50,12 @@ const ScrollDownIcon = () => {
             }
         });
     });
-    return (<framer_motion_1.AnimatePresence>
-      {show && (<framer_motion_1.motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1] }} className="w-fit min-h-[50px] p-1 border-2 rounded-full border-gray-500 dark:border-white ">
-          <framer_motion_1.motion.div initial={{ y: 0 }} animate={{ y: [0, 25], opacity: [1, 0] }} transition={{
+    return (react_1.default.createElement(framer_motion_1.AnimatePresence, null, show && (react_1.default.createElement(framer_motion_1.motion.div, { initial: { opacity: 0 }, animate: { opacity: 1 }, exit: { opacity: 0 }, transition: { duration: 0.7, ease: [0.76, 0, 0.24, 1] }, className: "w-fit min-h-[50px] p-1 border-2 rounded-full border-gray-500 dark:border-white " },
+        react_1.default.createElement(framer_motion_1.motion.div, { initial: { y: 0 }, animate: { y: [0, 25], opacity: [1, 0] }, transition: {
                 duration: 1,
                 ease: "easeOut",
                 repeat: Infinity,
                 repeatDelay: 1,
-            }} className="w-3 h-3 rounded-full bg-gray-500 dark:bg-white"/>
-        </framer_motion_1.motion.div>)}
-    </framer_motion_1.AnimatePresence>);
+            }, className: "w-3 h-3 rounded-full bg-gray-500 dark:bg-white" })))));
 };
 exports.default = ScrollDownIcon;
-//# sourceMappingURL=scroll-down-icon.js.map

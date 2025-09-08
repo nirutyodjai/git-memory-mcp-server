@@ -1,0 +1,629 @@
+# =============================================================================
+# ENTERPRISE SECURITY DASHBOARD - CI/CD PIPELINE
+# Automated Testing, Security Scanning, Building, and Deployment
+# =============================================================================
+
+name: 🚀 Security Dashboard CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop, feature/* ]
+    paths:
+      - 'src/dashboard/**'
+      - '.github/workflows/ci-cd.yml'
+  pull_request:
+    branches: [ main, develop ]
+    paths:
+      - 'src/dashboard/**'
+  release:
+    types: [ published ]
+  schedule:
+    # Run security scans daily at 2 AM UTC
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Deployment Environment'
+        required: true
+        default: 'staging'
+        type: choice
+        options:
+          - staging
+          - production
+      skip_tests:
+        description: 'Skip Tests'
+        required: false
+        default: false
+        type: boolean
+
+env:
+  NODE_VERSION: '20.x'
+  DOCKER_REGISTRY: 'ghcr.io'
+  IMAGE_NAME: 'nexus-ide/security-dashboard'
+  HELM_VERSION: '3.12.0'
+  KUBECTL_VERSION: '1.28.0'
+
+# =============================================================================
+# JOBS CONFIGURATION
+# =============================================================================
+
+jobs:
+  # ---------------------------------------------------------------------------
+  # CODE QUALITY & SECURITY ANALYSIS
+  # ---------------------------------------------------------------------------
+  
+  code-quality:
+    name: 🔍 Code Quality Analysis
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    
+    steps:
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: 'src/dashboard/package-lock.json'
+          
+      - name: 📦 Install Dependencies
+        working-directory: src/dashboard
+        run: |
+          npm ci --prefer-offline --no-audit
+          npm run audit:fix || true
+          
+      - name: 🧹 Lint Code
+        working-directory: src/dashboard
+        run: |
+          npm run lint
+          npm run lint:security
+          
+      - name: 🎨 Check Code Formatting
+        working-directory: src/dashboard
+        run: |
+          npm run format:check
+          npm run style:check
+          
+      - name: 📊 SonarCloud Analysis
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          projectBaseDir: src/dashboard
+          
+      - name: 📈 CodeClimate Analysis
+        uses: paambaati/codeclimate-action@v5.0.0
+        env:
+          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+        with:
+          workingDirectory: src/dashboard
+          coverageCommand: npm run test:coverage
+          coverageLocations: |
+            ${{github.workspace}}/src/dashboard/coverage/lcov.info:lcov
+
+  # ---------------------------------------------------------------------------
+  # SECURITY VULNERABILITY SCANNING
+  # ---------------------------------------------------------------------------
+  
+  security-scan:
+    name: 🛡️ Security Vulnerability Scan
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    
+    steps:
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v4
+        
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: 'src/dashboard/package-lock.json'
+          
+      - name: 📦 Install Dependencies
+        working-directory: src/dashboard
+        run: npm ci --prefer-offline --no-audit
+        
+      - name: 🔒 NPM Security Audit
+        working-directory: src/dashboard
+        run: |
+          npm audit --audit-level=moderate
+          npm run security:check
+          
+      - name: 🕵️ Snyk Security Scan
+        uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --severity-threshold=high --file=src/dashboard/package.json
+          
+      - name: 🔍 OWASP Dependency Check
+        uses: dependency-check/Dependency-Check_Action@main
+        with:
+          project: 'security-dashboard'
+          path: 'src/dashboard'
+          format: 'ALL'
+          
+      - name: 📋 Upload Security Reports
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: security-reports
+          path: |
+            reports/
+            src/dashboard/coverage/
+          retention-days: 30
+
+  # ---------------------------------------------------------------------------
+  # AUTOMATED TESTING SUITE
+  # ---------------------------------------------------------------------------
+  
+  test-suite:
+    name: 🧪 Comprehensive Test Suite
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    
+    strategy:
+      matrix:
+        node-version: ['18.x', '20.x', '21.x']
+        test-type: ['unit', 'integration', 'e2e']
+        
+    services:
+      postgres:
+        image: postgres:15-alpine
+        env:
+          POSTGRES_PASSWORD: test_password
+          POSTGRES_USER: test_user
+          POSTGRES_DB: security_dashboard_test
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+          
+      redis:
+        image: redis:7-alpine
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 6379:6379
+          
+      mongodb:
+        image: mongo:7
+        env:
+          MONGO_INITDB_ROOT_USERNAME: test_user
+          MONGO_INITDB_ROOT_PASSWORD: test_password
+        options: >-
+          --health-cmd "mongosh --eval 'db.runCommand(\"ping\")'"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 27017:27017
+    
+    steps:
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v4
+        
+      - name: 🟢 Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+          cache-dependency-path: 'src/dashboard/package-lock.json'
+          
+      - name: 📦 Install Dependencies
+        working-directory: src/dashboard
+        run: npm ci --prefer-offline
+        
+      - name: 🏗️ Build Application
+        working-directory: src/dashboard
+        run: npm run build
+        
+      - name: 🧪 Run ${{ matrix.test-type }} Tests
+        working-directory: src/dashboard
+        run: |
+          case "${{ matrix.test-type }}" in
+            "unit")
+              npm run test:unit -- --coverage
+              ;;
+            "integration")
+              npm run test:integration
+              ;;
+            "e2e")
+              npm run test:e2e
+              ;;
+          esac
+        env:
+          NODE_ENV: test
+          DATABASE_URL: postgresql://test_user:test_password@localhost:5432/security_dashboard_test
+          REDIS_URL: redis://localhost:6379
+          MONGODB_URL: mongodb://test_user:test_password@localhost:27017/security_dashboard_test
+          
+      - name: 📊 Upload Test Results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-results-${{ matrix.node-version }}-${{ matrix.test-type }}
+          path: |
+            src/dashboard/coverage/
+            src/dashboard/test-results/
+          retention-days: 30
+
+  # ---------------------------------------------------------------------------
+  # PERFORMANCE & LOAD TESTING
+  # ---------------------------------------------------------------------------
+  
+  performance-test:
+    name: ⚡ Performance & Load Testing
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    needs: [test-suite]
+    
+    steps:
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v4
+        
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: 'src/dashboard/package-lock.json'
+          
+      - name: 📦 Install Dependencies
+        working-directory: src/dashboard
+        run: npm ci --prefer-offline
+        
+      - name: 🏗️ Build Application
+        working-directory: src/dashboard
+        run: npm run build:production
+        
+      - name: 🚀 Start Application
+        working-directory: src/dashboard
+        run: |
+          npm start &
+          sleep 30
+          curl -f http://localhost:3000/api/system/health || exit 1
+        
+      - name: 📈 Lighthouse Performance Audit
+        uses: treosh/lighthouse-ci-action@v10
+        with:
+          configPath: 'src/dashboard/.lighthouserc.json'
+          uploadArtifacts: true
+          temporaryPublicStorage: true
+          
+      - name: 🔥 Artillery Load Testing
+        working-directory: src/dashboard
+        run: |
+          npm install -g artillery@latest
+          artillery run tests/load/load-test.yml
+          
+      - name: 📊 Upload Performance Reports
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: performance-reports
+          path: |
+            src/dashboard/lighthouse-reports/
+            src/dashboard/artillery-reports/
+          retention-days: 30
+
+  # ---------------------------------------------------------------------------
+  # DOCKER IMAGE BUILD & PUSH
+  # ---------------------------------------------------------------------------
+  
+  docker-build:
+    name: 🐳 Docker Build & Push
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    needs: [code-quality, security-scan, test-suite]
+    if: github.event_name != 'pull_request'
+    
+    outputs:
+      image-tag: ${{ steps.meta.outputs.tags }}
+      image-digest: ${{ steps.build.outputs.digest }}
+    
+    steps:
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v4
+        
+      - name: 🐳 Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        
+      - name: 🔐 Login to Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.DOCKER_REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: 🏷️ Extract Metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.DOCKER_REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=ref,event=branch
+            type=ref,event=pr
+            type=sha,prefix={{branch}}-
+            type=raw,value=latest,enable={{is_default_branch}}
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+          
+      - name: 🏗️ Build and Push Docker Image
+        id: build
+        uses: docker/build-push-action@v5
+        with:
+          context: src/dashboard
+          file: src/dashboard/Dockerfile
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          platforms: linux/amd64,linux/arm64
+          
+      - name: 🔍 Scan Docker Image
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: ${{ steps.meta.outputs.tags }}
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+          
+      - name: 📋 Upload Trivy Scan Results
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: 'trivy-results.sarif'
+
+  # ---------------------------------------------------------------------------
+  # STAGING DEPLOYMENT
+  # ---------------------------------------------------------------------------
+  
+  deploy-staging:
+    name: 🚀 Deploy to Staging
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    needs: [docker-build, performance-test]
+    if: github.ref == 'refs/heads/develop' || github.event.inputs.environment == 'staging'
+    environment:
+      name: staging
+      url: https://security-dashboard-staging.nexus-ide.com
+    
+    steps:
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v4
+        
+      - name: ⚙️ Setup Kubectl
+        uses: azure/setup-kubectl@v3
+        with:
+          version: ${{ env.KUBECTL_VERSION }}
+          
+      - name: ⚙️ Setup Helm
+        uses: azure/setup-helm@v3
+        with:
+          version: ${{ env.HELM_VERSION }}
+          
+      - name: 🔐 Configure Kubernetes
+        run: |
+          echo "${{ secrets.KUBE_CONFIG_STAGING }}" | base64 -d > kubeconfig
+          export KUBECONFIG=kubeconfig
+          kubectl config current-context
+          
+      - name: 🚀 Deploy with Helm
+        run: |
+          export KUBECONFIG=kubeconfig
+          helm upgrade --install security-dashboard-staging \
+            ./src/dashboard/helm/security-dashboard \
+            --namespace staging \
+            --create-namespace \
+            --set image.repository=${{ env.DOCKER_REGISTRY }}/${{ env.IMAGE_NAME }} \
+            --set image.tag=${{ needs.docker-build.outputs.image-tag }} \
+            --set environment=staging \
+            --set ingress.hosts[0].host=security-dashboard-staging.nexus-ide.com \
+            --values ./src/dashboard/helm/values-staging.yaml \
+            --wait --timeout=10m
+            
+      - name: 🧪 Run Smoke Tests
+        run: |
+          sleep 60
+          curl -f https://security-dashboard-staging.nexus-ide.com/api/system/health
+          npm run test:smoke -- --baseUrl=https://security-dashboard-staging.nexus-ide.com
+
+  # ---------------------------------------------------------------------------
+  # PRODUCTION DEPLOYMENT
+  # ---------------------------------------------------------------------------
+  
+  deploy-production:
+    name: 🌟 Deploy to Production
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    needs: [docker-build, deploy-staging]
+    if: github.ref == 'refs/heads/main' || github.event.inputs.environment == 'production'
+    environment:
+      name: production
+      url: https://security-dashboard.nexus-ide.com
+    
+    steps:
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v4
+        
+      - name: ⚙️ Setup Kubectl
+        uses: azure/setup-kubectl@v3
+        with:
+          version: ${{ env.KUBECTL_VERSION }}
+          
+      - name: ⚙️ Setup Helm
+        uses: azure/setup-helm@v3
+        with:
+          version: ${{ env.HELM_VERSION }}
+          
+      - name: 🔐 Configure Kubernetes
+        run: |
+          echo "${{ secrets.KUBE_CONFIG_PRODUCTION }}" | base64 -d > kubeconfig
+          export KUBECONFIG=kubeconfig
+          kubectl config current-context
+          
+      - name: 🚀 Blue-Green Deployment
+        run: |
+          export KUBECONFIG=kubeconfig
+          
+          # Deploy to green environment
+          helm upgrade --install security-dashboard-green \
+            ./src/dashboard/helm/security-dashboard \
+            --namespace production \
+            --create-namespace \
+            --set image.repository=${{ env.DOCKER_REGISTRY }}/${{ env.IMAGE_NAME }} \
+            --set image.tag=${{ needs.docker-build.outputs.image-tag }} \
+            --set environment=production \
+            --set deployment.color=green \
+            --set ingress.hosts[0].host=security-dashboard-green.nexus-ide.com \
+            --values ./src/dashboard/helm/values-production.yaml \
+            --wait --timeout=15m
+            
+      - name: 🧪 Production Smoke Tests
+        run: |
+          sleep 120
+          curl -f https://security-dashboard-green.nexus-ide.com/api/system/health
+          npm run test:smoke -- --baseUrl=https://security-dashboard-green.nexus-ide.com
+          
+      - name: 🔄 Switch Traffic to Green
+        run: |
+          export KUBECONFIG=kubeconfig
+          
+          # Update ingress to point to green deployment
+          kubectl patch ingress security-dashboard-ingress \
+            --namespace production \
+            --type='json' \
+            -p='[{"op": "replace", "path": "/spec/rules/0/http/paths/0/backend/service/name", "value": "security-dashboard-green"}]'
+            
+          # Wait for traffic switch
+          sleep 60
+          
+      - name: 🧹 Cleanup Blue Deployment
+        run: |
+          export KUBECONFIG=kubeconfig
+          helm uninstall security-dashboard-blue --namespace production || true
+          
+      - name: 📊 Post-Deployment Monitoring
+        run: |
+          # Trigger monitoring alerts
+          curl -X POST "${{ secrets.MONITORING_WEBHOOK }}" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "event": "deployment_completed",
+              "service": "security-dashboard",
+              "version": "${{ needs.docker-build.outputs.image-tag }}",
+              "environment": "production",
+              "timestamp": "'$(date -u +%Y-%m-%dT%H:%M:%SZ)'"
+            }'
+
+  # ---------------------------------------------------------------------------
+  # NOTIFICATION & REPORTING
+  # ---------------------------------------------------------------------------
+  
+  notify:
+    name: 📢 Notifications & Reporting
+    runs-on: ubuntu-latest
+    if: always()
+    needs: [code-quality, security-scan, test-suite, performance-test, docker-build, deploy-staging, deploy-production]
+    
+    steps:
+      - name: 📊 Generate Deployment Report
+        run: |
+          cat << EOF > deployment-report.md
+          # 🚀 Security Dashboard Deployment Report
+          
+          **Commit:** ${{ github.sha }}
+          **Branch:** ${{ github.ref_name }}
+          **Triggered by:** ${{ github.actor }}
+          **Workflow:** ${{ github.workflow }}
+          
+          ## 📋 Job Status Summary
+          
+          | Job | Status |
+          |-----|--------|
+          | Code Quality | ${{ needs.code-quality.result }} |
+          | Security Scan | ${{ needs.security-scan.result }} |
+          | Test Suite | ${{ needs.test-suite.result }} |
+          | Performance Test | ${{ needs.performance-test.result }} |
+          | Docker Build | ${{ needs.docker-build.result }} |
+          | Deploy Staging | ${{ needs.deploy-staging.result }} |
+          | Deploy Production | ${{ needs.deploy-production.result }} |
+          
+          ## 🔗 Useful Links
+          
+          - [Staging Environment](https://security-dashboard-staging.nexus-ide.com)
+          - [Production Environment](https://security-dashboard.nexus-ide.com)
+          - [Monitoring Dashboard](https://monitoring.nexus-ide.com/security-dashboard)
+          - [Security Reports](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
+          
+          EOF
+          
+      - name: 💬 Slack Notification
+        uses: 8398a7/action-slack@v3
+        if: always()
+        with:
+          status: ${{ job.status }}
+          channel: '#deployments'
+          webhook_url: ${{ secrets.SLACK_WEBHOOK }}
+          fields: repo,message,commit,author,action,eventName,ref,workflow
+          custom_payload: |
+            {
+              "attachments": [{
+                "color": "${{ job.status == 'success' && 'good' || job.status == 'failure' && 'danger' || 'warning' }}",
+                "title": "🚀 Security Dashboard Deployment",
+                "text": "Deployment ${{ job.status }} for commit ${{ github.sha }}",
+                "fields": [
+                  {
+                    "title": "Environment",
+                    "value": "${{ github.ref == 'refs/heads/main' && 'Production' || 'Staging' }}",
+                    "short": true
+                  },
+                  {
+                    "title": "Branch",
+                    "value": "${{ github.ref_name }}",
+                    "short": true
+                  }
+                ]
+              }]
+            }
+            
+      - name: 📧 Email Notification
+        uses: dawidd6/action-send-mail@v3
+        if: failure()
+        with:
+          server_address: smtp.gmail.com
+          server_port: 587
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: '🚨 Security Dashboard Deployment Failed'
+          to: ${{ secrets.NOTIFICATION_EMAIL }}
+          from: 'NEXUS IDE CI/CD <noreply@nexus-ide.com>'
+          body: |
+            The Security Dashboard deployment has failed.
+            
+            **Details:**
+            - Commit: ${{ github.sha }}
+            - Branch: ${{ github.ref_name }}
+            - Workflow: ${{ github.workflow }}
+            - Run ID: ${{ github.run_id }}
+            
+            Please check the GitHub Actions logs for more details:
+            https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+# =============================================================================
+# END OF CI/CD PIPELINE
+# =============================================================================

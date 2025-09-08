@@ -60,25 +60,16 @@ function FunnyThemeToggle({ className, }) {
         });
         setTheme("dark");
     };
-    return (<>
-      {theme === "light" ? (<button_1.Button variant="outline" size="icon" className={(0, utils_1.cn)("border-none bg-transparent", className)} onClick={goDark}>
-          <lucide_react_1.Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all duration-500 dark:-rotate-90 dark:scale-0 pointer-events-none"/>
-          <lucide_react_1.Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all duration-500 dark:rotate-0 dark:scale-100 pointer-events-none"/>
-          <span className="sr-only">Toggle theme</span>
-        </button_1.Button>) : (<popover_1.Popover>
-          <popover_1.PopoverTrigger asChild>
-            <button_1.Button variant="outline" size="icon" className={(0, utils_1.cn)("border-none bg-transparent", className)}>
-              <lucide_react_1.Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all duration-500 dark:-rotate-90 dark:scale-0"/>
-              <lucide_react_1.Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all duration-500 dark:rotate-0 dark:scale-100"/>
-              <span className="sr-only">Toggle theme</span>
-            </button_1.Button>
-          </popover_1.PopoverTrigger>
-          <popover_1.PopoverContent className="z-[99999] flex flex-col items-center gap-2">
-            {/* <p className="text-sm">these stunts are done by professional only</p> */}
-            <p className="text-sm text-center">{constants_1.themeDisclaimers.light[counter.light]}</p>
-            <button_1.Button onClick={goLight}>Go Light</button_1.Button>
-          </popover_1.PopoverContent>
-        </popover_1.Popover>)}
-    </>);
+    return (React.createElement(React.Fragment, null, theme === "light" ? (React.createElement(button_1.Button, { variant: "outline", size: "icon", className: (0, utils_1.cn)("border-none bg-transparent", className), onClick: goDark },
+        React.createElement(lucide_react_1.Sun, { className: "h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all duration-500 dark:-rotate-90 dark:scale-0 pointer-events-none" }),
+        React.createElement(lucide_react_1.Moon, { className: "absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all duration-500 dark:rotate-0 dark:scale-100 pointer-events-none" }),
+        React.createElement("span", { className: "sr-only" }, "Toggle theme"))) : (React.createElement(popover_1.Popover, null,
+        React.createElement(popover_1.PopoverTrigger, { asChild: true },
+            React.createElement(button_1.Button, { variant: "outline", size: "icon", className: (0, utils_1.cn)("border-none bg-transparent", className) },
+                React.createElement(lucide_react_1.Sun, { className: "h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all duration-500 dark:-rotate-90 dark:scale-0" }),
+                React.createElement(lucide_react_1.Moon, { className: "absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all duration-500 dark:rotate-0 dark:scale-100" }),
+                React.createElement("span", { className: "sr-only" }, "Toggle theme"))),
+        React.createElement(popover_1.PopoverContent, { className: "z-[99999] flex flex-col items-center gap-2" },
+            React.createElement("p", { className: "text-sm text-center" }, constants_1.themeDisclaimers.light[counter.light]),
+            React.createElement(button_1.Button, { onClick: goLight }, "Go Light"))))));
 }
-//# sourceMappingURL=funny-theme-toggle.js.map

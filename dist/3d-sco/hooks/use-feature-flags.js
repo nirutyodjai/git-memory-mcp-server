@@ -94,10 +94,7 @@ function FeatureFlagsProvider({ children, userId }) {
         trackEvent,
         refresh,
     };
-    return value = { value } >
-        { children }
-        < /FeatureFlagsContext.Provider>;
-    ;
+    return (React.createElement(FeatureFlagsContext.Provider, { value: value }, children));
 }
 function useFeatureFlags() {
     const context = (0, react_1.useContext)(FeatureFlagsContext);
@@ -134,28 +131,28 @@ function withFeatureFlag(flagName, Component, FallbackComponent) {
     return function FeatureFlaggedComponent(props) {
         const isEnabled = useFeatureFlag(flagName);
         if (isEnabled) {
-            return { ...props } /  > ;
+            return React.createElement(Component, { ...props });
         }
         if (FallbackComponent) {
-            return { ...props } /  > ;
+            return React.createElement(FallbackComponent, { ...props });
         }
         return null;
     };
 }
 function FeatureFlag({ flag, children, fallback = null }) {
     const isEnabled = useFeatureFlag(flag);
-    return isEnabled ? { children } < /> : <>{fallback}</ >  : ;
+    return isEnabled ? React.createElement(React.Fragment, null, children) : React.createElement(React.Fragment, null, fallback);
 }
 function ABTestComponent({ test, variants, fallback = null }) {
     const { variant } = useABTest(test);
     if (variant && variants[variant]) {
-        return { variants, [variant]:  } < />;
+        return React.createElement(React.Fragment, null, variants[variant]);
     }
     // Try control variant
     if (variants.control) {
-        return { variants, : .control } < />;
+        return React.createElement(React.Fragment, null, variants.control);
     }
-    return { fallback } < />;
+    return React.createElement(React.Fragment, null, fallback);
 }
 // Hook for gradual rollouts
 function useGradualRollout(flagName, percentage) {
@@ -179,4 +176,3 @@ function useGradualRollout(flagName, percentage) {
     }, [user?.id, flagName, percentage]);
     return isEnabled;
 }
-//# sourceMappingURL=use-feature-flags.js.map

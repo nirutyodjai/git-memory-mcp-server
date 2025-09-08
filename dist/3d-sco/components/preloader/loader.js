@@ -48,15 +48,10 @@ function Index() {
             transition: { duration: 0.7, ease: [0.76, 0, 0.24, 1], delay: 0.3 },
         },
     };
-    return (<framer_motion_1.motion.div variants={anim_1.slideUp} initial="initial" exit="exit" className={style_module_scss_1.default.introduction}>
-      {dimension.width > 0 && (<>
-          <framer_motion_1.motion.p variants={anim_1.opacity} initial="initial" animate="enter">
-            {(loadingPercent - (loadingPercent % 5)).toFixed(0)} %
-          </framer_motion_1.motion.p>
-          <svg>
-            <framer_motion_1.motion.path variants={curve} initial="initial" exit="exit"></framer_motion_1.motion.path>
-          </svg>
-        </>)}
-    </framer_motion_1.motion.div>);
+    return (React.createElement(framer_motion_1.motion.div, { variants: anim_1.slideUp, initial: "initial", exit: "exit", className: style_module_scss_1.default.introduction }, dimension.width > 0 && (React.createElement(React.Fragment, null,
+        React.createElement(framer_motion_1.motion.p, { variants: anim_1.opacity, initial: "initial", animate: "enter" },
+            (loadingPercent - (loadingPercent % 5)).toFixed(0),
+            " %"),
+        React.createElement("svg", null,
+            React.createElement(framer_motion_1.motion.path, { variants: curve, initial: "initial", exit: "exit" }))))));
 }
-//# sourceMappingURL=loader.js.map
