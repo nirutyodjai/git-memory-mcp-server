@@ -46,8 +46,15 @@ const FileExplorer = () => {
     fetchGitStatus();
   }, []);
 
-  const getFileStatus = (fileName: string) => {
-    return gitStatus[fileName] || null;
+  const getFileStatus = (node: NodeApi) => {
+    // Construct the full path of the node
+    let path = node.data.name;
+    let current = node.parent;
+    while (current && current.data.id !== "root") {
+      path = `${current.data.name}/${path}`;
+      current = current.parent;
+    }
+    return gitStatus[path] || null;
   };
 
   const getStatusColor = (status: string) => {
@@ -97,7 +104,7 @@ const FileExplorer = () => {
   };
 
   const renderTitle = (node: NodeApi) => {
-    const status = getFileStatus(node.data.name);
+    const status = getFileStatus(node);
     const color = getStatusColor(status);
     const title = getStatusTitle(status, node.data.name);
     const icon = getStatusIcon(status);
