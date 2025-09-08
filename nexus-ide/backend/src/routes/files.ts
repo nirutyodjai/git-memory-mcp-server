@@ -4,6 +4,7 @@ import * as path from 'path';
 import simpleGit, { SimpleGit, StatusResult } from 'simple-git';
 
 interface FileNode {
+  id: string;
   title: string;
   key: string;
   gitStatus?: string;
@@ -36,6 +37,7 @@ const readDirRecursive = (dir: string, projectRoot: string, gitStatus: StatusRes
     }
 
     const node: FileNode = {
+      id: fullPath, // Use fullPath as the unique ID
       title: dirent.name,
       key: fullPath,
       gitStatus: getGitStatus(projectRoot, gitStatus, fullPath),

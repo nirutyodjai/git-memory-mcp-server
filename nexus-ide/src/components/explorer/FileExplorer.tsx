@@ -128,6 +128,7 @@ import {
 } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { Input } from '../ui/Input';
+import { ContextMenu, ContextMenuTrigger, ContextMenuContent, ContextMenuItem, ContextMenuSeparator } from '../ui/ContextMenu';
 
 interface FileItem {
   id: string;
@@ -257,7 +258,8 @@ const FileExplorer: React.FC<FileExplorerProps> = ({
   const [clipboard, setClipboard] = useState<{ files: FileItem[]; operation: 'copy' | 'cut' } | null>(null);
   const [draggedItems, setDraggedItems] = useState<FileItem[]>([]);
   const [dropTarget, setDropTarget] = useState<string | null>(null);
-  const [contextMenu, setContextMenu] = useState<{ x: number; y: number; file: FileItem } | null>(null);
+  // Removed legacy custom context menu state (using design system ContextMenu)
+  // const [contextMenu, setContextMenu] = useState<{ x: number; y: number; file: FileItem } | null>(null);
   const [showAdvancedSearch, setShowAdvancedSearch] = useState(false);
   const [aiRecommendations, setAiRecommendations] = useState<AIRecommendation[]>([]);
   const [showAIPanel, setShowAIPanel] = useState(false);
@@ -277,7 +279,6 @@ const FileExplorer: React.FC<FileExplorerProps> = ({
   
   const fileExplorerRef = useRef<HTMLDivElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
-  const contextMenuRef = useRef<HTMLDivElement>(null);
 
   // File type icons mapping
   const getFileIcon = useCallback((file: FileItem) => {
@@ -606,15 +607,7 @@ const FileExplorer: React.FC<FileExplorerProps> = ({
   }, [onFileOpen, onFolderExpand, onFolderCollapse, loadFiles]);
 
   // Handle context menu
-  const handleContextMenu = useCallback((file: FileItem, event: React.MouseEvent) => {
-    event.preventDefault();
-    setContextMenu({
-      x: event.clientX,
-      y: event.clientY,
-      file,
-    });
-    onContextMenu?.(file, event);
-  }, [onContextMenu]);
+  // Legacy custom context menu removed; Radix ContextMenu handles positioning and visibility.
 
   // Handle drag and drop
   const handleDragStart = useCallback((file: FileItem, event: React.DragEvent) => {
@@ -753,19 +746,7 @@ const FileExplorer: React.FC<FileExplorerProps> = ({
     }
   }, [files, getAIInsights, showAIInsights]);
 
-  // Close context menu on click outside
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (contextMenuRef.current && !contextMenuRef.current.contains(event.target as Node)) {
-        setContextMenu(null);
-      }
-    };
-
-    if (contextMenu) {
-      document.addEventListener('mousedown', handleClickOutside);
-      return () => document.removeEventListener('mousedown', handleClickOutside);
-    }
-  }, [contextMenu]);
+  // Radix ContextMenu manages its own open/close lifecycle; removed manual outside-click handler.
 
   // Format file size
   const formatFileSize = useCallback((bytes: number) => {
@@ -804,102 +785,190 @@ const FileExplorer: React.FC<FileExplorerProps> = ({
     const isSelected = selectedItems.includes(file.id);
     const isDragging = draggedItems.some(item => item.id === file.id);
     const colorClass = getFileColor(file);
-    
+  
+    const selected = files.filter(f => selectedItems.includes(f.id));
+    const targetSelection = selected.length > 0 ? selected : [file];
+  
+    const destinationForPaste = file.type === 'folder' ? file.path : currentPath;
+  
     return (
-      <div
-        key={file.id}
-        className={`group flex items-center space-x-2 px-2 py-1 hover:bg-accent cursor-pointer transition-colors ${
-          isSelected ? 'bg-accent' : ''
-        } ${isDragging ? 'opacity-50' : ''}`}
-        style={{ paddingLeft: `${depth * 16 + 8}px` }}
-        onClick={(e) => handleFileSelect(file, e)}
-        onDoubleClick={() => handleFileOpen(file)}
-        onContextMenu={(e) => handleContextMenu(file, e)}
-        draggable
-        onDragStart={(e) => handleDragStart(file, e)}
-        onDragOver={handleDragOver}
-        onDrop={(e) => handleDrop(file, e)}
-      >
-        {/* Expand/Collapse Icon */}
-        {file.type === 'folder' && (
-          <button
-            className="p-0.5 hover:bg-accent rounded"
-            onClick={(e) => {
-              e.stopPropagation();
-              handleFileOpen(file);
-            }}
+      <ContextMenu>
+        <ContextMenuTrigger>
+          <div
+            key={file.id}
+            className={`group flex items-center space-x-2 px-2 py-1 hover:bg-accent cursor-pointer transition-colors ${
+              isSelected ? 'bg-accent' : ''
+            } ${isDragging ? 'opacity-50' : ''}`}
+            style={{ paddingLeft: `${depth * 16 + 8}px` }}
+            onClick={(e) => handleFileSelect(file, e)}
+            onDoubleClick={() => handleFileOpen(file)}
+            draggable
+            onDragStart={(e) => handleDragStart(file, e)}
+            onDragOver={handleDragOver}
+            onDrop={(e) => handleDrop(file, e)}
           >
-            {file.isExpanded ? (
-              <ChevronDown className="w-3 h-3" />
-            ) : (
-              <ChevronRight className="w-3 h-3" />
+            {/* Expand/Collapse Icon */}
+            {file.type === 'folder' && (
+              <button
+                className="p-0.5 hover:bg-accent rounded"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleFileOpen(file);
+                }}
+              >
+                {file.isExpanded ? (
+                  <ChevronDown className="w-3 h-3" />
+                ) : (
+                  <ChevronRight className="w-3 h-3" />
+                )}
+              </button>
             )}
-          </button>
-        )}
-        
-        {/* File Icon */}
-        <Icon className={`w-4 h-4 ${colorClass}`} />
-        
-        {/* Thumbnail */}
-        {showThumbnails && file.thumbnail && (
-          <img
-            src={file.thumbnail}
-            alt={file.name}
-            className="w-6 h-6 object-cover rounded"
-          />
-        )}
-        
-        {/* File Name */}
-        <span className={`flex-1 text-sm truncate ${colorClass}`}>
-          {file.name}
-        </span>
-        
-        {/* File Badges */}
-        <div className="flex items-center space-x-1">
-          {file.isFavorite && <Star className="w-3 h-3 text-yellow-500" />}
-          {file.isBookmarked && <Bookmark className="w-3 h-3 text-blue-500" />}
-          {file.isPinned && <Pin className="w-3 h-3 text-green-500" />}
-          {file.isSymlink && <Link className="w-3 h-3 text-purple-500" />}
-          {file.permissions && !file.permissions.write && <Lock className="w-3 h-3 text-red-500" />}
-          
-          {/* Git Status */}
-          {showGitStatus && file.gitStatus && (
-            <div className={`w-2 h-2 rounded-full ${
-              file.gitStatus === 'modified' ? 'bg-yellow-500' :
-              file.gitStatus === 'untracked' ? 'bg-green-500' :
-              file.gitStatus === 'added' ? 'bg-green-600' :
-              file.gitStatus === 'deleted' ? 'bg-red-500' :
-              file.gitStatus === 'renamed' ? 'bg-blue-500' :
-              file.gitStatus === 'copied' ? 'bg-cyan-500' :
-              file.gitStatus === 'unmerged' ? 'bg-purple-500' :
-              'bg-gray-400'
-            }`}></div>
-          )}
-          
-          {/* AI Insights Indicator */}
-          {showAIInsights && file.aiInsights && (
-            <div className="flex items-center space-x-0.5">
-              <Bot className="w-3 h-3 text-blue-500" />
-              <div className={`w-1 h-1 rounded-full ${
-                file.aiInsights.complexity > 0.8 ? 'bg-red-500' :
-                file.aiInsights.complexity > 0.6 ? 'bg-yellow-500' :
-                'bg-green-500'
-              }`}></div>
+            
+            {/* File Icon */}
+            <Icon className={`w-4 h-4 ${colorClass}`} />
+            
+            {/* Thumbnail */}
+            {showThumbnails && file.thumbnail && (
+              <img
+                src={file.thumbnail}
+                alt={file.name}
+                className="w-6 h-6 object-cover rounded"
+              />
+            )}
+            
+            {/* File Name */}
+            <span className={`flex-1 text-sm truncate ${colorClass}`}>
+              {file.name}
+            </span>
+            
+            {/* File Badges */}
+            <div className="flex items-center space-x-1">
+              {file.isFavorite && <Star className="w-3 h-3 text-yellow-500" />}
+              {file.isBookmarked && <Bookmark className="w-3 h-3 text-blue-500" />}
+              {file.isPinned && <Pin className="w-3 h-3 text-green-500" />}
+              {file.isSymlink && <Link className="w-3 h-3 text-purple-500" />}
+              {file.permissions && !file.permissions.write && <Lock className="w-3 h-3 text-red-500" />}
+              
+              {/* Git Status */}
+              {showGitStatus && file.gitStatus && (
+                <div className={`w-2 h-2 rounded-full ${
+                  file.gitStatus === 'modified' ? 'bg-yellow-500' :
+                  file.gitStatus === 'untracked' ? 'bg-green-500' :
+                  file.gitStatus === 'added' ? 'bg-green-600' :
+                  file.gitStatus === 'deleted' ? 'bg-red-500' :
+                  file.gitStatus === 'renamed' ? 'bg-blue-500' :
+                  file.gitStatus === 'copied' ? 'bg-cyan-500' :
+                  file.gitStatus === 'unmerged' ? 'bg-purple-500' :
+                  'bg-gray-400'
+                }`}></div>
+              )}
+              
+              {/* AI Insights Indicator */}
+              {showAIInsights && file.aiInsights && (
+                <div className="flex items-center space-x-0.5">
+                  <Bot className="w-3 h-3 text-blue-500" />
+                  <div className={`w-1 h-1 rounded-full ${
+                    file.aiInsights.complexity > 0.8 ? 'bg-red-500' :
+                    file.aiInsights.complexity > 0.6 ? 'bg-yellow-500' :
+                    'bg-green-500'
+                  }`}></div>
+                </div>
+              )}
             </div>
-          )}
-        </div>
-        
-        {/* File Size and Date */}
-        {viewMode === 'list' && (
-          <div className="flex items-center space-x-4 text-xs text-muted-foreground">
-            {file.size && <span>{formatFileSize(file.size)}</span>}
-            {file.modified && <span>{formatDate(file.modified)}</span>}
+            
+            {/* File Size and Date */}
+            {viewMode === 'list' && (
+              <div className="flex items-center space-x-4 text-xs text-muted-foreground">
+                {file.size && <span>{formatFileSize(file.size)}</span>}
+                {file.modified && <span>{formatDate(file.modified)}</span>}
+              </div>
+            )}
           </div>
-        )}
-      </div>
+        </ContextMenuTrigger>
+  
+        <ContextMenuContent className="w-56">
+          <ContextMenuItem onClick={() => handleFileOpen(file)}>
+            Open
+          </ContextMenuItem>
+          {file.type === 'folder' && (
+            <>
+              <ContextMenuItem onClick={() => onFileCreate?.(file.path, 'file')}>
+                New File
+              </ContextMenuItem>
+              <ContextMenuItem onClick={() => onFileCreate?.(file.path, 'folder')}>
+                New Folder
+              </ContextMenuItem>
+            </>
+          )}
+          <ContextMenuSeparator />
+          <ContextMenuItem onClick={() => {
+            const newName = prompt('Rename', file.name);
+            if (newName && newName !== file.name) {
+              onFileRename?.(file, newName);
+            }
+          }}>
+            Rename
+          </ContextMenuItem>
+          <ContextMenuItem onClick={async () => {
+            try { await navigator.clipboard.writeText(file.path); } catch (e) { console.warn('Clipboard not available'); }
+          }}>
+            Copy Path
+          </ContextMenuItem>
+          <ContextMenuSeparator />
+          <ContextMenuItem onClick={() => setClipboard({ files: targetSelection, operation: 'cut' })}>
+            Cut
+          </ContextMenuItem>
+          <ContextMenuItem onClick={() => setClipboard({ files: targetSelection, operation: 'copy' })}>
+            Copy
+          </ContextMenuItem>
+          <ContextMenuItem disabled={!clipboard} onClick={() => {
+            if (!clipboard) return;
+            if (clipboard.operation === 'copy') {
+              onFileCopy?.(clipboard.files, destinationForPaste);
+            } else {
+              onFileMove?.(clipboard.files, destinationForPaste);
+            }
+            setClipboard(null);
+          }}>
+            Paste
+          </ContextMenuItem>
+          <ContextMenuSeparator />
+          <ContextMenuItem onClick={() => onFileDelete?.(targetSelection)} className="text-destructive">
+            Delete
+          </ContextMenuItem>
+          <ContextMenuItem onClick={() => console.log('Reveal in Explorer:', file.path)}>
+            Reveal in Explorer
+          </ContextMenuItem>
+        </ContextMenuContent>
+      </ContextMenu>
     );
-  }, [selectedItems, draggedItems, getFileIcon, getFileColor, showThumbnails, showGitStatus, showAIInsights, viewMode, handleFileSelect, handleFileOpen, handleContextMenu, handleDragStart, handleDragOver, handleDrop, formatFileSize, formatDate]);
-
+  }, [
+    selectedItems,
+    draggedItems,
+    files,
+    clipboard,
+    currentPath,
+    getFileIcon,
+    getFileColor,
+    showThumbnails,
+    showGitStatus,
+    showAIInsights,
+    viewMode,
+    handleFileSelect,
+    handleFileOpen,
+    handleDragStart,
+    handleDragOver,
+    handleDrop,
+    formatFileSize,
+    formatDate,
+    onFileCreate,
+    onFileDelete,
+    onFileRename,
+    onFileCopy,
+    onFileMove,
+    setClipboard,
+  ]);
+  
   // Render breadcrumbs
   const renderBreadcrumbs = () => (
     <div className="flex items-center space-x-1 px-3 py-2 border-b border-border">
@@ -985,49 +1054,6 @@ const FileExplorer: React.FC<FileExplorerProps> = ({
     </div>
   );
 
-  // Render context menu
-  const renderContextMenu = () => {
-    if (!contextMenu) return null;
-    
-    return (
-      <div
-        ref={contextMenuRef}
-        className="fixed bg-background border border-border rounded-md shadow-lg py-1 z-50"
-        style={{
-          left: contextMenu.x,
-          top: contextMenu.y,
-        }}
-      >
-        <button className="w-full px-3 py-1 text-left text-sm hover:bg-accent">
-          Open
-        </button>
-        <button className="w-full px-3 py-1 text-left text-sm hover:bg-accent">
-          Open With...
-        </button>
-        <div className="border-t border-border my-1"></div>
-        <button className="w-full px-3 py-1 text-left text-sm hover:bg-accent">
-          Cut
-        </button>
-        <button className="w-full px-3 py-1 text-left text-sm hover:bg-accent">
-          Copy
-        </button>
-        <button className="w-full px-3 py-1 text-left text-sm hover:bg-accent">
-          Paste
-        </button>
-        <div className="border-t border-border my-1"></div>
-        <button className="w-full px-3 py-1 text-left text-sm hover:bg-accent">
-          Rename
-        </button>
-        <button className="w-full px-3 py-1 text-left text-sm hover:bg-accent text-red-600">
-          Delete
-        </button>
-        <div className="border-t border-border my-1"></div>
-        <button className="w-full px-3 py-1 text-left text-sm hover:bg-accent">
-          Properties
-        </button>
-      </div>
-    );
-  };
 
   return (
     <div ref={fileExplorerRef} className={`h-full flex flex-col bg-background ${className}`}>
@@ -1119,9 +1145,6 @@ const FileExplorer: React.FC<FileExplorerProps> = ({
           )}
         </div>
       )}
-      
-      {/* Context Menu */}
-      {renderContextMenu()}
     </div>
   );
 };

@@ -42,7 +42,8 @@ import {
 import { Badge } from '../ui/Badge';
 import { useFileSystem } from '../../hooks/useFileSystem';
 import { useGitStatus } from '../../hooks/useGitStatus';
-import { ScrollArea } from "@/components/ui/scroll-area";
+// Removed duplicate alias import for ScrollArea to avoid redeclaration
+// import { ScrollArea } from "@/components/ui/scroll-area";
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
 import { useFileExplorer } from '@/hooks/useFileExplorer';
 import { useAiServices } from '@/hooks/useAiServices';
@@ -518,82 +519,3 @@ export const FileExplorer: React.FC<FileExplorerProps> = ({
 };
 
 export default FileExplorer;
-
-/**
- * File Explorer Features:
- * 
- * 1. Tree View:
- *    - Hierarchical file/folder structure
- *    - Expandable/collapsible folders
- *    - File type icons and recognition
- *    - Git status indicators
- * 
- * 2. Search & Filter:
- *    - Real-time search filtering
- *    - Recursive search through folders
- *    - Highlight matching results
- *    - Clear search functionality
- * 
- * 3. Context Actions:
- *    - Right-click context menus
- *    - File/folder operations (create, rename, delete)
- *    - Copy path to clipboard
- *    - Reveal in system explorer
- * 
- * 4. Git Integration:
- *    - Visual git status indicators
- *    - Modified, added, deleted file states
- *    - Staged/unstaged changes
- *    - Untracked files highlighting
- * 
- * 5. Keyboard Navigation:
- *    - Arrow key navigation
- *    - Enter to open files
- *    - Space to toggle folders
- *    - Delete key for file deletion
- */
-type FileExplorerProps = {
-  width?: number;
-};
-
-const { treeData, toggleNode, openFile, contextMenu, handleContextMenu, closeContextMenu, renameNode, createNewNode, deleteNode, getGitStatus } = useFileExplorer();
-const { semanticSearch } = useAiServices();
-const [searchTerm, setSearchTerm] = useState('');
-const [searchResults, setSearchResults] = useState<FileTree[]>([]);
-const [isSearching, setIsSearching] = useState(false);
-
-const handleSearchChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-  const term = e.target.value;
-  setSearchTerm(term);
-
-  if (term.length > 2) {
-    setIsSearching(true);
-    const results = await semanticSearch(term);
-    setSearchResults(results);
-    setIsSearching(false);
-  } else {
-    setSearchResults([]);
-  }
-};
-
-const renderTree = (nodes: FileTree[], level = 0) => (
-<Input
-type="text"
-placeholder="Smart Search files..."
-className="w-full pl-8 pr-4 py-2 text-sm bg-gray-700 border-gray-600 rounded-md"
-value={searchTerm}
-onChange={handleSearchChange}
-/>
-{isSearching && <Loader2 className="absolute right-2 top-1/2 -translate-y-1/2 h-4 w-4 animate-spin" />}
-</div>
-</div>
-<ScrollArea className="flex-grow">
-<div className="p-2">
-{searchTerm.length > 2 ? renderTree(searchResults) : renderTree(treeData)}
-</div>
-</ScrollArea>
-</div>
-</div>
-</div>
-</div>
-</div>
