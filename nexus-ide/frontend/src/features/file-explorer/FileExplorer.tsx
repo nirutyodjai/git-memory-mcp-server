@@ -1,8 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Tree, NodeApi } from "react-arborist";
-import { VscQuestion, VscDiffModified, VscDiffAdded, VscDiffRemoved, VscDiffRenamed } from 'react-icons/vsc';
-import { useQuery } from '@tanstack/react-query';
-import { FaSearch } from 'react-icons/fa';
+import {
+  FaQuestionCircle,
+  FaPen,
+  FaPlus,
+  FaTrash,
+  FaExchangeAlt,
+  FaSearch,
+} from "react-icons/fa";
+import { useQuery } from "@tanstack/react-query";
 
 const fetchFileTree = async () => {
   const response = await fetch('/api/files');
@@ -20,41 +26,10 @@ const FileExplorer = () => {
     refetchOnReconnect: false,
     retry: false,
   });
-  const [gitStatus, setGitStatus] = useState({});
   const [searchTerm, setSearchTerm] = useState('');
 
-  useEffect(() => {
-    const fetchGitStatus = async () => {
-      try {
-        const response = await fetch('/api/git/status');
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        // Convert array of git status to a hash map for faster lookup
-        const statusMap = data.files.reduce((acc, file) => {
-          acc[file.path] = file.working_dir;
-          return acc;
-        }, {});
-        setGitStatus(statusMap);
-      } catch (error) {
-        console.error("Failed to fetch git status:", error);
-      }
-    };
-
-    fetchFileTree();
-    fetchGitStatus();
-  }, []);
-
   const getFileStatus = (node: NodeApi) => {
-    // Construct the full path of the node
-    let path = node.data.name;
-    let current = node.parent;
-    while (current && current.data.id !== "root") {
-      path = `${current.data.name}/${path}`;
-      current = current.parent;
-    }
-    return gitStatus[path] || null;
+    return node.data.gitStatus || null;
   };
 
   const getStatusColor = (status: string) => {
@@ -89,15 +64,15 @@ const FileExplorer = () => {
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case 'M':
-        return <VscDiffModified className="inline -mb-0.5 ml-2" />;
-      case 'A':
-      case '?':
-        return <VscDiffAdded className="inline -mb-0.5 ml-2" />;
-      case 'D':
-        return <VscDiffRemoved className="inline -mb-0.5 ml-2" />;
-      case 'R':
-        return <VscDiffRenamed className="inline -mb-0.5 ml-2" />;
+      case "M":
+        return <FaPen className="inline -mb-0.5 ml-2" />;
+      case "A":
+      case "U":
+        return <FaPlus className="inline -mb-0.5 ml-2" />;
+      case "D":
+        return <FaTrash className="inline -mb-0.5 ml-2" />;
+      case "R":
+        return <FaExchangeAlt className="inline -mb-0.5 ml-2" />;
       default:
         return null;
     }
