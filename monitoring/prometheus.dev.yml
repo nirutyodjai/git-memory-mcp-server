@@ -1,0 +1,27 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+rule_files:
+  # - "alerts.yml"
+
+scrape_configs:
+  # Git Memory MCP Server
+  - job_name: 'git-memory-mcp-server'
+    static_configs:
+      - targets: ['git-memory-server:3000']
+    metrics_path: '/metrics'
+    scrape_interval: 10s
+    scrape_timeout: 5s
+
+  # Redis
+  - job_name: 'redis'
+    static_configs:
+      - targets: ['redis:6379']
+    scrape_interval: 30s
+
+  # Node.js application metrics
+  - job_name: 'nodejs'
+    static_configs:
+      - targets: ['git-memory-server:3000']
+    scrape_interval: 15s

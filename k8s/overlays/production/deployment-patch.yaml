@@ -1,0 +1,79 @@
+# Production deployment patch
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: git-memory-mcp-server
+spec:
+  template:
+    spec:
+      containers:
+      - name: git-memory-server
+        env:
+        - name: JAEGER_ENDPOINT
+          value: "http://git-memory-jaeger:14268/api/traces"
+        resources:
+          requests:
+            memory: "1Gi"
+            cpu: "1000m"
+          limits:
+            memory: "2Gi"
+            cpu: "2000m"
+        livenessProbe:
+          initialDelaySeconds: 120
+          periodSeconds: 30
+        readinessProbe:
+          initialDelaySeconds: 60
+          periodSeconds: 10
+---
+# Production ingress patch
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: git-memory-ingress
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: "50m"
+    nginx.ingress.kubernetes.io/rate-limit: "1000"
+    nginx.ingress.kubernetes.io/rate-limit-window: "1m"
+    nginx.ingress.kubernetes.io/limit-rps: "100"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  tls:
+  - hosts:
+    - api.your-domain.com  # Replace with your actual domain
+    secretName: git-memory-prod-tls
+  rules:
+  - host: api.your-domain.com  # Replace with your actual domain
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: git-memory-mcp-server
+            port:
+              number: 80
+---
+# HPA patch for production
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: git-memory-hpa
+spec:
+  minReplicas: 5
+  maxReplicas: 50
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 60
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 70

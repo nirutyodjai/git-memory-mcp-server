@@ -1,0 +1,247 @@
+{
+  // Git Memory MCP Server Development Configuration
+  "extensions": [
+    // Essential extensions for Node.js development
+    "ms-vscode.vscode-typescript-next",
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+    "bradlc.vscode-tailwindcss",
+    "ms-vscode.vscode-json",
+
+    // Git and version control
+    "eamodio.gitlens",
+    "ms-vscode-remote.remote-containers",
+    "ms-vscode-remote.remote-ssh",
+
+    // Debugging and testing
+    "ms-vscode.vscode-chrome-debug-core",
+    "hbenl.vscode-test-explorer",
+    "ms-vscode.test-adapter-converter",
+
+    // Docker and DevOps
+    "ms-azuretools.vscode-docker",
+    "ms-kubernetes-tools.vscode-kubernetes-tools",
+    "redhat.vscode-yaml",
+
+    // Performance and monitoring
+    "ms-vscode.vscode-chrome-debug",
+    "ms-vscode.js-debug",
+
+    // API and WebSocket development
+    "humao.rest-client",
+    "ms-vscode.vscode-restclient",
+    "ms-vscode.vscode-websocket",
+
+    // Documentation and markdown
+    "yzhang.markdown-all-in-one",
+    "ms-vscode.powershell",
+    "ms-vscode.azurecli"
+  ],
+
+  "settings": {
+    // TypeScript settings
+    "typescript.preferences.importModuleSpecifier": "relative",
+    "typescript.suggest.autoImports": true,
+    "typescript.updateImportsOnFileMove.enabled": "always",
+
+    // Editor settings
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit",
+      "source.organizeImports": "explicit"
+    },
+
+    // ESLint settings
+    "eslint.validate": [
+      "javascript",
+      "javascriptreact",
+      "typescript",
+      "typescriptreact"
+    ],
+    "eslint.workingDirectories": [
+      "src",
+      "test",
+      "examples"
+    ],
+
+    // Prettier settings
+    "prettier.requireConfig": true,
+    "prettier.configPath": ".prettierrc",
+
+    // File associations
+    "files.associations": {
+      "*.ts": "typescript",
+      "*.js": "javascript",
+      "Dockerfile.*": "dockerfile"
+    },
+
+    // Git settings
+    "git.confirmSync": false,
+    "git.autofetch": true,
+    "git.enableSmartCommit": true,
+
+    // Debug settings
+    "debug.javascript.autoAttachFilter": "smart",
+    "debug.node.autoAttach": "on",
+
+    // Terminal settings
+    "terminal.integrated.scrollback": 10000,
+    "terminal.integrated.shell.linux": "/bin/bash",
+    "terminal.integrated.shell.windows": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+    "terminal.integrated.shell.osx": "/bin/bash",
+
+    // Workspace settings
+    "search.exclude": {
+      "**/node_modules": true,
+      "**/dist": true,
+      "**/logs": true,
+      "**/*.log": true
+    },
+
+    // Extension specific settings
+    "rest-client.environmentVariables": {
+      "local": {
+        "baseUrl": "http://localhost:3000",
+        "apiKey": "your-api-key-here"
+      }
+    }
+  },
+
+  "launch": {
+    // Debug server
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Debug Server",
+        "type": "node",
+        "request": "launch",
+        "program": "${workspaceFolder}/src/server.js",
+        "skipFiles": [
+          "<node_internals>/**",
+          "node_modules/**"
+        ],
+        "env": {
+          "NODE_ENV": "development",
+          "LOG_LEVEL": "debug",
+          "GIT_MEMORY_API_KEY": "dev-api-key-123"
+        },
+        "console": "integratedTerminal",
+        "restart": true
+      },
+      {
+        "name": "Debug with Inspector",
+        "type": "node",
+        "request": "launch",
+        "program": "${workspaceFolder}/src/server.js",
+        "skipFiles": [
+          "<node_internals>/**",
+          "node_modules/**"
+        ],
+        "env": {
+          "NODE_ENV": "development",
+          "LOG_LEVEL": "debug",
+          "GIT_MEMORY_API_KEY": "dev-api-key-123"
+        },
+        "runtimeArgs": [
+          "--inspect"
+        ],
+        "console": "integratedTerminal"
+      },
+      {
+        "name": "Debug Tests",
+        "type": "node",
+        "request": "launch",
+        "program": "${workspaceFolder}/node_modules/.bin/jest",
+        "args": [
+          "--runInBand"
+        ],
+        "skipFiles": [
+          "<node_internals>/**",
+          "node_modules/**"
+        ],
+        "console": "integratedTerminal"
+      },
+      {
+        "name": "Attach to Process",
+        "type": "node",
+        "request": "attach",
+        "skipFiles": [
+          "<node_internals>/**",
+          "node_modules/**"
+        ],
+        "restart": true
+      }
+    ]
+  },
+
+  "tasks": {
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "Start Development Server",
+        "type": "shell",
+        "command": "npm",
+        "args": ["run", "dev"],
+        "group": "build",
+        "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "focus": false,
+          "panel": "shared"
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "Run Tests",
+        "type": "shell",
+        "command": "npm",
+        "args": ["test"],
+        "group": {
+          "kind": "test",
+          "isDefault": true
+        },
+        "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "focus": false,
+          "panel": "shared"
+        }
+      },
+      {
+        "label": "Run Linting",
+        "type": "shell",
+        "command": "npm",
+        "args": ["run", "lint"],
+        "group": "build",
+        "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "focus": false,
+          "panel": "shared"
+        }
+      },
+      {
+        "label": "Run Type Checking",
+        "type": "shell",
+        "command": "npm",
+        "args": ["run", "type-check"],
+        "group": "build",
+        "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "focus": false,
+          "panel": "shared"
+        }
+      }
+    ]
+  },
+
+  "compounds": [
+    {
+      "name": "Full Development",
+      "configurations": ["Debug Server"],
+      "tasks": ["Start Development Server"]
+    }
+  ]
+}

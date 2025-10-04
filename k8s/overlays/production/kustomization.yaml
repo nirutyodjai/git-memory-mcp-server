@@ -1,0 +1,53 @@
+# Production environment overlay
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+metadata:
+  name: git-memory-production
+
+resources:
+  - ../base
+  - ../monitoring
+
+patchesStrategicMerge:
+  - deployment-patch.yaml
+  - ingress-patch.yaml
+  - hpa-patch.yaml
+
+# Production-specific configurations
+configMapGenerator:
+  - name: git-memory-config
+    behavior: merge
+    literals:
+      - NODE_ENV=production
+      - LOG_LEVEL=warn
+      - ENABLE_TRACING=true
+
+patchesJson6902:
+  - target:
+      group: apps
+      version: v1
+      kind: Deployment
+      name: git-memory-mcp-server
+    patch: |-
+      - op: replace
+        path: /spec/replicas
+        value: 3
+  - target:
+      group: autoscaling
+      version: v2
+      kind: HorizontalPodAutoscaler
+      name: git-memory-hpa
+    patch: |-
+      - op: replace
+        path: /spec/minReplicas
+        value: 3
+  - target:
+      group: autoscaling
+      version: v2
+      kind: HorizontalPodAutoscaler
+      name: git-memory-hpa
+    patch: |-
+      - op: replace
+        path: /spec/maxReplicas
+        value: 20

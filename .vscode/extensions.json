@@ -1,0 +1,56 @@
+{
+  "recommendations": [
+    // Essential extensions for Node.js development
+    "ms-vscode.vscode-typescript-next",
+    "ms-vscode.js-debug",
+
+    // Code quality and formatting
+    "esbenp.prettier-vscode",
+    "ms-vscode.vscode-eslint",
+
+    // Docker and container development
+    "ms-azuretools.vscode-docker",
+    "ms-kubernetes-tools.vscode-kubernetes-tools",
+
+    // Git and version control
+    "ms-vscode.vscode-git-graph",
+    "eamodio.gitlens",
+    "ms-vscode.vscode-json",
+
+    // Testing and development tools
+    "ms-playwright.playwright",
+    "hbenl.vscode-test-explorer",
+    "ms-vscode.test-adapter-converter",
+
+    // Performance and monitoring
+    "ms-vscode.vscode-chrome-debug-core",
+    "ms-vscode-remote.remote-containers",
+
+    // API and development tools
+    "ms-vscode.vscode-rest-client",
+    "humao.rest-client",
+    "ms-vscode.vscode-yaml",
+
+    // Productivity and utilities
+    "ms-vscode.vscode-markdownlint",
+    "streetsidesoftware.code-spell-checker",
+    "ms-vscode.powershell",
+    "ms-vscode.remote-explorer",
+
+    // Theme and appearance
+    "ms-vscode.theme-monokai-pro",
+    "dracula-theme.theme-dracula",
+    "ms-vscode.theme-material-kit",
+
+    // Specific for this project
+    "ms-vscode.vscode-js-profile-flame",
+    "ms-vscode.vscode-memory-leaks",
+    "ms-vscode.vscode-chrome-debug"
+  ],
+  "unwantedRecommendations": [
+    "ms-vscode.vscode-typescript",
+    "hookyqr.beautify",
+    "ms-vscode.vscode-npm",
+    "ms-vscode.vscode-node-debug2"
+  ]
+}

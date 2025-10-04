@@ -1,0 +1,29 @@
+# Patch for development deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: git-memory-mcp-server
+spec:
+  template:
+    spec:
+      containers:
+      - name: git-memory-server
+        env:
+        - name: JAEGER_ENDPOINT
+          value: "http://git-memory-jaeger:14268/api/traces"
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+---
+# Patch for development config
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: git-memory-config
+data:
+  PROMETHEUS_PORT: "9090"
+  ENABLE_METRICS: "true"

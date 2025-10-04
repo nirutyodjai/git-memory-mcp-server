@@ -1,0 +1,45 @@
+# Development environment overlay
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+metadata:
+  name: git-memory-development
+
+resources:
+  - ../base
+  - ../monitoring
+
+patchesStrategicMerge:
+  - deployment-patch.yaml
+  - config-patch.yaml
+
+# Development-specific configurations
+configMapGenerator:
+  - name: git-memory-config
+    behavior: merge
+    literals:
+      - NODE_ENV=development
+      - LOG_LEVEL=debug
+      - ENABLE_TRACING=true
+
+patchesJson6902:
+  - target:
+      group: apps
+      version: v1
+      kind: Deployment
+      name: git-memory-mcp-server
+    patch: |-
+      - op: replace
+        path: /spec/replicas
+        value: 1
+  - target:
+      group: apps
+      version: v1
+      kind: Deployment
+      name: git-memory-mcp-server
+    patch: |-
+      - op: add
+        path: /spec/template/spec/containers/0/env/-
+        value:
+          name: NODE_OPTIONS
+          value: "--inspect=0.0.0.0:9229"

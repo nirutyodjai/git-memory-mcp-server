@@ -1,0 +1,313 @@
+# Prometheus ServiceMonitor
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: git-memory-servicemonitor
+  namespace: git-memory
+  labels:
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      app: git-memory-mcp-server
+  endpoints:
+  - port: metrics
+    interval: 15s
+    path: /metrics
+  - port: http
+    interval: 30s
+    path: /health
+---
+# Grafana Dashboard ConfigMap
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: git-memory-grafana-dashboards
+  namespace: git-memory
+  labels:
+    grafana_dashboard: "1"
+data:
+  git-memory-dashboard.json: |
+    {
+      "dashboard": {
+        "id": null,
+        "title": "Git Memory MCP Server",
+        "tags": ["git-memory", "mcp"],
+        "timezone": "browser",
+        "panels": [
+          {
+            "id": 1,
+            "title": "Active Connections",
+            "type": "stat",
+            "targets": [
+              {
+                "expr": "active_connections",
+                "legendFormat": "Active Connections"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Tool Calls Rate",
+            "type": "graph",
+            "targets": [
+              {
+                "expr": "rate(tool_calls_total[5m])",
+                "legendFormat": "{{tool}}"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "title": "Response Time",
+            "type": "graph",
+            "targets": [
+              {
+                "expr": "rate(tool_duration_ms_sum[5m]) / rate(tool_duration_ms_count[5m])",
+                "legendFormat": "Average Response Time"
+              }
+            ]
+          },
+          {
+            "id": 4,
+            "title": "Error Rate",
+            "type": "graph",
+            "targets": [
+              {
+                "expr": "rate(tool_errors_total[5m])",
+                "legendFormat": "Error Rate"
+              }
+            ]
+          },
+          {
+            "id": 5,
+            "title": "Memory Usage",
+            "type": "graph",
+            "targets": [
+              {
+                "expr": "process_resident_memory_bytes",
+                "legendFormat": "Memory Usage"
+              }
+            ]
+          },
+          {
+            "id": 6,
+            "title": "CPU Usage",
+            "type": "graph",
+            "targets": [
+              {
+                "expr": "rate(process_cpu_seconds_total[5m])",
+                "legendFormat": "CPU Usage"
+              }
+            ]
+          }
+        ],
+        "time": {
+          "from": "now-1h",
+          "to": "now"
+        },
+        "refresh": "30s"
+      }
+    }
+---
+# Grafana Datasource ConfigMap
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: git-memory-grafana-datasources
+  namespace: git-memory
+  labels:
+    grafana_datasource: "1"
+data:
+  prometheus.yaml: |
+    apiVersion: 1
+    datasources:
+    - name: Prometheus
+      type: prometheus
+      url: http://git-memory-prometheus:9090
+      access: proxy
+      isDefault: true
+      editable: true
+---
+# Grafana Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: git-memory-grafana
+  namespace: git-memory
+  labels:
+    app: git-memory-grafana
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: git-memory-grafana
+  template:
+    metadata:
+      labels:
+        app: git-memory-grafana
+    spec:
+      containers:
+      - name: grafana
+        image: grafana/grafana:latest
+        ports:
+        - containerPort: 3000
+          name: grafana
+        env:
+        - name: GF_SECURITY_ADMIN_PASSWORD
+          value: "admin"
+        - name: GF_USERS_ALLOW_SIGN_UP
+          value: "false"
+        - name: GF_INSTALL_PLUGINS
+          value: "grafana-piechart-panel,grafana-worldmap-panel"
+        volumeMounts:
+        - name: grafana-data
+          mountPath: /var/lib/grafana
+        - name: grafana-dashboards
+          mountPath: /etc/grafana/dashboards
+        - name: grafana-datasources
+          mountPath: /etc/grafana/provisioning/datasources
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+      volumes:
+      - name: grafana-data
+        emptyDir: {}
+      - name: grafana-dashboards
+        configMap:
+          name: git-memory-grafana-dashboards
+      - name: grafana-datasources
+        configMap:
+          name: git-memory-grafana-datasources
+---
+# Grafana Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: git-memory-grafana
+  namespace: git-memory
+  labels:
+    app: git-memory-grafana
+spec:
+  selector:
+    app: git-memory-grafana
+  ports:
+  - name: grafana
+    port: 3000
+    targetPort: 3000
+  type: ClusterIP
+---
+# Prometheus Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: git-memory-prometheus
+  namespace: git-memory
+  labels:
+    app: git-memory-prometheus
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: git-memory-prometheus
+  template:
+    metadata:
+      labels:
+        app: git-memory-prometheus
+    spec:
+      containers:
+      - name: prometheus
+        image: prom/prometheus:latest
+        ports:
+        - containerPort: 9090
+          name: prometheus
+        volumeMounts:
+        - name: prometheus-config
+          mountPath: /etc/prometheus
+        - name: prometheus-data
+          mountPath: /prometheus
+        command:
+        - /bin/prometheus
+        args:
+        - --config.file=/etc/prometheus/prometheus.yml
+        - --storage.tsdb.path=/prometheus
+        - --web.console.libraries=/etc/prometheus/console_libraries
+        - --web.console.templates=/etc/prometheus/consoles
+        - --storage.tsdb.retention.time=200h
+        - --web.enable-lifecycle
+        - --web.enable-admin-api
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "500m"
+          limits:
+            memory: "1Gi"
+            cpu: "1000m"
+      volumes:
+      - name: prometheus-config
+        configMap:
+          name: git-memory-prometheus-config
+      - name: prometheus-data
+        emptyDir: {}
+---
+# Prometheus ConfigMap
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: git-memory-prometheus-config
+  namespace: git-memory
+data:
+  prometheus.yml: |
+    global:
+      scrape_interval: 15s
+      evaluation_interval: 15s
+
+    rule_files:
+      # - "alerts.yml"
+
+    alerting:
+      alertmanagers:
+        - static_configs:
+            - targets:
+
+    scrape_configs:
+      # Git Memory MCP Server
+      - job_name: 'git-memory-mcp-server'
+        static_configs:
+          - targets: ['git-memory-mcp-server:9090']
+        metrics_path: '/metrics'
+        scrape_interval: 10s
+        scrape_timeout: 5s
+
+      # Redis
+      - job_name: 'redis'
+        static_configs:
+          - targets: ['git-memory-redis:6379']
+        scrape_interval: 30s
+
+      # Node.js application metrics
+      - job_name: 'nodejs'
+        static_configs:
+          - targets: ['git-memory-mcp-server:3000']
+        scrape_interval: 15s
+---
+# Prometheus Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: git-memory-prometheus
+  namespace: git-memory
+  labels:
+    app: git-memory-prometheus
+spec:
+  selector:
+    app: git-memory-prometheus
+  ports:
+  - name: prometheus
+    port: 9090
+    targetPort: 9090
+  type: ClusterIP

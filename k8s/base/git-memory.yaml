@@ -1,0 +1,606 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: git-memory
+  labels:
+    name: git-memory
+    app: git-memory-mcp-server
+---
+# ConfigMap for application configuration
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: git-memory-config
+  namespace: git-memory
+data:
+  NODE_ENV: "production"
+  LOG_LEVEL: "info"
+  PORT: "3000"
+  MAX_CONNECTIONS: "3000"
+  ENABLE_METRICS: "true"
+  ENABLE_TRACING: "true"
+  REDIS_HOST: "git-memory-redis"
+  REDIS_PORT: "6379"
+  POSTGRES_HOST: "git-memory-postgres"
+  POSTGRES_PORT: "5432"
+  POSTGRES_DB: "git_memory_prod"
+  PROMETHEUS_ENABLED: "true"
+  PROMETHEUS_PORT: "9090"
+---
+# Secret for sensitive data
+apiVersion: v1
+kind: Secret
+metadata:
+  name: git-memory-secrets
+  namespace: git-memory
+type: Opaque
+data:
+  # Base64 encoded values - replace with actual values
+  GIT_MEMORY_API_KEY: "eW91ci1hcGkta2V5LWhlcmU="  # your-api-key-here
+  GIT_WEBHOOK_SECRET: "eW91ci13ZWJob29rLXNlY3JldC1oZXJl"  # your-webhook-secret-here
+  REDIS_PASSWORD: "cmVkaXNwYXNzd29yZA=="  # redispassword
+  POSTGRES_PASSWORD: "cG9zdGdyZXNwYXNzd29yZA=="  # postgrespassword
+  JAEGER_ENDPOINT: "aHR0cDovL2phZWdlci1jb2xsZWN0b3I6MTQyNjgvYXBpL3RyYWNlcw=="  # http://jaeger-collector:14268/api/traces
+---
+# PersistentVolumeClaim for logs
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: git-memory-logs-pvc
+  namespace: git-memory
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: standard  # Adjust based on your cluster
+---
+# PersistentVolumeClaim for repositories (optional)
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: git-memory-repos-pvc
+  namespace: git-memory
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Gi
+  storageClassName: standard
+---
+# Redis Deployment and Service
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: git-memory-redis
+  namespace: git-memory
+  labels:
+    app: git-memory-redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: git-memory-redis
+  template:
+    metadata:
+      labels:
+        app: git-memory-redis
+    spec:
+      containers:
+      - name: redis
+        image: redis:7-alpine
+        ports:
+        - containerPort: 6379
+          name: redis
+        command: ["redis-server"]
+        args: ["--appendonly", "yes", "--requirepass", "$(REDIS_PASSWORD)"]
+        env:
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: git-memory-secrets
+              key: REDIS_PASSWORD
+        volumeMounts:
+        - name: redis-data
+          mountPath: /data
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        livenessProbe:
+          exec:
+            command:
+            - redis-cli
+            - --raw
+            - incr
+            - ping
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          exec:
+            command:
+            - redis-cli
+            - --raw
+            - incr
+            - ping
+          initialDelaySeconds: 5
+          periodSeconds: 5
+      volumes:
+      - name: redis-data
+        persistentVolumeClaim:
+          claimName: git-memory-redis-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: git-memory-redis-pvc
+  namespace: git-memory
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+  storageClassName: standard
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: git-memory-redis
+  namespace: git-memory
+  labels:
+    app: git-memory-redis
+spec:
+  selector:
+    app: git-memory-redis
+  ports:
+  - name: redis
+    port: 6379
+    targetPort: 6379
+  type: ClusterIP
+---
+# PostgreSQL Deployment and Service (Optional)
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: git-memory-postgres
+  namespace: git-memory
+  labels:
+    app: git-memory-postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: git-memory-postgres
+  template:
+    metadata:
+      labels:
+        app: git-memory-postgres
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:15-alpine
+        ports:
+        - containerPort: 5432
+          name: postgres
+        env:
+        - name: POSTGRES_DB
+          valueFrom:
+            configMapKeyRef:
+              name: git-memory-config
+              key: POSTGRES_DB
+        - name: POSTGRES_USER
+          value: "git_memory"
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: git-memory-secrets
+              key: POSTGRES_PASSWORD
+        volumeMounts:
+        - name: postgres-data
+          mountPath: /var/lib/postgresql/data
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "500m"
+          limits:
+            memory: "1Gi"
+            cpu: "1000m"
+        livenessProbe:
+          exec:
+            command:
+            - pg_isready
+            - -U
+            - git_memory
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          exec:
+            command:
+            - pg_isready
+            - -U
+            - git_memory
+          initialDelaySeconds: 5
+          periodSeconds: 5
+      volumes:
+      - name: postgres-data
+        persistentVolumeClaim:
+          claimName: git-memory-postgres-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: git-memory-postgres-pvc
+  namespace: git-memory
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+  storageClassName: standard
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: git-memory-postgres
+  namespace: git-memory
+  labels:
+    app: git-memory-postgres
+spec:
+  selector:
+    app: git-memory-postgres
+  ports:
+  - name: postgres
+    port: 5432
+    targetPort: 5432
+  type: ClusterIP
+---
+# Jaeger Deployment and Service
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: git-memory-jaeger
+  namespace: git-memory
+  labels:
+    app: git-memory-jaeger
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: git-memory-jaeger
+  template:
+    metadata:
+      labels:
+        app: git-memory-jaeger
+    spec:
+      containers:
+      - name: jaeger
+        image: jaegertracing/all-in-one:latest
+        ports:
+        - containerPort: 16686
+          name: jaeger-ui
+        - containerPort: 14268
+          name: jaeger-collector
+        - containerPort: 14250
+          name: jaeger-agent
+        env:
+        - name: COLLECTOR_OTLP_ENABLED
+          value: "true"
+        - name: LOG_LEVEL
+          value: "info"
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: git-memory-jaeger
+  namespace: git-memory
+  labels:
+    app: git-memory-jaeger
+spec:
+  selector:
+    app: git-memory-jaeger
+  ports:
+  - name: jaeger-ui
+    port: 16686
+    targetPort: 16686
+  - name: jaeger-collector
+    port: 14268
+    targetPort: 14268
+  - name: jaeger-agent
+    port: 14250
+    targetPort: 14250
+  type: ClusterIP
+---
+# Main Git Memory MCP Server Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: git-memory-mcp-server
+  namespace: git-memory
+  labels:
+    app: git-memory-mcp-server
+spec:
+  replicas: 3  # Scale as needed
+  selector:
+    matchLabels:
+      app: git-memory-mcp-server
+  template:
+    metadata:
+      labels:
+        app: git-memory-mcp-server
+    spec:
+      containers:
+      - name: git-memory-server
+        image: git-memory-mcp-server:latest  # Replace with your image
+        ports:
+        - containerPort: 3000
+          name: http
+        - containerPort: 9090
+          name: metrics
+        env:
+        - name: NODE_ENV
+          valueFrom:
+            configMapKeyRef:
+              name: git-memory-config
+              key: NODE_ENV
+        - name: LOG_LEVEL
+          valueFrom:
+            configMapKeyRef:
+              name: git-memory-config
+              key: LOG_LEVEL
+        - name: PORT
+          valueFrom:
+            configMapKeyRef:
+              name: git-memory-config
+              key: PORT
+        - name: MAX_CONNECTIONS
+          valueFrom:
+            configMapKeyRef:
+              name: git-memory-config
+              key: MAX_CONNECTIONS
+        - name: ENABLE_METRICS
+          valueFrom:
+            configMapKeyRef:
+              name: git-memory-config
+              key: ENABLE_METRICS
+        - name: ENABLE_TRACING
+          valueFrom:
+            configMapKeyRef:
+              name: git-memory-config
+              key: ENABLE_TRACING
+        - name: GIT_MEMORY_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: git-memory-secrets
+              key: GIT_MEMORY_API_KEY
+        - name: GIT_WEBHOOK_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: git-memory-secrets
+              key: GIT_WEBHOOK_SECRET
+        - name: REDIS_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: git-memory-config
+              key: REDIS_HOST
+        - name: REDIS_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: git-memory-config
+              key: REDIS_PORT
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: git-memory-secrets
+              key: REDIS_PASSWORD
+        - name: POSTGRES_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: git-memory-config
+              key: POSTGRES_HOST
+        - name: POSTGRES_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: git-memory-config
+              key: POSTGRES_PORT
+        - name: POSTGRES_DB
+          valueFrom:
+            configMapKeyRef:
+              name: git-memory-config
+              key: POSTGRES_DB
+        - name: POSTGRES_USER
+          value: "git_memory"
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: git-memory-secrets
+              key: POSTGRES_PASSWORD
+        - name: JAEGER_ENDPOINT
+          valueFrom:
+            secretKeyRef:
+              name: git-memory-secrets
+              key: JAEGER_ENDPOINT
+        volumeMounts:
+        - name: logs-volume
+          mountPath: /app/logs
+        - name: repos-volume
+          mountPath: /app/repos
+          readOnly: true
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "500m"
+          limits:
+            memory: "1Gi"
+            cpu: "1000m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 3000
+          initialDelaySeconds: 60
+          periodSeconds: 30
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 3000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 3
+          failureThreshold: 3
+      volumes:
+      - name: logs-volume
+        persistentVolumeClaim:
+          claimName: git-memory-logs-pvc
+      - name: repos-volume
+        persistentVolumeClaim:
+          claimName: git-memory-repos-pvc
+---
+# Service for Git Memory MCP Server
+apiVersion: v1
+kind: Service
+metadata:
+  name: git-memory-mcp-server
+  namespace: git-memory
+  labels:
+    app: git-memory-mcp-server
+spec:
+  selector:
+    app: git-memory-mcp-server
+  ports:
+  - name: http
+    port: 80
+    targetPort: 3000
+    protocol: TCP
+  - name: metrics
+    port: 9090
+    targetPort: 9090
+    protocol: TCP
+  type: ClusterIP
+---
+# Ingress for external access
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: git-memory-ingress
+  namespace: git-memory
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/proxy-body-size: "50m"
+    nginx.ingress.kubernetes.io/rate-limit: "100"
+    nginx.ingress.kubernetes.io/rate-limit-window: "1m"
+    nginx.ingress.kubernetes.io/limit-rps: "10"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  tls:
+  - hosts:
+    - git-memory.your-domain.com  # Replace with your domain
+    secretName: git-memory-tls
+  rules:
+  - host: git-memory.your-domain.com  # Replace with your domain
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: git-memory-mcp-server
+            port:
+              number: 80
+---
+# HorizontalPodAutoscaler for auto-scaling
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: git-memory-hpa
+  namespace: git-memory
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: git-memory-mcp-server
+  minReplicas: 2
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 80
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 300
+      policies:
+      - type: Percent
+        value: 10
+        periodSeconds: 60
+    scaleUp:
+      stabilizationWindowSeconds: 120
+      policies:
+      - type: Percent
+        value: 50
+        periodSeconds: 60
+---
+# NetworkPolicy for security
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: git-memory-netpol
+  namespace: git-memory
+spec:
+  podSelector:
+    matchLabels:
+      app: git-memory-mcp-server
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: git-memory
+    - podSelector:
+        matchLabels:
+          app: git-memory-mcp-server
+    ports:
+    - protocol: TCP
+      port: 3000
+    - protocol: TCP
+      port: 9090
+  egress:
+  - to: []
+    ports:
+    - protocol: TCP
+      port: 6379  # Redis
+    - protocol: TCP
+      port: 5432  # PostgreSQL
+    - protocol: TCP
+      port: 14268 # Jaeger
+    - protocol: UDP
+      port: 53    # DNS
+    - protocol: TCP
+      port: 80    # HTTP
+    - protocol: TCP
+      port: 443   # HTTPS
